@@ -34,16 +34,6 @@ npm install @accesslint/core
 
 ## Quick start
 
-```js
-import { runAudit } from "@accesslint/core";
-
-const result = runAudit(document);
-
-for (const violation of result.violations) {
-  console.log(violation.ruleId, violation.message, violation.selector);
-}
-```
-
 ### Playwright
 
 Inject the library into the page and audit the live DOM:
