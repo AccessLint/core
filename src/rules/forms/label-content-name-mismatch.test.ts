@@ -76,6 +76,26 @@ describe("label-content-name-mismatch", () => {
     expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
   });
 
+  it("ignores style tags inside elements (not visible text)", () => {
+    const doc = makeDoc(`
+      <a href="/video" aria-label="Ulta Beauty Black-owned and Founded favorites">
+        Ulta Beauty Black-owned and Founded favorites
+        <style>video::cue { color: white; font-family: sans-serif; }</style>
+      </a>
+    `);
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("ignores script tags inside elements (not visible text)", () => {
+    const doc = makeDoc(`
+      <button aria-label="Play video">
+        Play video
+        <script>console.log("init")</script>
+      </button>
+    `);
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
   it("skips icon buttons (SVG not considered visible text)", () => {
     // SVG content is not considered visible label text for this rule
     const doc = makeDoc('<button aria-label="Close"><svg aria-hidden="true"></svg></button>');

@@ -37,7 +37,7 @@ function visibleTextMatches(accessibleName: string, visibleText: string): boolea
 
 /**
  * Extract truly visible text from an element, excluding:
- * - SVG content (icons, not readable text)
+ * - Non-rendered elements (style, script, SVG)
  * - Elements with role="img" or role="presentation"
  * - aria-hidden subtrees
  * - Elements hidden via inline display:none
@@ -50,8 +50,8 @@ function getVisibleText(el: Element): string {
     } else if (node.nodeType === 1 /* ELEMENT_NODE */) {
       const child = node as Element;
       const tag = child.tagName.toLowerCase();
-      // Skip SVG elements entirely — they render icons, not readable text
-      if (tag === "svg") continue;
+      // Skip non-rendered elements — their content is not visible text
+      if (tag === "style" || tag === "script" || tag === "svg") continue;
       // Skip elements removed from the accessibility tree
       if (child.getAttribute("aria-hidden") === "true") continue;
       if (child instanceof HTMLElement && child.style.display === "none") continue;
