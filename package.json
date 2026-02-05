@@ -28,6 +28,9 @@
     "url": "git+https://github.com/accesslint/core.git"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "happy-dom": "^20.4.0",
     "typescript": "^5.7.0",
