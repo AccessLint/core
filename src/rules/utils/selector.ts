@@ -29,11 +29,16 @@ function buildSegment(el: Element): string {
   }
   const parent = el.parentElement;
   if (parent) {
-    const sameTag = Array.from(parent.children).filter(
-      (c) => c.tagName === el.tagName,
-    );
-    if (sameTag.length > 1) {
-      return `${tag}:nth-of-type(${sameTag.indexOf(el) + 1})`;
+    let count = 0;
+    let index = 0;
+    for (let i = 0; i < parent.children.length; i++) {
+      if (parent.children[i].tagName === el.tagName) {
+        count++;
+        if (parent.children[i] === el) index = count;
+      }
+    }
+    if (count > 1) {
+      return `${tag}:nth-of-type(${index})`;
     }
   }
   return tag;
