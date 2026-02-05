@@ -136,17 +136,25 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
     }
     if (!hasAriaAttr) continue;
 
-    const selector = getSelector(el);
-    const html = getHtmlSnippet(el);
-    const hidden = isAriaHidden(el);
+    // Lazily compute selector/html only when a violation is found
+    let selector: string | undefined;
+    let html: string | undefined;
+    const lazy = () => {
+      if (selector === undefined) {
+        selector = getSelector(el);
+        html = getHtmlSnippet(el);
+      }
+      return { selector, html: html! };
+    };
 
     // --- aria-valid-attr ---
     for (const attr of el.attributes) {
       if (attr.name.startsWith("aria-") && !VALID_ARIA_ATTRS.has(attr.name)) {
+        const v = lazy();
         validAttr.push({
           ruleId: "aria-valid-attr",
-          selector,
-          html,
+          selector: v.selector,
+          html: v.html,
           impact: "critical",
           message: `Invalid ARIA attribute "${attr.name}".`,
         });
@@ -161,40 +169,44 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
 
       if (BOOLEAN_ATTRS.has(attr.name)) {
         if (val !== "true" && val !== "false") {
+          const v = lazy();
           validAttrValue.push({
             ruleId: "aria-valid-attr-value",
-            selector,
-            html,
+            selector: v.selector,
+            html: v.html,
             impact: "critical",
             message: `${attr.name} must be "true" or "false", got "${val}".`,
           });
         }
       } else if (TRISTATE_ATTRS.has(attr.name)) {
         if (val !== "true" && val !== "false" && val !== "mixed") {
+          const v = lazy();
           validAttrValue.push({
             ruleId: "aria-valid-attr-value",
-            selector,
-            html,
+            selector: v.selector,
+            html: v.html,
             impact: "critical",
             message: `${attr.name} must be "true", "false", or "mixed", got "${val}".`,
           });
         }
       } else if (INTEGER_ATTRS.has(attr.name)) {
         if (val === "" || !/^-?\d+$/.test(val)) {
+          const v = lazy();
           validAttrValue.push({
             ruleId: "aria-valid-attr-value",
-            selector,
-            html,
+            selector: v.selector,
+            html: v.html,
             impact: "critical",
             message: `${attr.name} must be an integer, got "${val}".`,
           });
         }
       } else if (NUMBER_ATTRS.has(attr.name)) {
         if (val === "" || isNaN(Number(val))) {
+          const v = lazy();
           validAttrValue.push({
             ruleId: "aria-valid-attr-value",
-            selector,
-            html,
+            selector: v.selector,
+            html: v.html,
             impact: "critical",
             message: `${attr.name} must be a number, got "${val}".`,
           });
@@ -203,10 +215,11 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
         const tokens = val.split(/\s+/);
         for (const token of tokens) {
           if (!TOKEN_ATTRS[attr.name].has(token)) {
+            const v = lazy();
             validAttrValue.push({
               ruleId: "aria-valid-attr-value",
-              selector,
-              html,
+              selector: v.selector,
+              html: v.html,
               impact: "critical",
               message: `Invalid value "${val}" for ${attr.name}.`,
             });
@@ -217,7 +230,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
     }
 
     // --- aria-prohibited-attr (only for non-hidden elements) ---
-    if (!hidden) {
+    if (!isAriaHidden(el)) {
       const explicitRole = el.getAttribute("role")?.trim().toLowerCase();
       const tagName = el.tagName.toLowerCase();
 
@@ -226,10 +239,11 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
         const hasAriaLabelledby = el.hasAttribute("aria-labelledby");
 
         if (hasAriaLabel || hasAriaLabelledby) {
+          const v = lazy();
           prohibitedAttr.push({
             ruleId: "aria-prohibited-attr",
-            selector,
-            html,
+            selector: v.selector,
+            html: v.html,
             impact: "serious",
             message: `aria-label and aria-labelledby are prohibited on <${tagName}> elements.`,
           });
@@ -240,10 +254,11 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
           const hasAriaLabelledby = el.hasAttribute("aria-labelledby");
 
           if (hasAriaLabel || hasAriaLabelledby) {
+            const v = lazy();
             prohibitedAttr.push({
               ruleId: "aria-prohibited-attr",
-              selector,
-              html,
+              selector: v.selector,
+              html: v.html,
               impact: "serious",
               message: `aria-label and aria-labelledby are prohibited on role "${explicitRole}".`,
             });
@@ -258,10 +273,11 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
                   NO_NAME_ROLES.has(explicitRole)) {
                 continue;
               }
+              const v = lazy();
               prohibitedAttr.push({
                 ruleId: "aria-prohibited-attr",
-                selector,
-                html,
+                selector: v.selector,
+                html: v.html,
                 impact: "serious",
                 message: `Attribute "${attr.name}" is prohibited on role "${explicitRole}".`,
               });
