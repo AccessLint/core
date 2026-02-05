@@ -94,7 +94,21 @@ export function getComputedRole(el: Element): string | null {
 // Accessible name
 // ---------------------------------------------------------------------------
 
+let _accessibleNameCache = new WeakMap<Element, string>();
+
+export function clearAccessibleNameCache(): void {
+  _accessibleNameCache = new WeakMap();
+}
+
 export function getAccessibleName(el: Element): string {
+  const cached = _accessibleNameCache.get(el);
+  if (cached !== undefined) return cached;
+  const result = _computeAccessibleName(el);
+  _accessibleNameCache.set(el, result);
+  return result;
+}
+
+function _computeAccessibleName(el: Element): string {
   // aria-labelledby
   const labelledBy = el.getAttribute("aria-labelledby");
   if (labelledBy) {

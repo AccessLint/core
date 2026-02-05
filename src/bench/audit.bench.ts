@@ -1,6 +1,6 @@
 import { describe, bench } from "vitest";
 import { runAudit, rules } from "../rules/index";
-import { clearAriaHiddenCache, clearComputedRoleCache } from "../rules/utils/aria";
+import { clearAriaHiddenCache, clearComputedRoleCache, clearAccessibleNameCache } from "../rules/utils/aria";
 import { clearColorCaches } from "../rules/utils/color";
 import { clearAriaAttrAuditCache } from "../rules/aria/aria-attr-audit";
 import { clearSelectorCache } from "../rules/utils/selector";
@@ -14,6 +14,7 @@ function clearCaches() {
   clearColorCaches();
   clearAriaAttrAuditCache();
   clearSelectorCache();
+  clearAccessibleNameCache();
 }
 
 describe("runAudit", () => {

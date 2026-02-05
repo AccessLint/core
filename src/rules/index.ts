@@ -1,5 +1,5 @@
 import type { Rule, Violation, AuditResult } from "./types";
-import { clearAriaHiddenCache, clearComputedRoleCache } from "./utils/aria";
+import { clearAriaHiddenCache, clearComputedRoleCache, clearAccessibleNameCache } from "./utils/aria";
 import { clearAriaAttrAuditCache } from "./aria/aria-attr-audit";
 import { clearColorCaches } from "./utils/color";
 import { clearSelectorCache } from "./utils/selector";
@@ -247,6 +247,7 @@ export function getActiveRules(): Rule[] {
 export function createChunkedAudit(doc: Document): ChunkedAudit {
   clearAriaHiddenCache();
   clearComputedRoleCache();
+  clearAccessibleNameCache();
   clearColorCaches();
 
   clearAriaAttrAuditCache();
@@ -277,6 +278,7 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
 export function runAudit(doc: Document): AuditResult {
   clearAriaHiddenCache();
   clearComputedRoleCache();
+  clearAccessibleNameCache();
   clearColorCaches();
 
   clearAriaAttrAuditCache();
