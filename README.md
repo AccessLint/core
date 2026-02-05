@@ -51,16 +51,18 @@ Inject the library into the page and audit the live DOM:
 ```ts
 // a11y.spec.ts
 import { test, expect } from "@playwright/test";
-import { createRequire } from "module";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
 
-const require = createRequire(import.meta.url);
+const iife = resolve(
+  dirname(fileURLToPath(import.meta.resolve("@accesslint/core"))),
+  "index.iife.js",
+);
 
 test("page has no accessibility violations", async ({ page }) => {
   await page.goto("https://example.com");
 
-  await page.addScriptTag({
-    path: require.resolve("@accesslint/core/dist/index.iife.js"),
-  });
+  await page.addScriptTag({ path: iife });
 
   const violations = await page.evaluate(() => {
     const { runAudit } = (window as any).AccessLintCore;
