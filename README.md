@@ -46,18 +46,27 @@ for (const violation of result.violations) {
 
 ### Playwright
 
-```js
+Inject the library into the page and audit the live DOM:
+
+```ts
 // a11y.spec.ts
 import { test, expect } from "@playwright/test";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
 
 test("page has no accessibility violations", async ({ page }) => {
   await page.goto("https://example.com");
 
-  const violations = await page.evaluate(async () => {
-    const { runAudit } = await import("@accesslint/core");
-    return runAudit(document).violations.map(({ ruleId, message, selector, impact }) => ({
-      ruleId, message, selector, impact,
-    }));
+  await page.addScriptTag({
+    path: require.resolve("@accesslint/core/dist/index.iife.js"),
+  });
+
+  const violations = await page.evaluate(() => {
+    const { runAudit } = (window as any).AccessLintCore;
+    return runAudit(document).violations.map(
+      ({ ruleId, message, selector, impact }) => ({ ruleId, message, selector, impact })
+    );
   });
 
   expect(violations).toEqual([]);
@@ -66,23 +75,25 @@ test("page has no accessibility violations", async ({ page }) => {
 
 ### Cypress
 
+Inject the library into the page and audit the live DOM:
+
 ```js
-// cypress/e2e/a11y.cy.js
-describe("Accessibility", () => {
-  it("has no violations", () => {
-    cy.visit("https://example.com");
-
-    cy.window().then(async (win) => {
-      const { runAudit } = await import("@accesslint/core");
-      const { violations } = runAudit(win.document);
-
-      violations.forEach((v) => {
-        cy.log(`${v.ruleId}: ${v.message} (${v.selector})`);
-      });
-
-      expect(violations).to.have.length(0);
+// cypress/support/commands.js
+Cypress.Commands.add("audit", () => {
+  const script = require.resolve("@accesslint/core/dist/index.iife.js");
+  cy.readFile(script).then((src) => {
+    cy.window().then((win) => {
+      win.eval(src);
+      const { runAudit } = win.AccessLintCore;
+      return runAudit(win.document).violations;
     });
   });
+});
+
+// cypress/e2e/a11y.cy.js
+it("has no accessibility violations", () => {
+  cy.visit("https://example.com");
+  cy.audit().should("have.length", 0);
 });
 ```
 
