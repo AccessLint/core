@@ -19,6 +19,7 @@
   "scripts": {
     "build": "vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json",
     "test": "vitest run",
+    "bench": "vitest bench",
     "prepublishOnly": "npm run build"
   },
   "repository": {
