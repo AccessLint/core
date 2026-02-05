@@ -88,19 +88,3 @@ export interface DeclarativeRule {
   skipAriaHidden?: boolean;
   documentOnly?: boolean;
 }
-
-export interface RemoteRuleMetadata {
-  description?: string;
-  guidance?: string;
-  prompt?: string;
-  wcag?: string[];
-  level?: "A" | "AA";
-  tags?: string[];
-}
-
-export interface RemoteRuleData {
-  version: number;
-  metadata?: Record<string, RemoteRuleMetadata>;
-  rules?: DeclarativeRule[];
-  disabled?: string[];
-}

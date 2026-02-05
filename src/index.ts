@@ -17,8 +17,6 @@ export type {
   AuditResult,
   DeclarativeRule,
   CheckType,
-  RemoteRuleMetadata,
-  RemoteRuleData,
 } from "./rules/types";
 
 // Utilities (useful for custom rule authors)
