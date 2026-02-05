@@ -65,7 +65,7 @@ test("page has no accessibility violations", async ({ page }) => {
   const violations = await page.evaluate(() => {
     const { runAudit } = (window as any).AccessLintCore;
     return runAudit(document).violations.map(
-      ({ ruleId, message, selector, impact }) => ({ ruleId, message, selector, impact })
+      (v: any) => ({ ruleId: v.ruleId, message: v.message, selector: v.selector, impact: v.impact })
     );
   });
 
