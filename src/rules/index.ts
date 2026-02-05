@@ -2,6 +2,7 @@ import type { Rule, Violation, AuditResult } from "./types";
 import { clearAriaHiddenCache, clearComputedRoleCache } from "./utils/aria";
 import { clearAriaAttrAuditCache } from "./aria/aria-attr-audit";
 import { clearColorCaches } from "./utils/color";
+import { clearSelectorCache } from "./utils/selector";
 
 // Images
 import { imgAlt } from "./images/img-alt";
@@ -249,6 +250,7 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
   clearColorCaches();
 
   clearAriaAttrAuditCache();
+  clearSelectorCache();
 
   const activeRules = getActiveRules();
   const violations: Violation[] = [];
@@ -278,6 +280,7 @@ export function runAudit(doc: Document): AuditResult {
   clearColorCaches();
 
   clearAriaAttrAuditCache();
+  clearSelectorCache();
 
   const activeRules = getActiveRules();
   const violations: Violation[] = [];

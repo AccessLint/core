@@ -1,3 +1,9 @@
+let _selectorCache = new WeakMap<Element, string>();
+
+export function clearSelectorCache(): void {
+  _selectorCache = new WeakMap();
+}
+
 /** Escape a string for use inside a CSS `[attr="value"]` selector. */
 function escapeAttrVal(s: string): string {
   return s.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
@@ -74,6 +80,9 @@ function buildSelectorWithinRoot(el: Element): string {
  * path that crosses iframe boundaries: `iframe-selector >>>iframe> inner-selector`.
  */
 export function getSelector(el: Element): string {
+  const cached = _selectorCache.get(el);
+  if (cached !== undefined) return cached;
+
   const parts: { selector: string; delimiter: string }[] = [];
   let current: Element | null = el;
 
@@ -96,7 +105,9 @@ export function getSelector(el: Element): string {
     }
   }
 
-  return parts.map((p, i) => (i === 0 ? "" : p.delimiter) + p.selector).join("");
+  const result = parts.map((p, i) => (i === 0 ? "" : p.delimiter) + p.selector).join("");
+  _selectorCache.set(el, result);
+  return result;
 }
 
 /**
