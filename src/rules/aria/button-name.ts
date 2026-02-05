@@ -1,0 +1,66 @@
+import type { Rule } from "../types";
+import { getSelector, getHtmlSnippet } from "../utils/selector";
+import { getAccessibleName, isAriaHidden } from "../utils/aria";
+
+function getButtonContext(btn: Element): string | undefined {
+  const parts: string[] = [];
+
+  // Include class names (helpful for icon buttons like "btn-close", "icon-search")
+  const className = btn.className;
+  if (className && typeof className === "string" && className.trim()) {
+    parts.push(`Classes: ${className.trim().slice(0, 100)}`);
+  }
+
+  // Check for form context
+  const form = btn.closest("form");
+  if (form) {
+    const formLabel = form.getAttribute("aria-label") || form.querySelector("legend")?.textContent?.trim();
+    if (formLabel) parts.push(`Form: ${formLabel.slice(0, 60)}`);
+  }
+
+  // Check nearby heading
+  const parent = btn.parentElement;
+  if (parent) {
+    const heading = parent.closest("h1, h2, h3, h4, h5, h6") || parent.querySelector("h1, h2, h3, h4, h5, h6");
+    if (heading?.textContent?.trim()) {
+      parts.push(`Nearby heading: ${heading.textContent.trim().slice(0, 60)}`);
+    }
+  }
+
+  return parts.length > 0 ? parts.join("\n") : undefined;
+}
+
+export const buttonName: Rule = {
+  id: "button-name",
+  wcag: ["4.1.2"],
+  level: "A",
+  description: "Buttons must have discernible text.",
+  guidance:
+    "Screen reader users need to know what a button does. Add visible text content, aria-label, or aria-labelledby. For icon buttons, use aria-label describing the action (e.g., aria-label='Close'). If the button contains an image, ensure the image has alt text describing the button's action.",
+  prompt:
+    "Based on the button's content, class, or context, suggest an appropriate aria-label describing the action it performs.",
+  run(doc) {
+    const violations = [];
+    for (const btn of doc.querySelectorAll('button, [role="button"]')) {
+      if (isAriaHidden(btn)) continue;
+
+      // Skip elements inside shadow DOM — accessible name resolution
+      // can't reliably cross shadow boundaries (aria-labelledby IDs,
+      // slot content, etc.), leading to false positives.
+      if (btn.getRootNode() instanceof ShadowRoot) continue;
+
+      const name = getAccessibleName(btn);
+      if (!name) {
+        violations.push({
+          ruleId: "button-name",
+          selector: getSelector(btn),
+          html: getHtmlSnippet(btn),
+          impact: "critical" as const,
+          message: "Button has no discernible text.",
+          context: getButtonContext(btn),
+        });
+      }
+    }
+    return violations;
+  },
+};

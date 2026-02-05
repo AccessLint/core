@@ -1,0 +1,84 @@
+import { describe, it, expect } from "vitest";
+import { labelContentNameMismatch } from "./label-content-name-mismatch";
+
+function makeDoc(html: string): Document {
+  return new DOMParser().parseFromString(html, "text/html");
+}
+
+describe("label-content-name-mismatch", () => {
+  it("passes button without aria-label", () => {
+    const doc = makeDoc("<button>Submit</button>");
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("passes button with matching aria-label", () => {
+    const doc = makeDoc('<button aria-label="Submit form">Submit</button>');
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("reports button with mismatched aria-label", () => {
+    const doc = makeDoc('<button aria-label="Send email">Submit</button>');
+    const violations = labelContentNameMismatch.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].ruleId).toBe("label-content-name-mismatch");
+  });
+
+  it("passes when aria-label contains visible text", () => {
+    const doc = makeDoc('<button aria-label="Submit order form">Submit</button>');
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("reports link with completely mismatched aria-label", () => {
+    const doc = makeDoc('<a href="/" aria-label="Navigate to start">Home</a>');
+    const violations = labelContentNameMismatch.run(doc);
+    expect(violations).toHaveLength(1);
+  });
+
+  it("passes link with matching aria-label", () => {
+    const doc = makeDoc('<a href="/" aria-label="Home page">Home</a>');
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("passes input submit without aria override", () => {
+    const doc = makeDoc('<input type="submit" value="Submit">');
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("is case-insensitive", () => {
+    const doc = makeDoc('<button aria-label="SUBMIT form">Submit</button>');
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("normalizes whitespace", () => {
+    const doc = makeDoc('<button aria-label="Submit   form">Submit</button>');
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("reports input with aria-label not matching visible label", () => {
+    const doc = makeDoc(`
+      <label for="email">Email address</label>
+      <input id="email" type="email" aria-label="Enter your contact email">
+    `);
+    const violations = labelContentNameMismatch.run(doc);
+    expect(violations).toHaveLength(1);
+  });
+
+  it("passes input with aria-label containing visible label", () => {
+    const doc = makeDoc(`
+      <label for="email">Email</label>
+      <input id="email" type="email" aria-label="Email address">
+    `);
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("skips aria-hidden elements", () => {
+    const doc = makeDoc('<button aria-label="Different" aria-hidden="true">Submit</button>');
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
+  it("skips icon buttons (SVG not considered visible text)", () => {
+    // SVG content is not considered visible label text for this rule
+    const doc = makeDoc('<button aria-label="Close"><svg aria-hidden="true"></svg></button>');
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+});

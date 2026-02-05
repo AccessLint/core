@@ -1,0 +1,66 @@
+import type { Rule } from "../types";
+import { getSelector, getHtmlSnippet } from "../utils/selector";
+
+const REQUIRED_ATTRS: Record<string, string[]> = {
+  checkbox: ["aria-checked"],
+  combobox: ["aria-expanded"],
+  heading: ["aria-level"],
+  menuitemcheckbox: ["aria-checked"],
+  menuitemradio: ["aria-checked"],
+  meter: ["aria-valuenow"],
+  option: ["aria-selected"],
+  radio: ["aria-checked"],
+  scrollbar: ["aria-controls", "aria-valuenow"],
+  separator: ["aria-valuenow"], // when focusable
+  slider: ["aria-valuenow"],
+  spinbutton: ["aria-valuenow"],
+  switch: ["aria-checked"],
+};
+
+export const ariaRequiredAttr: Rule = {
+  id: "aria-required-attr",
+  wcag: ["4.1.2"],
+  level: "A",
+  description: "Elements with ARIA roles must have all required ARIA attributes.",
+  guidance:
+    "Some ARIA roles require specific attributes to function correctly. For example, checkbox requires aria-checked, slider requires aria-valuenow, heading requires aria-level. Without these attributes, assistive technologies cannot convey the element's state or value to users. Add the missing required attribute with an appropriate value.",
+  prompt:
+    "State which attribute is required for this role and suggest an appropriate value based on the element's apparent state.",
+  run(doc) {
+    const violations = [];
+    for (const el of doc.querySelectorAll("[role]")) {
+      const role = el.getAttribute("role")!.trim().toLowerCase();
+      const required = REQUIRED_ATTRS[role];
+      if (!required) continue;
+
+      // Skip native elements that implicitly provide the state
+      if (role === "checkbox" && el instanceof HTMLInputElement && el.type === "checkbox") continue;
+      if (role === "radio" && el instanceof HTMLInputElement && el.type === "radio") continue;
+      if (role === "option" && el instanceof HTMLOptionElement) continue;
+      if (role === "heading" && /^h[1-6]$/i.test(el.tagName)) continue;
+
+      // separator only requires aria-valuenow when focusable (interactive separator)
+      if (role === "separator") {
+        const tabindex = el.getAttribute("tabindex");
+        if (!tabindex || tabindex === "-1") continue;
+      }
+
+      // Native <hr> elements have implicit separator role — skip
+      if (el.tagName.toLowerCase() === "hr" && !el.hasAttribute("role")) continue;
+
+      for (const attr of required) {
+        if (!el.hasAttribute(attr)) {
+          violations.push({
+            ruleId: "aria-required-attr",
+            selector: getSelector(el),
+            html: getHtmlSnippet(el),
+            impact: "critical" as const,
+            message: `Role "${role}" requires attribute "${attr}".`,
+          });
+          break;
+        }
+      }
+    }
+    return violations;
+  },
+};
