@@ -18,6 +18,7 @@ export type {
   DeclarativeRule,
   CheckType,
   RemoteRuleMetadata,
+  RemoteRuleData,
 } from "./rules/types";
 
 // Utilities (useful for custom rule authors)
@@ -28,6 +29,16 @@ export {
   isAriaHidden,
   isValidRole,
   getAccessibleTextContent,
+  clearAriaHiddenCache,
+  clearComputedRoleCache,
 } from "./rules/utils/aria";
 
-export { getSelector, getHtmlSnippet } from "./rules/utils/selector";
+export {
+  getSelector,
+  getHtmlSnippet,
+  querySelectorShadowAware,
+} from "./rules/utils/selector";
+
+// Cache clearing (useful for test helpers and extension integration)
+export { clearAriaAttrAuditCache } from "./rules/aria/aria-attr-audit";
+export { clearColorCaches } from "./rules/utils/color";
