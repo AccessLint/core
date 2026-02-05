@@ -26,6 +26,10 @@ const NON_TEXT_TAGS = new Set([
   "HR",
 ]);
 
+function rgbToHex([r, g, b]: [number, number, number]): string {
+  return "#" + [r, g, b].map((c) => c.toString(16).padStart(2, "0")).join("");
+}
+
 function isDisabledFormElement(el: Element): boolean {
   if (
     el instanceof HTMLInputElement ||
@@ -104,13 +108,15 @@ export const colorContrast: Rule = {
 
       if (ratio < threshold) {
         const roundedRatio = Math.round(ratio * 100) / 100;
+        const fgHex = rgbToHex(fg);
+        const bgHex = rgbToHex(bg);
         violations.push({
           ruleId: "color-contrast",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
           message: `Insufficient color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
-          context: `foreground: rgb(${fg.join(", ")}), background: rgb(${bg.join(", ")}), ratio: ${roundedRatio}:1, required: ${threshold}:1`,
+          context: `foreground: ${fgHex} rgb(${fg.join(", ")}), background: ${bgHex} rgb(${bg.join(", ")}), ratio: ${roundedRatio}:1, required: ${threshold}:1`,
         });
       }
     }

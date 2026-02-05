@@ -20,8 +20,8 @@ describe("color-contrast", () => {
     expect(violations).toHaveLength(1);
     expect(violations[0].ruleId).toBe("color-contrast");
     expect(violations[0].impact).toBe("serious");
-    expect(violations[0].context).toContain("foreground: rgb(0, 0, 0)");
-    expect(violations[0].context).toContain("background: rgb(50, 50, 50)");
+    expect(violations[0].context).toContain("foreground: #000000 rgb(0, 0, 0)");
+    expect(violations[0].context).toContain("background: #323232 rgb(50, 50, 50)");
   });
 
   it("passes: black text on white background", () => {
@@ -96,8 +96,8 @@ describe("color-contrast", () => {
     const violations = colorContrast.run(doc);
     expect(violations).toHaveLength(1);
     expect(violations[0].context).toMatch(/ratio: \d+\.\d+:1/);
-    expect(violations[0].context).toContain("foreground: rgb(100, 100, 100)");
-    expect(violations[0].context).toContain("background: rgb(120, 120, 120)");
+    expect(violations[0].context).toContain("foreground: #646464 rgb(100, 100, 100)");
+    expect(violations[0].context).toContain("background: #787878 rgb(120, 120, 120)");
   });
 
   it("checks each element only once even with multiple text nodes", () => {
