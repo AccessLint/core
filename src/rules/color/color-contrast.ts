@@ -1,5 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
+import { isAriaHidden } from "../utils/aria";
 import {
   getCachedComputedStyle,
   parseColor,
@@ -45,9 +46,9 @@ function isDisabledFormElement(el: Element): boolean {
 }
 
 function isHidden(el: Element): boolean {
+  if (isAriaHidden(el)) return true;
   let current: Element | null = el;
   while (current) {
-    if (current.getAttribute("aria-hidden") === "true") return true;
     const style = getCachedComputedStyle(current);
     if (style.display === "none" || style.visibility === "hidden") return true;
     current = current.parentElement;
