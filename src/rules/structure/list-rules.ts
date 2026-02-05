@@ -1,35 +1,21 @@
-import type { Rule } from "../types";
+import type { Rule, DeclarativeRule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
+import { compileDeclarativeRule } from "../engine";
 
-export const list: Rule = {
+const listSpec: DeclarativeRule = {
   id: "list",
+  selector: "ul, ol",
+  check: { type: "child-invalid", allowedChildren: ["li", "script", "template"] },
+  impact: "serious",
+  message: "List contains non-<li> child <{{tag}}>.",
+  description: "<ul> and <ol> must only contain <li>, <script>, or <template> as direct children.",
   wcag: ["1.3.1"],
   level: "A",
-  description: "<ul> and <ol> must only contain <li>, <script>, or <template> as direct children.",
-  guidance:
-    "Screen readers announce list structure ('list with 5 items') based on proper markup. Placing non-<li> elements directly inside <ul> or <ol> breaks this structure. Wrap content in <li> elements, or if you need wrapper divs for styling, restructure your CSS to style the <li> elements directly.",
-  prompt:
-    "Explain how to restructure this element within the list properly.",
-  run(doc) {
-    const violations = [];
-    for (const listEl of doc.querySelectorAll("ul, ol")) {
-      for (const child of listEl.children) {
-        const tag = child.tagName.toLowerCase();
-        if (tag !== "li" && tag !== "script" && tag !== "template") {
-          violations.push({
-            ruleId: "list",
-            selector: getSelector(child),
-            html: getHtmlSnippet(child),
-            impact: "serious" as const,
-            message: `<${listEl.tagName.toLowerCase()}> contains non-<li> child <${tag}>.`,
-          });
-          break; // one violation per list
-        }
-      }
-    }
-    return violations;
-  },
+  guidance: "Screen readers announce list structure ('list with 5 items') based on proper markup. Placing non-<li> elements directly inside <ul> or <ol> breaks this structure. Wrap content in <li> elements, or if you need wrapper divs for styling, restructure your CSS to style the <li> elements directly.",
+  prompt: "Explain how to restructure this element within the list properly.",
 };
+
+export const list = compileDeclarativeRule(listSpec);
 
 export const dlitem: Rule = {
   id: "dlitem",
@@ -57,32 +43,17 @@ export const dlitem: Rule = {
   },
 };
 
-export const definitionList: Rule = {
+const definitionListSpec: DeclarativeRule = {
   id: "definition-list",
+  selector: "dl",
+  check: { type: "child-invalid", allowedChildren: ["dt", "dd", "div", "script", "template"] },
+  impact: "serious",
+  message: "<dl> contains invalid child <{{tag}}>.",
+  description: "<dl> elements must only contain <dt>, <dd>, <div>, <script>, or <template>.",
   wcag: ["1.3.1"],
   level: "A",
-  description: "<dl> elements must only contain <dt>, <dd>, <div>, <script>, or <template>.",
-  guidance:
-    "Definition lists have strict content requirements. Only <dt> (terms), <dd> (definitions), and <div> (for grouping dt/dd pairs) are valid children. Other elements break the list structure for screen readers. Move invalid elements outside the <dl>, or restructure using proper definition list markup.",
-  prompt:
-    "Explain whether to move this element outside the <dl> or convert it to dt/dd.",
-  run(doc) {
-    const violations = [];
-    const allowed = new Set(["dt", "dd", "div", "script", "template"]);
-    for (const dl of doc.querySelectorAll("dl")) {
-      for (const child of dl.children) {
-        if (!allowed.has(child.tagName.toLowerCase())) {
-          violations.push({
-            ruleId: "definition-list",
-            selector: getSelector(child),
-            html: getHtmlSnippet(child),
-            impact: "serious" as const,
-            message: `<dl> contains invalid child <${child.tagName.toLowerCase()}>.`,
-          });
-          break;
-        }
-      }
-    }
-    return violations;
-  },
+  guidance: "Definition lists have strict content requirements. Only <dt> (terms), <dd> (definitions), and <div> (for grouping dt/dd pairs) are valid children. Other elements break the list structure for screen readers. Move invalid elements outside the <dl>, or restructure using proper definition list markup.",
+  prompt: "Explain whether to move this element outside the <dl> or convert it to dt/dd.",
 };
+
+export const definitionList = compileDeclarativeRule(definitionListSpec);

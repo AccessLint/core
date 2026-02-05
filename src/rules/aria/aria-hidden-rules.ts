@@ -1,5 +1,6 @@
-import type { Rule } from "../types";
+import type { Rule, DeclarativeRule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
+import { compileDeclarativeRule } from "../engine";
 
 // Elements that are natively focusable
 const FOCUSABLE_SELECTOR = [
@@ -44,28 +45,21 @@ function isActuallyVisible(el: HTMLElement): boolean {
   return true;
 }
 
-export const ariaHiddenBody: Rule = {
+const ariaHiddenBodySpec: DeclarativeRule = {
   id: "aria-hidden-body",
+  selector: 'body[aria-hidden="true"]',
+  check: { type: "selector-exists" },
+  impact: "critical",
+  message: "aria-hidden='true' on body hides all content from assistive technologies.",
+  description: "aria-hidden='true' must not be present on the document body.",
   wcag: ["4.1.2"],
   level: "A",
-  description: "aria-hidden='true' must not be present on the document body.",
   guidance: "Setting aria-hidden='true' on the body element hides all page content from assistive technologies, making the page completely inaccessible to screen reader users. Remove aria-hidden from the body element. If you need to hide content temporarily (e.g., behind a modal), use aria-hidden on specific sections instead.",
-  prompt:
-    "Instruct to remove aria-hidden='true' from the body element.",
-  run(doc) {
-    const body = doc.body;
-    if (body?.getAttribute("aria-hidden") === "true") {
-      return [{
-        ruleId: "aria-hidden-body",
-        selector: "body",
-        html: getHtmlSnippet(body),
-        impact: "critical" as const,
-        message: "aria-hidden='true' on body hides all content from assistive technologies.",
-      }];
-    }
-    return [];
-  },
+  prompt: "Instruct to remove aria-hidden='true' from the body element.",
+  skipAriaHidden: false,
 };
+
+export const ariaHiddenBody = compileDeclarativeRule(ariaHiddenBodySpec);
 
 export const ariaHiddenFocus: Rule = {
   id: "aria-hidden-focus",
