@@ -51,13 +51,8 @@ Inject the library into the page and audit the live DOM:
 ```ts
 // a11y.spec.ts
 import { test, expect } from "@playwright/test";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
 
-const iife = resolve(
-  dirname(fileURLToPath(import.meta.resolve("@accesslint/core"))),
-  "index.iife.js",
-);
+const iife = require.resolve("@accesslint/core/iife");
 
 test("page has no accessibility violations", async ({ page }) => {
   await page.goto("https://example.com");
@@ -82,8 +77,7 @@ Inject the library into the page and audit the live DOM:
 ```js
 // cypress/support/commands.js
 Cypress.Commands.add("audit", () => {
-  const script = require.resolve("@accesslint/core/dist/index.iife.js");
-  cy.readFile(script).then((src) => {
+  cy.readFile("node_modules/@accesslint/core/dist/index.iife.js").then((src) => {
     cy.window().then((win) => {
       win.eval(src);
       const { runAudit } = win.AccessLintCore;
