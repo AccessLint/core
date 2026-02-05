@@ -11,30 +11,6 @@ Pure accessibility rule engine for WCAG auditing. 83 bundled rules, a declarativ
 - **Runs anywhere** — works with happy-dom, jsdom, and real browsers with no DOM polyfills or compatibility workarounds. Run accessibility audits in Vitest and React Testing Library using the same environment as the rest of your tests
 - **MIT licensed**
 
-## Benchmarks
-
-Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and invalid elements:
-
-| Document size | ops/sec | mean |
-| ------------- | ------: | ---: |
-| 100 elements | 252 | 4.0 ms |
-| 1,000 elements | 27 | 36.6 ms |
-| 2,000 elements | 2.0 | 494 ms |
-
-> Measured on GitHub Actions `ubuntu-latest` / Node 22 with `vitest bench` ([run](https://github.com/AccessLint/core/actions/runs/21695011947)).
-
-### Concordance with axe-core
-
-On a synthetic 500-element document exercising all rule categories:
-
-| Metric | Value |
-| ------ | ----: |
-| Rules where both agree | 44 |
-| @accesslint/core only | 9 |
-| axe-core only | 4 |
-| **Concordance** (agreement / core findings) | **83%** |
-| **Coverage** (agreement / axe findings) | **92%** |
-
 ## Install
 
 ```sh
@@ -299,6 +275,30 @@ Helpers for building custom rules:
 | `duplicate-id-aria` | A | 4.1.2 | IDs used in ARIA must be unique. |
 | `video-caption` | A | 1.2.2 | Videos must have captions. |
 | `audio-caption` | A | 1.2.1 | Audio elements should have a text alternative. |
+
+## Benchmarks
+
+Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and invalid elements:
+
+| Document size | ops/sec | mean |
+| ------------- | ------: | ---: |
+| 100 elements | 252 | 4.0 ms |
+| 1,000 elements | 27 | 36.6 ms |
+| 2,000 elements | 2.0 | 494 ms |
+
+> Measured on GitHub Actions `ubuntu-latest` / Node 22 with `vitest bench` ([run](https://github.com/AccessLint/core/actions/runs/21695011947)).
+
+### Concordance with axe-core
+
+On a synthetic 500-element document exercising all rule categories:
+
+| Metric | Value |
+| ------ | ----: |
+| Rules where both agree | 44 |
+| @accesslint/core only | 9 |
+| axe-core only | 4 |
+| **Concordance** (agreement / core findings) | **83%** |
+| **Coverage** (agreement / axe findings) | **92%** |
 
 ## Development
 
