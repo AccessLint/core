@@ -76,6 +76,48 @@ for (const violation of result.violations) {
 }
 ```
 
+### Playwright
+
+```js
+// a11y.spec.ts
+import { test, expect } from "@playwright/test";
+
+test("page has no accessibility violations", async ({ page }) => {
+  await page.goto("https://example.com");
+
+  const violations = await page.evaluate(async () => {
+    const { runAudit } = await import("@accesslint/core");
+    return runAudit(document).violations.map(({ ruleId, message, selector, impact }) => ({
+      ruleId, message, selector, impact,
+    }));
+  });
+
+  expect(violations).toEqual([]);
+});
+```
+
+### Cypress
+
+```js
+// cypress/e2e/a11y.cy.js
+describe("Accessibility", () => {
+  it("has no violations", () => {
+    cy.visit("https://example.com");
+
+    cy.window().then(async (win) => {
+      const { runAudit } = await import("@accesslint/core");
+      const { violations } = runAudit(win.document);
+
+      violations.forEach((v) => {
+        cy.log(`${v.ruleId}: ${v.message} (${v.selector})`);
+      });
+
+      expect(violations).to.have.length(0);
+    });
+  });
+});
+```
+
 ## API
 
 ### `runAudit(doc: Document): AuditResult`
