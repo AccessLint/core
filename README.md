@@ -43,6 +43,22 @@ npm install @accesslint/core
 
 ## Quick start
 
+### Vitest + React Testing Library
+
+Audit a rendered component in your existing test suite:
+
+```tsx
+import { render } from "@testing-library/react";
+import { runAudit } from "@accesslint/core";
+import { LoginForm } from "./LoginForm";
+
+test("LoginForm has no accessibility violations", () => {
+  const { container } = render(<LoginForm />);
+  const { violations } = runAudit(container.ownerDocument);
+  expect(violations).toEqual([]);
+});
+```
+
 ### Playwright
 
 Inject the library into the page and audit the live DOM:
