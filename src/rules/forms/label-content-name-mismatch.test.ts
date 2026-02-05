@@ -86,6 +86,18 @@ describe("label-content-name-mismatch", () => {
     expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
   });
 
+  it("ignores deeply nested style tags with no other visible text", () => {
+    const doc = makeDoc(`
+      <a aria-label="Watch video" href="/video/123/">
+        <div><div><div>
+          <style>video::cue { color: white; font-size: 18px; }</style>
+          <div><video preload="auto" src="video.mp4"><track kind="captions"></video></div>
+        </div></div></div>
+      </a>
+    `);
+    expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
+  });
+
   it("ignores script tags inside elements (not visible text)", () => {
     const doc = makeDoc(`
       <button aria-label="Play video">
