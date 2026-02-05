@@ -6,6 +6,24 @@ Pure accessibility rule engine for WCAG auditing. 83 bundled rules, a declarativ
 
 Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and invalid elements:
 
+```mermaid
+---
+config:
+  xyChart:
+    xAxis:
+      label: Document size
+    yAxis:
+      label: Mean audit time (ms)
+  themeVariables:
+    xyChart:
+      plotColorPalette: "#7c3aed"
+---
+xychart-beta
+  x-axis ["100 els" , "1k els", "2k els"]
+  y-axis "Mean audit time (ms)" 0 --> 550
+  bar [4, 37, 494]
+```
+
 | Document size | ops/sec | mean |
 | ------------- | ------: | ---: |
 | 100 elements | 252 | 4.0 ms |
@@ -17,6 +35,20 @@ Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and
 ### Concordance with axe-core
 
 On a synthetic 500-element document exercising all rule categories:
+
+```mermaid
+---
+config:
+  themeVariables:
+    pie1: "#22c55e"
+    pie2: "#7c3aed"
+    pie3: "#f59e0b"
+---
+pie title Rule findings (57 mapped rules)
+  "Both agree" : 44
+  "Core only" : 9
+  "axe-core only" : 4
+```
 
 | Metric | Value |
 | ------ | ----: |
