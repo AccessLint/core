@@ -208,13 +208,21 @@ Helpers for building custom rules:
 
 ## Benchmarks
 
-Run benchmarks with:
+Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and invalid elements:
+
+| Document size | ops/sec | mean |
+| ------------- | ------: | ---: |
+| 100 elements | 252 | 4.0 ms |
+| 1,000 elements | 27 | 36.6 ms |
+| 2,000 elements | 2.0 | 494 ms |
+
+> Measured on GitHub Actions `ubuntu-latest` / Node 22 with `vitest bench` ([run](https://github.com/AccessLint/core/actions/runs/21695011947)).
+
+Run benchmarks locally:
 
 ```sh
 npm run bench
 ```
-
-Benchmarks exercise `runAudit` and per-rule performance across synthetic documents of 100, 500, and 2,000 elements.
 
 ## Development
 
