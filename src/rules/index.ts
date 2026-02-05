@@ -1,6 +1,7 @@
 import type { Rule, Violation, AuditResult } from "./types";
 import { clearAriaHiddenCache, clearComputedRoleCache } from "./utils/aria";
 import { clearAriaAttrAuditCache } from "./aria/aria-attr-audit";
+import { clearColorCaches } from "./utils/color";
 
 // Images
 import { imgAlt } from "./images/img-alt";
@@ -87,6 +88,9 @@ import { duplicateIdAria } from "./parsing/duplicate-id";
 
 // Media
 import { videoCaptions, audioCaptions } from "./media/media-captions";
+
+// Color
+import { colorContrast } from "./color/color-contrast";
 
 export const rules: Rule[] = [
   // Document Structure
@@ -193,6 +197,9 @@ export const rules: Rule[] = [
   // Media
   videoCaptions,
   audioCaptions,
+
+  // Color
+  colorContrast,
 ];
 
 export interface ChunkedAudit {
@@ -239,6 +246,7 @@ export function getActiveRules(): Rule[] {
 export function createChunkedAudit(doc: Document): ChunkedAudit {
   clearAriaHiddenCache();
   clearComputedRoleCache();
+  clearColorCaches();
 
   clearAriaAttrAuditCache();
 
@@ -267,6 +275,7 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
 export function runAudit(doc: Document): AuditResult {
   clearAriaHiddenCache();
   clearComputedRoleCache();
+  clearColorCaches();
 
   clearAriaAttrAuditCache();
 

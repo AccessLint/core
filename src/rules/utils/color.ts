@@ -66,7 +66,10 @@ function _computeEffectiveBg(el: Element): [number, number, number] | null {
     if (style.backgroundImage && style.backgroundImage !== "none") return null;
     return parseColor(bg);
   }
-  // Default to white if nothing found
+  // Default to white if nothing found — correct for real browsers where the
+  // default page background is white. In test environments with limited CSS
+  // resolution (happy-dom, jsdom) this fallback can cause false positives when
+  // a dark background is applied via stylesheets rather than inline styles.
   return [255, 255, 255];
 }
 
