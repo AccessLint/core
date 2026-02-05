@@ -1,6 +1,7 @@
 import type { Rule, Violation } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
+import { getCachedComputedStyle } from "../utils/color";
 
 // Elements that are natively interactive (for nesting checks).
 // Excludes label (wrapping inputs in <label> is standard HTML),
@@ -152,9 +153,7 @@ export const scrollableRegionFocusable: Rule = {
       if (!(el instanceof HTMLElement)) continue;
 
       // Check if element is scrollable
-      const view = doc.defaultView ?? (doc as unknown as ShadowRoot).ownerDocument.defaultView;
-      const style = view?.getComputedStyle(el);
-      if (!style) continue;
+      const style = getCachedComputedStyle(el);
 
       const overflowX = style.overflowX;
       const overflowY = style.overflowY;
