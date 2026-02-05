@@ -14,6 +14,18 @@ Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and
 
 > Measured on GitHub Actions `ubuntu-latest` / Node 22 with `vitest bench` ([run](https://github.com/AccessLint/core/actions/runs/21695011947)).
 
+### Concordance with axe-core
+
+On a synthetic 500-element document exercising all rule categories:
+
+| Metric | Value |
+| ------ | ----: |
+| Rules where both agree | 44 |
+| @accesslint/core only | 9 |
+| axe-core only | 4 |
+| **Concordance** (agreement / core findings) | **83%** |
+| **Coverage** (agreement / axe findings) | **92%** |
+
 ## Install
 
 ```sh
