@@ -2,6 +2,15 @@
 
 Pure accessibility rule engine for WCAG auditing. 83 bundled rules, a declarative rule engine, and zero browser dependencies.
 
+## Highlights
+
+- **Lightweight** — 29 KB gzipped (IIFE), with zero runtime dependencies
+- **Chunked audits** — time-budgeted processing via [`createChunkedAudit`](#createchunkedauditdoc-document-chunkedaudit) to avoid long tasks on the main thread
+- **Declarative rule engine** — define custom rules as JSON and compile them with [`compileDeclarativeRule`](#compiledeclarativerulespec-declarativerule-rule), no JavaScript required
+- **ESM, CJS, and IIFE** — tree-shakable ES modules, CommonJS for Node, and a single-file IIFE for script injection into any page
+- **Runs anywhere** — works with happy-dom, jsdom, and real browsers with no DOM polyfills or compatibility workarounds. Run accessibility audits in Vitest and React Testing Library using the same environment as the rest of your tests
+- **MIT licensed**
+
 ## Benchmarks
 
 Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and invalid elements:
@@ -65,21 +74,27 @@ test("page has no accessibility violations", async ({ page }) => {
 Inject the library into the page and audit the live DOM:
 
 ```js
-// cypress/support/commands.js
+// cypress/e2e/a11y.cy.js
 Cypress.Commands.add("audit", () => {
-  cy.readFile("node_modules/@accesslint/core/dist/index.iife.js").then((src) => {
-    cy.window().then((win) => {
-      win.eval(src);
-      const { runAudit } = win.AccessLintCore;
-      return runAudit(win.document).violations;
+  return cy
+    .readFile("node_modules/@accesslint/core/dist/index.iife.js")
+    .then((src) => {
+      return cy.window().then((win) => {
+        win.eval(src);
+        const result = win.AccessLintCore.runAudit(win.document);
+        return result.violations;
+      });
     });
-  });
 });
 
-// cypress/e2e/a11y.cy.js
-it("has no accessibility violations", () => {
-  cy.visit("https://example.com");
-  cy.audit().should("have.length", 0);
+describe("sample.html accessibility audit", () => {
+  beforeEach(() => {
+    cy.visit("sample.html");
+  });
+
+  it("has no accessibility violations", () => {
+    cy.audit().should("have.length", 0);
+  });
 });
 ```
 
