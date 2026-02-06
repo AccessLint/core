@@ -1,10 +1,10 @@
 # @accesslint/core
 
-Pure accessibility rule engine for WCAG auditing. 83 bundled rules, a declarative rule engine, and zero browser dependencies.
+Pure accessibility rule engine for WCAG auditing. 84 bundled rules, a declarative rule engine, and zero browser dependencies.
 
 ## Highlights
 
-- **Lightweight** — 29 KB gzipped (IIFE), with zero runtime dependencies
+- **Lightweight** — 31 KB gzipped (IIFE), with zero runtime dependencies
 - **Chunked audits** — time-budgeted processing via [`createChunkedAudit`](#createchunkedauditdoc-document-chunkedaudit) to avoid long tasks on the main thread
 - **Declarative rule engine** — define custom rules as JSON and compile them with [`compileDeclarativeRule`](#compiledeclarativerulespec-declarativerule-rule), no JavaScript required
 - **ESM, CJS, and IIFE** — tree-shakable ES modules, CommonJS for Node, and a single-file IIFE for script injection into any page
@@ -163,7 +163,7 @@ const rule = compileDeclarativeRule({
 
 ### `rules`
 
-Array of all 83 bundled `Rule` objects.
+Array of all 84 bundled `Rule` objects.
 
 ### `getActiveRules(): Rule[]`
 
@@ -188,7 +188,7 @@ Helpers for building custom rules:
 
 ## Rules
 
-83 rules covering WCAG 2.1 Level A and AA.
+84 rules covering WCAG 2.1 Level A and AA.
 
 | Rule | Level | WCAG | Description |
 | ---- | ----- | ---- | ----------- |
@@ -275,18 +275,15 @@ Helpers for building custom rules:
 | `duplicate-id-aria` | A | 4.1.2 | IDs used in ARIA must be unique. |
 | `video-caption` | A | 1.2.2 | Videos must have captions. |
 | `audio-caption` | A | 1.2.1 | Audio elements should have a text alternative. |
+| `color-contrast` | AA | 1.4.3 | Text must have sufficient color contrast. |
 
 ## Benchmarks
 
-Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and invalid elements:
+Full audit (`runAudit`) on a synthetic 100-element document with a realistic mix of valid and invalid elements:
 
 | Document size | ops/sec | mean |
 | ------------- | ------: | ---: |
-| 100 elements | 252 | 4.0 ms |
-| 1,000 elements | 27 | 36.6 ms |
-| 2,000 elements | 2.0 | 494 ms |
-
-> Measured on GitHub Actions `ubuntu-latest` / Node 22 with `vitest bench` ([run](https://github.com/AccessLint/core/actions/runs/21695011947)).
+| 100 elements | 392 | 2.5 ms |
 
 ### Concordance with axe-core
 
@@ -304,7 +301,7 @@ On a synthetic 500-element document exercising all rule categories:
 
 ```sh
 npm install
-npm test        # 394 tests
+npm test        # 410 tests
 npm run bench   # performance benchmarks
 npm run build   # produces dist/index.js, dist/index.cjs, dist/index.d.ts
 ```
