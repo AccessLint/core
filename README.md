@@ -1,12 +1,11 @@
 # @accesslint/core
 
-Pure accessibility rule engine for WCAG auditing. 84 bundled rules, a declarative rule engine, and zero browser dependencies.
+Pure accessibility rule engine for WCAG auditing. 84 bundled rules and zero browser dependencies.
 
 ## Highlights
 
 - **Lightweight** — 31 KB gzipped (IIFE), with zero runtime dependencies
 - **Chunked audits** — time-budgeted processing via [`createChunkedAudit`](#createchunkedauditdoc-document-chunkedaudit) to avoid long tasks on the main thread
-- **Declarative rule engine** — define custom rules as JSON and compile them with [`compileDeclarativeRule`](#compiledeclarativerulespec-declarativerule-rule), no JavaScript required
 - **ESM, CJS, and IIFE** — tree-shakable ES modules, CommonJS for Node, and a single-file IIFE for script injection into any page
 - **Runs anywhere** — works with happy-dom, jsdom, and real browsers with no DOM polyfills or compatibility workarounds. Run accessibility audits in Vitest and React Testing Library using the same environment as the rest of your tests
 - **MIT licensed**
@@ -136,28 +135,10 @@ processNext();
 Customize which rules are active.
 
 ```js
-import { configureRules, compileDeclarativeRule } from "@accesslint/core";
+import { configureRules } from "@accesslint/core";
 
 configureRules({
   disabledRules: ["heading-order"],
-  additionalRules: [compileDeclarativeRule(myCustomRule)],
-});
-```
-
-### `compileDeclarativeRule(spec: DeclarativeRule): Rule`
-
-Compile a declarative rule definition into an executable rule. Supports six check types: `selector-exists`, `attribute-value`, `attribute-missing`, `attribute-regex`, `child-required`, and `child-invalid`.
-
-```js
-const rule = compileDeclarativeRule({
-  id: "no-autofocus",
-  selector: "[autofocus]",
-  check: { type: "selector-exists" },
-  impact: "serious",
-  message: "Autofocus attribute should not be used.",
-  description: "autofocus moves focus unexpectedly.",
-  wcag: ["2.4.3"],
-  level: "A",
 });
 ```
 
@@ -279,11 +260,7 @@ Helpers for building custom rules:
 
 ## Benchmarks
 
-Full audit (`runAudit`) on a synthetic 100-element document with a realistic mix of valid and invalid elements:
-
-| Document size | ops/sec | mean |
-| ------------- | ------: | ---: |
-| 100 elements | 392 | 2.5 ms |
+Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and invalid elements.
 
 ### Concordance with axe-core
 
