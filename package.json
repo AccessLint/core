@@ -1,6 +1,6 @@
 {
   "name": "@accesslint/core",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Pure accessibility rule engine — WCAG audit with zero browser dependencies",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -21,6 +21,9 @@
     "build": "vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json",
     "test": "vitest run",
     "bench": "vitest bench",
+    "test:memory": "vitest run --config vite.memory.config.ts",
+    "act:download": "npx tsx src/act/download-fixtures.ts",
+    "test:act": "vitest run src/act/act.test.ts",
     "prepublishOnly": "npm run build"
   },
   "repository": {

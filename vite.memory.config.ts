@@ -9,10 +9,6 @@ export default defineConfig({
   },
   test: {
     environment: "happy-dom",
-    include: ["src/**/*.test.ts"],
-    exclude: ["src/bench/memory.test.ts"],
-  },
-  benchmark: {
-    include: ["src/**/*.bench.ts"],
+    include: ["src/bench/memory.test.ts"],
   },
 });

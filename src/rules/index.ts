@@ -245,13 +245,7 @@ export function getActiveRules(): Rule[] {
  * Call processChunk() repeatedly (e.g. via setTimeout) to avoid long tasks.
  */
 export function createChunkedAudit(doc: Document): ChunkedAudit {
-  clearAriaHiddenCache();
-  clearComputedRoleCache();
-  clearAccessibleNameCache();
-  clearColorCaches();
-
-  clearAriaAttrAuditCache();
-  clearSelectorCache();
+  clearAllCaches();
 
   const activeRules = getActiveRules();
   const violations: Violation[] = [];
@@ -275,14 +269,17 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
   };
 }
 
-export function runAudit(doc: Document): AuditResult {
+export function clearAllCaches(): void {
   clearAriaHiddenCache();
   clearComputedRoleCache();
   clearAccessibleNameCache();
   clearColorCaches();
-
   clearAriaAttrAuditCache();
   clearSelectorCache();
+}
+
+export function runAudit(doc: Document): AuditResult {
+  clearAllCaches();
 
   const activeRules = getActiveRules();
   const violations: Violation[] = [];
