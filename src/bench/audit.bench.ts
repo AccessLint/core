@@ -4,9 +4,11 @@ import { clearAriaHiddenCache, clearComputedRoleCache, clearAccessibleNameCache 
 import { clearColorCaches } from "../rules/utils/color";
 import { clearAriaAttrAuditCache } from "../rules/aria/aria-attr-audit";
 import { clearSelectorCache } from "../rules/utils/selector";
-import { generateDoc, SMALL_SIZE } from "./fixtures";
+import { generateDoc, SMALL_SIZE, MEDIUM_SIZE, LARGE_SIZE } from "./fixtures";
 
-const doc = generateDoc(SMALL_SIZE);
+const smallDoc = generateDoc(SMALL_SIZE);
+const mediumDoc = generateDoc(MEDIUM_SIZE);
+const largeDoc = generateDoc(LARGE_SIZE);
 
 function clearCaches() {
   clearAriaHiddenCache();
@@ -18,16 +20,24 @@ function clearCaches() {
 }
 
 describe("runAudit", () => {
-  bench("100 elements", () => {
-    runAudit(doc);
+  bench("500 elements", () => {
+    runAudit(smallDoc);
   });
+
+  bench("2k elements", () => {
+    runAudit(mediumDoc);
+  });
+
+  bench("5k elements", () => {
+    runAudit(largeDoc);
+  }, { time: 1000 });
 });
 
-describe("per-rule (100 elements)", () => {
+describe("per-rule (500 elements)", () => {
   for (const rule of rules) {
     bench(rule.id, () => {
       clearCaches();
-      rule.run(doc);
+      rule.run(smallDoc);
     });
   }
 });

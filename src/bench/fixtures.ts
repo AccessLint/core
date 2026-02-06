@@ -368,9 +368,9 @@ export function generateDoc(n: number): Document {
   return new DOMParser().parseFromString(generateHtml(n), "text/html");
 }
 
-/** ~100 elements */
-export const SMALL_SIZE = 100;
 /** ~500 elements */
-export const MEDIUM_SIZE = 500;
+export const SMALL_SIZE = 500;
 /** ~2,000 elements */
-export const LARGE_SIZE = 2_000;
+export const MEDIUM_SIZE = 2_000;
+/** ~5,000 elements */
+export const LARGE_SIZE = 5_000;
