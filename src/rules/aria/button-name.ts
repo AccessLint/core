@@ -44,6 +44,15 @@ export const buttonName: Rule = {
     for (const btn of doc.querySelectorAll('button, [role="button"]')) {
       if (isAriaHidden(btn)) continue;
 
+      // Presentation role is only respected when element is NOT focusable.
+      // Focusable elements (like <button>) override the presentation role.
+      const role = btn.getAttribute("role");
+      if (role === "none" || role === "presentation") {
+        const isFocusable = btn.matches('button:not([disabled]), [tabindex]:not([tabindex="-1"])') ||
+          (btn.tagName.toLowerCase() === "button" && !(btn as HTMLButtonElement).disabled);
+        if (!isFocusable) continue;
+      }
+
       // Skip elements inside shadow DOM — accessible name resolution
       // can't reliably cross shadow boundaries (aria-labelledby IDs,
       // slot content, etc.), leading to false positives.

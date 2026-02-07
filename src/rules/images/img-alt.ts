@@ -2,7 +2,7 @@ import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
-function getImageContext(img: HTMLImageElement): string | undefined {
+function getImageContext(img: Element): string | undefined {
   const parts: string[] = [];
 
   // Check if inside a link
@@ -24,11 +24,22 @@ function getImageContext(img: HTMLImageElement): string | undefined {
   // Get adjacent text from parent
   const parent = img.parentElement;
   if (parent && parent !== link) {
-    const text = parent.textContent?.replace(img.alt || "", "").trim().slice(0, 100);
+    const alt = img instanceof HTMLImageElement ? img.alt || "" : "";
+    const text = parent.textContent?.replace(alt, "").trim().slice(0, 100);
     if (text) parts.push(`Adjacent text: ${text}`);
   }
 
   return parts.length > 0 ? parts.join("\n") : undefined;
+}
+
+/** Check if an element or any ancestor has visibility:hidden */
+function isVisibilityHidden(el: Element): boolean {
+  let current: Element | null = el;
+  while (current) {
+    if (current instanceof HTMLElement && current.style.visibility === "hidden") return true;
+    current = current.parentElement;
+  }
+  return false;
 }
 
 export const imgAlt: Rule = {
@@ -43,9 +54,35 @@ export const imgAlt: Rule = {
     "Describe what alt text to add. If the image appears decorative based on context (spacer, background, icon next to text that already describes it), recommend alt=''. Otherwise suggest descriptive alt text based on the src or surrounding context.",
   run(doc) {
     const violations = [];
+
+    // Check <img> elements
     for (const img of doc.querySelectorAll("img")) {
       if (isAriaHidden(img)) continue;
-      if (img.getAttribute("role") === "presentation" || img.getAttribute("role") === "none") continue;
+      if (isVisibilityHidden(img)) continue;
+
+      const role = img.getAttribute("role");
+
+      // Presentation/none role is overridden when the element is focusable
+      if (role === "presentation" || role === "none") {
+        const tabindex = img.getAttribute("tabindex");
+        if (!tabindex || tabindex === "-1") continue; // truly decorative
+        // Falls through — focusable images with presentation role need alt
+      }
+
+      const alt = img.getAttribute("alt");
+      // Whitespace-only alt (not empty "") is not a valid accessible name
+      if (alt !== null && alt.trim() === "" && alt !== "") {
+        violations.push({
+          ruleId: "img-alt",
+          selector: getSelector(img),
+          html: getHtmlSnippet(img),
+          impact: "critical" as const,
+          message: "Image has whitespace-only alt text. Use alt=\"\" for decorative images or provide descriptive text.",
+          context: getImageContext(img),
+        });
+        continue;
+      }
+
       if (!img.hasAttribute("alt") && !getAccessibleName(img)) {
         violations.push({
           ruleId: "img-alt",
@@ -57,6 +94,23 @@ export const imgAlt: Rule = {
         });
       }
     }
+
+    // Check non-img elements with role="img"
+    for (const el of doc.querySelectorAll('[role="img"]:not(img):not(svg)')) {
+      if (isAriaHidden(el)) continue;
+      if (isVisibilityHidden(el)) continue;
+      if (!getAccessibleName(el)) {
+        violations.push({
+          ruleId: "img-alt",
+          selector: getSelector(el),
+          html: getHtmlSnippet(el),
+          impact: "critical" as const,
+          message: "Element with role=\"img\" has no accessible name. Add aria-label or aria-labelledby.",
+          context: getImageContext(el),
+        });
+      }
+    }
+
     return violations;
   },
 };

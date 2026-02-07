@@ -29,6 +29,33 @@ const GLOBAL_ARIA_ATTRS = [
   "aria-relevant",
 ];
 
+/**
+ * Check an element for attributes/state that conflict with decorative intent.
+ */
+function getConflictIssues(el: Element): string[] {
+  const issues: string[] = [];
+
+  // Check if element is focusable
+  if (el.matches(FOCUSABLE_SELECTOR)) {
+    issues.push("element is focusable");
+  }
+
+  // Check for global ARIA attributes that conflict
+  for (const attr of GLOBAL_ARIA_ATTRS) {
+    if (el.hasAttribute(attr)) {
+      issues.push(`has ${attr}`);
+      break; // Report only first conflicting attr
+    }
+  }
+
+  // Check for aria-label or aria-labelledby (name establishing)
+  if (el.hasAttribute("aria-label") || el.hasAttribute("aria-labelledby")) {
+    issues.push("has accessible name");
+  }
+
+  return issues;
+}
+
 export const presentationRoleConflict: Rule = {
   id: "presentation-role-conflict",
   wcag: ["4.1.2"],
@@ -40,29 +67,11 @@ export const presentationRoleConflict: Rule = {
   run(doc) {
     const violations = [];
 
+    // Elements with explicit presentation/none role
     for (const el of doc.querySelectorAll('[role="presentation"], [role="none"]')) {
       if (isAriaHidden(el)) continue;
 
-      const issues: string[] = [];
-
-      // Check if element is focusable
-      if (el.matches(FOCUSABLE_SELECTOR)) {
-        issues.push("element is focusable");
-      }
-
-      // Check for global ARIA attributes that conflict
-      for (const attr of GLOBAL_ARIA_ATTRS) {
-        if (el.hasAttribute(attr)) {
-          issues.push(`has ${attr}`);
-          break; // Report only first conflicting attr
-        }
-      }
-
-      // Check for aria-label or aria-labelledby (name establishing)
-      if (el.hasAttribute("aria-label") || el.hasAttribute("aria-labelledby")) {
-        issues.push("has accessible name");
-      }
-
+      const issues = getConflictIssues(el);
       if (issues.length > 0) {
         violations.push({
           ruleId: "presentation-role-conflict",
@@ -70,6 +79,25 @@ export const presentationRoleConflict: Rule = {
           html: getHtmlSnippet(el),
           impact: "serious" as const,
           message: `Presentation role conflicts with: ${issues.join(", ")}. The role will be ignored.`,
+        });
+      }
+    }
+
+    // Elements with implicit presentation role: <img alt="">
+    // Per ARIA in HTML, <img alt=""> has implicit role "presentation"
+    for (const img of doc.querySelectorAll('img[alt=""]')) {
+      if (isAriaHidden(img)) continue;
+      // Skip if already has an explicit role (handled above or not decorative)
+      if (img.hasAttribute("role")) continue;
+
+      const issues = getConflictIssues(img);
+      if (issues.length > 0) {
+        violations.push({
+          ruleId: "presentation-role-conflict",
+          selector: getSelector(img),
+          html: getHtmlSnippet(img),
+          impact: "serious" as const,
+          message: `Element with implicit presentation role (alt="") conflicts with: ${issues.join(", ")}. The decorative role will be ignored.`,
         });
       }
     }

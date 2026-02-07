@@ -13,7 +13,7 @@ export const summaryName: Rule = {
   run(doc) {
     const violations = [];
 
-    for (const summary of doc.querySelectorAll("summary")) {
+    for (const summary of doc.querySelectorAll("details > summary:first-of-type")) {
       if (isAriaHidden(summary)) continue;
 
       const name = getAccessibleName(summary);

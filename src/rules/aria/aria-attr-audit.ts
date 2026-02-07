@@ -40,6 +40,7 @@ const NUMBER_ATTRS = new Set([
 
 const TOKEN_ATTRS: Record<string, Set<string>> = {
   "aria-autocomplete": new Set(["inline", "list", "both", "none"]),
+  "aria-expanded": new Set(["true", "false", "undefined"]),
   "aria-current": new Set(["page", "step", "location", "date", "time", "true", "false"]),
   "aria-dropeffect": new Set(["copy", "execute", "link", "move", "none", "popup"]),
   "aria-haspopup": new Set(["true", "false", "menu", "listbox", "tree", "grid", "dialog"]),
@@ -166,6 +167,8 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
     for (const attr of el.attributes) {
       if (!attr.name.startsWith("aria-")) continue;
       const val = attr.value.trim();
+      // Skip empty values — there's no value to validate (inapplicable)
+      if (val === "" && !BOOLEAN_ATTRS.has(attr.name) && !TRISTATE_ATTRS.has(attr.name)) continue;
 
       if (BOOLEAN_ATTRS.has(attr.name)) {
         if (val !== "true" && val !== "false") {

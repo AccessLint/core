@@ -34,6 +34,8 @@ function isActuallyVisible(el: HTMLElement): boolean {
     // Check inline styles first (fast path)
     if (current.style.display === "none") return false;
     if (current.style.visibility === "hidden") return false;
+    // Note: off-screen positioning (top:-999em) does NOT make elements
+    // non-focusable — they remain in the tab order and should be flagged.
     // Check computed styles if view is available
     if (view) {
       const computed = view.getComputedStyle(current);
@@ -76,10 +78,11 @@ export const ariaHiddenFocus: Rule = {
       // Skip if it's the body (handled by aria-hidden-body)
       if (hidden === doc.body) continue;
 
-      // Find focusable elements within
-      const focusable = hidden.querySelectorAll(FOCUSABLE_SELECTOR);
+      // Collect focusable elements: both descendants and the element itself
+      const candidates: Element[] = [...hidden.querySelectorAll(FOCUSABLE_SELECTOR)];
+      if (hidden.matches(FOCUSABLE_SELECTOR)) candidates.push(hidden);
 
-      for (const el of focusable) {
+      for (const el of candidates) {
         // Check if element is actually focusable (not disabled, not hidden)
         if (el instanceof HTMLElement) {
           // Skip elements with tabindex="-1" as they're not in tab order

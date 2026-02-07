@@ -63,14 +63,14 @@ describe("meta-refresh", () => {
     const doc = makeDoc('<html><head><meta http-equiv="refresh" content="5;url=/new-page"></head></html>');
     const violations = metaRefresh.run(doc);
     expect(violations).toHaveLength(1);
+    expect(violations[0].message).toContain("redirects");
     expect(violations[0].message).toContain("5 seconds");
   });
 
-  it("reports immediate redirect with warning", () => {
+  it("allows immediate redirect (delay 0)", () => {
     const doc = makeDoc('<html><head><meta http-equiv="refresh" content="0;url=/new-page"></head></html>');
     const violations = metaRefresh.run(doc);
-    expect(violations).toHaveLength(1);
-    expect(violations[0].impact).toBe("moderate");
+    expect(violations).toHaveLength(0);
   });
 
   it("reports auto-refresh", () => {

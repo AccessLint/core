@@ -23,9 +23,9 @@ describe("object-alt", () => {
     expect(objectAlt.run(doc)).toHaveLength(0);
   });
 
-  it("passes object with fallback content", () => {
+  it("flags object with only text fallback content (not an accessible name)", () => {
     const doc = makeDoc('<object data="movie.swf">Flash animation of company logo</object>');
-    expect(objectAlt.run(doc)).toHaveLength(0);
+    expect(objectAlt.run(doc)).toHaveLength(1);
   });
 
   it("passes object with title", () => {

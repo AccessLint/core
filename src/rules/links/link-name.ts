@@ -35,7 +35,7 @@ export const linkName: Rule = {
     "Based on the href or surrounding context, suggest descriptive link text or an aria-label.",
   run(doc) {
     const violations = [];
-    for (const a of doc.querySelectorAll('a[href], [role="link"]')) {
+    for (const a of doc.querySelectorAll('a[href], area[href], [role="link"]')) {
       if (isAriaHidden(a)) continue;
       const name = getAccessibleName(a);
       if (!name) {

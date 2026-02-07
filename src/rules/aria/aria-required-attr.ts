@@ -1,5 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
+import { isAriaHidden } from "../utils/aria";
 
 const REQUIRED_ATTRS: Record<string, string[]> = {
   checkbox: ["aria-checked"],
@@ -8,7 +9,6 @@ const REQUIRED_ATTRS: Record<string, string[]> = {
   menuitemcheckbox: ["aria-checked"],
   menuitemradio: ["aria-checked"],
   meter: ["aria-valuenow"],
-  option: ["aria-selected"],
   radio: ["aria-checked"],
   scrollbar: ["aria-controls", "aria-valuenow"],
   separator: ["aria-valuenow"], // when focusable
@@ -29,6 +29,8 @@ export const ariaRequiredAttr: Rule = {
   run(doc) {
     const violations = [];
     for (const el of doc.querySelectorAll("[role]")) {
+      if (isAriaHidden(el)) continue;
+      if (el instanceof HTMLElement && el.style.display === "none") continue;
       const role = el.getAttribute("role")!.trim().toLowerCase();
       const required = REQUIRED_ATTRS[role];
       if (!required) continue;

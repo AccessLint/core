@@ -28,10 +28,11 @@ export const metaViewport: Rule = {
       });
     }
 
-    // Check for maximum-scale < 2
-    const maxScaleMatch = content.match(/maximum-scale\s*=\s*([\d.]+)/i);
+    // Check for maximum-scale < 2 (including "yes" which browsers treat as 1)
+    const maxScaleMatch = content.match(/maximum-scale\s*=\s*([\d.]+|yes)/i);
     if (maxScaleMatch) {
-      const maxScale = parseFloat(maxScaleMatch[1]);
+      const rawValue = maxScaleMatch[1];
+      const maxScale = rawValue.toLowerCase() === "yes" ? 1 : parseFloat(rawValue);
       if (maxScale < 2) {
         violations.push({
           ruleId: "meta-viewport",
@@ -56,50 +57,49 @@ export const metaRefresh: Rule = {
   prompt:
     "Explain why meta refresh is problematic and suggest server-side alternatives.",
   run(doc) {
-    const violations = [];
+    // Iterate through all meta refresh tags.  For URL redirects, the first
+    // one with a validly-formed URL wins (the browser acts on it).
+    for (const refresh of doc.querySelectorAll('meta[http-equiv="refresh"]')) {
+      const content = refresh.getAttribute("content") || "";
 
-    const refresh = doc.querySelector('meta[http-equiv="refresh"]');
-    if (!refresh) return [];
-
-    const content = refresh.getAttribute("content") || "";
-
-    // Parse the refresh time
-    const match = content.match(/^(\d+)/);
-    if (match) {
+      const match = content.match(/^(\d+)/);
+      if (!match) continue;
       const seconds = parseInt(match[1], 10);
 
-      // Any redirect (URL in content) is problematic
-      if (content.includes("url=")) {
-        if (seconds <= 0) {
-          // Immediate redirect - less harmful but still an issue
-          violations.push({
-            ruleId: "meta-refresh",
-            selector: getSelector(refresh),
-            html: getHtmlSnippet(refresh),
-            impact: "moderate" as const,
-            message: "Page uses meta refresh for redirect. Use server-side redirect instead.",
-          });
-        } else {
-          violations.push({
+      // Valid URL redirect: number followed by ; or , then either:
+      //   - url= prefix (with any URL, including relative), or
+      //   - an absolute http(s) URL
+      const hasValidUrl = /^\d+\s*[;,]\s*url\s*=/i.test(content) ||
+        /^\d+\s*[;,]\s*['"]?\s*https?:/i.test(content);
+
+      if (hasValidUrl) {
+        // This is the effective redirect
+        if (seconds > 0 && seconds <= 72000) {
+          return [{
             ruleId: "meta-refresh",
             selector: getSelector(refresh),
             html: getHtmlSnippet(refresh),
             impact: "critical" as const,
             message: `Page redirects after ${seconds} seconds without warning. Use server-side redirect.`,
-          });
+          }];
         }
-      } else if (seconds > 0 && seconds <= 72000) {
-        // Auto-refresh without redirect
-        violations.push({
+        // Delay 0 or > 72000 is OK; this redirect wins so stop checking
+        return [];
+      }
+
+      // No valid URL = same-page refresh
+      if (seconds > 0 && seconds <= 72000) {
+        return [{
           ruleId: "meta-refresh",
           selector: getSelector(refresh),
           html: getHtmlSnippet(refresh),
           impact: "critical" as const,
           message: `Page auto-refreshes after ${seconds} seconds. Provide user control over refresh.`,
-        });
+        }];
       }
+      // seconds == 0 or > 72000 with no URL: skip, check next meta
     }
 
-    return violations;
+    return [];
   },
 };

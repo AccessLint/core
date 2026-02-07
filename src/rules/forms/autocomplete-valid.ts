@@ -1,5 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
+import { isAriaHidden } from "../utils/aria";
 
 const VALID_AUTOCOMPLETE = new Set([
   "off", "on", "name", "honorific-prefix", "given-name", "additional-name",
@@ -16,6 +17,58 @@ const VALID_AUTOCOMPLETE = new Set([
   "url", "photo",
 ]);
 
+// Contact-related fields that can be preceded by a contact type modifier
+const CONTACT_FIELDS = new Set([
+  "tel", "tel-country-code", "tel-national", "tel-area-code", "tel-local",
+  "tel-extension", "email", "impp",
+]);
+
+const CONTACT_TYPES = new Set(["home", "work", "mobile", "fax", "pager"]);
+const HINT_MODES = new Set(["shipping", "billing"]);
+
+// WebAuthn credential type hint (allowed after the field name)
+const CREDENTIAL_HINTS = new Set(["webauthn"]);
+
+/**
+ * Validate the autocomplete token structure per the HTML spec:
+ * [section-*] [shipping|billing] [home|work|mobile|fax|pager] field-name [webauthn]
+ */
+function isValidAutocomplete(value: string): boolean {
+  const tokens = value.toLowerCase().split(/\s+/).filter(Boolean);
+  if (tokens.length === 0) return true; // empty is skipped
+
+  let i = 0;
+
+  // Optional section-* token
+  if (tokens[i].startsWith("section-")) i++;
+
+  // Optional hint mode (shipping/billing)
+  if (i < tokens.length && HINT_MODES.has(tokens[i])) i++;
+
+  // Optional contact type
+  let hasContactType = false;
+  if (i < tokens.length && CONTACT_TYPES.has(tokens[i])) {
+    hasContactType = true;
+    i++;
+  }
+
+  // Required: exactly one field name
+  if (i >= tokens.length) return false;
+  const fieldToken = tokens[i];
+  if (!VALID_AUTOCOMPLETE.has(fieldToken)) return false;
+
+  // If a contact type was used, the field must be contact-related
+  if (hasContactType && !CONTACT_FIELDS.has(fieldToken)) return false;
+
+  i++;
+
+  // Optional credential hint (e.g. "webauthn") after field name
+  if (i < tokens.length && CREDENTIAL_HINTS.has(tokens[i])) i++;
+
+  // Must have consumed all tokens
+  return i === tokens.length;
+}
+
 export const autocompleteValid: Rule = {
   id: "autocomplete-valid",
   wcag: ["1.3.5"],
@@ -28,12 +81,16 @@ export const autocompleteValid: Rule = {
   run(doc) {
     const violations = [];
     for (const el of doc.querySelectorAll("[autocomplete]")) {
+      // Skip hidden, disabled, and aria-disabled elements
+      if (isAriaHidden(el)) continue;
+      if (el instanceof HTMLElement && el.style.display === "none") continue;
+      if ((el as HTMLInputElement).disabled) continue;
+      if (el.getAttribute("aria-disabled") === "true") continue;
+
       const value = el.getAttribute("autocomplete")!.trim();
       if (!value) continue;
-      // Parse tokens: optional "section-*", optional "shipping"/"billing", the field name
-      const tokens = value.split(/\s+/);
-      const fieldToken = tokens[tokens.length - 1];
-      if (!VALID_AUTOCOMPLETE.has(fieldToken)) {
+
+      if (!isValidAutocomplete(value)) {
         violations.push({
           ruleId: "autocomplete-valid",
           selector: getSelector(el),

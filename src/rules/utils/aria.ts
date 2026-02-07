@@ -268,9 +268,22 @@ export function getAccessibleTextContent(el: Element): string {
       if (!isRemovedFromA11yTree(child)) {
         const tagName = child.tagName?.toLowerCase();
         if (tagName === "img" || tagName === "area") {
-          // Images/areas contribute their aria-label or alt text
+          // Images/areas contribute their accessible name:
+          // aria-labelledby > aria-label > alt > title
+          const imgLabelledBy = child.getAttribute("aria-labelledby");
+          if (imgLabelledBy) {
+            const imgNames = imgLabelledBy
+              .split(/\s+/)
+              .map((id) => child.ownerDocument.getElementById(id)?.textContent?.trim() ?? "")
+              .filter(Boolean);
+            if (imgNames.length) {
+              text += imgNames.join(" ");
+              continue;
+            }
+          }
           text += child.getAttribute("aria-label")?.trim()
             ?? child.getAttribute("alt")
+            ?? child.getAttribute("title")?.trim()
             ?? "";
         } else if (tagName === "svg") {
           // SVGs contribute their aria-label or <title> child text

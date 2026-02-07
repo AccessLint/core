@@ -17,18 +17,19 @@ export const ariaRoles: Rule = {
       const rawRole = el.getAttribute("role")!;
       // Strip Unicode curly quotes before splitting
       const cleaned = rawRole.replace(/[\u201C\u201D\u2018\u2019\u00AB\u00BB]/g, "");
-      const roles = cleaned.split(/\s+/);
-      for (const role of roles) {
-        if (role && !isValidRole(role)) {
-          violations.push({
-            ruleId: "aria-roles",
-            selector: getSelector(el),
-            html: getHtmlSnippet(el),
-            impact: "critical" as const,
-            message: `Invalid ARIA role "${role}".`,
-          });
-          break;
-        }
+      const roles = cleaned.split(/\s+/).filter(Boolean);
+      // Per ARIA spec, user agents use the first valid role in the list as
+      // a fallback chain.  Only report a violation when NONE of the listed
+      // roles is valid.
+      const hasValidRole = roles.some((r) => isValidRole(r));
+      if (!hasValidRole && roles.length > 0) {
+        violations.push({
+          ruleId: "aria-roles",
+          selector: getSelector(el),
+          html: getHtmlSnippet(el),
+          impact: "critical" as const,
+          message: `Invalid ARIA role "${roles[0]}".`,
+        });
       }
     }
     return violations;

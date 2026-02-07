@@ -16,8 +16,20 @@ export const tdHeadersAttr: Rule = {
       if (isAriaHidden(td)) continue;
       const table = td.closest("table");
       if (!table) continue;
+      const tdId = td.getAttribute("id");
       const ids = td.getAttribute("headers")!.split(/\s+/);
       for (const id of ids) {
+        // Self-referencing headers are invalid
+        if (id === tdId) {
+          violations.push({
+            ruleId: "td-headers-attr",
+            selector: getSelector(td),
+            html: getHtmlSnippet(td),
+            impact: "serious" as const,
+            message: `Headers attribute references the cell itself ("${id}").`,
+          });
+          break;
+        }
         if (!table.querySelector(`th#${CSS.escape(id)}, td#${CSS.escape(id)}`)) {
           violations.push({
             ruleId: "td-headers-attr",

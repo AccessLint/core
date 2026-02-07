@@ -44,8 +44,12 @@ describe("label", () => {
   });
 
   it("reports select without label", () => {
-    // select with option text gets textContent as fallback name — use empty select
     const doc = makeDoc("<html><body><select></select></body></html>");
+    expect(formLabel.run(doc)).toHaveLength(1);
+  });
+
+  it("reports select with options but no label", () => {
+    const doc = makeDoc("<html><body><select><option>England</option></select></body></html>");
     expect(formLabel.run(doc)).toHaveLength(1);
   });
 });
