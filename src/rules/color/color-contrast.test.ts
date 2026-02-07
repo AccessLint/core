@@ -68,6 +68,27 @@ describe("color-contrast", () => {
     expect(colorContrast.run(doc)).toHaveLength(0);
   });
 
+  it("skips: visually hidden elements (clip rect)", () => {
+    const doc = makeDoc(
+      '<body><label style="position: absolute; width: 1px; height: 1px; clip: rect(0, 0, 0, 0); overflow: hidden; color: rgb(255, 255, 255);">SR only</label></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("skips: visually hidden elements (clip-path inset)", () => {
+    const doc = makeDoc(
+      '<body><span style="position: absolute; clip-path: inset(50%); color: rgb(255, 255, 255);">SR only</span></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("skips: visually hidden elements (1px with overflow hidden)", () => {
+    const doc = makeDoc(
+      '<body><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; color: rgb(255, 255, 255);">SR only</span></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
   it("skips: elements with background images (no false positive)", () => {
     const doc = makeDoc(
       '<body><p style="color: rgb(0, 0, 0); background-image: url(bg.png);">Over image</p></body>'

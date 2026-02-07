@@ -46,12 +46,30 @@ function isDisabledFormElement(el: Element): boolean {
   return false;
 }
 
+function isVisuallyHidden(style: CSSStyleDeclaration): boolean {
+  // Classic sr-only / visuallyhidden: clip: rect(0 0 0 0)
+  // Browsers normalise to "rect(0px, 0px, 0px, 0px)"
+  const clip = style.clip;
+  if (clip === "rect(0px, 0px, 0px, 0px)" || clip === "rect(0, 0, 0, 0)") return true;
+  // Modern equivalent: clip-path: inset(50%) or inset(100%)
+  const clipPath = style.clipPath;
+  if (clipPath === "inset(50%)" || clipPath === "inset(100%)") return true;
+  // Tiny box with overflow hidden (1px × 1px sr-only without clip)
+  if (style.overflow === "hidden" && style.position === "absolute") {
+    const w = parseFloat(style.width);
+    const h = parseFloat(style.height);
+    if (w <= 1 && h <= 1) return true;
+  }
+  return false;
+}
+
 function isHidden(el: Element): boolean {
   if (isAriaHidden(el)) return true;
   let current: Element | null = el;
   while (current) {
     const style = getCachedComputedStyle(current);
     if (style.display === "none" || style.visibility === "hidden") return true;
+    if (isVisuallyHidden(style)) return true;
     current = current.parentElement;
   }
   return false;
