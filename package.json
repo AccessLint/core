@@ -24,7 +24,8 @@
     "test:memory": "vitest run --config vite.memory.config.ts",
     "act:download": "npx tsx src/act/download-fixtures.ts",
     "test:act": "vitest run src/act/act.test.ts",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "release": "scripts/release.sh"
   },
   "repository": {
     "type": "git",
