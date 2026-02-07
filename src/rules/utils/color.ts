@@ -31,11 +31,19 @@ export function getContrastRatio(l1: number, l2: number): number {
 }
 
 export function parseColor(color: string): [number, number, number] | null {
-  const match = color.match(
+  // Legacy comma-separated: rgb(r, g, b) / rgba(r, g, b, a)
+  const comma = color.match(
     /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*[\d.]+)?\s*\)/
   );
-  if (match) {
-    return [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])];
+  if (comma) {
+    return [parseInt(comma[1]), parseInt(comma[2]), parseInt(comma[3])];
+  }
+  // Modern space-separated (CSS Color Level 4): rgb(r g b) / rgb(r g b / a)
+  const space = color.match(
+    /rgba?\(\s*(\d+)\s+(\d+)\s+(\d+)\s*(?:\/\s*[\d.]+%?)?\s*\)/
+  );
+  if (space) {
+    return [parseInt(space[1]), parseInt(space[2]), parseInt(space[3])];
   }
   return null;
 }
@@ -61,14 +69,21 @@ function _computeEffectiveBg(el: Element): [number, number, number] | null {
     if (bgImg && bgImg !== "none" && bgImg !== "initial") return null;
     const bg = style.backgroundColor;
     // Skip fully transparent
-    if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)") {
+    if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)" || bg === "rgba(0 0 0 / 0)") {
       current = current.parentElement;
       continue;
     }
-    const alphaMatch = bg.match(/rgba\(.+?,\s*([\d.]+)\s*\)/);
-    if (alphaMatch && parseFloat(alphaMatch[1]) < 0.1) {
-      current = current.parentElement;
-      continue;
+    // Extract alpha: legacy rgba(r, g, b, a) or modern rgb(r g b / a)
+    const alphaMatch = bg.match(/rgba\(.+?,\s*([\d.]+)\s*\)/) ||
+      bg.match(/rgba?\(.+?\/\s*([\d.]+%?)\s*\)/);
+    if (alphaMatch) {
+      const alpha = alphaMatch[1].endsWith("%")
+        ? parseFloat(alphaMatch[1]) / 100
+        : parseFloat(alphaMatch[1]);
+      if (alpha < 0.1) {
+        current = current.parentElement;
+        continue;
+      }
     }
     return parseColor(bg);
   }

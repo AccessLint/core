@@ -174,6 +174,37 @@ describe("color-contrast", () => {
     expect(colorContrast.run(doc)).toHaveLength(0);
   });
 
+  it("fails: modern space-separated rgb syntax (CSS Color Level 4)", () => {
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0 0 0); background-color: rgb(50 50 50);">Low contrast</p></body>'
+    );
+    const violations = colorContrast.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].ruleId).toBe("color-contrast");
+  });
+
+  it("passes: modern space-separated rgb syntax with good contrast", () => {
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0 0 0); background-color: rgb(255 255 255);">Good contrast</p></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("fails: modern rgb syntax with alpha (CSS Color Level 4)", () => {
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0 0 0 / 1); background-color: rgb(50 50 50 / 1);">Low contrast</p></body>'
+    );
+    const violations = colorContrast.run(doc);
+    expect(violations).toHaveLength(1);
+  });
+
+  it("skips: modern rgb syntax with zero alpha foreground", () => {
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0 0 0 / 0); background-color: rgb(50 50 50);">Transparent text</p></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
   it("does not skip: normal-flow text with normal-flow sibling img", () => {
     // Neither the text nor the image is positioned — no overlap possible
     const doc = makeDoc(

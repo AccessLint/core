@@ -118,9 +118,15 @@ export const colorContrast: Rule = {
       const fg = parseColor(style.color);
       if (!fg) continue;
 
-      // Check for transparent foreground via rgba alpha
-      const fgAlphaMatch = style.color.match(/rgba\(.+?,\s*([\d.]+)\s*\)/);
-      if (fgAlphaMatch && parseFloat(fgAlphaMatch[1]) === 0) continue;
+      // Check for transparent foreground via rgba alpha (legacy or modern syntax)
+      const fgAlphaMatch = style.color.match(/rgba\(.+?,\s*([\d.]+)\s*\)/) ||
+        style.color.match(/rgba?\(.+?\/\s*([\d.]+%?)\s*\)/);
+      if (fgAlphaMatch) {
+        const fgAlpha = fgAlphaMatch[1].endsWith("%")
+          ? parseFloat(fgAlphaMatch[1]) / 100
+          : parseFloat(fgAlphaMatch[1]);
+        if (fgAlpha === 0) continue;
+      }
 
       // Skip text that may be visually overlaid on an image/video element
       if (mayBeOverImage(el)) continue;
