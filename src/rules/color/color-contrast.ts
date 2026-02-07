@@ -43,6 +43,36 @@ function isDisabledFormElement(el: Element): boolean {
   }
   // fieldset[disabled] disables all descendants
   if (el.closest("fieldset[disabled]")) return true;
+  // aria-disabled="true" on the element itself or an interactive role ancestor
+  if (el.getAttribute("aria-disabled") === "true") return true;
+  return false;
+}
+
+/** Check if a label's associated control is disabled. */
+function isLabelForDisabledControl(el: Element, doc: Document): boolean {
+  if (el.tagName !== "LABEL") return false;
+  const label = el as HTMLLabelElement;
+  // Explicit for= association
+  const forId = label.htmlFor;
+  if (forId) {
+    const target = doc.getElementById(forId);
+    if (target && (
+      (target as HTMLInputElement).disabled ||
+      target.getAttribute("aria-disabled") === "true"
+    )) return true;
+  }
+  // Implicit association (control nested inside label)
+  const control = label.querySelector("input, select, textarea, button");
+  if (control && (
+    (control as HTMLInputElement).disabled ||
+    control.getAttribute("aria-disabled") === "true"
+  )) return true;
+  // Label referencing an aria-disabled widget via for + aria-labelledby
+  const id = label.id;
+  if (id) {
+    const referenced = doc.querySelector(`[aria-labelledby~="${id}"][aria-disabled="true"]`);
+    if (referenced) return true;
+  }
   return false;
 }
 
@@ -108,12 +138,18 @@ export const colorContrast: Rule = {
 
       if (NON_TEXT_TAGS.has(el.tagName)) continue;
       if (isDisabledFormElement(el)) continue;
+      if (isLabelForDisabledControl(el, doc)) continue;
       if (isHidden(el)) continue;
 
       const style = getCachedComputedStyle(el);
 
       // Skip transparent/zero-opacity text
       if (parseFloat(style.opacity) === 0) continue;
+
+      // Skip elements with text-shadow — shadow alters effective contrast
+      // and cannot be reliably analyzed from computed styles alone.
+      const textShadow = style.textShadow;
+      if (textShadow && textShadow !== "none" && textShadow !== "initial") continue;
 
       const fg = parseColor(style.color);
       if (!fg) continue;

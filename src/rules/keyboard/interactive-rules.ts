@@ -162,9 +162,18 @@ export const scrollableRegionFocusable: Rule = {
 
       if (!isScrollable) continue;
 
-      // Check if it actually has scrollable content
-      const hasScrollableContent = el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth;
-      if (!hasScrollableContent) continue;
+      // Check if it actually has scrollable content.
+      // In real browsers, scroll metrics reflect actual layout overflow.
+      // In DOM-only environments (happy-dom), scrollHeight === clientHeight === 0,
+      // so fall back to heuristic: explicit dimensions + visible text content.
+      const hasScrollMetrics = el.scrollHeight > 0 || el.clientHeight > 0;
+      if (hasScrollMetrics) {
+        if (el.scrollHeight <= el.clientHeight && el.scrollWidth <= el.clientWidth) continue;
+      } else {
+        const hasDimensions = style.height !== "" || style.maxHeight !== "";
+        const hasText = el.textContent != null && el.textContent.trim().length > 0;
+        if (!hasDimensions || !hasText) continue;
+      }
 
       // Check if it's focusable
       const tabindex = el.getAttribute("tabindex");

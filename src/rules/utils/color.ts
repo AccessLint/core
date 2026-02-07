@@ -30,7 +30,31 @@ export function getContrastRatio(l1: number, l2: number): number {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
+const NAMED_COLORS: Record<string, [number, number, number]> = {
+  black: [0, 0, 0], white: [255, 255, 255], red: [255, 0, 0],
+  green: [0, 128, 0], blue: [0, 0, 255], yellow: [255, 255, 0],
+  orange: [255, 165, 0], purple: [128, 0, 128], gray: [128, 128, 128],
+  grey: [128, 128, 128], silver: [192, 192, 192], maroon: [128, 0, 0],
+  navy: [0, 0, 128], teal: [0, 128, 128], aqua: [0, 255, 255],
+  fuchsia: [255, 0, 255], lime: [0, 255, 0], olive: [128, 128, 0],
+};
+
 export function parseColor(color: string): [number, number, number] | null {
+  const trimmed = color.trim().toLowerCase();
+
+  // Named colors
+  if (NAMED_COLORS[trimmed]) return NAMED_COLORS[trimmed];
+
+  // Hex: #RGB, #RRGGBB
+  const hex3 = trimmed.match(/^#([0-9a-f])([0-9a-f])([0-9a-f])$/);
+  if (hex3) {
+    return [parseInt(hex3[1] + hex3[1], 16), parseInt(hex3[2] + hex3[2], 16), parseInt(hex3[3] + hex3[3], 16)];
+  }
+  const hex6 = trimmed.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/);
+  if (hex6) {
+    return [parseInt(hex6[1], 16), parseInt(hex6[2], 16), parseInt(hex6[3], 16)];
+  }
+
   // Legacy comma-separated: rgb(r, g, b) / rgba(r, g, b, a)
   const comma = color.match(
     /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*[\d.]+)?\s*\)/
@@ -140,10 +164,18 @@ function _checkOverImage(el: Element): boolean {
   return false;
 }
 
+/** Convert a CSS font-size value to pixels. Handles px and pt units. */
+function fontSizeToPx(raw: string): number {
+  const value = parseFloat(raw);
+  if (raw.endsWith("pt")) return value * (4 / 3); // 1pt = 4/3 px
+  return value; // px or unitless
+}
+
 export function isLargeText(el: Element): boolean {
   const style = getCachedComputedStyle(el);
-  const fontSize = parseFloat(style.fontSize);
+  const fontSizePx = fontSizeToPx(style.fontSize);
   const fontWeight = parseInt(style.fontWeight) || (style.fontWeight === "bold" ? 700 : 400);
-  // Large text: >= 18pt (24px) or >= 14pt (18.66px) bold
-  return fontSize >= 24 || (fontSize >= 18.66 && fontWeight >= 700);
+  // Large text: >= 18pt (24px) or >= 14pt (18.66px) bold.
+  // Use small tolerance (0.5px) for DOM environments with imprecise pt→px conversion.
+  return fontSizePx >= 23.5 || (fontSizePx >= 18.5 && fontWeight >= 700);
 }

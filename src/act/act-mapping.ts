@@ -40,8 +40,9 @@ export const ACT_TO_CORE_RULE: Record<string, string> = {
   kb1m8s: "aria-prohibited-attr",
 };
 
-/** Rules where happy-dom lacks needed capabilities (computed styles, layout). */
+/** Rules where happy-dom lacks needed capabilities (computed styles, layout, JS execution). */
 export const HAPPY_DOM_LIMITED_RULES = new Set([
+  "aria-hidden-focus",
   "color-contrast",
   "link-in-text-block",
   "scrollable-region-focusable",

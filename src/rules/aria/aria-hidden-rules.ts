@@ -34,8 +34,6 @@ function isActuallyVisible(el: HTMLElement): boolean {
     // Check inline styles first (fast path)
     if (current.style.display === "none") return false;
     if (current.style.visibility === "hidden") return false;
-    // Note: off-screen positioning (top:-999em) does NOT make elements
-    // non-focusable — they remain in the tab order and should be flagged.
     // Check computed styles if view is available
     if (view) {
       const computed = view.getComputedStyle(current);
@@ -46,6 +44,7 @@ function isActuallyVisible(el: HTMLElement): boolean {
   }
   return true;
 }
+
 
 const ariaHiddenBodySpec: DeclarativeRule = {
   id: "aria-hidden-body",
@@ -99,6 +98,7 @@ export const ariaHiddenFocus: Rule = {
           // pattern: modals/menus closed with aria-hidden that also hide
           // content via display:none or visibility:hidden.
           if (!isActuallyVisible(el)) continue;
+
 
           violations.push({
             ruleId: "aria-hidden-focus",
