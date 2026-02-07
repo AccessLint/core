@@ -1,6 +1,6 @@
 {
   "name": "@accesslint/core",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Pure accessibility rule engine — WCAG audit with zero browser dependencies",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -36,6 +36,7 @@
     "access": "public"
   },
   "devDependencies": {
+    "@codspeed/vitest-plugin": "^5.1.0",
     "happy-dom": "^20.4.0",
     "typescript": "^5.7.0",
     "vite": "^6.0.0",
