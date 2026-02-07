@@ -21,3 +21,11 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npm publish --provenance
+
+      - name: Notify a11y-agent
+        run: |
+          gh api repos/AccessLint/a11y-agent/dispatches \
+            -f event_type=core-published \
+            -f 'client_payload[version]'="${GITHUB_REF_NAME#v}"
+        env:
+          GH_TOKEN: ${{ secrets.A11Y_AGENT_DISPATCH_TOKEN }}
