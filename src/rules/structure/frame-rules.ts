@@ -2,6 +2,19 @@ import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
+/** True when an iframe/frame is hidden and not exposed to assistive technology. */
+function isHiddenFrame(frame: Element): boolean {
+  if (!(frame instanceof HTMLElement)) return false;
+  // Inline style checks
+  if (frame.style.display === "none") return true;
+  if (frame.style.visibility === "hidden") return true;
+  // Zero or 1×1 tracking pixel dimensions (attribute or inline style)
+  const w = frame.getAttribute("width");
+  const h = frame.getAttribute("height");
+  if ((w === "0" || w === "1") && (h === "0" || h === "1")) return true;
+  return false;
+}
+
 export const frameTitle: Rule = {
   id: "frame-title",
   wcag: ["4.1.2"],
@@ -14,6 +27,7 @@ export const frameTitle: Rule = {
     const violations = [];
     for (const frame of doc.querySelectorAll("iframe, frame")) {
       if (isAriaHidden(frame)) continue;
+      if (isHiddenFrame(frame)) continue;
       const name = getAccessibleName(frame);
       if (!name) {
         violations.push({
@@ -45,13 +59,7 @@ export const frameTitleUnique: Rule = {
 
     for (const frame of frames) {
       if (isAriaHidden(frame)) continue;
-
-      // Skip hidden/tracking iframes (zero dimensions or explicitly hidden)
-      const width = frame.getAttribute("width");
-      const height = frame.getAttribute("height");
-      if (width === "0" || height === "0") continue;
-      if (frame instanceof HTMLElement && frame.style.display === "none") continue;
-      if (frame instanceof HTMLElement && frame.style.visibility === "hidden") continue;
+      if (isHiddenFrame(frame)) continue;
 
       const title = frame.getAttribute("title")?.trim().toLowerCase();
       if (title) {

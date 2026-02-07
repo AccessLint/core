@@ -38,6 +38,21 @@ describe("frame-title", () => {
     const doc = makeDoc('<html><body><iframe src="page.html" aria-hidden="true"></iframe></body></html>');
     expect(frameTitle.run(doc)).toHaveLength(0);
   });
+
+  it("skips hidden tracking iframes (visibility:hidden)", () => {
+    const doc = makeDoc('<html><body><iframe height="1" width="1" style="position: absolute; top: 0px; left: 0px; border: none; visibility: hidden;"></iframe></body></html>');
+    expect(frameTitle.run(doc)).toHaveLength(0);
+  });
+
+  it("skips hidden tracking iframes (display:none)", () => {
+    const doc = makeDoc('<html><body><iframe src="track.html" style="display:none"></iframe></body></html>');
+    expect(frameTitle.run(doc)).toHaveLength(0);
+  });
+
+  it("skips 0x0 iframes", () => {
+    const doc = makeDoc('<html><body><iframe src="track.html" width="0" height="0"></iframe></body></html>');
+    expect(frameTitle.run(doc)).toHaveLength(0);
+  });
 });
 
 describe("frame-title-unique", () => {
