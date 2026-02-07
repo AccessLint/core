@@ -43,5 +43,6 @@ export const ACT_TO_CORE_RULE: Record<string, string> = {
 /** Rules where happy-dom lacks needed capabilities (computed styles, layout). */
 export const HAPPY_DOM_LIMITED_RULES = new Set([
   "color-contrast",
+  "link-in-text-block",
   "scrollable-region-focusable",
 ]);
