@@ -368,6 +368,8 @@ export function generateDoc(n: number): Document {
   return new DOMParser().parseFromString(generateHtml(n), "text/html");
 }
 
+/** ~100 elements */
+export const TINY_SIZE = 100;
 /** ~500 elements */
 export const SMALL_SIZE = 500;
 /** ~2,000 elements */
