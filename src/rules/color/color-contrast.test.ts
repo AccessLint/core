@@ -75,6 +75,13 @@ describe("color-contrast", () => {
     expect(colorContrast.run(doc)).toHaveLength(0);
   });
 
+  it("skips: text inside ancestor with background image", () => {
+    const doc = makeDoc(
+      '<body><div style="background-image: url(hero.jpg);"><h1 style="color: rgb(255, 255, 255);">White text over image</h1></div></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
   it("skips: disabled form elements", () => {
     const doc = makeDoc(
       '<body><input disabled style="color: rgb(200, 200, 200); background-color: rgb(200, 200, 200);" value="Disabled input"></body>'
@@ -114,5 +121,46 @@ describe("color-contrast", () => {
       "<body><script>var x = 1;</script><style>.foo { color: red; }</style></body>"
     );
     expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("skips: absolutely positioned text over sibling img in positioning context", () => {
+    const doc = makeDoc(
+      '<body><div style="position: relative;">' +
+        '<img src="hero.jpg">' +
+        '<h1 style="position: absolute; top: 0; color: rgb(255, 255, 255);">Overlay</h1>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("skips: text over absolutely positioned sibling img", () => {
+    const doc = makeDoc(
+      '<body><div style="position: relative;">' +
+        '<img src="hero.jpg" style="position: absolute; top: 0; left: 0;">' +
+        '<p style="color: rgb(255, 255, 255);">Caption</p>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("skips: absolutely positioned text over sibling video", () => {
+    const doc = makeDoc(
+      '<body><div style="position: relative;">' +
+        "<video></video>" +
+        '<p style="position: absolute; color: rgb(255, 255, 255);">Over video</p>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("does not skip: normal-flow text with normal-flow sibling img", () => {
+    // Neither the text nor the image is positioned — no overlap possible
+    const doc = makeDoc(
+      '<body><div style="position: relative;">' +
+        '<img src="photo.jpg">' +
+        '<p style="color: rgb(200, 200, 200); background-color: rgb(200, 200, 200);">Not overlapping</p>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(1);
   });
 });

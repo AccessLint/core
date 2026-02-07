@@ -1,9 +1,11 @@
 let _computedStyleCache = new WeakMap<Element, CSSStyleDeclaration>();
 let _effectiveBgCache = new WeakMap<Element, [number, number, number] | null>();
+let _overImageCache = new WeakMap<Element, boolean>();
 
 export function clearColorCaches(): void {
   _computedStyleCache = new WeakMap();
   _effectiveBgCache = new WeakMap();
+  _overImageCache = new WeakMap();
 }
 
 export function getCachedComputedStyle(el: Element): CSSStyleDeclaration {
@@ -51,6 +53,12 @@ function _computeEffectiveBg(el: Element): [number, number, number] | null {
   let current: Element | null = el;
   while (current) {
     const style = getCachedComputedStyle(current);
+    // Has a background image — can't reliably determine color.
+    // Must check before transparency so we don't skip past image backgrounds
+    // whose backgroundColor resolves to transparent (the default).
+    // "initial" is excluded because happy-dom returns it for `background` shorthand without an image.
+    const bgImg = style.backgroundImage;
+    if (bgImg && bgImg !== "none" && bgImg !== "initial") return null;
     const bg = style.backgroundColor;
     // Skip fully transparent
     if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)") {
@@ -62,8 +70,6 @@ function _computeEffectiveBg(el: Element): [number, number, number] | null {
       current = current.parentElement;
       continue;
     }
-    // Has a background image — can't reliably determine color
-    if (style.backgroundImage && style.backgroundImage !== "none") return null;
     return parseColor(bg);
   }
   // Default to white if nothing found — correct for real browsers where the
@@ -71,6 +77,52 @@ function _computeEffectiveBg(el: Element): [number, number, number] | null {
   // resolution (happy-dom, jsdom) this fallback can cause false positives when
   // a dark background is applied via stylesheets rather than inline styles.
   return [255, 255, 255];
+}
+
+const MEDIA_TAGS = new Set(["IMG", "PICTURE", "VIDEO", "SVG"]);
+
+/**
+ * Detects whether text may be visually overlaid on a media element (<img>,
+ * <picture>, <video>, <svg>) via CSS positioning. Returns true when either
+ * the text or a sibling media element is positioned out of normal flow
+ * within a shared positioning context — the common hero/card overlay pattern.
+ */
+export function mayBeOverImage(el: Element): boolean {
+  const cached = _overImageCache.get(el);
+  if (cached !== undefined) return cached;
+  const result = _checkOverImage(el);
+  _overImageCache.set(el, result);
+  return result;
+}
+
+function _checkOverImage(el: Element): boolean {
+  let current: Element | null = el;
+  let textIsOutOfFlow = false;
+
+  while (current) {
+    const pos = getCachedComputedStyle(current).position;
+
+    if (pos === "absolute" || pos === "fixed") {
+      textIsOutOfFlow = true;
+    }
+
+    // At a positioning context, check sibling branches for media elements
+    if (current !== el && pos !== "static") {
+      for (const child of current.children) {
+        if (child === el || child.contains(el)) continue;
+        if (MEDIA_TAGS.has(child.tagName)) {
+          if (textIsOutOfFlow) return true;
+          const childPos = getCachedComputedStyle(child).position;
+          if (childPos === "absolute" || childPos === "fixed") return true;
+        }
+      }
+      // Only check the nearest positioning context for the text
+      if (textIsOutOfFlow) break;
+    }
+
+    current = current.parentElement;
+  }
+  return false;
 }
 
 export function isLargeText(el: Element): boolean {

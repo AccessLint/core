@@ -8,6 +8,7 @@ import {
   getLuminance,
   getContrastRatio,
   isLargeText,
+  mayBeOverImage,
 } from "../utils/color";
 
 const NON_TEXT_TAGS = new Set([
@@ -98,6 +99,9 @@ export const colorContrast: Rule = {
       // Check for transparent foreground via rgba alpha
       const fgAlphaMatch = style.color.match(/rgba\(.+?,\s*([\d.]+)\s*\)/);
       if (fgAlphaMatch && parseFloat(fgAlphaMatch[1]) === 0) continue;
+
+      // Skip text that may be visually overlaid on an image/video element
+      if (mayBeOverImage(el)) continue;
 
       const bg = getEffectiveBackgroundColor(el);
       if (!bg) continue; // background-image or can't determine
