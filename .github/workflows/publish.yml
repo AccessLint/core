@@ -29,3 +29,11 @@ jobs:
             -f 'client_payload[version]'="${GITHUB_REF_NAME#v}"
         env:
           GH_TOKEN: ${{ secrets.A11Y_AGENT_DISPATCH_TOKEN }}
+
+      - name: Notify accesslint-bench
+        run: |
+          gh api repos/AccessLint/accesslint-bench/dispatches \
+            -f event_type=core-published \
+            -f 'client_payload[version]'="${GITHUB_REF_NAME#v}"
+        env:
+          GH_TOKEN: ${{ secrets.BENCH_DISPATCH_TOKEN }}
