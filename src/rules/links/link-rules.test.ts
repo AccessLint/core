@@ -73,6 +73,27 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
+  it("passes: link inside nav landmark", () => {
+    const doc = makeDoc(
+      '<body><nav><p style="color: rgb(0,0,0);">Menu <a href="/page" style="color: rgb(0,0,0); text-decoration: none;">link</a></p></nav></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  it("passes: link inside role=navigation", () => {
+    const doc = makeDoc(
+      '<body><div role="navigation"><p style="color: rgb(0,0,0);">Menu <a href="/page" style="color: rgb(0,0,0); text-decoration: none;">link</a></p></div></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  it("passes: link in list with no non-link text in immediate block", () => {
+    const doc = makeDoc(
+      '<body><ul><li><a href="/page" style="color: rgb(0,0,0); text-decoration: none;">link</a></li></ul></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
   it("passes: image-only link (no text content)", () => {
     const doc = makeDoc(
       '<body><p style="color: rgb(0,0,0);">Some text <a href="/page" style="text-decoration: none;"><img src="icon.png" alt=""></a> more text</p></body>'

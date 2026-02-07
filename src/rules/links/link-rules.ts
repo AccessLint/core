@@ -72,15 +72,18 @@ const INLINE_DISPLAYS = new Set([
 ]);
 
 /**
- * Walk up from `link` to find the nearest block-level ancestor that also
- * contains non-link text content (the "text block" the link sits in).
+ * Find the nearest block-level ancestor that contains non-link text,
+ * indicating the link is embedded in a paragraph of running text.
+ * Returns null when the nearest block has no non-link text (link lists,
+ * nav menus) — only walks one level up to avoid over-matching.
  */
 function findParentTextBlock(link: Element): Element | null {
   let el: Element | null = link.parentElement;
   while (el) {
     const display = getCachedComputedStyle(el).display;
     if (BLOCK_DISPLAYS.has(display)) {
-      if (hasNonLinkText(el)) return el;
+      // Only consider the nearest block; don't walk further.
+      return hasNonLinkText(el) ? el : null;
     }
     el = el.parentElement;
   }
@@ -231,6 +234,10 @@ export const linkInTextBlock: Rule = {
 
       // Skip links with no text content (e.g. image-only links)
       if (!getAccessibleTextContent(link).trim()) continue;
+
+      // Skip links in navigation/footer landmarks — these are expected
+      // to be all-link regions and don't need prose-level distinction.
+      if (link.closest('nav, [role="navigation"], [role="banner"], [role="contentinfo"]')) continue;
 
       // Skip non-inline links (block-level links are visually distinct)
       const linkStyle = getCachedComputedStyle(link);
