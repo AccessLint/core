@@ -48,9 +48,13 @@ function isDisabledFormElement(el: Element): boolean {
 
 function isVisuallyHidden(style: CSSStyleDeclaration): boolean {
   // Classic sr-only / visuallyhidden: clip: rect(0 0 0 0)
-  // Browsers normalise to "rect(0px, 0px, 0px, 0px)"
+  // Computed format varies: "rect(0px, 0px, 0px, 0px)", "rect(0, 0, 0, 0)",
+  // "rect(0 0 0 0)" — extract numbers and check all are zero.
   const clip = style.clip;
-  if (clip === "rect(0px, 0px, 0px, 0px)" || clip === "rect(0, 0, 0, 0)") return true;
+  if (clip && clip.startsWith("rect(")) {
+    const nums = clip.match(/[\d.]+/g);
+    if (!nums || nums.every((n) => parseFloat(n) === 0)) return true;
+  }
   // Modern equivalent: clip-path: inset(50%) or inset(100%)
   const clipPath = style.clipPath;
   if (clipPath === "inset(50%)" || clipPath === "inset(100%)") return true;
