@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/accesslint/core.git"
+    "url": "git+https://github.com/AccessLint/core.git"
   },
   "license": "MIT",
   "publishConfig": {
