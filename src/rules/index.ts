@@ -203,6 +203,7 @@ export const rules: Rule[] = [
   colorContrast,
 ];
 
+
 export interface ChunkedAudit {
   /** Process rules for up to budgetMs. Returns true if more rules remain. */
   processChunk(budgetMs: number): boolean;

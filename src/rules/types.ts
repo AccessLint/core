@@ -19,6 +19,8 @@ export interface Violation {
   message: string;
   /** Rule-specific surrounding context to help AI understand the issue */
   context?: string;
+  /** Additional context for AI guidance only (not displayed to user) */
+  aiContext?: string;
   element?: Element;
 }
 
