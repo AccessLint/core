@@ -94,6 +94,34 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
+  it("passes: link list separated by pipe characters", () => {
+    const doc = makeDoc(
+      '<body><div style="color: rgb(0,0,0);"><a href="/a" style="color: rgb(0,0,0); text-decoration: none;">Home</a> | <a href="/b" style="color: rgb(0,0,0); text-decoration: none;">About</a> | <a href="/c" style="color: rgb(0,0,0); text-decoration: none;">Contact</a></div></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  it("passes: link list separated by middot", () => {
+    const doc = makeDoc(
+      '<body><div style="color: rgb(0,0,0);"><a href="/a" style="color: rgb(0,0,0); text-decoration: none;">Privacy</a> · <a href="/b" style="color: rgb(0,0,0); text-decoration: none;">Terms</a></div></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  it("passes: link inside footer element", () => {
+    const doc = makeDoc(
+      '<body><footer><p style="color: rgb(0,0,0);">Copyright 2024 <a href="/privacy" style="color: rgb(0,0,0); text-decoration: none;">Privacy</a></p></footer></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  it("passes: link inside header element", () => {
+    const doc = makeDoc(
+      '<body><header><p style="color: rgb(0,0,0);">Welcome back <a href="/profile" style="color: rgb(0,0,0); text-decoration: none;">User</a></p></header></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
   it("passes: image-only link (no text content)", () => {
     const doc = makeDoc(
       '<body><p style="color: rgb(0,0,0);">Some text <a href="/page" style="text-decoration: none;"><img src="icon.png" alt=""></a> more text</p></body>'
