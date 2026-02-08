@@ -42,7 +42,7 @@ import {
   landmarkUnique,
   region,
 } from "./structure/landmark-rules";
-import { list, dlitem, definitionList } from "./structure/list-rules";
+import { list, listitem, dlitem, definitionList } from "./structure/list-rules";
 import { documentTitle, bypass, pageHasHeadingOne } from "./structure/document-rules";
 import { frameTitle, frameTitleUnique } from "./structure/frame-rules";
 import { emptyHeading } from "./structure/heading-rules";
@@ -147,6 +147,7 @@ export const rules: Rule[] = [
   landmarkUnique,
   region,
   list,
+  listitem,
   dlitem,
   definitionList,
 

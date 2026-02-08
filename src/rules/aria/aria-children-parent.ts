@@ -74,7 +74,7 @@ function hasRequiredChildren(el: Element, requiredGroups: string[][]): boolean {
 
 export const ariaRequiredChildren: Rule = {
   id: "aria-required-children",
-  wcag: ["4.1.2"],
+  wcag: ["1.3.1"],
   level: "A",
   description: "Certain ARIA roles require specific child roles to be present.",
   guidance: "Some ARIA roles represent containers that must contain specific child roles for proper semantics. For example, a list must contain listitems, a menu must contain menuitems. Add the required child elements with appropriate roles, or use native HTML elements that provide these semantics implicitly (e.g., <ul> with <li>).",
@@ -108,7 +108,7 @@ export const ariaRequiredChildren: Rule = {
 
 export const ariaRequiredParent: Rule = {
   id: "aria-required-parent",
-  wcag: ["4.1.2"],
+  wcag: ["1.3.1"],
   level: "A",
   description: "Certain ARIA roles must be contained within specific parent roles.",
   guidance: "Some ARIA roles represent items that must exist within specific container roles. For example, a listitem must be within a list, a tab must be within a tablist. Wrap the element in the appropriate parent, or use native HTML elements that provide this structure (e.g., <li> inside <ul>).",

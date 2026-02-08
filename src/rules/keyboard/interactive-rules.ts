@@ -176,7 +176,13 @@ export const scrollableRegionFocusable: Rule = {
       // so fall back to heuristic: explicit dimensions + visible text content.
       const hasScrollMetrics = el.scrollHeight > 0 || el.clientHeight > 0;
       if (hasScrollMetrics) {
-        if (el.scrollHeight <= el.clientHeight && el.scrollWidth <= el.clientWidth) continue;
+        const overflowH = el.scrollHeight - el.clientHeight;
+        const overflowW = el.scrollWidth - el.clientWidth;
+        // No overflow at all
+        if (overflowH <= 0 && overflowW <= 0) continue;
+        // Require meaningful overflow — small overflows (< 36px) are often
+        // caused by borders, padding, or sub-pixel rounding, not real content.
+        if (overflowH < 36 && overflowW < 36) continue;
         // Skip elements under 64x64px — too small to be meaningful scroll regions
         if (el.clientWidth < 64 && el.clientHeight < 64) continue;
       } else {
