@@ -69,7 +69,7 @@ export const ariaHiddenFocus: Rule = {
   description: "Elements with aria-hidden='true' must not contain focusable elements.",
   guidance: "When aria-hidden='true' hides an element from assistive technologies but the element contains focusable children, keyboard users can focus those children but screen reader users won't know they exist. Either remove focusable elements from the hidden region, add tabindex='-1' to them, or remove aria-hidden.",
   prompt:
-    "Suggest adding tabindex='-1' to this focusable element, or moving it outside the aria-hidden region, or removing aria-hidden from the ancestor.",
+    "This element can receive keyboard focus but is inside an aria-hidden region, making it invisible to screen readers. The context explains why it's focusable. Fix by either: (1) adding tabindex='-1' to remove it from tab order, (2) moving it outside the aria-hidden region, or (3) removing aria-hidden='true' from the ancestor if the content should be accessible.",
   run(doc) {
     const violations = [];
 
@@ -99,6 +99,20 @@ export const ariaHiddenFocus: Rule = {
           // content via display:none or visibility:hidden.
           if (!isActuallyVisible(el)) continue;
 
+          // Determine why this element is focusable
+          const tag = el.tagName.toLowerCase();
+          let reason: string;
+          if (tabindex !== null) reason = `has tabindex="${tabindex}"`;
+          else if (tag === "a" && el.hasAttribute("href")) reason = "is a link with href";
+          else if (tag === "button") reason = "is a <button>";
+          else if (tag === "input") reason = `is an <input type="${(el as HTMLInputElement).type}">`;
+          else if (tag === "select") reason = "is a <select>";
+          else if (tag === "textarea") reason = "is a <textarea>";
+          else if (tag === "iframe") reason = "is an <iframe>";
+          else reason = `is a natively focusable <${tag}>`;
+
+          // Find the aria-hidden ancestor
+          const hiddenAncestor = el === hidden ? el : el.closest('[aria-hidden="true"]');
 
           violations.push({
             ruleId: "aria-hidden-focus",
@@ -106,6 +120,7 @@ export const ariaHiddenFocus: Rule = {
             html: getHtmlSnippet(el),
             impact: "serious" as const,
             message: "Focusable element is inside an aria-hidden region.",
+            context: `Focusable because: ${reason}. aria-hidden ancestor: ${hiddenAncestor ? getHtmlSnippet(hiddenAncestor) : "unknown"}`,
           });
         }
       }

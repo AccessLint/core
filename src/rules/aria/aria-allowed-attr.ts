@@ -93,7 +93,7 @@ export const ariaAllowedAttr: Rule = {
   description: "ARIA attributes must be allowed for the element's role.",
   guidance: "Each ARIA role supports specific attributes. Using unsupported attributes creates confusion for assistive technologies. Check the ARIA specification for which attributes are valid for each role, or remove the attribute if it's not needed.",
   prompt:
-    "State which attribute is not allowed on this role and recommend removing it or using a different element/role that supports the attribute.",
+    "The ARIA attribute listed in context is not supported on this element's role. Either remove the attribute (if the behavior it describes isn't needed), or change the element's role to one that supports it. The context lists which attributes ARE allowed on this role — use that to suggest alternatives if applicable.",
   run(doc) {
     const violations = [];
 
@@ -111,12 +111,17 @@ export const ariaAllowedAttr: Rule = {
         if (GLOBAL_ARIA_ATTRS.has(attr.name)) continue;
         if (allowedAttrs.has(attr.name)) continue;
 
+        const allowed = allowedAttrs.size > 0
+          ? [...allowedAttrs].join(", ")
+          : "none (only global ARIA attributes)";
+
         violations.push({
           ruleId: "aria-allowed-attr",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "critical" as const,
           message: `ARIA attribute "${attr.name}" is not allowed on role "${role}".`,
+          context: `Attribute: ${attr.name}="${attr.value}", role: ${role}, allowed role-specific attributes: ${allowed}`,
         });
       }
     }

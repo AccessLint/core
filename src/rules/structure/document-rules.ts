@@ -9,16 +9,26 @@ export const documentTitle: Rule = {
   description: "Documents must have a <title> element to provide users with an overview of content.",
   guidance: "Screen reader users rely on page titles to identify and navigate between tabs/windows. Add a descriptive <title> element in <head> that summarizes the page purpose. Keep titles unique across the site, placing specific content before the site name (e.g., 'Contact Us - Acme Corp').",
   prompt:
-    "Suggest a descriptive page title based on the visible content.",
+    "The page has no title or an empty title. Suggest a concise, descriptive <title> based on the page content sample in context. Good titles are specific and front-load the unique part: 'Product Details - Store Name' rather than 'Store Name - Product Details'.",
   run(doc) {
     const title = doc.querySelector("title");
     if (!title || !title.textContent?.trim()) {
+      // Sample visible content for title suggestion
+      let textSample: string | undefined;
+      const h1 = doc.querySelector("h1");
+      if (h1?.textContent?.trim()) {
+        textSample = `h1: "${h1.textContent.trim().slice(0, 100)}"`;
+      } else if (doc.body) {
+        const text = doc.body.textContent?.trim().replace(/\s+/g, " ") || "";
+        if (text) textSample = `Page text: "${text.slice(0, 150)}"`;
+      }
       return [{
         ruleId: "document-title",
         selector: "html",
         html: "<html>",
         impact: "serious" as const,
         message: title ? "Document <title> element is empty." : "Document is missing a <title> element.",
+        context: textSample,
       }];
     }
     return [];
@@ -80,7 +90,7 @@ export const pageHasHeadingOne: Rule = {
   description: "Page should contain a level-one heading.",
   guidance: "A level-one heading (<h1> or role='heading' with aria-level='1') helps users understand the page topic and provides a landmark for screen reader navigation. Each page should have exactly one h1 that describes the main content, typically matching or similar to the page title.",
   prompt:
-    "Suggest appropriate h1 text based on the page's visible content.",
+    "The page has no <h1> heading. Suggest appropriate h1 text based on the page title or content sample in context. The h1 should describe the page's main topic and typically be placed at the start of the main content area.",
   run(doc) {
     const h1 = doc.querySelector("h1");
     if (h1 && getAccessibleName(h1)) return [];
@@ -91,12 +101,23 @@ export const pageHasHeadingOne: Rule = {
       if (getAccessibleName(heading)) return [];
     }
 
+    // Gather context for h1 suggestion
+    const parts: string[] = [];
+    const title = doc.querySelector("title")?.textContent?.trim();
+    if (title) parts.push(`Page title: "${title}"`);
+    const main = doc.querySelector("main");
+    if (main) {
+      const text = main.textContent?.trim().replace(/\s+/g, " ") || "";
+      if (text) parts.push(`Main content: "${text.slice(0, 100)}"`);
+    }
+
     return [{
       ruleId: "page-has-heading-one",
       selector: "html",
       html: "<html>",
       impact: "moderate" as const,
       message: "Page does not contain a level-one heading.",
+      context: parts.length > 0 ? parts.join(", ") : undefined,
     }];
   },
 };
