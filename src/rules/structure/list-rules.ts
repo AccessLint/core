@@ -5,7 +5,7 @@ import { compileDeclarativeRule } from "../engine";
 const listSpec: DeclarativeRule = {
   id: "list",
   selector: "ul, ol",
-  check: { type: "child-invalid", allowedChildren: ["li", "script", "template"] },
+  check: { type: "child-invalid", allowedChildren: ["li", "script", "template"], allowedChildRoles: ["listitem"] },
   impact: "serious",
   message: "List contains non-<li> child <{{tag}}>.",
   description: "<ul> and <ol> must only contain <li>, <script>, or <template> as direct children.",

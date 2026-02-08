@@ -219,6 +219,29 @@ export function isValidAriaAttribute(attr: string): boolean {
   return GLOBAL_ARIA_ATTRS.has(attr) || attr.startsWith("aria-");
 }
 
+/**
+ * Check if an element or any ancestor is hidden via computed styles
+ * (display:none, visibility:hidden) or aria-hidden. This catches stylesheet-
+ * applied hiding that isAriaHidden misses (which only checks inline styles).
+ */
+export function isComputedHidden(el: Element): boolean {
+  let current: Element | null = el;
+  while (current) {
+    if (current.getAttribute("aria-hidden") === "true") return true;
+    if (current instanceof HTMLElement && current.hidden) return true;
+    // Check computed style when available (real browser environment)
+    if (typeof getComputedStyle === "function") {
+      const style = getComputedStyle(current);
+      if (style.display === "none" || style.visibility === "hidden") return true;
+    } else {
+      // DOM-only: fall back to inline style check
+      if (current instanceof HTMLElement && current.style.display === "none") return true;
+    }
+    current = current.parentElement;
+  }
+  return false;
+}
+
 let _ariaHiddenCache = new WeakMap<Element, boolean>();
 
 export function clearAriaHiddenCache(): void {

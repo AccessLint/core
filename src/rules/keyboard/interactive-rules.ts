@@ -152,6 +152,14 @@ export const scrollableRegionFocusable: Rule = {
       if (isAriaHidden(el)) continue;
       if (!(el instanceof HTMLElement)) continue;
 
+      // Skip <body> and <html> — inherently scrollable via browser
+      const tagName = el.tagName.toLowerCase();
+      if (tagName === "body" || tagName === "html") continue;
+
+      // Skip role="presentation" / role="none" — decorative containers
+      const role = el.getAttribute("role");
+      if (role === "presentation" || role === "none") continue;
+
       // Check if element is scrollable
       const style = getCachedComputedStyle(el);
 
@@ -169,10 +177,13 @@ export const scrollableRegionFocusable: Rule = {
       const hasScrollMetrics = el.scrollHeight > 0 || el.clientHeight > 0;
       if (hasScrollMetrics) {
         if (el.scrollHeight <= el.clientHeight && el.scrollWidth <= el.clientWidth) continue;
+        // Skip elements under 64x64px — too small to be meaningful scroll regions
+        if (el.clientWidth < 64 && el.clientHeight < 64) continue;
       } else {
         const hasDimensions = style.height !== "" || style.maxHeight !== "";
-        const hasText = el.textContent != null && el.textContent.trim().length > 0;
-        if (!hasDimensions || !hasText) continue;
+        // Require text content > 50 chars to consider it a meaningful scrollable region
+        const textLen = el.textContent?.trim().length ?? 0;
+        if (!hasDimensions || textLen <= 50) continue;
       }
 
       // Check if it's focusable

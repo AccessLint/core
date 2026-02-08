@@ -65,6 +65,8 @@ export interface ChildRequiredCheck {
 export interface ChildInvalidCheck {
   type: "child-invalid";
   allowedChildren: string[];
+  /** Also accept children with these role attribute values */
+  allowedChildRoles?: string[];
 }
 
 export type CheckType =

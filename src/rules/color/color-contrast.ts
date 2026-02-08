@@ -109,6 +109,46 @@ function isHidden(el: Element): boolean {
   return false;
 }
 
+/**
+ * Walk up the tree and multiply opacity values.
+ * Returns the accumulated opacity (0–1).
+ */
+function getAccumulatedOpacity(el: Element): number {
+  let opacity = 1;
+  let current: Element | null = el;
+  while (current) {
+    const style = getCachedComputedStyle(current);
+    const o = parseFloat(style.opacity);
+    if (!isNaN(o)) opacity *= o;
+    current = current.parentElement;
+  }
+  return opacity;
+}
+
+/**
+ * Returns true when any ancestor uses visual effects that make
+ * contrast unreliable to compute (filter, mix-blend-mode, backdrop-filter).
+ */
+function hasUnreliableVisualEffects(el: Element): boolean {
+  let current: Element | null = el;
+  while (current) {
+    const style = getCachedComputedStyle(current);
+    const filter = style.filter;
+    if (filter && filter !== "none" && filter !== "initial") return true;
+    const blendMode = style.mixBlendMode;
+    if (blendMode && blendMode !== "normal" && blendMode !== "initial") return true;
+    const backdrop = style.backdropFilter;
+    if (backdrop && backdrop !== "none" && backdrop !== "initial") return true;
+    current = current.parentElement;
+  }
+  return false;
+}
+
+/** Returns true when the element is inside a native <select>. */
+function isInsideNativeSelect(el: Element): boolean {
+  return el.closest("select") !== null;
+}
+
 export const colorContrast: Rule = {
   id: "color-contrast",
   wcag: ["1.4.3"],
@@ -137,6 +177,15 @@ export const colorContrast: Rule = {
       checked.add(el);
 
       if (NON_TEXT_TAGS.has(el.tagName)) continue;
+
+      // Skip <body> and <html> text nodes — these are checked by
+      // scrollable-region but aren't meaningful for contrast analysis.
+      const tag = el.tagName;
+      if (tag === "BODY" || tag === "HTML") continue;
+
+      // Skip elements inside native <select> — browser-controlled rendering
+      if (isInsideNativeSelect(el)) continue;
+
       if (isDisabledFormElement(el)) continue;
       if (isLabelForDisabledControl(el, doc)) continue;
       if (isHidden(el)) continue;
@@ -146,10 +195,16 @@ export const colorContrast: Rule = {
       // Skip transparent/zero-opacity text
       if (parseFloat(style.opacity) === 0) continue;
 
+      // Skip effectively invisible elements (accumulated opacity < 0.1)
+      if (getAccumulatedOpacity(el) < 0.1) continue;
+
       // Skip elements with text-shadow — shadow alters effective contrast
       // and cannot be reliably analyzed from computed styles alone.
       const textShadow = style.textShadow;
       if (textShadow && textShadow !== "none" && textShadow !== "initial") continue;
+
+      // Bail out on visual effects that make contrast unreliable
+      if (hasUnreliableVisualEffects(el)) continue;
 
       const fg = parseColor(style.color);
       if (!fg) continue;

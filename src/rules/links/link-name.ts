@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { getAccessibleName, isAriaHidden } from "../utils/aria";
+import { getAccessibleName, isAriaHidden, isComputedHidden } from "../utils/aria";
 
 function getLinkContext(el: Element): string | undefined {
   const parts: string[] = [];
@@ -37,6 +37,9 @@ export const linkName: Rule = {
     const violations = [];
     for (const a of doc.querySelectorAll('a[href], area[href], [role="link"]')) {
       if (isAriaHidden(a)) continue;
+      if (isComputedHidden(a)) continue;
+      // Skip shadow DOM elements — name resolution can't reliably cross shadow boundaries
+      if (a.getRootNode() instanceof ShadowRoot) continue;
       const name = getAccessibleName(a);
       if (!name) {
         violations.push({

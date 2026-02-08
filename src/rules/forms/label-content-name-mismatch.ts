@@ -66,8 +66,9 @@ function getVisibleText(el: Element): string {
 
 export const labelContentNameMismatch: Rule = {
   id: "label-content-name-mismatch",
-  wcag: ["2.5.3"],
+  wcag: [],
   level: "A",
+  tags: ["best-practice"],
   description: "Interactive elements with visible text must have accessible names that contain that text.",
   guidance: "For voice control users who activate controls by speaking their visible label, the accessible name must include the visible text. If aria-label is 'Submit form' but the button shows 'Send', voice users saying 'click Send' won't activate it. Ensure aria-label/aria-labelledby contains or matches the visible text.",
   prompt:

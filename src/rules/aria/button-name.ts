@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { getAccessibleName, isAriaHidden } from "../utils/aria";
+import { getAccessibleName, isAriaHidden, isComputedHidden } from "../utils/aria";
 
 function getButtonContext(btn: Element): string | undefined {
   const parts: string[] = [];
@@ -43,6 +43,7 @@ export const buttonName: Rule = {
     const violations = [];
     for (const btn of doc.querySelectorAll('button, [role="button"]')) {
       if (isAriaHidden(btn)) continue;
+      if (isComputedHidden(btn)) continue;
 
       // Presentation role is only respected when element is NOT focusable.
       // Focusable elements (like <button>) override the presentation role.

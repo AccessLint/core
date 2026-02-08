@@ -234,20 +234,31 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
           const allowedSet = new Set(
             spec.check.allowedChildren.map((t) => t.toLowerCase()),
           );
+          const allowedRoleSet = spec.check.allowedChildRoles
+            ? new Set(spec.check.allowedChildRoles.map((r) => r.toLowerCase()))
+            : null;
           for (const el of doc.querySelectorAll(spec.selector)) {
             if (skipAriaHidden && isAriaHidden(el)) continue;
+            // Skip elements with role="presentation" or role="none" —
+            // presentational containers have no semantics to enforce
+            const parentRole = el.getAttribute("role")?.trim().toLowerCase();
+            if (parentRole === "presentation" || parentRole === "none") continue;
             for (const child of el.children) {
-              if (!allowedSet.has(child.tagName.toLowerCase())) {
-                violations.push({
-                  ruleId: spec.id,
-                  selector: getSelector(child),
-                  html: getHtmlSnippet(child),
-                  impact: spec.impact,
-                  message: applyTemplate(spec.message, child, spec.check),
-                  element: child,
-                });
-                break; // one violation per parent
-              }
+              if (allowedSet.has(child.tagName.toLowerCase())) continue;
+              // Check child's role attribute
+              const childRole = child.getAttribute("role")?.trim().toLowerCase();
+              if (childRole && allowedRoleSet?.has(childRole)) continue;
+              // Allow role="presentation" / role="none" children (pass-through containers)
+              if (childRole === "presentation" || childRole === "none") continue;
+              violations.push({
+                ruleId: spec.id,
+                selector: getSelector(child),
+                html: getHtmlSnippet(child),
+                impact: spec.impact,
+                message: applyTemplate(spec.message, child, spec.check),
+                element: child,
+              });
+              break; // one violation per parent
             }
           }
           break;

@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { getAccessibleName, isAriaHidden } from "../utils/aria";
+import { getAccessibleName, isAriaHidden, isComputedHidden } from "../utils/aria";
 
 // Command roles that require accessible names
 const COMMAND_ROLES = new Set(["button", "link", "menuitem"]);
@@ -77,6 +77,9 @@ export const ariaCommandName: Rule = {
     // Check elements with command roles
     for (const el of doc.querySelectorAll('[role="button"], [role="link"], [role="menuitem"]')) {
       if (isAriaHidden(el)) continue;
+      if (isComputedHidden(el)) continue;
+      // Skip shadow DOM elements — name resolution can't reliably cross shadow boundaries
+      if (el.getRootNode() instanceof ShadowRoot) continue;
 
       // Skip native elements that are handled by other rules
       if (el.tagName.toLowerCase() === "button" || el.tagName.toLowerCase() === "a") continue;
@@ -115,6 +118,9 @@ export const ariaInputFieldName: Rule = {
 
     for (const el of doc.querySelectorAll(selector)) {
       if (isAriaHidden(el)) continue;
+      if (isComputedHidden(el)) continue;
+      // Skip shadow DOM elements — name resolution can't reliably cross shadow boundaries
+      if (el.getRootNode() instanceof ShadowRoot) continue;
 
       // Skip native inputs handled by label rule
       if (el.matches("input, select, textarea")) continue;
@@ -149,6 +155,9 @@ export const ariaToggleFieldName: Rule = {
 
     for (const el of doc.querySelectorAll(selector)) {
       if (isAriaHidden(el)) continue;
+      if (isComputedHidden(el)) continue;
+      // Skip shadow DOM elements — name resolution can't reliably cross shadow boundaries
+      if (el.getRootNode() instanceof ShadowRoot) continue;
 
       // Skip native inputs handled by other rules
       if (el.matches('input[type="checkbox"], input[type="radio"]')) continue;

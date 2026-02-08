@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { getAccessibleName, getAccessibleTextContent, isAriaHidden } from "../utils/aria";
+import { getAccessibleName, getAccessibleTextContent, isAriaHidden, isComputedHidden } from "../utils/aria";
 
 // Widget roles that constitute form fields (per ACT rule e086e5)
 const WIDGET_ROLE_SELECTOR = [
@@ -112,7 +112,18 @@ export const formLabel: Rule = {
 
     for (const input of inputs) {
       if (isAriaHidden(input)) continue;
-      if (input instanceof HTMLElement && (input.hidden || input.style.display === "none")) continue;
+      if (isComputedHidden(input)) continue;
+
+      // Skip disabled form elements — axe-core doesn't flag these
+      if (
+        (input instanceof HTMLInputElement ||
+         input instanceof HTMLTextAreaElement ||
+         input instanceof HTMLSelectElement ||
+         input instanceof HTMLButtonElement) &&
+        input.disabled
+      ) continue;
+      if (input.closest("fieldset[disabled]")) continue;
+      if (input.getAttribute("aria-disabled") === "true") continue;
 
       // Skip elements with presentation/none role
       const role = input.getAttribute("role")?.trim().toLowerCase();
