@@ -15,7 +15,7 @@ export const imageRedundantAlt: Rule = {
   guidance:
     "When an image is inside a link or button that also has text, make the alt text complementary rather than identical. If the image is purely decorative in that context, use alt='' to avoid repetition.",
   prompt:
-    "Show the duplicated text and suggest either an empty alt or a complementary description.",
+    "The image alt text is identical to the text already visible in the parent link or button. Screen reader users hear the same words twice. If the image is decorative in this context (e.g. an icon next to a label), recommend alt=''. Otherwise suggest brief complementary alt text that adds information the visible text doesn't convey — for example what the image depicts, not what the link says.",
   run(doc) {
     const violations = [];
     for (const img of doc.querySelectorAll("img[alt]")) {
@@ -27,12 +27,15 @@ export const imageRedundantAlt: Rule = {
       if (parentInteractive) {
         const parentText = parentInteractive.textContent?.trim().toLowerCase() || "";
         if (parentText && parentText === alt) {
+          const parentTag = parentInteractive.tagName.toLowerCase();
+          const href = parentInteractive.getAttribute("href");
           violations.push({
             ruleId: "image-redundant-alt",
             selector: getSelector(img),
             html: getHtmlSnippet(img),
             impact: "minor" as const,
-            message: `Alt text "${img.getAttribute("alt")}" duplicates surrounding ${parentInteractive.tagName.toLowerCase()} text.`,
+            message: `Alt text "${img.getAttribute("alt")}" duplicates surrounding ${parentTag} text.`,
+            context: `Duplicated text: "${img.getAttribute("alt")}", parent element: <${parentTag}>${href ? ` href="${href}"` : ""}`,
           });
         }
       }
@@ -59,20 +62,22 @@ export const imageAltRedundantWords: Rule = {
   guidance:
     "Screen readers already announce 'image' or 'graphic' before reading alt text, so phrases like 'image of', 'photo of', or 'picture of' are redundant. Remove these words and describe what the image shows. For example, change 'image of a dog' to 'golden retriever playing fetch'.",
   prompt:
-    "Identify the redundant word(s) in the alt text and show the corrected version with those words removed.",
+    "The alt text contains a word like 'image', 'photo', or 'picture' that is already announced by the screen reader. Rewrite the alt text with the redundant word removed while keeping the description meaningful. For example: 'image of a sunset over the ocean' → 'sunset over the ocean'; 'photo of team members' → 'team members at the 2024 offsite'; 'icon for settings' → 'settings'.",
   run(doc) {
     const violations = [];
     for (const img of doc.querySelectorAll("img[alt]")) {
       const alt = img.getAttribute("alt")!.toLowerCase();
       if (!alt) continue;
 
-      if (REDUNDANT_WORDS.some((w) => alt.split(/\s+/).includes(w))) {
+      const found = REDUNDANT_WORDS.filter((w) => alt.split(/\s+/).includes(w));
+      if (found.length > 0) {
         violations.push({
           ruleId: "image-alt-redundant-words",
           selector: getSelector(img),
           html: getHtmlSnippet(img),
           impact: "minor" as const,
-          message: `Alt text "${img.getAttribute("alt")}" contains redundant word(s).`,
+          message: `Alt text "${img.getAttribute("alt")}" contains redundant word(s): ${found.join(", ")}.`,
+          context: `Current alt: "${img.getAttribute("alt")}", redundant word(s): ${found.join(", ")}`,
         });
       }
     }
