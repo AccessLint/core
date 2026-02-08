@@ -58,6 +58,46 @@ describe("aria-required-children", () => {
     const doc = makeDoc('<div role="list" aria-hidden="true"><div>No items</div></div>');
     expect(ariaRequiredChildren.run(doc)).toHaveLength(0);
   });
+
+  it("skips elements with aria-busy=true", () => {
+    const doc = makeDoc('<div role="list" aria-busy="true"><div>Loading...</div></div>');
+    expect(ariaRequiredChildren.run(doc)).toHaveLength(0);
+  });
+
+  it("skips empty reviewEmpty roles (e.g. empty list)", () => {
+    const doc = makeDoc('<div role="list"></div>');
+    expect(ariaRequiredChildren.run(doc)).toHaveLength(0);
+  });
+
+  it("flags non-empty reviewEmpty roles with wrong children", () => {
+    const doc = makeDoc('<div role="list"><div>Not a listitem</div></div>');
+    expect(ariaRequiredChildren.run(doc)).toHaveLength(1);
+  });
+
+  it("flags empty non-reviewEmpty roles (e.g. empty menu)", () => {
+    const doc = makeDoc('<div role="menu"></div>');
+    expect(ariaRequiredChildren.run(doc)).toHaveLength(1);
+  });
+
+  it("skips collapsed combobox", () => {
+    const doc = makeDoc('<div role="combobox" aria-expanded="false"></div>');
+    expect(ariaRequiredChildren.run(doc)).toHaveLength(0);
+  });
+
+  it("skips combobox without aria-expanded", () => {
+    const doc = makeDoc('<div role="combobox"></div>');
+    expect(ariaRequiredChildren.run(doc)).toHaveLength(0);
+  });
+
+  it("skips input with role combobox", () => {
+    const doc = makeDoc('<input role="combobox" aria-expanded="true">');
+    expect(ariaRequiredChildren.run(doc)).toHaveLength(0);
+  });
+
+  it("flags expanded div combobox without required children", () => {
+    const doc = makeDoc('<div role="combobox" aria-expanded="true"><span>text</span></div>');
+    expect(ariaRequiredChildren.run(doc)).toHaveLength(1);
+  });
 });
 
 describe("aria-required-parent", () => {
