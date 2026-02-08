@@ -102,7 +102,7 @@ export const formLabel: Rule = {
   description: "Form elements must have labels. Use <label>, aria-label, or aria-labelledby.",
   guidance: "Every form input needs an accessible label so users understand what information to enter. Use a <label> element with a for attribute matching the input's id, wrap the input in a <label>, or use aria-label/aria-labelledby for custom components. Placeholders are not sufficient as labels since they disappear when typing.",
   prompt:
-    "Based on the input type, name attribute, or placeholder, suggest a label element with appropriate text, or an aria-label.",
+    "This form field has no accessible label. Based on the context (input type, name attribute, placeholder, or surrounding elements), suggest adding a <label for=\"id\"> element with descriptive text, or an aria-label attribute. The label should describe what information the user should enter, not the field type. For example: 'Email address', 'Search', 'Phone number'.",
   run(doc) {
     const violations = [];
 
@@ -120,12 +120,25 @@ export const formLabel: Rule = {
 
       const name = getFormFieldName(input);
       if (!name) {
+        const parts: string[] = [];
+        const tag = input.tagName.toLowerCase();
+        const type = input.getAttribute("type");
+        if (type && tag === "input") parts.push(`type: ${type}`);
+        const inputName = input.getAttribute("name");
+        if (inputName) parts.push(`name: "${inputName}"`);
+        const placeholder = input.getAttribute("placeholder");
+        if (placeholder) parts.push(`placeholder: "${placeholder}"`);
+        if (role) parts.push(`role: ${role}`);
+        const id = input.getAttribute("id");
+        if (id) parts.push(`id: "${id}"`);
+
         violations.push({
           ruleId: "label",
           selector: getSelector(input),
           html: getHtmlSnippet(input),
           impact: "critical" as const,
           message: "Form element has no accessible label.",
+          context: parts.length > 0 ? parts.join(", ") : undefined,
         });
       }
     }

@@ -8,28 +8,30 @@ export const metaViewport: Rule = {
   description: "Viewport meta tag must not disable user scaling.",
   guidance: "Users with low vision need to zoom content up to 200% or more. Setting user-scalable=no or maximum-scale=1 prevents zooming and fails WCAG. Remove these restrictions. If your layout breaks at high zoom, fix the responsive design rather than preventing zoom.",
   prompt:
-    "Explain which viewport restrictions to remove and show the corrected meta tag.",
+    "The viewport meta tag restricts zooming, which prevents low-vision users from enlarging content. Show the current content attribute and a corrected version with the problematic properties removed. Keep other viewport properties (like width=device-width, initial-scale=1) intact — only remove user-scalable=no and maximum-scale restrictions.",
   run(doc) {
     const violations = [];
 
     const viewport = doc.querySelector('meta[name="viewport"]');
     if (!viewport) return [];
 
-    const content = viewport.getAttribute("content")?.toLowerCase() || "";
+    const content = viewport.getAttribute("content") || "";
+    const contentLower = content.toLowerCase();
 
     // Check for user-scalable=no
-    if (/user-scalable\s*=\s*no/i.test(content) || /user-scalable\s*=\s*0/i.test(content)) {
+    if (/user-scalable\s*=\s*no/i.test(contentLower) || /user-scalable\s*=\s*0/i.test(contentLower)) {
       violations.push({
         ruleId: "meta-viewport",
         selector: getSelector(viewport),
         html: getHtmlSnippet(viewport),
         impact: "critical" as const,
         message: "Viewport disables user scaling. Remove user-scalable=no.",
+        context: `content: "${content}"`,
       });
     }
 
     // Check for maximum-scale < 2 (including "yes" which browsers treat as 1)
-    const maxScaleMatch = content.match(/maximum-scale\s*=\s*([\d.]+|yes)/i);
+    const maxScaleMatch = contentLower.match(/maximum-scale\s*=\s*([\d.]+|yes)/i);
     if (maxScaleMatch) {
       const rawValue = maxScaleMatch[1];
       const maxScale = rawValue.toLowerCase() === "yes" ? 1 : parseFloat(rawValue);
@@ -40,6 +42,7 @@ export const metaViewport: Rule = {
           html: getHtmlSnippet(viewport),
           impact: "critical" as const,
           message: `Viewport maximum-scale=${maxScale} restricts zooming. Set to at least 2 or remove.`,
+          context: `content: "${content}"`,
         });
       }
     }

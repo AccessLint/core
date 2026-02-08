@@ -9,7 +9,7 @@ export const htmlHasLang: Rule = {
   description: "The <html> element must have a lang attribute.",
   guidance: "Screen readers use the lang attribute to determine which language rules and pronunciation to use. Without it, content may be mispronounced. Set lang to the primary language of the page (e.g., lang='en' for English, lang='es' for Spanish).",
   prompt:
-    "Determine the page's primary language and suggest the appropriate lang value.",
+    "The page is missing a lang attribute on <html>. Use the text sample in context to determine the primary language and suggest the correct BCP 47 code (e.g. 'en' for English, 'es' for Spanish, 'fr' for French, 'de' for German, 'ja' for Japanese, 'zh' for Chinese, 'pt' for Portuguese, 'ar' for Arabic). Add lang to the <html> element: <html lang=\"...\">.",
   run(doc) {
     const html = doc.documentElement;
     // Only applies to HTML documents (not SVG or MathML roots)
@@ -24,12 +24,19 @@ export const htmlHasLang: Rule = {
     }
 
     if (!html.getAttribute("lang")?.trim()) {
+      // Sample visible text to help determine language
+      let textSample: string | undefined;
+      if (doc.body) {
+        const text = doc.body.textContent?.trim().replace(/\s+/g, " ") || "";
+        if (text) textSample = text.slice(0, 200);
+      }
       return [{
         ruleId: "html-has-lang",
         selector: getSelector(html),
         html: getHtmlSnippet(html),
         impact: "serious" as const,
         message: "<html> element missing lang attribute.",
+        context: textSample ? `Page text sample: "${textSample}"` : undefined,
       }];
     }
     return [];
