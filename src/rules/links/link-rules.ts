@@ -115,8 +115,8 @@ function hasNonLinkText(block: Element): boolean {
     }
     if (!insideLink) nonLinkText += node.data;
   }
-  // Require at least one word (2+ consecutive letters) to count as prose
-  return /[a-zA-Z\u00C0-\u024F]{2,}/.test(nonLinkText);
+  // Require at least one word (2+ consecutive letters in any script) to count as prose
+  return /\p{L}{2,}/u.test(nonLinkText);
 }
 
 /**

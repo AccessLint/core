@@ -101,6 +101,13 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
+  it("passes: link list with CJK punctuation separators", () => {
+    const doc = makeDoc(
+      '<body><div style="color: rgb(0,0,0);"><a href="/a" style="color: rgb(0,0,0); text-decoration: none;">首页</a>｜<a href="/b" style="color: rgb(0,0,0); text-decoration: none;">关于</a></div></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
   it("passes: link list separated by middot", () => {
     const doc = makeDoc(
       '<body><div style="color: rgb(0,0,0);"><a href="/a" style="color: rgb(0,0,0); text-decoration: none;">Privacy</a> · <a href="/b" style="color: rgb(0,0,0); text-decoration: none;">Terms</a></div></body>'
@@ -158,6 +165,31 @@ describe("link-in-text-block", () => {
     expect(violations[0].context).toContain("ratio:");
     expect(violations[0].context).toContain("link color:");
     expect(violations[0].context).toContain("surrounding text:");
+  });
+
+  it("fails: CJK text block with indistinguishable link", () => {
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0,0,0);">这是一段中文文本 <a href="/page" style="color: rgb(0,0,0); text-decoration-line: none;">链接</a> 更多文本</p></body>'
+    );
+    const violations = linkInTextBlock.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].ruleId).toBe("link-in-text-block");
+  });
+
+  it("fails: Cyrillic text block with indistinguishable link", () => {
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0,0,0);">Это текст <a href="/page" style="color: rgb(0,0,0); text-decoration-line: none;">ссылка</a> ещё текст</p></body>'
+    );
+    const violations = linkInTextBlock.run(doc);
+    expect(violations).toHaveLength(1);
+  });
+
+  it("fails: Arabic text block with indistinguishable link", () => {
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0,0,0);">هذا نص <a href="/page" style="color: rgb(0,0,0); text-decoration-line: none;">رابط</a> مزيد</p></body>'
+    );
+    const violations = linkInTextBlock.run(doc);
+    expect(violations).toHaveLength(1);
   });
 
   it("fails: text-decoration: none with no other visual cue", () => {
