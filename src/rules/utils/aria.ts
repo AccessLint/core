@@ -227,16 +227,7 @@ export function isValidAriaAttribute(attr: string): boolean {
 export function isComputedHidden(el: Element): boolean {
   let current: Element | null = el;
   while (current) {
-    if (current.getAttribute("aria-hidden") === "true") return true;
-    if (current instanceof HTMLElement && current.hidden) return true;
-    // Check computed style when available (real browser environment)
-    if (typeof getComputedStyle === "function") {
-      const style = getComputedStyle(current);
-      if (style.display === "none" || style.visibility === "hidden") return true;
-    } else {
-      // DOM-only: fall back to inline style check
-      if (current instanceof HTMLElement && current.style.display === "none") return true;
-    }
+    if (isRemovedFromA11yTree(current)) return true;
     current = current.parentElement;
   }
   return false;

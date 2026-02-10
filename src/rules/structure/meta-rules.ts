@@ -23,10 +23,8 @@ export const metaViewport: Rule = {
     const userScalableMatch = contentLower.match(/user-scalable\s*=\s*([^\s,;]+)/i);
     if (userScalableMatch) {
       const raw = userScalableMatch[1];
-      const isDisabled = raw === "no" || (() => {
-        const num = parseFloat(raw);
-        return !isNaN(num) && num > -1 && num < 1;
-      })();
+      const num = parseFloat(raw);
+      const isDisabled = raw === "no" || (!isNaN(num) && num > -1 && num < 1);
       if (isDisabled) {
         violations.push({
           ruleId: "meta-viewport",

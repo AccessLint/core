@@ -21,6 +21,7 @@ describe("list", () => {
     const violations = list.run(doc);
     expect(violations).toHaveLength(1);
     expect(violations[0].message).toContain("text");
+    expect(violations[0].message).toContain("<li>");
   });
 
   it("passes ul with only whitespace text nodes", () => {
@@ -50,5 +51,12 @@ describe("definition-list", () => {
   it("reports invalid child in dl", () => {
     const doc = makeDoc("<html><body><dl><p>Bad</p></dl></body></html>");
     expect(definitionList.run(doc)).toHaveLength(1);
+  });
+
+  it("reports bare text node in dl", () => {
+    const doc = makeDoc("<html><body><dl>Bare text<dt>T</dt><dd>D</dd></dl></body></html>");
+    const violations = definitionList.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].message).toContain("<dt>");
   });
 });

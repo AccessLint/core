@@ -126,17 +126,39 @@ function getAccumulatedOpacity(el: Element): number {
 }
 
 /**
- * A CSS filter/backdrop-filter is a no-op when every function in the list
- * uses its identity value (e.g. `grayscale(0)`, `brightness(1)`).
- * Dark-mode plugins commonly set `filter: grayscale(0)` on `<html>` as a
- * toggle hook — this must not cause us to skip contrast checking.
+ * Filter functions and their identity (no-op) values.  A CSS filter is a
+ * no-op when every function evaluates to its identity value.  Dark-mode
+ * plugins commonly set `filter: grayscale(0)` on `<html>` as a toggle
+ * hook — this must not cause us to skip contrast checking.
+ *
+ * Identity = 0: grayscale, blur, hue-rotate, invert, sepia
+ * Identity = 1: brightness, contrast, saturate, opacity
  */
-const NOOP_FILTER_RE =
-  /^(?:grayscale\(0\)|blur\(0(?:px)?\)|brightness\(1\)|contrast\(1\)|saturate\(1\)|opacity\(1\)|hue-rotate\(0(?:deg|rad|turn)?\)|invert\(0\)|sepia\(0\))$/;
+const FILTER_IDENTITY: Record<string, number> = {
+  grayscale: 0, blur: 0, "hue-rotate": 0, invert: 0, sepia: 0,
+  brightness: 1, contrast: 1, saturate: 1, opacity: 1,
+};
+
+function parseFilterArg(arg: string): number {
+  const num = parseFloat(arg);
+  if (isNaN(num)) return NaN;
+  // Percentage values: 100% → 1, 0% → 0
+  return arg.trim().endsWith("%") ? num / 100 : num;
+}
+
+const FILTER_FN_RE = /([a-z-]+)\(([^)]*)\)/g;
 
 function isNoopFilter(value: string): boolean {
-  // Split on whitespace to handle combined filters like "grayscale(0) blur(0px)"
-  return value.split(/\s+/).every((fn) => NOOP_FILTER_RE.test(fn));
+  let match: RegExpExecArray | null;
+  let matched = false;
+  FILTER_FN_RE.lastIndex = 0;
+  while ((match = FILTER_FN_RE.exec(value))) {
+    matched = true;
+    const identity = FILTER_IDENTITY[match[1]];
+    if (identity === undefined) return false; // unknown function (e.g. url(), drop-shadow())
+    if (parseFilterArg(match[2]) !== identity) return false;
+  }
+  return matched;
 }
 
 /**

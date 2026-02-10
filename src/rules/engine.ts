@@ -245,14 +245,18 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
             if (parentRole === "presentation" || parentRole === "none") continue;
             let found = false;
             // Check for bare text nodes (non-whitespace) — invalid direct children
+            const semanticChildren = spec.check.allowedChildren.filter(
+              (t) => t !== "script" && t !== "template",
+            );
             for (const node of el.childNodes) {
               if (node.nodeType === 3 && node.textContent && node.textContent.trim()) {
+                const wrapped = semanticChildren.map((t) => `<${t}>`).join(" or ");
                 violations.push({
                   ruleId: spec.id,
                   selector: getSelector(el),
                   html: getHtmlSnippet(el),
                   impact: spec.impact,
-                  message: `<${el.tagName.toLowerCase()}> contains direct text content that should be wrapped in a proper child element.`,
+                  message: `<${el.tagName.toLowerCase()}> contains direct text content. Wrap in ${wrapped}.`,
                   element: el,
                 });
                 found = true;
