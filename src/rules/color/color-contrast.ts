@@ -126,6 +126,20 @@ function getAccumulatedOpacity(el: Element): number {
 }
 
 /**
+ * A CSS filter/backdrop-filter is a no-op when every function in the list
+ * uses its identity value (e.g. `grayscale(0)`, `brightness(1)`).
+ * Dark-mode plugins commonly set `filter: grayscale(0)` on `<html>` as a
+ * toggle hook — this must not cause us to skip contrast checking.
+ */
+const NOOP_FILTER_RE =
+  /^(?:grayscale\(0\)|blur\(0(?:px)?\)|brightness\(1\)|contrast\(1\)|saturate\(1\)|opacity\(1\)|hue-rotate\(0(?:deg|rad|turn)?\)|invert\(0\)|sepia\(0\))$/;
+
+function isNoopFilter(value: string): boolean {
+  // Split on whitespace to handle combined filters like "grayscale(0) blur(0px)"
+  return value.split(/\s+/).every((fn) => NOOP_FILTER_RE.test(fn));
+}
+
+/**
  * Returns true when any ancestor uses visual effects that make
  * contrast unreliable to compute (filter, mix-blend-mode, backdrop-filter).
  */
@@ -134,11 +148,11 @@ function hasUnreliableVisualEffects(el: Element): boolean {
   while (current) {
     const style = getCachedComputedStyle(current);
     const filter = style.filter;
-    if (filter && filter !== "none" && filter !== "initial") return true;
+    if (filter && filter !== "none" && filter !== "initial" && !isNoopFilter(filter)) return true;
     const blendMode = style.mixBlendMode;
     if (blendMode && blendMode !== "normal" && blendMode !== "initial") return true;
     const backdrop = style.backdropFilter;
-    if (backdrop && backdrop !== "none" && backdrop !== "initial") return true;
+    if (backdrop && backdrop !== "none" && backdrop !== "initial" && !isNoopFilter(backdrop)) return true;
     current = current.parentElement;
   }
   return false;

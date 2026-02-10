@@ -205,6 +205,35 @@ describe("color-contrast", () => {
     expect(colorContrast.run(doc)).toHaveLength(0);
   });
 
+  it("fails: ancestor has no-op filter grayscale(0)", () => {
+    // Dark-mode plugins set filter: grayscale(0) on <html> as a toggle hook
+    const doc = makeDoc(
+      '<html style="filter: grayscale(0);"><body><p style="color: rgb(200, 200, 200); background-color: rgb(200, 200, 200);">Low contrast</p></body></html>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(1);
+  });
+
+  it("fails: ancestor has combined no-op filters", () => {
+    const doc = makeDoc(
+      '<body><div style="filter: grayscale(0) brightness(1);"><p style="color: rgb(200, 200, 200); background-color: rgb(200, 200, 200);">Low contrast</p></div></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(1);
+  });
+
+  it("skips: ancestor has real filter (blur)", () => {
+    const doc = makeDoc(
+      '<body><div style="filter: blur(5px);"><p style="color: rgb(200, 200, 200); background-color: rgb(200, 200, 200);">Blurred</p></div></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("skips: ancestor has mixed real and no-op filters", () => {
+    const doc = makeDoc(
+      '<body><div style="filter: grayscale(0) blur(5px);"><p style="color: rgb(200, 200, 200); background-color: rgb(200, 200, 200);">Blurred</p></div></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
   it("does not skip: normal-flow text with normal-flow sibling img", () => {
     // Neither the text nor the image is positioned — no overlap possible
     const doc = makeDoc(
