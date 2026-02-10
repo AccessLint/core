@@ -18,16 +18,25 @@ export const metaViewport: Rule = {
     const content = viewport.getAttribute("content") || "";
     const contentLower = content.toLowerCase();
 
-    // Check for user-scalable=no
-    if (/user-scalable\s*=\s*no/i.test(contentLower) || /user-scalable\s*=\s*0/i.test(contentLower)) {
-      violations.push({
-        ruleId: "meta-viewport",
-        selector: getSelector(viewport),
-        html: getHtmlSnippet(viewport),
-        impact: "critical" as const,
-        message: "Viewport disables user scaling. Remove user-scalable=no.",
-        context: `content: "${content}"`,
-      });
+    // Check for user-scalable=no or numeric values that disable scaling.
+    // Browsers treat values between -1 and 1 (exclusive) as disabling zoom.
+    const userScalableMatch = contentLower.match(/user-scalable\s*=\s*([^\s,;]+)/i);
+    if (userScalableMatch) {
+      const raw = userScalableMatch[1];
+      const isDisabled = raw === "no" || (() => {
+        const num = parseFloat(raw);
+        return !isNaN(num) && num > -1 && num < 1;
+      })();
+      if (isDisabled) {
+        violations.push({
+          ruleId: "meta-viewport",
+          selector: getSelector(viewport),
+          html: getHtmlSnippet(viewport),
+          impact: "critical" as const,
+          message: `Viewport disables user scaling (user-scalable=${raw}). Remove this restriction.`,
+          context: `content: "${content}"`,
+        });
+      }
     }
 
     // Check for maximum-scale < 2 (including "yes" which browsers treat as 1)
