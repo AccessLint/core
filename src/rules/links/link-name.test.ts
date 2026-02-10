@@ -25,4 +25,25 @@ describe("link-name", () => {
     const doc = makeDoc('<html><body><a href="/page"><img src="x.png" alt="Logo"></a></body></html>');
     expect(linkName.run(doc)).toHaveLength(0);
   });
+
+  it("reports link whose only text is inside a display:none child", () => {
+    const doc = makeDoc(
+      '<html><body><a href="/page"><span style="display: none;">Hidden</span></a></body></html>'
+    );
+    expect(linkName.run(doc)).toHaveLength(1);
+  });
+
+  it("reports link whose only text is inside a visibility:hidden child", () => {
+    const doc = makeDoc(
+      '<html><body><a href="/page"><span style="visibility: hidden;">Hidden</span></a></body></html>'
+    );
+    expect(linkName.run(doc)).toHaveLength(1);
+  });
+
+  it("passes link with mix of hidden and visible text", () => {
+    const doc = makeDoc(
+      '<html><body><a href="/page"><span style="display: none;">Icon</span> About</a></body></html>'
+    );
+    expect(linkName.run(doc)).toHaveLength(0);
+  });
 });

@@ -273,7 +273,13 @@ export function isAriaHidden(el: Element): boolean {
  */
 function isRemovedFromA11yTree(el: Element): boolean {
   if (el.getAttribute("aria-hidden") === "true") return true;
-  if (el instanceof HTMLElement && (el.hidden || el.style.display === "none")) return true;
+  if (el instanceof HTMLElement && el.hidden) return true;
+  if (typeof getComputedStyle === "function") {
+    const style = getComputedStyle(el);
+    if (style.display === "none" || style.visibility === "hidden") return true;
+  } else if (el instanceof HTMLElement && el.style.display === "none") {
+    return true;
+  }
   return false;
 }
 
