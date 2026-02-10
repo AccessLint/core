@@ -92,9 +92,8 @@ function findParentTextBlock(link: Element): Element | null {
 
 /** Returns true when `block` contains substantive prose text that is NOT
  *  inside an `<a>` element.  Punctuation-only separators between links
- *  (e.g. " | ", " · ") and short metadata labels (e.g. "Regular Price",
- *  "by") do not count — the text must contain at least two words (two or
- *  more consecutive letters each) to qualify as a text block. */
+ *  (e.g. " | ", " · ") do not count — the text must contain at least one
+ *  word (two or more consecutive letters) to qualify as a text block. */
 function hasNonLinkText(block: Element): boolean {
   const walker = block.ownerDocument.createTreeWalker(
     block,
@@ -116,11 +115,8 @@ function hasNonLinkText(block: Element): boolean {
     }
     if (!insideLink) nonLinkText += node.data;
   }
-  // Require at least two words (2+ consecutive letters in any script) to
-  // count as prose.  Single-word labels like "Producent:" or short metadata
-  // like "by" are not sufficient for a text block.
-  const words = nonLinkText.match(/\p{L}{2,}/gu);
-  return words !== null && words.length >= 2;
+  // Require at least one word (2+ consecutive letters in any script) to count as prose
+  return /\p{L}{2,}/u.test(nonLinkText);
 }
 
 /**
@@ -262,6 +258,11 @@ export const linkInTextBlock: Rule = {
 
       // Skip links with no text content (e.g. image-only links)
       if (!getAccessibleTextContent(link).trim()) continue;
+
+      // Skip links in landmark regions — navigation, banner, and
+      // contentinfo regions are structurally distinct from article prose
+      // and links there are identified by context, not inline color cues.
+      if (link.closest('nav, header, footer, [role="navigation"], [role="banner"], [role="contentinfo"]')) continue;
 
       // Skip non-inline links (block-level links are visually distinct)
       const linkStyle = getCachedComputedStyle(link);

@@ -73,9 +73,16 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
-  it("passes: nav link list (insufficient non-link text)", () => {
+  it("passes: link inside nav landmark", () => {
     const doc = makeDoc(
       '<body><nav><p style="color: rgb(0,0,0);">Menu <a href="/page" style="color: rgb(0,0,0); text-decoration: none;">link</a></p></nav></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  it("passes: link inside role=navigation", () => {
+    const doc = makeDoc(
+      '<body><div role="navigation"><p style="color: rgb(0,0,0);">Menu <a href="/page" style="color: rgb(0,0,0); text-decoration: none;">link</a></p></div></body>'
     );
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
@@ -108,14 +115,14 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
-  it("passes: footer with short label (insufficient non-link text)", () => {
+  it("passes: link inside footer element", () => {
     const doc = makeDoc(
       '<body><footer><p style="color: rgb(0,0,0);">Copyright 2024 <a href="/privacy" style="color: rgb(0,0,0); text-decoration: none;">Privacy</a></p></footer></body>'
     );
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
-  it("passes: header with identical colors (allowSameColor)", () => {
+  it("passes: link inside header element", () => {
     const doc = makeDoc(
       '<body><header><p style="color: rgb(0,0,0);">Welcome back <a href="/profile" style="color: rgb(0,0,0); text-decoration: none;">User</a></p></header></body>'
     );
@@ -150,9 +157,9 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
-  it("passes: short metadata label next to link (single word)", () => {
+  it("passes: short metadata label with identical color (allowSameColor)", () => {
     const doc = makeDoc(
-      '<body><div style="color: rgb(0,0,0);">Producent: <a href="/brand" style="color: rgb(50,50,50); text-decoration: none;">Brand Name</a></div></body>'
+      '<body><div style="color: rgb(0,0,0);">Producent: <a href="/brand" style="color: rgb(0,0,0); text-decoration: none;">Brand Name</a></div></body>'
     );
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
@@ -215,11 +222,4 @@ describe("link-in-text-block", () => {
     expect(violations).toHaveLength(1);
   });
 
-  it("fails: link in footer prose with color-only distinction", () => {
-    const doc = makeDoc(
-      '<body><footer><p style="color: rgb(0,0,0);">Built by <a href="/company" style="color: rgb(50,50,50); text-decoration: none;">Company</a>. MIT License.</p></footer></body>'
-    );
-    const violations = linkInTextBlock.run(doc);
-    expect(violations).toHaveLength(1);
-  });
 });
