@@ -92,8 +92,9 @@ function findParentTextBlock(link: Element): Element | null {
 
 /** Returns true when `block` contains substantive prose text that is NOT
  *  inside an `<a>` element.  Punctuation-only separators between links
- *  (e.g. " | ", " · ") do not count — the text must contain at least one
- *  word (two or more consecutive letters) to qualify as a text block. */
+ *  (e.g. " | ", " · ") and short metadata labels (e.g. "Regular Price",
+ *  "by") do not count — the text must contain at least two words (two or
+ *  more consecutive letters each) to qualify as a text block. */
 function hasNonLinkText(block: Element): boolean {
   const walker = block.ownerDocument.createTreeWalker(
     block,
@@ -115,8 +116,11 @@ function hasNonLinkText(block: Element): boolean {
     }
     if (!insideLink) nonLinkText += node.data;
   }
-  // Require at least one word (2+ consecutive letters in any script) to count as prose
-  return /\p{L}{2,}/u.test(nonLinkText);
+  // Require at least two words (2+ consecutive letters in any script) to
+  // count as prose.  Single-word labels like "Producent:" or short metadata
+  // like "by" are not sufficient for a text block.
+  const words = nonLinkText.match(/\p{L}{2,}/gu);
+  return words !== null && words.length >= 2;
 }
 
 /**
@@ -152,14 +156,18 @@ function getSurroundingTextColor(
 
 /**
  * Check if the link has a non-color visual distinction from surrounding text.
+ * Examines both the link element itself and its descendants (e.g. an inner
+ * `<span>` with an underline).
  */
 function isVisuallyDistinct(
+  link: Element,
   linkStyle: CSSStyleDeclaration,
   parentStyle: CSSStyleDeclaration,
 ): boolean {
+  const parentDecoration = parentStyle.textDecorationLine || parentStyle.textDecoration || "";
+
   // Underline or line-through that differs from parent
   const linkDecoration = linkStyle.textDecorationLine || linkStyle.textDecoration || "";
-  const parentDecoration = parentStyle.textDecorationLine || parentStyle.textDecoration || "";
   if (
     (linkDecoration.includes("underline") || linkDecoration.includes("line-through")) &&
     linkDecoration !== parentDecoration
@@ -188,8 +196,8 @@ function isVisuallyDistinct(
   }
 
   // Font-weight difference >= 300
-  const linkWeight = parseFontWeight(linkStyle.fontWeight);
   const parentWeight = parseFontWeight(parentStyle.fontWeight);
+  const linkWeight = parseFontWeight(linkStyle.fontWeight);
   if (Math.abs(linkWeight - parentWeight) >= 300) {
     return true;
   }
@@ -204,6 +212,22 @@ function isVisuallyDistinct(
   const parentSize = parseFloat(parentStyle.fontSize) || 16;
   if (parentSize > 0 && linkSize / parentSize >= 1.2) {
     return true;
+  }
+
+  // Check descendant elements for visual distinction (e.g. inner <span>
+  // with text-decoration: underline or bold font-weight)
+  for (const desc of link.querySelectorAll("*")) {
+    const descStyle = getCachedComputedStyle(desc);
+    const deco = descStyle.textDecorationLine || descStyle.textDecoration || "";
+    if (
+      (deco.includes("underline") || deco.includes("line-through")) &&
+      deco !== parentDecoration
+    ) {
+      return true;
+    }
+    if (Math.abs(parseFontWeight(descStyle.fontWeight) - parentWeight) >= 300) {
+      return true;
+    }
   }
 
   return false;
@@ -239,10 +263,6 @@ export const linkInTextBlock: Rule = {
       // Skip links with no text content (e.g. image-only links)
       if (!getAccessibleTextContent(link).trim()) continue;
 
-      // Skip links in navigation/footer landmarks — these are expected
-      // to be all-link regions and don't need prose-level distinction.
-      if (link.closest('nav, header, footer, [role="navigation"], [role="banner"], [role="contentinfo"]')) continue;
-
       // Skip non-inline links (block-level links are visually distinct)
       const linkStyle = getCachedComputedStyle(link);
       const linkDisplay = linkStyle.display || "inline"; // default for <a>
@@ -255,7 +275,7 @@ export const linkInTextBlock: Rule = {
       const blockStyle = getCachedComputedStyle(block);
 
       // Check 1: non-color visual distinction
-      if (isVisuallyDistinct(linkStyle, blockStyle)) continue;
+      if (isVisuallyDistinct(link, linkStyle, blockStyle)) continue;
 
       // Check 2: 3:1 color contrast with surrounding text
       const linkColor = parseColor(linkStyle.color);
@@ -267,6 +287,10 @@ export const linkInTextBlock: Rule = {
       const linkLum = getLuminance(...linkColor);
       const textLum = getLuminance(...textColor);
       const ratio = getContrastRatio(linkLum, textLum);
+
+      // When link and text colors are effectively identical, color is not
+      // being used as a means of distinction — not a 1.4.1 issue.
+      if (ratio < 1.1) continue;
 
       if (ratio >= 3) continue;
 
@@ -283,7 +307,7 @@ export const linkInTextBlock: Rule = {
         html: getHtmlSnippet(link),
         impact: "serious" as const,
         message:
-          "Link in text block is not visually distinguishable from surrounding text. Add an underline, border, or ensure 3:1 color contrast with surrounding text.",
+          "Link in text block is not visually distinguishable from surrounding text. Add a non-color visual indicator such as an underline or border.",
         context,
       });
     }

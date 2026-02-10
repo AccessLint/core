@@ -73,16 +73,9 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
-  it("passes: link inside nav landmark", () => {
+  it("passes: nav link list (insufficient non-link text)", () => {
     const doc = makeDoc(
       '<body><nav><p style="color: rgb(0,0,0);">Menu <a href="/page" style="color: rgb(0,0,0); text-decoration: none;">link</a></p></nav></body>'
-    );
-    expect(linkInTextBlock.run(doc)).toHaveLength(0);
-  });
-
-  it("passes: link inside role=navigation", () => {
-    const doc = makeDoc(
-      '<body><div role="navigation"><p style="color: rgb(0,0,0);">Menu <a href="/page" style="color: rgb(0,0,0); text-decoration: none;">link</a></p></div></body>'
     );
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
@@ -115,14 +108,14 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
-  it("passes: link inside footer element", () => {
+  it("passes: footer with short label (insufficient non-link text)", () => {
     const doc = makeDoc(
       '<body><footer><p style="color: rgb(0,0,0);">Copyright 2024 <a href="/privacy" style="color: rgb(0,0,0); text-decoration: none;">Privacy</a></p></footer></body>'
     );
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
-  it("passes: link inside header element", () => {
+  it("passes: header with identical colors (allowSameColor)", () => {
     const doc = makeDoc(
       '<body><header><p style="color: rgb(0,0,0);">Welcome back <a href="/profile" style="color: rgb(0,0,0); text-decoration: none;">User</a></p></header></body>'
     );
@@ -143,11 +136,33 @@ describe("link-in-text-block", () => {
     expect(linkInTextBlock.run(doc)).toHaveLength(0);
   });
 
-  // --- Fail cases ---
-
-  it("fails: no underline, same color as surrounding text", () => {
+  it("passes: link and text have identical colors (allowSameColor)", () => {
     const doc = makeDoc(
       '<body><p style="color: rgb(0,0,0);">Some text <a href="/page" style="color: rgb(0,0,0); text-decoration-line: none;">link</a> more text</p></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  it("passes: descendant element has underline", () => {
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0,0,0);">Some text <a href="/page" style="color: rgb(50,50,50); text-decoration: none;"><span style="text-decoration: underline;">link</span></a> more text</p></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  it("passes: short metadata label next to link (single word)", () => {
+    const doc = makeDoc(
+      '<body><div style="color: rgb(0,0,0);">Producent: <a href="/brand" style="color: rgb(50,50,50); text-decoration: none;">Brand Name</a></div></body>'
+    );
+    expect(linkInTextBlock.run(doc)).toHaveLength(0);
+  });
+
+  // --- Fail cases ---
+
+  it("fails: no underline, low contrast with surrounding text", () => {
+    // rgb(50,50,50) on rgb(0,0,0): ~1.6:1 contrast — below 3:1 threshold
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0,0,0);">Some text <a href="/page" style="color: rgb(50,50,50); text-decoration-line: none;">link</a> more text</p></body>'
     );
     const violations = linkInTextBlock.run(doc);
     expect(violations).toHaveLength(1);
@@ -167,34 +182,42 @@ describe("link-in-text-block", () => {
     expect(violations[0].context).toContain("surrounding text:");
   });
 
-  it("fails: CJK text block with indistinguishable link", () => {
+  it("fails: CJK text block with low-contrast link", () => {
     const doc = makeDoc(
-      '<body><p style="color: rgb(0,0,0);">这是一段中文文本 <a href="/page" style="color: rgb(0,0,0); text-decoration-line: none;">链接</a> 更多文本</p></body>'
+      '<body><p style="color: rgb(0,0,0);">这是一段中文文本 <a href="/page" style="color: rgb(50,50,50); text-decoration-line: none;">链接</a> 更多文本</p></body>'
     );
     const violations = linkInTextBlock.run(doc);
     expect(violations).toHaveLength(1);
     expect(violations[0].ruleId).toBe("link-in-text-block");
   });
 
-  it("fails: Cyrillic text block with indistinguishable link", () => {
+  it("fails: Cyrillic text block with low-contrast link", () => {
     const doc = makeDoc(
-      '<body><p style="color: rgb(0,0,0);">Это текст <a href="/page" style="color: rgb(0,0,0); text-decoration-line: none;">ссылка</a> ещё текст</p></body>'
+      '<body><p style="color: rgb(0,0,0);">Это текст <a href="/page" style="color: rgb(50,50,50); text-decoration-line: none;">ссылка</a> ещё текст</p></body>'
     );
     const violations = linkInTextBlock.run(doc);
     expect(violations).toHaveLength(1);
   });
 
-  it("fails: Arabic text block with indistinguishable link", () => {
+  it("fails: Arabic text block with low-contrast link", () => {
     const doc = makeDoc(
-      '<body><p style="color: rgb(0,0,0);">هذا نص <a href="/page" style="color: rgb(0,0,0); text-decoration-line: none;">رابط</a> مزيد</p></body>'
+      '<body><p style="color: rgb(0,0,0);">هذا نص <a href="/page" style="color: rgb(50,50,50); text-decoration-line: none;">رابط</a> مزيد</p></body>'
     );
     const violations = linkInTextBlock.run(doc);
     expect(violations).toHaveLength(1);
   });
 
-  it("fails: text-decoration: none with no other visual cue", () => {
+  it("fails: text-decoration: none with low-contrast color", () => {
     const doc = makeDoc(
-      '<body><p style="color: rgb(100,100,100);">Paragraph text <a href="/page" style="color: rgb(100,100,100); text-decoration: none;">link text</a> and more</p></body>'
+      '<body><p style="color: rgb(100,100,100);">Paragraph text <a href="/page" style="color: rgb(130,130,130); text-decoration: none;">link text</a> and more</p></body>'
+    );
+    const violations = linkInTextBlock.run(doc);
+    expect(violations).toHaveLength(1);
+  });
+
+  it("fails: link in footer prose with color-only distinction", () => {
+    const doc = makeDoc(
+      '<body><footer><p style="color: rgb(0,0,0);">Built by <a href="/company" style="color: rgb(50,50,50); text-decoration: none;">Company</a>. MIT License.</p></footer></body>'
     );
     const violations = linkInTextBlock.run(doc);
     expect(violations).toHaveLength(1);
