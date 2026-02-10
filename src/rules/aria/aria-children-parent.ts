@@ -33,8 +33,9 @@ const REVIEW_EMPTY_ROLES = new Set([
 // Role to required parent role mapping
 const REQUIRED_PARENT: Record<string, string[]> = {
   caption: ["figure", "table", "grid", "treegrid"],
-  // cell/gridcell/columnheader/rowheader must be in a row
-  // but we skip checking native td/th since they're handled by HTML semantics
+  cell: ["row"],
+  columnheader: ["row"],
+  gridcell: ["row"],
   listitem: ["list", "group"],
   menuitem: ["menu", "menubar", "group"],
   menuitemcheckbox: ["menu", "menubar", "group"],
@@ -42,6 +43,7 @@ const REQUIRED_PARENT: Record<string, string[]> = {
   option: ["listbox", "group"],
   row: ["table", "grid", "treegrid", "rowgroup"],
   rowgroup: ["table", "grid", "treegrid"],
+  rowheader: ["row"],
   tab: ["tablist"],
   treeitem: ["tree", "group"],
 };

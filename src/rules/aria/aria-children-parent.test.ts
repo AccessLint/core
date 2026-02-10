@@ -148,4 +148,35 @@ describe("aria-required-parent", () => {
     const doc = makeDoc('<div><div role="listitem" aria-hidden="true">Hidden</div></div>');
     expect(ariaRequiredParent.run(doc)).toHaveLength(0);
   });
+
+  it("passes cell inside row", () => {
+    const doc = makeDoc('<div role="table"><div role="row"><div role="cell">Data</div></div></div>');
+    expect(ariaRequiredParent.run(doc)).toHaveLength(0);
+  });
+
+  it("reports cell without row parent", () => {
+    const doc = makeDoc('<div role="table"><div role="cell">Orphan</div></div>');
+    const violations = ariaRequiredParent.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].message).toContain("row");
+  });
+
+  it("reports columnheader without row parent", () => {
+    const doc = makeDoc('<div role="grid"><div role="columnheader">Header</div></div>');
+    const violations = ariaRequiredParent.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].message).toContain("row");
+  });
+
+  it("passes gridcell inside row", () => {
+    const doc = makeDoc('<div role="grid"><div role="row"><div role="gridcell">Cell</div></div></div>');
+    expect(ariaRequiredParent.run(doc)).toHaveLength(0);
+  });
+
+  it("reports rowheader without row parent", () => {
+    const doc = makeDoc('<div role="table"><div role="rowheader">Header</div></div>');
+    const violations = ariaRequiredParent.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].message).toContain("row");
+  });
 });
