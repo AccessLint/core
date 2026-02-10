@@ -180,9 +180,9 @@ export const scrollableRegionFocusable: Rule = {
         const overflowW = el.scrollWidth - el.clientWidth;
         // No overflow at all
         if (overflowH <= 0 && overflowW <= 0) continue;
-        // Require meaningful overflow — small overflows (< 36px) are often
+        // Require meaningful overflow — small overflows (< 14px) are often
         // caused by borders, padding, or sub-pixel rounding, not real content.
-        if (overflowH < 36 && overflowW < 36) continue;
+        if (overflowH < 14 && overflowW < 14) continue;
         // Skip elements under 64x64px — too small to be meaningful scroll regions
         if (el.clientWidth < 64 && el.clientHeight < 64) continue;
       } else {
