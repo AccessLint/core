@@ -243,6 +243,23 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
             // presentational containers have no semantics to enforce
             const parentRole = el.getAttribute("role")?.trim().toLowerCase();
             if (parentRole === "presentation" || parentRole === "none") continue;
+            let found = false;
+            // Check for bare text nodes (non-whitespace) — invalid direct children
+            for (const node of el.childNodes) {
+              if (node.nodeType === 3 && node.textContent && node.textContent.trim()) {
+                violations.push({
+                  ruleId: spec.id,
+                  selector: getSelector(el),
+                  html: getHtmlSnippet(el),
+                  impact: spec.impact,
+                  message: `<${el.tagName.toLowerCase()}> contains direct text content that should be wrapped in a proper child element.`,
+                  element: el,
+                });
+                found = true;
+                break;
+              }
+            }
+            if (found) continue;
             for (const child of el.children) {
               if (allowedSet.has(child.tagName.toLowerCase())) continue;
               // Check child's role attribute
