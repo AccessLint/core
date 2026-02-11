@@ -1,6 +1,6 @@
 # @accesslint/core
 
-Pure accessibility rule engine for WCAG auditing. 85 bundled rules (65 active by default) and zero browser dependencies.
+Pure accessibility rule engine for WCAG auditing. 85 bundled rules (69 active by default) and zero browser dependencies.
 
 ## Highlights
 
@@ -154,7 +154,7 @@ Array of all 85 bundled `Rule` objects.
 
 ### `defaultDisabledRuleIds`
 
-`Set<string>` of the 20 rule IDs that are disabled by default. These can be re-enabled via `configureRules({ enabledRules: [...] })`.
+`Set<string>` of the 16 rule IDs that are disabled by default. These can be re-enabled via `configureRules({ enabledRules: [...] })`.
 
 ### `getActiveRules(): Rule[]`
 
@@ -179,7 +179,7 @@ Helpers for building custom rules:
 
 ## Rules
 
-65 rules active by default, covering WCAG 2.1 Level A and AA. An additional 20 rules are bundled but disabled by default; re-enable them via `configureRules({ enabledRules: [...] })`.
+69 rules active by default, covering WCAG 2.1 Level A and AA. An additional 16 rules are bundled but disabled by default; re-enable them via `configureRules({ enabledRules: [...] })`.
 
 | Rule | Level | WCAG | Description |
 | ---- | ----- | ---- | ----------- |
@@ -193,6 +193,7 @@ Helpers for building custom rules:
 | `blink` | A | 2.2.2 | `<blink>` must not be used. |
 | `marquee` | A | 2.2.2 | `<marquee>` must not be used. |
 | `img-alt` | A | 1.1.1 | Images must have alternate text. |
+| `svg-img-alt` | A | 1.1.1 | SVG images must have an accessible name. |
 | `input-image-alt` | A | 1.1.1, 4.1.2 | Image inputs must have alternate text. |
 | `image-redundant-alt` | A | — | Image alt should not duplicate adjacent text. |
 | `image-alt-redundant-words` | A | — | Alt text should not contain "image", "photo", etc. |
@@ -223,6 +224,8 @@ Helpers for building custom rules:
 | `landmark-complementary-is-top-level` | A | — | Aside landmark should be top-level. |
 | `landmark-unique` | A | — | Landmarks of the same type should have unique labels. |
 | `region` | A | — | All content should be within landmarks. |
+| `aria-roles` | A | 4.1.2 | ARIA role values must be valid. |
+| `aria-valid-attr` | A | 4.1.2 | ARIA attributes must be valid (correctly spelled). |
 | `aria-valid-attr-value` | A | 4.1.2 | ARIA attributes must have valid values. |
 | `aria-required-attr` | A | 4.1.2 | Required ARIA attributes must be present. |
 | `aria-allowed-attr` | A | 4.1.2 | ARIA attributes must be allowed for the role. |
@@ -245,6 +248,7 @@ Helpers for building custom rules:
 | `td-headers-attr` | A | 1.3.1 | Table headers references must be valid. |
 | `scope-attr-valid` | A | 1.3.1 | `scope` attribute must have a valid value. |
 | `empty-table-header` | A | — | Table headers should have visible text. |
+| `duplicate-id-aria` | A | 4.1.2 | IDs used in ARIA must be unique. |
 | `video-caption` | A | 1.2.2 | Videos must have captions. |
 | `audio-caption` | A | 1.2.1 | Audio elements should have a text alternative. |
 | `color-contrast` | AA | 1.4.3 | Text must have sufficient color contrast. |
