@@ -44,5 +44,5 @@ export { clearAriaAttrAuditCache } from "./rules/aria/aria-attr-audit";
 export { clearColorCaches } from "./rules/utils/color";
 
 // i18n (API only, no bundled locale data)
-export { registerLocale } from "./i18n/registry";
+export { registerLocale, translateViolations } from "./i18n/registry";
 export type { LocaleMap, RuleTranslation } from "./i18n/types";

@@ -42,7 +42,7 @@ export { clearAriaAttrAuditCache } from "./rules/aria/aria-attr-audit";
 export { clearColorCaches } from "./rules/utils/color";
 
 // i18n
-export { registerLocale } from "./i18n/registry";
+export { registerLocale, translateViolations } from "./i18n/registry";
 export type { LocaleMap, RuleTranslation } from "./i18n/types";
 
 // Locale data (tree-shakeable — only included if imported)

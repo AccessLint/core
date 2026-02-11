@@ -3,7 +3,7 @@ import { clearAriaHiddenCache, clearComputedRoleCache, clearAccessibleNameCache 
 import { clearAriaAttrAuditCache } from "./aria/aria-attr-audit";
 import { clearColorCaches } from "./utils/color";
 import { clearSelectorCache } from "./utils/selector";
-import { applyLocale } from "../i18n/registry";
+import { applyLocale, translateViolations } from "../i18n/registry";
 
 // Images
 import { imgAlt } from "./images/img-alt";
@@ -269,6 +269,7 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
   clearAllCaches();
 
   const activeRules = getActiveRules();
+  const locale = activeLocale;
   const violations: Violation[] = [];
   let index = 0;
 
@@ -285,7 +286,7 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
       return index < activeRules.length;
     },
     getViolations() {
-      return violations;
+      return locale ? translateViolations(violations, locale) : violations;
     },
   };
 }
@@ -314,7 +315,7 @@ export function runAudit(doc: Document): AuditResult {
   return {
     url: doc.location?.href ?? "",
     timestamp: Date.now(),
-    violations,
+    violations: activeLocale ? translateViolations(violations, activeLocale) : violations,
     ruleCount: activeRules.length,
   };
 }

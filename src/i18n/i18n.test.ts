@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { rules, configureRules, getActiveRules, getRuleById } from "../rules/index";
-import { registerLocale } from "./registry";
+import { rules, configureRules, getActiveRules, getRuleById, runAudit } from "../rules/index";
+import { registerLocale, translateViolations } from "./registry";
 import { en } from "./en";
+import { es } from "./es";
 
 beforeEach(() => {
   // Reset to no locale between tests
@@ -105,6 +106,86 @@ describe("i18n locale support", () => {
       expect(t.description, `en.ts description out of sync for ${rule.id}`).toBe(rule.description);
       if (rule.guidance) {
         expect(t.guidance, `en.ts guidance out of sync for ${rule.id}`).toBe(rule.guidance);
+      }
+    }
+  });
+});
+
+describe("i18n message translation", () => {
+  it("translates static violation messages", () => {
+    registerLocale("es", es);
+    const violations = [
+      { ruleId: "button-name", message: "Button has no discernible text.", element: "<button></button>", selector: "button" },
+    ];
+    const translated = translateViolations(violations, "es");
+    expect(translated[0].message).toBe("El botón no tiene texto discernible.");
+  });
+
+  it("translates dynamic messages with single placeholder", () => {
+    registerLocale("es", es);
+    const violations = [
+      { ruleId: "aria-roles", message: 'Invalid ARIA role "banana".', element: "<div>", selector: "div" },
+    ];
+    const translated = translateViolations(violations, "es");
+    expect(translated[0].message).toBe('Rol ARIA inválido "banana".');
+  });
+
+  it("translates dynamic messages with multiple placeholders", () => {
+    registerLocale("es", es);
+    const violations = [
+      { ruleId: "heading-order", message: "Heading level 4 skipped from level 2.", element: "<h4>", selector: "h4" },
+    ];
+    const translated = translateViolations(violations, "es");
+    expect(translated[0].message).toBe("Nivel de encabezado 4 saltado desde el nivel 2.");
+  });
+
+  it("returns original message when no matching template exists", () => {
+    registerLocale("es", es);
+    const violations = [
+      { ruleId: "button-name", message: "Some unexpected message format.", element: "<button>", selector: "button" },
+    ];
+    const translated = translateViolations(violations, "es");
+    expect(translated[0].message).toBe("Some unexpected message format.");
+  });
+
+  it("returns original violations when locale is not registered", () => {
+    const violations = [
+      { ruleId: "button-name", message: "Button has no discernible text.", element: "<button>", selector: "button" },
+    ];
+    const translated = translateViolations(violations, "unknown");
+    expect(translated).toBe(violations);
+  });
+
+  it("does not mutate original violation objects", () => {
+    registerLocale("es", es);
+    const original = { ruleId: "button-name", message: "Button has no discernible text.", element: "<button>", selector: "button" };
+    const violations = [original];
+    const translated = translateViolations(violations, "es");
+    expect(original.message).toBe("Button has no discernible text.");
+    expect(translated[0].message).toBe("El botón no tiene texto discernible.");
+  });
+
+  it("handles placeholders that contain placeholder-like text", () => {
+    registerLocale("es", es);
+    // Captured value contains literal text that looks like a placeholder reference
+    const violations = [
+      { ruleId: "aria-valid-attr-value", message: 'aria-checked must be "true" or "false", got "{1} weird".', element: "<div>", selector: "div" },
+    ];
+    const translated = translateViolations(violations, "es");
+    expect(translated[0].message).toBe('aria-checked debe ser "true" o "false", se obtuvo "{1} weird".');
+  });
+
+  it("Spanish locale has messages for all rules with English messages", () => {
+    for (const [ruleId, enEntry] of Object.entries(en)) {
+      if (enEntry.messages) {
+        const esEntry = es[ruleId];
+        expect(esEntry?.messages, `Missing Spanish messages for rule: ${ruleId}`).toBeDefined();
+        for (const key of Object.keys(enEntry.messages)) {
+          expect(
+            esEntry.messages![key],
+            `Missing Spanish message translation for ${ruleId}: "${key}"`,
+          ).toBeDefined();
+        }
       }
     }
   });
