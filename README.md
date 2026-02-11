@@ -1,10 +1,10 @@
 # @accesslint/core
 
-Pure accessibility rule engine for WCAG auditing. 84 bundled rules and zero browser dependencies.
+Pure accessibility rule engine for WCAG auditing. 85 bundled rules (65 active by default) and zero browser dependencies.
 
 ## Highlights
 
-- **Lightweight** — 31 KB gzipped (IIFE), with zero runtime dependencies
+- **Lightweight** — 38 KB gzipped (IIFE), with zero runtime dependencies
 - **Chunked audits** — time-budgeted processing via [`createChunkedAudit`](#createchunkedauditdoc-document-chunkedaudit) to avoid long tasks on the main thread
 - **ESM, CJS, and IIFE** — tree-shakable ES modules, CommonJS for Node, and a single-file IIFE for script injection into any page
 - **Runs anywhere** — works with happy-dom, jsdom, and real browsers with no DOM polyfills or compatibility workarounds. Run accessibility audits in Vitest and React Testing Library using the same environment as the rest of your tests
@@ -132,23 +132,33 @@ processNext();
 
 ### `configureRules(options: ConfigureOptions)`
 
-Customize which rules are active.
+Customize which rules are active. Twenty rules are disabled by default (see `defaultDisabledRuleIds`); use `enabledRules` to re-enable them.
 
 ```js
 import { configureRules } from "@accesslint/core";
 
+// Disable a rule
 configureRules({
   disabledRules: ["heading-order"],
+});
+
+// Re-enable a default-disabled rule
+configureRules({
+  enabledRules: ["aria-roles"],
 });
 ```
 
 ### `rules`
 
-Array of all 84 bundled `Rule` objects.
+Array of all 85 bundled `Rule` objects.
+
+### `defaultDisabledRuleIds`
+
+`Set<string>` of the 20 rule IDs that are disabled by default. These can be re-enabled via `configureRules({ enabledRules: [...] })`.
 
 ### `getActiveRules(): Rule[]`
 
-Returns bundled rules (minus disabled) plus any additional rules from `configureRules()`.
+Returns bundled rules minus default-disabled and user-disabled rules (plus any re-enabled or additional rules from `configureRules()`).
 
 ### `getRuleById(id: string): Rule | undefined`
 
@@ -169,7 +179,7 @@ Helpers for building custom rules:
 
 ## Rules
 
-84 rules covering WCAG 2.1 Level A and AA.
+65 rules active by default, covering WCAG 2.1 Level A and AA. An additional 20 rules are bundled but disabled by default; re-enable them via `configureRules({ enabledRules: [...] })`.
 
 | Rule | Level | WCAG | Description |
 | ---- | ----- | ---- | ----------- |
@@ -183,7 +193,6 @@ Helpers for building custom rules:
 | `blink` | A | 2.2.2 | `<blink>` must not be used. |
 | `marquee` | A | 2.2.2 | `<marquee>` must not be used. |
 | `img-alt` | A | 1.1.1 | Images must have alternate text. |
-| `svg-img-alt` | A | 1.1.1 | SVG images must have an accessible name. |
 | `input-image-alt` | A | 1.1.1, 4.1.2 | Image inputs must have alternate text. |
 | `image-redundant-alt` | A | — | Image alt should not duplicate adjacent text. |
 | `image-alt-redundant-words` | A | — | Alt text should not contain "image", "photo", etc. |
@@ -195,13 +204,11 @@ Helpers for building custom rules:
 | `form-field-multiple-labels` | A | — | Form fields should not have multiple labels. |
 | `select-name` | A | 4.1.2 | Select elements must have a label. |
 | `input-button-name` | A | 4.1.2 | Input buttons must have discernible text. |
-| `autocomplete-valid` | AA | 1.3.5 | Autocomplete must use valid values. |
 | `label-content-name-mismatch` | A | 2.5.3 | Accessible name must contain visible text. |
 | `label-title-only` | A | — | Forms should not use title as the only label. |
 | `tabindex` | A | — | tabindex should not be greater than 0. |
 | `focus-order-semantics` | A | — | Focusable elements must have an appropriate role. |
 | `nested-interactive` | A | 4.1.2 | Interactive controls must not be nested. |
-| `scrollable-region-focusable` | A | 2.1.1 | Scrollable regions must be keyboard accessible. |
 | `accesskeys` | A | — | Accesskey values must be unique. |
 | `heading-order` | A | — | Heading levels should increase by one. |
 | `empty-heading` | A | — | Headings must have discernible text. |
@@ -216,69 +223,37 @@ Helpers for building custom rules:
 | `landmark-complementary-is-top-level` | A | — | Aside landmark should be top-level. |
 | `landmark-unique` | A | — | Landmarks of the same type should have unique labels. |
 | `region` | A | — | All content should be within landmarks. |
-| `list` | A | 1.3.1 | Lists must only contain valid children. |
-| `dlitem` | A | 1.3.1 | `<dt>`/`<dd>` must be in a `<dl>`. |
-| `definition-list` | A | 1.3.1 | `<dl>` must only contain valid children. |
-| `aria-roles` | A | 4.1.2 | ARIA role values must be valid. |
-| `aria-valid-attr` | A | 4.1.2 | ARIA attributes must be correctly spelled. |
 | `aria-valid-attr-value` | A | 4.1.2 | ARIA attributes must have valid values. |
 | `aria-required-attr` | A | 4.1.2 | Required ARIA attributes must be present. |
 | `aria-allowed-attr` | A | 4.1.2 | ARIA attributes must be allowed for the role. |
-| `aria-allowed-role` | A | 4.1.2 | ARIA role must be appropriate for the element. |
-| `aria-required-children` | A | 4.1.2 | Required child roles must be present. |
-| `aria-required-parent` | A | 4.1.2 | Required parent roles must be present. |
 | `aria-hidden-body` | A | 4.1.2 | `aria-hidden` must not be on `<body>`. |
 | `aria-hidden-focus` | A | 4.1.2 | `aria-hidden` regions must not contain focusable elements. |
 | `aria-command-name` | A | 4.1.2 | ARIA commands must have an accessible name. |
 | `aria-input-field-name` | A | 4.1.2 | ARIA input fields must have an accessible name. |
 | `aria-toggle-field-name` | A | 4.1.2 | ARIA toggle fields must have an accessible name. |
 | `aria-meter-name` | A | 4.1.2 | ARIA meters must have an accessible name. |
-| `aria-progressbar-name` | A | 4.1.2 | ARIA progressbars must have an accessible name. |
 | `aria-dialog-name` | A | 4.1.2 | ARIA dialogs must have an accessible name. |
-| `aria-tooltip-name` | A | 4.1.2 | ARIA tooltips must have an accessible name. |
 | `aria-treeitem-name` | A | 4.1.2 | ARIA treeitems must have an accessible name. |
-| `aria-prohibited-attr` | A | 4.1.2 | Prohibited ARIA attributes must not be used. |
 | `presentation-role-conflict` | A | 4.1.2 | Presentation role must not conflict with focusability. |
 | `button-name` | A | 4.1.2 | Buttons must have discernible text. |
 | `summary-name` | A | 4.1.2 | `<summary>` elements must have an accessible name. |
 | `link-name` | A | 2.4.4, 4.1.2 | Links must have discernible text. |
 | `skip-link` | A | 2.4.1 | Skip links must point to a valid target. |
-| `link-in-text-block` | A | 1.4.1 | Links in text must be distinguishable by more than color. |
 | `html-has-lang` | A | 3.1.1 | `<html>` must have a `lang` attribute. |
 | `html-lang-valid` | A | 3.1.1 | `lang` on `<html>` must be valid. |
-| `valid-lang` | AA | 3.1.2 | `lang` attributes must have valid values. |
 | `html-xml-lang-mismatch` | A | 3.1.1 | `lang` and `xml:lang` must match. |
 | `td-headers-attr` | A | 1.3.1 | Table headers references must be valid. |
-| `th-has-data-cells` | A | 1.3.1 | Table headers should have data cells. |
-| `td-has-header` | A | 1.3.1 | Data cells in large tables should have headers. |
 | `scope-attr-valid` | A | 1.3.1 | `scope` attribute must have a valid value. |
 | `empty-table-header` | A | — | Table headers should have visible text. |
-| `duplicate-id-aria` | A | 4.1.2 | IDs used in ARIA must be unique. |
 | `video-caption` | A | 1.2.2 | Videos must have captions. |
 | `audio-caption` | A | 1.2.1 | Audio elements should have a text alternative. |
 | `color-contrast` | AA | 1.4.3 | Text must have sufficient color contrast. |
-
-## Benchmarks
-
-Full audit (`runAudit`) on synthetic documents with a realistic mix of valid and invalid elements.
-
-### Concordance with axe-core
-
-On a synthetic 500-element document exercising all rule categories:
-
-| Metric | Value |
-| ------ | ----: |
-| Rules where both agree | 44 |
-| @accesslint/core only | 9 |
-| axe-core only | 4 |
-| **Concordance** (agreement / core findings) | **83%** |
-| **Coverage** (agreement / axe findings) | **92%** |
 
 ## Development
 
 ```sh
 npm install
-npm test        # 410 tests
+npm test        # 498 tests
 npm run bench   # performance benchmarks
 npm run build   # produces dist/index.js, dist/index.cjs, dist/index.d.ts
 ```
