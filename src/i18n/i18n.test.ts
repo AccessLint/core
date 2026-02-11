@@ -6,7 +6,7 @@ import { es } from "./es";
 
 beforeEach(() => {
   // Reset to no locale between tests
-  configureRules({ locale: undefined, additionalRules: [], disabledRules: [] });
+  configureRules({ locale: undefined, additionalRules: [], disabledRules: [], enabledRules: [] });
 });
 
 describe("i18n locale support", () => {

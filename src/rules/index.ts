@@ -213,18 +213,46 @@ export interface ChunkedAudit {
   getViolations(): Violation[];
 }
 
+// --- Default-disabled rules (< 80% agreement with axe-core) ---
+
+export const defaultDisabledRuleIds = new Set([
+  "aria-allowed-role",
+  "aria-progressbar-name",
+  "aria-prohibited-attr",
+  "aria-required-children",
+  "aria-required-parent",
+  "aria-roles",
+  "aria-tooltip-name",
+  "aria-valid-attr",
+  "autocomplete-valid",
+  "definition-list",
+  "dlitem",
+  "duplicate-id-aria",
+  "link-in-text-block",
+  "list",
+  "listitem",
+  "scrollable-region-focusable",
+  "svg-img-alt",
+  "td-has-header",
+  "th-has-data-cells",
+  "valid-lang",
+]);
+
 // --- Configuration state ---
 
 let additionalRules: Rule[] = [];
 let disabledRuleIds = new Set<string>();
+let enabledRuleIds = new Set<string>();
 let activeLocale: string | undefined;
 let localizedRulesCache: Rule[] | undefined;
 
 export interface ConfigureOptions {
   /** Additional rules to include (e.g. compiled declarative rules) */
   additionalRules?: Rule[];
-  /** Rule IDs to disable */
+  /** Rule IDs to disable (in addition to default-disabled rules) */
   disabledRules?: string[];
+  /** Rule IDs to re-enable from the default-disabled set */
+  enabledRules?: string[];
   /** Locale for translated rule descriptions/guidance (e.g. 'en', 'es') */
   locale?: string;
 }
@@ -236,6 +264,9 @@ export function configureRules(options: ConfigureOptions): void {
   if (options.disabledRules) {
     disabledRuleIds = new Set(options.disabledRules);
   }
+  if (options.enabledRules) {
+    enabledRuleIds = new Set(options.enabledRules);
+  }
   if ("locale" in options) {
     activeLocale = options.locale || undefined;
   }
@@ -243,14 +274,19 @@ export function configureRules(options: ConfigureOptions): void {
 }
 
 /**
- * Return the full set of active rules: bundled (minus disabled) plus
- * any additional rules added via configureRules().
+ * Return the full set of active rules: bundled (minus default-disabled and
+ * user-disabled, plus re-enabled) plus any additional rules via configureRules().
  * When a locale is active, returns shallow-cloned rules with translated fields.
  */
 export function getActiveRules(): Rule[] {
   if (localizedRulesCache) return localizedRulesCache;
 
-  const active = rules.filter((r) => !disabledRuleIds.has(r.id));
+  const active = rules.filter((r) => {
+    if (disabledRuleIds.has(r.id)) return false;
+    if (enabledRuleIds.has(r.id)) return true;
+    if (defaultDisabledRuleIds.has(r.id)) return false;
+    return true;
+  });
   const combined = active.concat(additionalRules);
 
   if (activeLocale) {
