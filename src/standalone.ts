@@ -1,3 +1,5 @@
+// Standalone (IIFE) entry point — excludes locale data bundles.
+
 // Core audit
 export { rules, runAudit, getRuleById, getActiveRules, clearAllCaches } from "./rules/index";
 export type { ChunkedAudit } from "./rules/index";
@@ -41,10 +43,6 @@ export {
 export { clearAriaAttrAuditCache } from "./rules/aria/aria-attr-audit";
 export { clearColorCaches } from "./rules/utils/color";
 
-// i18n
+// i18n (API only, no bundled locale data)
 export { registerLocale } from "./i18n/registry";
 export type { LocaleMap, RuleTranslation } from "./i18n/types";
-
-// Locale data (tree-shakeable — only included if imported)
-export { en as localeEn } from "./i18n/en";
-export { es as localeEs } from "./i18n/es";

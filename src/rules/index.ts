@@ -3,6 +3,7 @@ import { clearAriaHiddenCache, clearComputedRoleCache, clearAccessibleNameCache 
 import { clearAriaAttrAuditCache } from "./aria/aria-attr-audit";
 import { clearColorCaches } from "./utils/color";
 import { clearSelectorCache } from "./utils/selector";
+import { applyLocale } from "../i18n/registry";
 
 // Images
 import { imgAlt } from "./images/img-alt";
@@ -216,12 +217,16 @@ export interface ChunkedAudit {
 
 let additionalRules: Rule[] = [];
 let disabledRuleIds = new Set<string>();
+let activeLocale: string | undefined;
+let localizedRulesCache: Rule[] | undefined;
 
 export interface ConfigureOptions {
   /** Additional rules to include (e.g. compiled declarative rules) */
   additionalRules?: Rule[];
   /** Rule IDs to disable */
   disabledRules?: string[];
+  /** Locale for translated rule descriptions/guidance (e.g. 'en', 'es') */
+  locale?: string;
 }
 
 export function configureRules(options: ConfigureOptions): void {
@@ -231,15 +236,29 @@ export function configureRules(options: ConfigureOptions): void {
   if (options.disabledRules) {
     disabledRuleIds = new Set(options.disabledRules);
   }
+  if ("locale" in options) {
+    activeLocale = options.locale || undefined;
+  }
+  localizedRulesCache = undefined;
 }
 
 /**
  * Return the full set of active rules: bundled (minus disabled) plus
  * any additional rules added via configureRules().
+ * When a locale is active, returns shallow-cloned rules with translated fields.
  */
 export function getActiveRules(): Rule[] {
+  if (localizedRulesCache) return localizedRulesCache;
+
   const active = rules.filter((r) => !disabledRuleIds.has(r.id));
-  return active.concat(additionalRules);
+  const combined = active.concat(additionalRules);
+
+  if (activeLocale) {
+    localizedRulesCache = applyLocale(combined, activeLocale);
+    return localizedRulesCache;
+  }
+
+  return combined;
 }
 
 /**
@@ -303,6 +322,10 @@ export function runAudit(doc: Document): AuditResult {
 const ruleMap = new Map<string, Rule>(rules.map((r) => [r.id, r]));
 
 export function getRuleById(id: string): Rule | undefined {
+  if (activeLocale) {
+    const active = getActiveRules();
+    return active.find((r) => r.id === id);
+  }
   const bundled = ruleMap.get(id);
   if (bundled) return bundled;
   return additionalRules.find((r) => r.id === id);

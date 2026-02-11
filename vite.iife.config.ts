@@ -4,15 +4,13 @@ import { resolve } from "path";
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
-      formats: ["es", "cjs"],
-      fileName: (format) => {
-        if (format === "es") return "index.js";
-        return "index.cjs";
-      },
+      entry: resolve(__dirname, "src/standalone.ts"),
+      formats: ["iife"],
+      name: "AccessLintCore",
+      fileName: () => "index.iife.js",
     },
     outDir: "dist",
-    emptyOutDir: true,
+    emptyOutDir: false,
   },
   resolve: {
     alias: {
