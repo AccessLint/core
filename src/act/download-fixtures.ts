@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 import { ACT_TO_CORE_RULE } from "./act-mapping";
 
 const TESTCASES_URL =
-  "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases.json";
+  "https://raw.githubusercontent.com/w3c/wcag-act-rules/main/content-assets/wcag-act-rules/testcases.json";
 const OUTPUT_DIR = resolve(import.meta.dirname, "../../act-fixtures");
 const OUTPUT_FILE = resolve(OUTPUT_DIR, "act-testcases.json");
 const INDEX_CACHE = resolve(OUTPUT_DIR, "testcases-index.json");
@@ -30,11 +30,23 @@ interface FixtureEntry {
 }
 
 
+const W3C_BASE =
+  "https://www.w3.org/WAI/content-assets/wcag-act-rules/";
+const GITHUB_RAW_BASE =
+  "https://raw.githubusercontent.com/w3c/wcag-act-rules/main/content-assets/wcag-act-rules/";
+
+function toGitHubUrl(url: string): string {
+  if (url.startsWith(W3C_BASE)) {
+    return GITHUB_RAW_BASE + url.slice(W3C_BASE.length);
+  }
+  return url;
+}
+
 function curlFetch(url: string): string | null {
   try {
     return execSync(
-      `curl -sfL --retry 2 --retry-delay 3 --max-time 20 "${url}"`,
-      { encoding: "utf-8", timeout: 60000 },
+      `curl -sfL --retry 2 --retry-delay 3 --max-time 20 "${toGitHubUrl(url)}"`,
+      { encoding: "utf-8", timeout: 60000, maxBuffer: 10 * 1024 * 1024 },
     );
   } catch {
     return null;
