@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  unit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,6 +24,24 @@ jobs:
 
       - name: Run unit tests
         run: npm test
+
+  act:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Cache ACT fixtures
+        uses: actions/cache@v4
+        with:
+          path: act-fixtures
+          key: act-fixtures-${{ hashFiles('src/act/act-mapping.ts') }}
 
       - name: Download ACT fixtures
         run: npm run act:download

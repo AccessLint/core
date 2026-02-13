@@ -33,7 +33,7 @@ interface FixtureEntry {
 function curlFetch(url: string): string | null {
   try {
     return execSync(
-      `curl -sf --retry 2 --retry-delay 3 --max-time 20 "${url}"`,
+      `curl -sfL --retry 2 --retry-delay 3 --max-time 20 "${url}"`,
       { encoding: "utf-8", timeout: 60000 },
     );
   } catch {
