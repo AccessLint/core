@@ -13,6 +13,11 @@ interface ImportantResult {
   px: number | null;
 }
 
+/** Escape a string for safe use inside a RegExp pattern. */
+function escapeRegExp(s: string): string {
+  return s.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+}
+
 /**
  * Parse the *last* CSS property value with !important from an inline style.
  *
@@ -28,7 +33,7 @@ function getImportantValue(
 
   // Match all occurrences of  property: value !important  (last one wins)
   const regex = new RegExp(
-    `${property}\\s*:\\s*([^;!]+)\\s*!\\s*important`,
+    `${escapeRegExp(property)}\\s*:\\s*([^;!]+)\\s*!\\s*important`,
     "gi",
   );
   let lastMatch: RegExpExecArray | null = null;
@@ -94,7 +99,7 @@ function anyTextViolatesPx(
     if (node !== el) {
       const childStyle = node.getAttribute("style") || "";
       const hasOwn = new RegExp(
-        `${property}\\s*:\\s*[^;!]+\\s*!\\s*important`, "i"
+        `${escapeRegExp(property)}\\s*:\\s*[^;!]+\\s*!\\s*important`, "i"
       ).test(childStyle);
       if (hasOwn) return false;
     }
@@ -161,7 +166,7 @@ function hasAffectedText(el: Element, property: string): boolean {
   for (const child of el.children) {
     const childStyle = child.getAttribute("style") || "";
     const hasOwnImportant = new RegExp(
-      `${property}\\s*:\\s*[^;!]+\\s*!\\s*important`,
+      `${escapeRegExp(property)}\\s*:\\s*[^;!]+\\s*!\\s*important`,
       "i",
     ).test(childStyle);
 
@@ -284,7 +289,9 @@ export const importantLineHeight: Rule = {
       if (!hasAffectedText(el, "line-height")) continue;
       // Line-height is only relevant when text wraps vertically
       if (hasHorizontalOnlyScroll(el)) continue;
-      // Line-height only matters for multi-line text — skip single-line elements
+      // Line-height only matters for multi-line text — skip single-line elements.
+      // In happy-dom, scrollHeight is 0 (no layout engine) so this guard is
+      // effectively a no-op there; the check only activates in browser contexts.
       if (el instanceof HTMLElement && el.scrollHeight > 0) {
         const lh = parseFloat(getCachedComputedStyle(el).lineHeight);
         if (lh > 0 && el.scrollHeight <= lh * 1.5) continue;

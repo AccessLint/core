@@ -179,9 +179,12 @@ function splitGradientArgs(content: string): string[] {
 /**
  * Extract color stops from a CSS gradient value.
  * Returns parsed RGB colors for each stop, skipping positions/angles.
- * For "transparent", returns [255,255,255] (assumes white page background).
+ * For "transparent", uses the provided fallback color (defaults to white).
  */
-export function parseGradientStops(bgImage: string): [number, number, number][] {
+export function parseGradientStops(
+  bgImage: string,
+  transparentFallback: [number, number, number] = [255, 255, 255],
+): [number, number, number][] {
   const colors: [number, number, number][] = [];
   // Match the outermost gradient function — use balanced parens matching
   const gradIdx = bgImage.search(/(?:linear|radial|conic)-gradient\(/);
@@ -205,7 +208,7 @@ export function parseGradientStops(bgImage: string): [number, number, number][] 
 
     // Handle "transparent" keyword
     if (trimmed === "transparent" || trimmed.startsWith("transparent ")) {
-      colors.push([255, 255, 255]); // Assume white page background shows through
+      colors.push(transparentFallback);
       continue;
     }
 

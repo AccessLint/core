@@ -232,6 +232,82 @@ export const colorContrastEnhanced: Rule = {
   },
 };
 
+/** Find the nearest ancestor (or self) with a CSS gradient background. */
+function findAncestorGradient(el: Element): { bgImage: string; gradientEl: Element } | null {
+  let current: Element | null = el;
+  while (current) {
+    const style = getCachedComputedStyle(current);
+    const bgImg = style.backgroundImage;
+    if (bgImg && bgImg !== "none" && bgImg !== "initial") {
+      return bgImg.includes("gradient(") ? { bgImage: bgImg, gradientEl: current } : null;
+    }
+    const bg = style.backgroundColor;
+    if (!bg || bg === "transparent" || bg === "rgba(0, 0, 0, 0)" || bg === "rgba(0 0 0 / 0)") {
+      current = current.parentElement;
+      continue;
+    }
+    // Nearly transparent — keep looking
+    if (parseColorAlpha(bg) < 0.1) {
+      current = current.parentElement;
+      continue;
+    }
+    // Solid background found — no gradient shows through
+    return null;
+  }
+  return null;
+}
+
+/** Check gradient background contrast and return a violation if insufficient. */
+function checkGradientContrast(
+  el: Element,
+  fg: [number, number, number],
+  fgAlpha: number,
+  accumulatedOpacity: number,
+  threshold: number,
+  ruleId: string,
+  level: "AA" | "AAA",
+  gradientBg: string,
+  transparentFallback: [number, number, number],
+) {
+  const stops = parseGradientStops(gradientBg, transparentFallback);
+  if (stops.length === 0) return null;
+
+  // Use the gradient stop that gives the BEST contrast with fg.
+  // ACT rule afw4f7: if the highest possible contrast of any text
+  // character meets the threshold, the element passes. Only flag
+  // when even the best stop fails.
+  let bestRatio = 0;
+  let bestBg = stops[0];
+  for (const stop of stops) {
+    let testFg = fg;
+    if (fgAlpha < 1) testFg = compositeColors(fg, stop, fgAlpha);
+    if (accumulatedOpacity < 1) testFg = compositeColors(testFg, stop, accumulatedOpacity);
+    const r = getContrastRatio(
+      getLuminance(testFg[0], testFg[1], testFg[2]),
+      getLuminance(stop[0], stop[1], stop[2]),
+    );
+    if (r > bestRatio) {
+      bestRatio = r;
+      bestBg = stop;
+    }
+  }
+
+  if (bestRatio >= threshold) return null;
+
+  let effectiveFg = fg;
+  if (fgAlpha < 1) effectiveFg = compositeColors(fg, bestBg, fgAlpha);
+  if (accumulatedOpacity < 1) effectiveFg = compositeColors(effectiveFg, bestBg, accumulatedOpacity);
+  const roundedRatio = Math.round(bestRatio * 100) / 100;
+  return {
+    ruleId,
+    selector: getSelector(el),
+    html: getHtmlSnippet(el),
+    impact: "serious" as const,
+    message: `Insufficient${level === "AAA" ? " enhanced" : ""} color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
+    context: `foreground: ${rgbToHex(effectiveFg)} rgb(${effectiveFg.join(", ")}), background: gradient, ratio: ${roundedRatio}:1, required: ${threshold}:1`,
+  };
+}
+
 function checkContrast(doc: Document, ruleId: string, level: "AA" | "AAA") {
     const violations = [];
     const body = doc.body;
@@ -293,51 +369,24 @@ function checkContrast(doc: Document, ruleId: string, level: "AA" | "AAA") {
       // Skip text that may be visually overlaid on an image/video element
       if (mayBeOverImage(el)) continue;
 
+      const threshold = level === "AAA"
+        ? (isLargeText(el) ? 4.5 : 7)
+        : (isLargeText(el) ? 3 : 4.5);
+
       let bg = getEffectiveBackgroundColor(el);
 
-      // If no solid background found, check for gradient backgrounds
+      // If no solid background found, check ancestor chain for gradient backgrounds
       if (!bg) {
-        const bgImage = style.backgroundImage;
-        if (bgImage && bgImage.includes("gradient(")) {
-          const stops = parseGradientStops(bgImage);
-          if (stops.length > 0) {
-            // Use the gradient stop that gives the BEST contrast with fg.
-            // ACT rule afw4f7: if the highest possible contrast of any text
-            // character meets the threshold, the element passes. Only flag
-            // when even the best stop fails.
-            const threshold = level === "AAA"
-              ? (isLargeText(el) ? 4.5 : 7)
-              : (isLargeText(el) ? 3 : 4.5);
-            let bestRatio = 0;
-            let bestBg = stops[0];
-            for (const stop of stops) {
-              let testFg = fg;
-              if (fgAlpha < 1) testFg = compositeColors(fg, stop, fgAlpha);
-              if (accumulatedOpacity < 1) testFg = compositeColors(testFg, stop, accumulatedOpacity);
-              const r = getContrastRatio(
-                getLuminance(testFg[0], testFg[1], testFg[2]),
-                getLuminance(stop[0], stop[1], stop[2]),
-              );
-              if (r > bestRatio) {
-                bestRatio = r;
-                bestBg = stop;
-              }
-            }
-            if (bestRatio < threshold) {
-              let effectiveFg = fg;
-              if (fgAlpha < 1) effectiveFg = compositeColors(fg, bestBg, fgAlpha);
-              if (accumulatedOpacity < 1) effectiveFg = compositeColors(effectiveFg, bestBg, accumulatedOpacity);
-              const roundedRatio = Math.round(bestRatio * 100) / 100;
-              violations.push({
-                ruleId,
-                selector: getSelector(el),
-                html: getHtmlSnippet(el),
-                impact: "serious" as const,
-                message: `Insufficient${level === "AAA" ? " enhanced" : ""} color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
-                context: `foreground: ${rgbToHex(effectiveFg)} rgb(${effectiveFg.join(", ")}), background: gradient, ratio: ${roundedRatio}:1, required: ${threshold}:1`,
-              });
-            }
-          }
+        const gradientInfo = findAncestorGradient(el);
+        if (gradientInfo) {
+          const parentBg = gradientInfo.gradientEl.parentElement
+            ? getEffectiveBackgroundColor(gradientInfo.gradientEl.parentElement)
+            : null;
+          const violation = checkGradientContrast(
+            el, fg, fgAlpha, accumulatedOpacity, threshold, ruleId, level,
+            gradientInfo.bgImage, parentBg ?? [255, 255, 255],
+          );
+          if (violation) violations.push(violation);
         }
         continue;
       }
@@ -356,9 +405,6 @@ function checkContrast(doc: Document, ruleId: string, level: "AA" | "AAA") {
       const fgLum = getLuminance(effectiveFg[0], effectiveFg[1], effectiveFg[2]);
       const bgLum = getLuminance(bg[0], bg[1], bg[2]);
       const ratio = getContrastRatio(fgLum, bgLum);
-      const threshold = level === "AAA"
-        ? (isLargeText(el) ? 4.5 : 7)
-        : (isLargeText(el) ? 3 : 4.5);
 
       if (ratio < threshold) {
         const roundedRatio = Math.round(ratio * 100) / 100;

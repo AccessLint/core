@@ -50,8 +50,9 @@ for (const entry of deduped) {
 // Rules whose test fixtures may trigger browser navigation (meta refresh with delay=0)
 const NAVIGATION_RULES = new Set(["meta-refresh", "meta-refresh-no-exception"]);
 
-// Test fixtures that reference external stylesheets that can't be loaded
-// in the test environment (page.setContent doesn't resolve external URLs)
+// Test fixtures that reference external or root-relative stylesheets that
+// can't be loaded in the test environment (page.setContent doesn't resolve
+// external URLs or root-relative paths like /path/styles.css)
 function usesExternalStylesheets(html: string): boolean {
   return /<link\s[^>]*href\s*=\s*["'][^"']*:\/\//i.test(html) ||
     /<link\s[^>]*href\s*=\s*["']\/[^"']/i.test(html);
