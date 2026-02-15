@@ -46,6 +46,39 @@ function isActuallyVisible(el: HTMLElement): boolean {
 }
 
 
+/**
+ * Detect focus sentinel pattern: an off-screen element whose focus is
+ * redirected via a script (e.g. `getElementById('id').addEventListener('focus', ...)`
+ * that calls `.focus()` on another element). We check both positioning and
+ * script content because off-screen alone doesn't indicate a sentinel.
+ */
+function isFocusSentinel(el: HTMLElement): boolean {
+  // Must be off-screen
+  const view = el.ownerDocument.defaultView;
+  if (!view) return false;
+  const style = view.getComputedStyle(el);
+  const position = style.position;
+  if (position !== "absolute" && position !== "fixed") return false;
+  const top = parseFloat(style.top);
+  const left = parseFloat(style.left);
+  const offScreen = (!isNaN(top) && top < -500) || (!isNaN(left) && left < -500);
+  if (!offScreen) return false;
+
+  // Must have a focus redirect: check scripts for addEventListener('focus',...)
+  // on this element that calls .focus()
+  const id = el.id;
+  if (!id) return false;
+  const escapedId = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const pattern = new RegExp(
+    `getElementById\\s*\\(\\s*['"]${escapedId}['"]\\s*\\)\\s*\\.\\s*addEventListener\\s*\\(\\s*['"]focus['"]`,
+  );
+  for (const script of el.ownerDocument.querySelectorAll("script")) {
+    const text = script.textContent || "";
+    if (pattern.test(text) && /\.focus\s*\(/.test(text)) return true;
+  }
+  return false;
+}
+
 const ariaHiddenBodySpec: DeclarativeRule = {
   id: "accesslint-062",
   selector: 'body[aria-hidden="true"]',
@@ -100,13 +133,13 @@ export const ariaHiddenFocus: Rule = {
           // content via display:none or visibility:hidden.
           if (!isActuallyVisible(el)) continue;
 
-          // ACT 6cfa84 Passed Example 4: focus sentinel pattern — if
-          // the element has an onfocus handler that redirects focus,
-          // it's not a real focus trap and should not be flagged.
-          // We check the attribute rather than calling el.focus() to
-          // avoid side effects (scroll, event dispatch, async triggers).
+          // Focus sentinel pattern: skip elements positioned off-screen
+          // (e.g. position:absolute; top:-999em) or with onfocus handlers
+          // that redirect focus. These are used in modal dialog patterns
+          // to wrap keyboard focus and are not real focus traps.
           const onfocus = el.getAttribute("onfocus") || "";
           if (/\.focus\s*\(/.test(onfocus)) continue;
+          if (isFocusSentinel(el)) continue;
 
           // Determine why this element is focusable
           const tag = el.tagName.toLowerCase();
