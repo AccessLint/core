@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("area-alt", () => {
+describe("accesslint-016", () => {
   it("reports area without alt", () => {
     const doc = makeDoc(`
       <map name="nav">
@@ -14,7 +14,7 @@ describe("area-alt", () => {
     `);
     const violations = areaAlt.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("area-alt");
+    expect(violations[0].ruleId).toBe("accesslint-016");
   });
 
   it("passes area with alt", () => {

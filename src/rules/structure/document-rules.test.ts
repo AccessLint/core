@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("document-title", () => {
+describe("accesslint-001", () => {
   it("reports missing title element", () => {
     const doc = makeDoc("<html><head></head><body>Content</body></html>");
     const violations = documentTitle.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("document-title");
+    expect(violations[0].ruleId).toBe("accesslint-001");
     expect(violations[0].message).toContain("missing");
   });
 
@@ -33,7 +33,7 @@ describe("document-title", () => {
   });
 });
 
-describe("bypass", () => {
+describe("accesslint-002", () => {
   it("passes with main landmark", () => {
     const doc = makeDoc("<html><body><main>Content</main></body></html>");
     expect(bypass.run(doc)).toHaveLength(0);
@@ -61,11 +61,11 @@ describe("bypass", () => {
     const doc2 = makeDoc("<html><body><div>Just content</div></body></html>");
     const violations = bypass.run(doc2);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("bypass");
+    expect(violations[0].ruleId).toBe("accesslint-002");
   });
 });
 
-describe("page-has-heading-one", () => {
+describe("accesslint-003", () => {
   it("passes with h1 element", () => {
     const doc = makeDoc("<html><body><h1>Page Title</h1></body></html>");
     expect(pageHasHeadingOne.run(doc)).toHaveLength(0);
@@ -80,7 +80,7 @@ describe("page-has-heading-one", () => {
     const doc = makeDoc("<html><body><h2>Section</h2><p>Content</p></body></html>");
     const violations = pageHasHeadingOne.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("page-has-heading-one");
+    expect(violations[0].ruleId).toBe("accesslint-003");
   });
 
   it("reports empty h1", () => {

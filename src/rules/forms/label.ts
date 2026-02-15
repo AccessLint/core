@@ -96,7 +96,7 @@ function getFormFieldName(el: Element): string {
 }
 
 export const formLabel: Rule = {
-  id: "label",
+  id: "accesslint-020",
   actRuleIds: ["e086e5"],
   wcag: ["4.1.2"],
   level: "A",
@@ -145,7 +145,7 @@ export const formLabel: Rule = {
         if (id) parts.push(`id: "${id}"`);
 
         violations.push({
-          ruleId: "label",
+          ruleId: "accesslint-020",
           selector: getSelector(input),
           html: getHtmlSnippet(input),
           impact: "critical" as const,
@@ -159,7 +159,7 @@ export const formLabel: Rule = {
 };
 
 export const formFieldMultipleLabels: Rule = {
-  id: "form-field-multiple-labels",
+  id: "accesslint-021",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -195,7 +195,7 @@ export const formFieldMultipleLabels: Rule = {
 
       if (totalLabels > 1) {
         violations.push({
-          ruleId: "form-field-multiple-labels",
+          ruleId: "accesslint-021",
           selector: getSelector(input),
           html: getHtmlSnippet(input),
           impact: "moderate" as const,

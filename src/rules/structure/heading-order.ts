@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
 
 export const headingOrder: Rule = {
-  id: "heading-order",
+  id: "accesslint-033",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -27,7 +27,7 @@ export const headingOrder: Rule = {
       }
       if (lastLevel > 0 && level > lastLevel + 1) {
         violations.push({
-          ruleId: "heading-order",
+          ruleId: "accesslint-033",
           selector: getSelector(heading),
           html: getHtmlSnippet(heading),
           impact: "moderate" as const,

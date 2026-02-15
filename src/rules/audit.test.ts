@@ -29,9 +29,9 @@ describe("runAudit integration", () => {
 
       // Should find violations from multiple rule categories
       const ruleIds = new Set(result.violations.map((v) => v.ruleId));
-      expect(ruleIds.has("img-alt")).toBe(true);
-      expect(ruleIds.has("link-name")).toBe(true);
-      expect(ruleIds.has("empty-heading")).toBe(true);
+      expect(ruleIds.has("accesslint-011")).toBe(true);
+      expect(ruleIds.has("accesslint-077")).toBe(true);
+      expect(ruleIds.has("accesslint-034")).toBe(true);
     },
     15_000,
   );

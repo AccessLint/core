@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
 
 export const htmlHasLang: Rule = {
-  id: "html-has-lang",
+  id: "accesslint-080",
   actRuleIds: ["b5c3f8"],
   wcag: ["3.1.1"],
   level: "A",
@@ -32,7 +32,7 @@ export const htmlHasLang: Rule = {
         if (text) textSample = text.slice(0, 200);
       }
       return [{
-        ruleId: "html-has-lang",
+        ruleId: "accesslint-080",
         selector: getSelector(html),
         html: getHtmlSnippet(html),
         impact: "serious" as const,
@@ -83,7 +83,7 @@ function isValidLangTag(lang: string): boolean {
 }
 
 export const htmlLangValid: Rule = {
-  id: "html-lang-valid",
+  id: "accesslint-081",
   actRuleIds: ["bf051a"],
   wcag: ["3.1.1"],
   level: "A",
@@ -95,7 +95,7 @@ export const htmlLangValid: Rule = {
     const lang = doc.documentElement.getAttribute("lang")?.trim();
     if (lang && !isValidLangTag(lang)) {
       return [{
-        ruleId: "html-lang-valid",
+        ruleId: "accesslint-081",
         selector: "html",
         html: getHtmlSnippet(doc.documentElement),
         impact: "serious" as const,
@@ -151,7 +151,7 @@ function hasVisibleLangText(el: Element): boolean {
 }
 
 export const validLang: Rule = {
-  id: "valid-lang",
+  id: "accesslint-082",
   actRuleIds: ["de46e4"],
   wcag: ["3.1.2"],
   level: "AA",
@@ -173,7 +173,7 @@ export const validLang: Rule = {
       if (rawLang && !lang) {
         if (hasVisibleLangText(el)) {
           violations.push({
-            ruleId: "valid-lang",
+            ruleId: "accesslint-082",
             selector: getSelector(el),
             html: getHtmlSnippet(el),
             impact: "serious" as const,
@@ -190,7 +190,7 @@ export const validLang: Rule = {
 
       if (!isValidLangTag(lang)) {
         violations.push({
-          ruleId: "valid-lang",
+          ruleId: "accesslint-082",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -204,7 +204,7 @@ export const validLang: Rule = {
 };
 
 export const htmlXmlLangMismatch: Rule = {
-  id: "html-xml-lang-mismatch",
+  id: "accesslint-083",
   wcag: ["3.1.1"],
   level: "A",
   description: "The lang and xml:lang attributes on <html> must match.",
@@ -223,7 +223,7 @@ export const htmlXmlLangMismatch: Rule = {
 
       if (langPrimary !== xmlLangPrimary) {
         return [{
-          ruleId: "html-xml-lang-mismatch",
+          ruleId: "accesslint-083",
           selector: "html",
           html: getHtmlSnippet(html),
           impact: "moderate" as const,

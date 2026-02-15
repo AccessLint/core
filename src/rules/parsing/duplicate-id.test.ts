@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("duplicate-id-aria", () => {
+describe("accesslint-089", () => {
   it("reports duplicate IDs referenced by aria-labelledby", () => {
     const doc = makeDoc(
       '<html><body><div id="a">Label</div><div id="a">Dup</div><input aria-labelledby="a"></body></html>'

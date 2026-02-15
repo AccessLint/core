@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("tabindex", () => {
+describe("accesslint-027", () => {
   it("reports positive tabindex", () => {
     const doc = makeDoc('<html><body><div tabindex="5">X</div></body></html>');
     expect(tabindex.run(doc)).toHaveLength(1);

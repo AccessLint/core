@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
 export const summaryName: Rule = {
-  id: "summary-name",
+  id: "accesslint-076",
   actRuleIds: ["2t702h"],
   wcag: ["4.1.2"],
   level: "A",
@@ -20,7 +20,7 @@ export const summaryName: Rule = {
       const name = getAccessibleName(summary);
       if (!name) {
         violations.push({
-          ruleId: "summary-name",
+          ruleId: "accesslint-076",
           selector: getSelector(summary),
           html: getHtmlSnippet(summary),
           impact: "serious" as const,

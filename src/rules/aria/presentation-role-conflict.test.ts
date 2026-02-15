@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("presentation-role-conflict", () => {
+describe("accesslint-073", () => {
   it("passes role=presentation on non-focusable element", () => {
     const doc = makeDoc('<img role="presentation" src="spacer.gif">');
     expect(presentationRoleConflict.run(doc)).toHaveLength(0);

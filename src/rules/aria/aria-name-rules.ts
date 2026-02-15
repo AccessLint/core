@@ -64,7 +64,7 @@ function createNameRule(
 }
 
 export const ariaCommandName: Rule = {
-  id: "aria-command-name",
+  id: "accesslint-064",
   actRuleIds: ["m6b1q3"],
   wcag: ["4.1.2"],
   level: "A",
@@ -98,7 +98,7 @@ export const ariaCommandName: Rule = {
         if (img?.getAttribute("alt")?.trim()) continue;
 
         violations.push({
-          ruleId: "aria-command-name",
+          ruleId: "accesslint-064",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -112,7 +112,7 @@ export const ariaCommandName: Rule = {
 };
 
 export const ariaInputFieldName: Rule = {
-  id: "aria-input-field-name",
+  id: "accesslint-065",
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA input fields must have an accessible name.",
@@ -135,7 +135,7 @@ export const ariaInputFieldName: Rule = {
       const name = getAccessibleName(el);
       if (!name) {
         violations.push({
-          ruleId: "aria-input-field-name",
+          ruleId: "accesslint-065",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -149,7 +149,7 @@ export const ariaInputFieldName: Rule = {
 };
 
 export const ariaToggleFieldName: Rule = {
-  id: "aria-toggle-field-name",
+  id: "accesslint-066",
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA toggle fields must have an accessible name.",
@@ -172,7 +172,7 @@ export const ariaToggleFieldName: Rule = {
       const name = getAccessibleName(el);
       if (!name) {
         violations.push({
-          ruleId: "aria-toggle-field-name",
+          ruleId: "accesslint-066",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -186,7 +186,7 @@ export const ariaToggleFieldName: Rule = {
 };
 
 export const ariaMeterName: Rule = {
-  id: "aria-meter-name",
+  id: "accesslint-067",
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA meter elements must have an accessible name.",
@@ -202,7 +202,7 @@ export const ariaMeterName: Rule = {
       const name = getAccessibleName(el);
       if (!name) {
         violations.push({
-          ruleId: "aria-meter-name",
+          ruleId: "accesslint-067",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -216,7 +216,7 @@ export const ariaMeterName: Rule = {
 };
 
 export const ariaProgressbarName: Rule = {
-  id: "aria-progressbar-name",
+  id: "accesslint-068",
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA progressbar elements must have an accessible name.",
@@ -232,7 +232,7 @@ export const ariaProgressbarName: Rule = {
       const name = getAccessibleName(el);
       if (!name) {
         violations.push({
-          ruleId: "aria-progressbar-name",
+          ruleId: "accesslint-068",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -246,7 +246,7 @@ export const ariaProgressbarName: Rule = {
 };
 
 export const ariaDialogName: Rule = {
-  id: "aria-dialog-name",
+  id: "accesslint-069",
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA dialogs must have an accessible name.",
@@ -262,7 +262,7 @@ export const ariaDialogName: Rule = {
       const name = getAccessibleName(el);
       if (!name) {
         violations.push({
-          ruleId: "aria-dialog-name",
+          ruleId: "accesslint-069",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -276,7 +276,7 @@ export const ariaDialogName: Rule = {
 };
 
 export const ariaTooltipName: Rule = {
-  id: "aria-tooltip-name",
+  id: "accesslint-070",
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA tooltips must have an accessible name.",
@@ -292,7 +292,7 @@ export const ariaTooltipName: Rule = {
       const name = getAccessibleName(el);
       if (!name) {
         violations.push({
-          ruleId: "aria-tooltip-name",
+          ruleId: "accesslint-070",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -306,7 +306,7 @@ export const ariaTooltipName: Rule = {
 };
 
 export const ariaTreeitemName: Rule = {
-  id: "aria-treeitem-name",
+  id: "accesslint-071",
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA treeitem elements must have an accessible name.",
@@ -322,7 +322,7 @@ export const ariaTreeitemName: Rule = {
       const name = getAccessibleName(el);
       if (!name) {
         violations.push({
-          ruleId: "aria-treeitem-name",
+          ruleId: "accesslint-071",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,

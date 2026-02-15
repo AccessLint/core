@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
 
 export const pAsHeading: Rule = {
-  id: "p-as-heading",
+  id: "accesslint-035",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -41,7 +41,7 @@ export const pAsHeading: Rule = {
         const nextSibling = p.nextElementSibling;
         if (nextSibling && (nextSibling.tagName === "P" || nextSibling.tagName === "DIV" || nextSibling.tagName === "UL")) {
           violations.push({
-            ruleId: "p-as-heading",
+            ruleId: "accesslint-035",
             selector: getSelector(p),
             html: getHtmlSnippet(p),
             impact: "serious" as const,

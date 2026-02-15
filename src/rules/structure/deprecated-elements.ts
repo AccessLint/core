@@ -2,7 +2,7 @@ import type { DeclarativeRule } from "../types";
 import { compileDeclarativeRule } from "../engine";
 
 const blinkSpec: DeclarativeRule = {
-  id: "blink",
+  id: "accesslint-009",
   selector: "blink",
   check: { type: "selector-exists" },
   impact: "serious",
@@ -17,7 +17,7 @@ const blinkSpec: DeclarativeRule = {
 export const blink = compileDeclarativeRule(blinkSpec);
 
 const marqueeSpec: DeclarativeRule = {
-  id: "marquee",
+  id: "accesslint-010",
   selector: "marquee",
   check: { type: "selector-exists" },
   impact: "serious",

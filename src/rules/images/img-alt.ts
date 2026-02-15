@@ -43,7 +43,7 @@ function isVisibilityHidden(el: Element): boolean {
 }
 
 export const imgAlt: Rule = {
-  id: "img-alt",
+  id: "accesslint-011",
   actRuleIds: ["23a2a8"],
   wcag: ["1.1.1"],
   level: "A",
@@ -74,7 +74,7 @@ export const imgAlt: Rule = {
       // Whitespace-only alt (not empty "") is not a valid accessible name
       if (alt !== null && alt.trim() === "" && alt !== "") {
         violations.push({
-          ruleId: "img-alt",
+          ruleId: "accesslint-011",
           selector: getSelector(img),
           html: getHtmlSnippet(img),
           impact: "critical" as const,
@@ -86,7 +86,7 @@ export const imgAlt: Rule = {
 
       if (!img.hasAttribute("alt") && !getAccessibleName(img)) {
         violations.push({
-          ruleId: "img-alt",
+          ruleId: "accesslint-011",
           selector: getSelector(img),
           html: getHtmlSnippet(img),
           impact: "critical" as const,
@@ -102,7 +102,7 @@ export const imgAlt: Rule = {
       if (isVisibilityHidden(el)) continue;
       if (!getAccessibleName(el)) {
         violations.push({
-          ruleId: "img-alt",
+          ruleId: "accesslint-011",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "critical" as const,

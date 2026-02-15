@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("blink", () => {
+describe("accesslint-009", () => {
   it("reports blink element", () => {
     const doc = makeDoc("<html><body><blink>Attention!</blink></body></html>");
     const violations = blink.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("blink");
+    expect(violations[0].ruleId).toBe("accesslint-009");
   });
 
   it("passes without blink element", () => {
@@ -24,12 +24,12 @@ describe("blink", () => {
   });
 });
 
-describe("marquee", () => {
+describe("accesslint-010", () => {
   it("reports marquee element", () => {
     const doc = makeDoc("<html><body><marquee>Scrolling text</marquee></body></html>");
     const violations = marquee.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("marquee");
+    expect(violations[0].ruleId).toBe("accesslint-010");
   });
 
   it("passes without marquee element", () => {

@@ -6,7 +6,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
  * Maps to axe-core's image-redundant-alt rule.
  */
 export const imageRedundantAlt: Rule = {
-  id: "image-redundant-alt",
+  id: "accesslint-014",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -30,7 +30,7 @@ export const imageRedundantAlt: Rule = {
           const parentTag = parentInteractive.tagName.toLowerCase();
           const href = parentInteractive.getAttribute("href");
           violations.push({
-            ruleId: "image-redundant-alt",
+            ruleId: "accesslint-014",
             selector: getSelector(img),
             html: getHtmlSnippet(img),
             impact: "minor" as const,
@@ -53,7 +53,7 @@ const REDUNDANT_WORDS = ["image", "picture", "photo", "graphic", "icon", "img"];
  * does not have an equivalent check.
  */
 export const imageAltRedundantWords: Rule = {
-  id: "image-alt-redundant-words",
+  id: "accesslint-015",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -72,7 +72,7 @@ export const imageAltRedundantWords: Rule = {
       const found = REDUNDANT_WORDS.filter((w) => alt.split(/\s+/).includes(w));
       if (found.length > 0) {
         violations.push({
-          ruleId: "image-alt-redundant-words",
+          ruleId: "accesslint-015",
           selector: getSelector(img),
           html: getHtmlSnippet(img),
           impact: "minor" as const,

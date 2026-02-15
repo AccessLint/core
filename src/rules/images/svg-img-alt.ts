@@ -33,7 +33,7 @@ function getSvgAccessibleName(el: Element): string {
 }
 
 export const svgImgAlt: Rule = {
-  id: "svg-img-alt",
+  id: "accesslint-012",
   actRuleIds: ["7d6734"],
   wcag: ["1.1.1"],
   level: "A",
@@ -54,7 +54,7 @@ export const svgImgAlt: Rule = {
       if (!name) {
         const role = el.getAttribute("role");
         violations.push({
-          ruleId: "svg-img-alt",
+          ruleId: "accesslint-012",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,

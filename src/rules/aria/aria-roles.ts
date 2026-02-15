@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isValidRole } from "../utils/aria";
 
 export const ariaRoles: Rule = {
-  id: "aria-roles",
+  id: "accesslint-054",
   actRuleIds: ["674b10"],
   wcag: ["4.1.2"],
   level: "A",
@@ -25,7 +25,7 @@ export const ariaRoles: Rule = {
       const hasValidRole = roles.some((r) => isValidRole(r));
       if (!hasValidRole && roles.length > 0) {
         violations.push({
-          ruleId: "aria-roles",
+          ruleId: "accesslint-054",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "critical" as const,

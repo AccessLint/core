@@ -6,12 +6,12 @@ function makeDoc(html: string): Document {
   return doc;
 }
 
-describe("img-alt", () => {
+describe("accesslint-011", () => {
   it("reports images missing alt attribute", () => {
     const doc = makeDoc('<html><body><img src="photo.jpg"></body></html>');
     const violations = imgAlt.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("img-alt");
+    expect(violations[0].ruleId).toBe("accesslint-011");
   });
 
   it("passes images with alt attribute", () => {

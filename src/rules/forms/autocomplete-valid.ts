@@ -70,7 +70,7 @@ function isValidAutocomplete(value: string): boolean {
 }
 
 export const autocompleteValid: Rule = {
-  id: "autocomplete-valid",
+  id: "accesslint-024",
   actRuleIds: ["73f2c2"],
   wcag: ["1.3.5"],
   level: "AA",
@@ -93,7 +93,7 @@ export const autocompleteValid: Rule = {
 
       if (!isValidAutocomplete(value)) {
         violations.push({
-          ruleId: "autocomplete-valid",
+          ruleId: "accesslint-024",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,

@@ -87,7 +87,7 @@ const GLOBAL_ARIA_ATTRS = new Set([
 ]);
 
 export const ariaAllowedAttr: Rule = {
-  id: "aria-allowed-attr",
+  id: "accesslint-058",
   actRuleIds: ["5c01ea"],
   wcag: ["4.1.2"],
   level: "A",
@@ -117,7 +117,7 @@ export const ariaAllowedAttr: Rule = {
           : "none (only global ARIA attributes)";
 
         violations.push({
-          ruleId: "aria-allowed-attr",
+          ruleId: "accesslint-058",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "critical" as const,

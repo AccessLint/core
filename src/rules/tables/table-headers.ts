@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden, getAccessibleName } from "../utils/aria";
 
 export const tdHeadersAttr: Rule = {
-  id: "td-headers-attr",
+  id: "accesslint-084",
   actRuleIds: ["a25f45"],
   wcag: ["1.3.1"],
   level: "A",
@@ -23,7 +23,7 @@ export const tdHeadersAttr: Rule = {
         // Self-referencing headers are invalid
         if (id === tdId) {
           violations.push({
-            ruleId: "td-headers-attr",
+            ruleId: "accesslint-084",
             selector: getSelector(td),
             html: getHtmlSnippet(td),
             impact: "serious" as const,
@@ -33,7 +33,7 @@ export const tdHeadersAttr: Rule = {
         }
         if (!table.querySelector(`th#${CSS.escape(id)}, td#${CSS.escape(id)}`)) {
           violations.push({
-            ruleId: "td-headers-attr",
+            ruleId: "accesslint-084",
             selector: getSelector(td),
             html: getHtmlSnippet(td),
             impact: "serious" as const,
@@ -48,7 +48,7 @@ export const tdHeadersAttr: Rule = {
 };
 
 export const thHasDataCells: Rule = {
-  id: "th-has-data-cells",
+  id: "accesslint-085",
   actRuleIds: ["d0f69e"],
   wcag: ["1.3.1"],
   level: "A",
@@ -67,7 +67,7 @@ export const thHasDataCells: Rule = {
       const tds = table.querySelectorAll("td");
       if (ths.length > 0 && tds.length === 0) {
         violations.push({
-          ruleId: "th-has-data-cells",
+          ruleId: "accesslint-085",
           selector: getSelector(table),
           html: getHtmlSnippet(table),
           impact: "serious" as const,
@@ -80,7 +80,7 @@ export const thHasDataCells: Rule = {
 };
 
 export const tdHasHeader: Rule = {
-  id: "td-has-header",
+  id: "accesslint-086",
   wcag: ["1.3.1"],
   level: "A",
   description: "Data cells in tables larger than 3x3 should have associated headers.",
@@ -159,7 +159,7 @@ export const tdHasHeader: Rule = {
 
         if (!rowHasHeader && !colHasHeader && !hasScope && !hasHeadersAttr) {
           violations.push({
-            ruleId: "td-has-header",
+            ruleId: "accesslint-086",
             selector: getSelector(td),
             html: getHtmlSnippet(td),
             impact: "serious" as const,
@@ -176,7 +176,7 @@ export const tdHasHeader: Rule = {
 };
 
 export const scopeAttrValid: Rule = {
-  id: "scope-attr-valid",
+  id: "accesslint-087",
   wcag: ["1.3.1"],
   level: "A",
   description: "The scope attribute on table headers must have a valid value.",
@@ -193,7 +193,7 @@ export const scopeAttrValid: Rule = {
       const scope = th.getAttribute("scope")?.toLowerCase();
       if (scope && !validScopes.has(scope)) {
         violations.push({
-          ruleId: "scope-attr-valid",
+          ruleId: "accesslint-087",
           selector: getSelector(th),
           html: getHtmlSnippet(th),
           impact: "moderate" as const,
@@ -207,7 +207,7 @@ export const scopeAttrValid: Rule = {
 };
 
 export const emptyTableHeader: Rule = {
-  id: "empty-table-header",
+  id: "accesslint-088",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -228,7 +228,7 @@ export const emptyTableHeader: Rule = {
       // Check for accessible name
       if (!getAccessibleName(th)) {
         violations.push({
-          ruleId: "empty-table-header",
+          ruleId: "accesslint-088",
           selector: getSelector(th),
           html: getHtmlSnippet(th),
           impact: "minor" as const,

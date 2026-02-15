@@ -86,7 +86,7 @@ function isInteractiveContainer(el: Element): boolean {
 }
 
 export const nestedInteractive: Rule = {
-  id: "nested-interactive",
+  id: "accesslint-029",
   wcag: ["4.1.2"],
   level: "A",
   description: "Interactive controls must not be nested inside each other.",
@@ -116,7 +116,7 @@ export const nestedInteractive: Rule = {
           const parent = interactiveAncestors[interactiveAncestors.length - 1];
           if (!isAllowedNesting(parent, node)) {
             violations.push({
-              ruleId: "nested-interactive",
+              ruleId: "accesslint-029",
               selector: getSelector(node),
               html: getHtmlSnippet(node),
               impact: "serious" as const,
@@ -138,7 +138,7 @@ export const nestedInteractive: Rule = {
 };
 
 export const scrollableRegionFocusable: Rule = {
-  id: "scrollable-region-focusable",
+  id: "accesslint-030",
   actRuleIds: ["0ssw9k"],
   wcag: ["2.1.1"],
   level: "A",
@@ -210,7 +210,7 @@ export const scrollableRegionFocusable: Rule = {
       if (focusableChild) continue;
 
       violations.push({
-        ruleId: "scrollable-region-focusable",
+        ruleId: "accesslint-030",
         selector: getSelector(el),
         html: getHtmlSnippet(el),
         impact: "serious" as const,

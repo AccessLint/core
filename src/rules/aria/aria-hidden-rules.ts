@@ -47,7 +47,7 @@ function isActuallyVisible(el: HTMLElement): boolean {
 
 
 const ariaHiddenBodySpec: DeclarativeRule = {
-  id: "aria-hidden-body",
+  id: "accesslint-062",
   selector: 'body[aria-hidden="true"]',
   check: { type: "selector-exists" },
   impact: "critical",
@@ -63,7 +63,7 @@ const ariaHiddenBodySpec: DeclarativeRule = {
 export const ariaHiddenBody = compileDeclarativeRule(ariaHiddenBodySpec);
 
 export const ariaHiddenFocus: Rule = {
-  id: "aria-hidden-focus",
+  id: "accesslint-063",
   actRuleIds: ["6cfa84"],
   wcag: ["4.1.2"],
   level: "A",
@@ -124,7 +124,7 @@ export const ariaHiddenFocus: Rule = {
           const hiddenAncestor = el === hidden ? el : el.closest('[aria-hidden="true"]');
 
           violations.push({
-            ruleId: "aria-hidden-focus",
+            ruleId: "accesslint-063",
             selector: getSelector(el),
             html: getHtmlSnippet(el),
             impact: "serious" as const,

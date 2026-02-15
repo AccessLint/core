@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("frame-title", () => {
+describe("accesslint-004", () => {
   it("reports iframe without title", () => {
     const doc = makeDoc('<html><body><iframe src="page.html"></iframe></body></html>');
     const violations = frameTitle.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("frame-title");
+    expect(violations[0].ruleId).toBe("accesslint-004");
   });
 
   it("reports iframe with empty title", () => {
@@ -55,7 +55,7 @@ describe("frame-title", () => {
   });
 });
 
-describe("frame-title-unique", () => {
+describe("accesslint-005", () => {
   it("passes when frame titles are unique", () => {
     const doc = makeDoc(`
       <html><body>
@@ -75,7 +75,7 @@ describe("frame-title-unique", () => {
     `);
     const violations = frameTitleUnique.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("frame-title-unique");
+    expect(violations[0].ruleId).toBe("accesslint-005");
   });
 
   it("reports multiple duplicates", () => {

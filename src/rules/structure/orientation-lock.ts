@@ -77,7 +77,7 @@ function isOrientationLockRotate(value: string): boolean {
 }
 
 export const cssOrientationLock: Rule = {
-  id: "css-orientation-lock",
+  id: "accesslint-053",
   actRuleIds: ["b33eff"],
   wcag: ["1.3.4"],
   level: "AA",
@@ -121,7 +121,7 @@ export const cssOrientationLock: Rule = {
 
         if (locked) {
           violations.push({
-            ruleId: "css-orientation-lock",
+            ruleId: "accesslint-053",
             selector: getSelector(style),
             html: getHtmlSnippet(style),
             impact: "serious" as const,

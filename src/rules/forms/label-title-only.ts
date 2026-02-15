@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
 
 export const labelTitleOnly: Rule = {
-  id: "label-title-only",
+  id: "accesslint-026",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -39,7 +39,7 @@ export const labelTitleOnly: Rule = {
       // Violation if only title is used
       if (hasTitle && !hasAriaLabel && !hasAriaLabelledby && !hasLabel) {
         violations.push({
-          ruleId: "label-title-only",
+          ruleId: "accesslint-026",
           selector: getSelector(input),
           html: getHtmlSnippet(input),
           impact: "serious" as const,

@@ -2,7 +2,7 @@ import type { Rule } from "../types";
 import { runAriaAttrAudit } from "./aria-attr-audit";
 
 export const ariaProhibitedAttr: Rule = {
-  id: "aria-prohibited-attr",
+  id: "accesslint-072",
   actRuleIds: ["kb1m8s"],
   wcag: ["4.1.2"],
   level: "A",

@@ -85,7 +85,7 @@ function checkRequiredChildren(el: Element, requiredGroups: string[][]): "pass" 
 }
 
 export const ariaRequiredChildren: Rule = {
-  id: "aria-required-children",
+  id: "accesslint-060",
   actRuleIds: ["bc4a75"],
   wcag: ["1.3.1"],
   level: "A",
@@ -124,7 +124,7 @@ export const ariaRequiredChildren: Rule = {
 
       const requiredStr = required.map((g) => g.join(" or ")).join(", ");
       violations.push({
-        ruleId: "aria-required-children",
+        ruleId: "accesslint-060",
         selector: getSelector(el),
         html: getHtmlSnippet(el),
         impact: "critical" as const,
@@ -137,7 +137,7 @@ export const ariaRequiredChildren: Rule = {
 };
 
 export const ariaRequiredParent: Rule = {
-  id: "aria-required-parent",
+  id: "accesslint-061",
   actRuleIds: ["ff89c9"],
   wcag: ["1.3.1"],
   level: "A",
@@ -172,7 +172,7 @@ export const ariaRequiredParent: Rule = {
 
       if (!found) {
         violations.push({
-          ruleId: "aria-required-parent",
+          ruleId: "accesslint-061",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "critical" as const,

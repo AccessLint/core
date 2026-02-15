@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("object-alt", () => {
+describe("accesslint-017", () => {
   it("reports object without alternative text", () => {
     const doc = makeDoc('<object data="movie.swf" type="application/x-shockwave-flash"></object>');
     const violations = objectAlt.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("object-alt");
+    expect(violations[0].ruleId).toBe("accesslint-017");
   });
 
   it("passes object with aria-label", () => {

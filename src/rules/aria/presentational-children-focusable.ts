@@ -42,7 +42,7 @@ const FOCUSABLE_SELECTOR = [
 ].join(", ");
 
 export const presentationalChildrenFocusable: Rule = {
-  id: "presentational-children-focusable",
+  id: "accesslint-074",
   actRuleIds: ["307n5z"],
   wcag: ["4.1.2"],
   level: "A",
@@ -67,7 +67,7 @@ export const presentationalChildrenFocusable: Rule = {
         if ((child as HTMLButtonElement | HTMLInputElement).disabled) continue;
 
         violations.push({
-          ruleId: "presentational-children-focusable",
+          ruleId: "accesslint-074",
           selector: getSelector(child),
           html: getHtmlSnippet(child),
           impact: "serious" as const,

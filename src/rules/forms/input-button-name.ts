@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
 export const inputButtonName: Rule = {
-  id: "input-button-name",
+  id: "accesslint-023",
   wcag: ["4.1.2"],
   level: "A",
   description: "Input buttons must have discernible text via value, aria-label, or aria-labelledby.",
@@ -23,7 +23,7 @@ export const inputButtonName: Rule = {
       const hasDefaultLabel = (type === "submit" || type === "reset") && !input.hasAttribute("value");
       if (!value && !hasDefaultLabel && !getAccessibleName(input)) {
         violations.push({
-          ruleId: "input-button-name",
+          ruleId: "accesslint-023",
           selector: getSelector(input),
           html: getHtmlSnippet(input),
           impact: "critical" as const,

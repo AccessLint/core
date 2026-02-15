@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { rules, clearAllCaches } from "../rules/index";
+import { ACT_TO_CORE_RULE } from "./act-mapping";
 
 const FIXTURE_PATH = resolve(
   import.meta.dirname,
@@ -37,28 +38,30 @@ function makeDoc(html: string): Document {
 describe.skipIf(!fixturesExist)("ACT Performance", () => {
   const fixtures = loadFixtures();
 
-  // Group by core rule ID
+  // Group by core rule ID (translate fixture's old slug to accesslintNNNN via ACT mapping)
   const byRule = new Map<string, FixtureEntry[]>();
   for (const entry of fixtures) {
-    const list = byRule.get(entry.coreRuleId) ?? [];
+    const newId = ACT_TO_CORE_RULE[entry.actRuleId];
+    if (!newId) continue;
+    const list = byRule.get(newId) ?? [];
     list.push(entry);
-    byRule.set(entry.coreRuleId, list);
+    byRule.set(newId, list);
   }
 
   const ruleMap = new Map(rules.map((r) => [r.id, r]));
 
-  for (const [coreRuleId, entries] of byRule) {
-    const rule = ruleMap.get(coreRuleId);
+  for (const [ruleId, entries] of byRule) {
+    const rule = ruleMap.get(ruleId);
     if (!rule) {
-      it(`${coreRuleId}: rule not found`, () => {
-        expect.fail(`Rule "${coreRuleId}" not found in rules array`);
+      it(`${ruleId}: rule not found`, () => {
+        expect.fail(`Rule "${ruleId}" not found in rules array`);
       });
       continue;
     }
 
     const actRuleId = entries[0].actRuleId;
 
-    describe(`${coreRuleId} (ACT ${actRuleId})`, () => {
+    describe(`${ruleId} (ACT ${actRuleId})`, () => {
       beforeEach(() => {
         clearAllCaches();
       });

@@ -2,7 +2,7 @@ import type { DeclarativeRule } from "../types";
 import { compileDeclarativeRule } from "../engine";
 
 const tabindexSpec: DeclarativeRule = {
-  id: "tabindex",
+  id: "accesslint-027",
   selector: "[tabindex]",
   check: { type: "attribute-value", attribute: "tabindex", operator: ">", value: 0 },
   impact: "serious",

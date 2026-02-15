@@ -2,7 +2,7 @@ import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 
 export const metaViewport: Rule = {
-  id: "meta-viewport",
+  id: "accesslint-006",
   actRuleIds: ["b4f0c3"],
   wcag: ["1.4.4"],
   level: "AA",
@@ -28,7 +28,7 @@ export const metaViewport: Rule = {
       const isDisabled = raw === "no" || (!isNaN(num) && num > -1 && num < 1);
       if (isDisabled) {
         violations.push({
-          ruleId: "meta-viewport",
+          ruleId: "accesslint-006",
           selector: getSelector(viewport),
           html: getHtmlSnippet(viewport),
           impact: "critical" as const,
@@ -45,7 +45,7 @@ export const metaViewport: Rule = {
       const maxScale = rawValue.toLowerCase() === "yes" ? 1 : parseFloat(rawValue);
       if (maxScale < 2) {
         violations.push({
-          ruleId: "meta-viewport",
+          ruleId: "accesslint-006",
           selector: getSelector(viewport),
           html: getHtmlSnippet(viewport),
           impact: "critical" as const,
@@ -60,7 +60,7 @@ export const metaViewport: Rule = {
 };
 
 export const metaRefreshNoException: Rule = {
-  id: "meta-refresh-no-exception",
+  id: "accesslint-008",
   actRuleIds: ["bisz58"],
   wcag: ["2.2.1", "3.2.5"],
   level: "A",
@@ -81,7 +81,7 @@ export const metaRefreshNoException: Rule = {
       if (hasValidUrl) {
         if (seconds > 0) {
           return [{
-            ruleId: "meta-refresh-no-exception",
+            ruleId: "accesslint-008",
             selector: getSelector(refresh),
             html: getHtmlSnippet(refresh),
             impact: "critical" as const,
@@ -95,7 +95,7 @@ export const metaRefreshNoException: Rule = {
       // Same-page refresh (no URL)
       if (seconds > 0) {
         return [{
-          ruleId: "meta-refresh-no-exception",
+          ruleId: "accesslint-008",
           selector: getSelector(refresh),
           html: getHtmlSnippet(refresh),
           impact: "critical" as const,
@@ -108,7 +108,7 @@ export const metaRefreshNoException: Rule = {
 };
 
 export const metaRefresh: Rule = {
-  id: "meta-refresh",
+  id: "accesslint-007",
   actRuleIds: ["bc659a"],
   wcag: ["2.2.1", "2.2.4", "3.2.5"],
   level: "A",
@@ -136,7 +136,7 @@ export const metaRefresh: Rule = {
         // This is the effective redirect
         if (seconds > 0 && seconds <= 72000) {
           return [{
-            ruleId: "meta-refresh",
+            ruleId: "accesslint-007",
             selector: getSelector(refresh),
             html: getHtmlSnippet(refresh),
             impact: "critical" as const,
@@ -150,7 +150,7 @@ export const metaRefresh: Rule = {
       // No valid URL = same-page refresh
       if (seconds > 0 && seconds <= 72000) {
         return [{
-          ruleId: "meta-refresh",
+          ruleId: "accesslint-007",
           selector: getSelector(refresh),
           html: getHtmlSnippet(refresh),
           impact: "critical" as const,

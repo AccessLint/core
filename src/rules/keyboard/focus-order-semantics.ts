@@ -8,7 +8,7 @@ const NON_INTERACTIVE_TAGS = new Set([
 ]);
 
 export const focusOrderSemantics: Rule = {
-  id: "focus-order-semantics",
+  id: "accesslint-028",
   wcag: [],
   tags: ["best-practice"],
   level: "A",
@@ -26,7 +26,7 @@ export const focusOrderSemantics: Rule = {
       const role = el.getAttribute("role");
       if (!role) {
         violations.push({
-          ruleId: "focus-order-semantics",
+          ruleId: "accesslint-028",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "moderate" as const,

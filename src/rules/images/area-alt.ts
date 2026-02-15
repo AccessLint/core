@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
 export const areaAlt: Rule = {
-  id: "area-alt",
+  id: "accesslint-016",
   wcag: ["1.1.1", "4.1.2"],
   level: "A",
   description: "Image map <area> elements must have alternative text.",
@@ -19,7 +19,7 @@ export const areaAlt: Rule = {
       const name = getAccessibleName(area);
       if (!name) {
         violations.push({
-          ruleId: "area-alt",
+          ruleId: "accesslint-016",
           selector: getSelector(area),
           html: getHtmlSnippet(area),
           impact: "critical" as const,

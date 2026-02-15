@@ -6,7 +6,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("link-in-text-block", () => {
+describe("accesslint-079", () => {
   afterEach(() => {
     clearColorCaches();
   });
@@ -173,7 +173,7 @@ describe("link-in-text-block", () => {
     );
     const violations = linkInTextBlock.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("link-in-text-block");
+    expect(violations[0].ruleId).toBe("accesslint-079");
     expect(violations[0].impact).toBe("serious");
   });
 
@@ -195,7 +195,7 @@ describe("link-in-text-block", () => {
     );
     const violations = linkInTextBlock.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("link-in-text-block");
+    expect(violations[0].ruleId).toBe("accesslint-079");
   });
 
   it("fails: Cyrillic text block with low-contrast link", () => {

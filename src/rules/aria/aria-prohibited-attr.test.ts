@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("aria-prohibited-attr", () => {
+describe("accesslint-072", () => {
   it("reports aria-label on role=none", () => {
     const doc = makeDoc('<img role="none" aria-label="Decorative" src="bg.png">');
     const violations = ariaProhibitedAttr.run(doc);

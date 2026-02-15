@@ -4,7 +4,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 const ARIA_ID_ATTRS = ["aria-labelledby", "aria-describedby", "aria-controls", "aria-owns", "aria-flowto"];
 
 export const duplicateIdAria: Rule = {
-  id: "duplicate-id-aria",
+  id: "accesslint-089",
   wcag: ["4.1.2"],
   level: "A",
   description: "IDs used in ARIA and label associations must be unique to avoid broken references.",
@@ -66,7 +66,7 @@ export const duplicateIdAria: Rule = {
       }
 
       violations.push({
-        ruleId: "duplicate-id-aria",
+        ruleId: "accesslint-089",
         selector: getSelector(els[1]),
         html: getHtmlSnippet(els[1]),
         impact: "critical" as const,

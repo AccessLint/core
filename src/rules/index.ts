@@ -232,15 +232,15 @@ export interface ChunkedAudit {
 
 export const defaultDisabledRuleIds = new Set([
   // No ACT mapping; disabled due to known precision issues
-  "aria-allowed-role",
-  "aria-progressbar-name",
-  "aria-tooltip-name",
-  "definition-list",
-  "dlitem",
-  "link-in-text-block",
-  "list",
-  "listitem",
-  "td-has-header",
+  "accesslint-059",
+  "accesslint-068",
+  "accesslint-070",
+  "accesslint-049",
+  "accesslint-048",
+  "accesslint-079",
+  "accesslint-046",
+  "accesslint-047",
+  "accesslint-086",
 ]);
 
 // --- Configuration state ---

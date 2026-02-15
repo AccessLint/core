@@ -142,7 +142,7 @@ function getAllowedRoles(el: Element): Set<string> | "any" | "none" {
 }
 
 export const ariaAllowedRole: Rule = {
-  id: "aria-allowed-role",
+  id: "accesslint-059",
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA role must be appropriate for the element.",
@@ -168,7 +168,7 @@ export const ariaAllowedRole: Rule = {
 
       if (allowed === "none") {
         violations.push({
-          ruleId: "aria-allowed-role",
+          ruleId: "accesslint-059",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "minor" as const,
@@ -176,7 +176,7 @@ export const ariaAllowedRole: Rule = {
         });
       } else if (allowed !== "any" && !allowed.has(role)) {
         violations.push({
-          ruleId: "aria-allowed-role",
+          ruleId: "accesslint-059",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "minor" as const,

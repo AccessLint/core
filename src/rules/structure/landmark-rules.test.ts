@@ -16,7 +16,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("landmark-one-main", () => {
+describe("accesslint-036", () => {
   it("reports missing main landmark", () => {
     const doc = makeDoc("<html><body><div>Content</div></body></html>");
     const violations = landmarkMain.run(doc);
@@ -42,7 +42,7 @@ describe("landmark-one-main", () => {
   });
 });
 
-describe("landmark-no-duplicate-banner", () => {
+describe("accesslint-037", () => {
   it("passes with single header", () => {
     const doc = makeDoc("<html><body><header>Site header</header><main>Content</main></body></html>");
     expect(landmarkNoDuplicateBanner.run(doc)).toHaveLength(0);
@@ -60,7 +60,7 @@ describe("landmark-no-duplicate-banner", () => {
   });
 });
 
-describe("landmark-no-duplicate-contentinfo", () => {
+describe("accesslint-038", () => {
   it("passes with single footer", () => {
     const doc = makeDoc("<html><body><main>Content</main><footer>Site footer</footer></body></html>");
     expect(landmarkNoDuplicateContentinfo.run(doc)).toHaveLength(0);
@@ -73,7 +73,7 @@ describe("landmark-no-duplicate-contentinfo", () => {
   });
 });
 
-describe("landmark-no-duplicate-main", () => {
+describe("accesslint-039", () => {
   it("passes with single main", () => {
     const doc = makeDoc("<html><body><main>Content</main></body></html>");
     expect(landmarkNoDuplicateMain.run(doc)).toHaveLength(0);
@@ -86,7 +86,7 @@ describe("landmark-no-duplicate-main", () => {
   });
 });
 
-describe("landmark-banner-is-top-level", () => {
+describe("accesslint-040", () => {
   it("passes for top-level banner", () => {
     const doc = makeDoc('<html><body><div role="banner">Header</div></body></html>');
     expect(landmarkBannerIsTopLevel.run(doc)).toHaveLength(0);
@@ -99,7 +99,7 @@ describe("landmark-banner-is-top-level", () => {
   });
 });
 
-describe("landmark-contentinfo-is-top-level", () => {
+describe("accesslint-041", () => {
   it("passes for top-level contentinfo", () => {
     const doc = makeDoc('<html><body><div role="contentinfo">Footer</div></body></html>');
     expect(landmarkContentinfoIsTopLevel.run(doc)).toHaveLength(0);
@@ -112,7 +112,7 @@ describe("landmark-contentinfo-is-top-level", () => {
   });
 });
 
-describe("landmark-main-is-top-level", () => {
+describe("accesslint-042", () => {
   it("passes for top-level main", () => {
     const doc = makeDoc("<html><body><main>Content</main></body></html>");
     expect(landmarkMainIsTopLevel.run(doc)).toHaveLength(0);
@@ -125,7 +125,7 @@ describe("landmark-main-is-top-level", () => {
   });
 });
 
-describe("landmark-complementary-is-top-level", () => {
+describe("accesslint-043", () => {
   it("passes for top-level aside", () => {
     const doc = makeDoc("<html><body><aside>Sidebar</aside></body></html>");
     expect(landmarkComplementaryIsTopLevel.run(doc)).toHaveLength(0);
@@ -143,7 +143,7 @@ describe("landmark-complementary-is-top-level", () => {
   });
 });
 
-describe("landmark-unique", () => {
+describe("accesslint-044", () => {
   it("passes with uniquely labeled navs", () => {
     const doc = makeDoc(`
       <html><body>
@@ -183,7 +183,7 @@ describe("landmark-unique", () => {
   });
 });
 
-describe("region", () => {
+describe("accesslint-045", () => {
   it("passes when all content is in landmarks", () => {
     const doc = makeDoc(`
       <html><body>
@@ -204,7 +204,7 @@ describe("region", () => {
     `);
     const violations = region.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("region");
+    expect(violations[0].ruleId).toBe("accesslint-045");
   });
 
   it("allows skip links outside landmarks", () => {

@@ -4,7 +4,7 @@ import { compileDeclarativeRule } from "../engine";
 import { isAriaHidden } from "../utils/aria";
 
 const listSpec: DeclarativeRule = {
-  id: "list",
+  id: "accesslint-046",
   selector: "ul, ol",
   check: { type: "child-invalid", allowedChildren: ["li", "script", "template"], allowedChildRoles: ["listitem"] },
   impact: "serious",
@@ -19,7 +19,7 @@ const listSpec: DeclarativeRule = {
 export const list = compileDeclarativeRule(listSpec);
 
 export const dlitem: Rule = {
-  id: "dlitem",
+  id: "accesslint-048",
   wcag: ["1.3.1"],
   level: "A",
   description: "<dt> and <dd> elements must be contained in a <dl>.",
@@ -32,7 +32,7 @@ export const dlitem: Rule = {
     for (const el of doc.querySelectorAll("dt, dd")) {
       if (!el.parentElement || el.parentElement.tagName.toLowerCase() !== "dl") {
         violations.push({
-          ruleId: "dlitem",
+          ruleId: "accesslint-048",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -45,7 +45,7 @@ export const dlitem: Rule = {
 };
 
 const definitionListSpec: DeclarativeRule = {
-  id: "definition-list",
+  id: "accesslint-049",
   selector: "dl",
   check: { type: "child-invalid", allowedChildren: ["dt", "dd", "div", "script", "template"] },
   impact: "serious",
@@ -60,7 +60,7 @@ const definitionListSpec: DeclarativeRule = {
 export const definitionList = compileDeclarativeRule(definitionListSpec);
 
 export const listitem: Rule = {
-  id: "listitem",
+  id: "accesslint-047",
   wcag: ["1.3.1"],
   level: "A",
   description: "<li> elements must be contained in a <ul>, <ol>, or <menu>.",
@@ -80,7 +80,7 @@ export const listitem: Rule = {
       const parentRole = parent.getAttribute("role")?.trim().toLowerCase();
       if (parentRole === "list") continue;
       violations.push({
-        ruleId: "listitem",
+        ruleId: "accesslint-047",
         selector: getSelector(el),
         html: getHtmlSnippet(el),
         impact: "serious" as const,

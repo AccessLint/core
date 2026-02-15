@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("label-title-only", () => {
+describe("accesslint-026", () => {
   it("reports input with only title attribute", () => {
     const doc = makeDoc('<input type="text" title="Search">');
     const violations = labelTitleOnly.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("label-title-only");
+    expect(violations[0].ruleId).toBe("accesslint-026");
   });
 
   it("passes input with label element", () => {

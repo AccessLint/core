@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("label", () => {
+describe("accesslint-020", () => {
   it("reports input without label", () => {
     const doc = makeDoc('<html><body><input type="text"></body></html>');
     const v = formLabel.run(doc);
     expect(v).toHaveLength(1);
-    expect(v[0].ruleId).toBe("label");
+    expect(v[0].ruleId).toBe("accesslint-020");
   });
 
   it("passes input with aria-label", () => {

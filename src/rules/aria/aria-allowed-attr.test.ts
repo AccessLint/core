@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("aria-allowed-attr", () => {
+describe("accesslint-058", () => {
   it("passes when ARIA attributes are allowed for role", () => {
     const doc = makeDoc('<button aria-pressed="true">Toggle</button>');
     expect(ariaAllowedAttr.run(doc)).toHaveLength(0);

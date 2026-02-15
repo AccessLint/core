@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("aria-valid-attr", () => {
+describe("accesslint-055", () => {
   it("passes valid aria attributes", () => {
     const doc = makeDoc('<html><body><div aria-label="test"></div></body></html>');
     expect(ariaValidAttr.run(doc)).toHaveLength(0);

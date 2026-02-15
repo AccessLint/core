@@ -14,7 +14,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("aria-command-name", () => {
+describe("accesslint-064", () => {
   it("passes command with text", () => {
     const doc = makeDoc('<div role="button">Click me</div>');
     expect(ariaCommandName.run(doc)).toHaveLength(0);
@@ -47,7 +47,7 @@ describe("aria-command-name", () => {
   });
 });
 
-describe("aria-input-field-name", () => {
+describe("accesslint-065", () => {
   it("passes textbox with aria-label", () => {
     const doc = makeDoc('<div role="textbox" aria-label="Username"></div>');
     expect(ariaInputFieldName.run(doc)).toHaveLength(0);
@@ -76,7 +76,7 @@ describe("aria-input-field-name", () => {
   });
 });
 
-describe("aria-toggle-field-name", () => {
+describe("accesslint-066", () => {
   it("passes checkbox with name", () => {
     const doc = makeDoc('<div role="checkbox" aria-checked="false">Subscribe</div>');
     expect(ariaToggleFieldName.run(doc)).toHaveLength(0);
@@ -99,7 +99,7 @@ describe("aria-toggle-field-name", () => {
   });
 });
 
-describe("aria-meter-name", () => {
+describe("accesslint-067", () => {
   it("passes meter with aria-label", () => {
     const doc = makeDoc('<div role="meter" aria-valuenow="70" aria-label="Battery level"></div>');
     expect(ariaMeterName.run(doc)).toHaveLength(0);
@@ -117,7 +117,7 @@ describe("aria-meter-name", () => {
   });
 });
 
-describe("aria-progressbar-name", () => {
+describe("accesslint-068", () => {
   it("passes progressbar with aria-label", () => {
     const doc = makeDoc('<div role="progressbar" aria-valuenow="50" aria-label="Upload progress"></div>');
     expect(ariaProgressbarName.run(doc)).toHaveLength(0);
@@ -130,7 +130,7 @@ describe("aria-progressbar-name", () => {
   });
 });
 
-describe("aria-dialog-name", () => {
+describe("accesslint-069", () => {
   it("passes dialog with aria-label", () => {
     const doc = makeDoc('<div role="dialog" aria-label="Confirm action"></div>');
     expect(ariaDialogName.run(doc)).toHaveLength(0);
@@ -159,7 +159,7 @@ describe("aria-dialog-name", () => {
   });
 });
 
-describe("aria-tooltip-name", () => {
+describe("accesslint-070", () => {
   it("passes tooltip with text content", () => {
     const doc = makeDoc('<div role="tooltip">Helpful hint</div>');
     expect(ariaTooltipName.run(doc)).toHaveLength(0);
@@ -172,7 +172,7 @@ describe("aria-tooltip-name", () => {
   });
 });
 
-describe("aria-treeitem-name", () => {
+describe("accesslint-071", () => {
   it("passes treeitem with text", () => {
     const doc = makeDoc('<div role="treeitem">Documents</div>');
     expect(ariaTreeitemName.run(doc)).toHaveLength(0);

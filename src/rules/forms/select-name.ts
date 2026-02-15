@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
 export const selectName: Rule = {
-  id: "select-name",
+  id: "accesslint-022",
   wcag: ["4.1.2"],
   level: "A",
   description: "Select elements must have a programmatically associated label via <label>, aria-label, or aria-labelledby.",
@@ -17,7 +17,7 @@ export const selectName: Rule = {
       if (isAriaHidden(select)) continue;
       if (!getAccessibleName(select)) {
         violations.push({
-          ruleId: "select-name",
+          ruleId: "accesslint-022",
           selector: getSelector(select),
           html: getHtmlSnippet(select),
           impact: "critical" as const,

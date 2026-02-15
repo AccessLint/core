@@ -39,7 +39,7 @@ const deduped = fixtures.filter((f) => {
   return true;
 });
 
-// Group by core rule ID
+// Group by the fixture's coreRuleId (old slug names from fixture data)
 const byRule = new Map<string, FixtureEntry[]>();
 for (const entry of deduped) {
   const list = byRule.get(entry.coreRuleId) ?? [];
@@ -48,6 +48,7 @@ for (const entry of deduped) {
 }
 
 // Rules whose test fixtures may trigger browser navigation (meta refresh with delay=0)
+// These use the old fixture slug names since we group by coreRuleId from fixture data
 const NAVIGATION_RULES = new Set(["meta-refresh", "meta-refresh-no-exception"]);
 
 // Test fixtures that reference external or root-relative stylesheets that
@@ -85,13 +86,13 @@ for (const [coreRuleId, entries] of byRule) {
           await page.setContent(entry.html, { waitUntil: "domcontentloaded" });
           await page.addScriptTag({ path: IIFE_PATH });
 
-          violations = await page.evaluate((ruleId) => {
+          violations = await page.evaluate((actId) => {
             const { rules, clearAllCaches } = (window as any).AccessLintCore;
             clearAllCaches();
-            const rule = rules.find((r: any) => r.id === ruleId);
+            const rule = rules.find((r: any) => r.actRuleIds?.includes(actId));
             if (!rule) return [];
             return rule.run(document);
-          }, coreRuleId);
+          }, entry.actRuleId);
         } catch (e: any) {
           // Meta refresh with delay=0 causes instant navigation, destroying
           // the execution context. This is expected for passing meta-refresh

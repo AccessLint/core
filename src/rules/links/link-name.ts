@@ -25,7 +25,7 @@ function getLinkContext(el: Element): string | undefined {
 }
 
 export const linkName: Rule = {
-  id: "link-name",
+  id: "accesslint-077",
   actRuleIds: ["c487ae"],
   wcag: ["2.4.4", "4.1.2"],
   level: "A",
@@ -44,7 +44,7 @@ export const linkName: Rule = {
       const name = getAccessibleName(a);
       if (!name) {
         violations.push({
-          ruleId: "link-name",
+          ruleId: "accesslint-077",
           selector: getSelector(a),
           html: getHtmlSnippet(a),
           impact: "serious" as const,

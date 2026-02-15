@@ -153,7 +153,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
       if (attr.name.startsWith("aria-") && !VALID_ARIA_ATTRS.has(attr.name)) {
         const v = lazy();
         validAttr.push({
-          ruleId: "aria-valid-attr",
+          ruleId: "accesslint-055",
           selector: v.selector,
           html: v.html,
           impact: "critical",
@@ -174,7 +174,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
         if (val !== "true" && val !== "false") {
           const v = lazy();
           validAttrValue.push({
-            ruleId: "aria-valid-attr-value",
+            ruleId: "accesslint-056",
             selector: v.selector,
             html: v.html,
             impact: "critical",
@@ -185,7 +185,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
         if (val !== "true" && val !== "false" && val !== "mixed") {
           const v = lazy();
           validAttrValue.push({
-            ruleId: "aria-valid-attr-value",
+            ruleId: "accesslint-056",
             selector: v.selector,
             html: v.html,
             impact: "critical",
@@ -196,7 +196,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
         if (val === "" || !/^-?\d+$/.test(val)) {
           const v = lazy();
           validAttrValue.push({
-            ruleId: "aria-valid-attr-value",
+            ruleId: "accesslint-056",
             selector: v.selector,
             html: v.html,
             impact: "critical",
@@ -207,7 +207,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
         if (val === "" || isNaN(Number(val))) {
           const v = lazy();
           validAttrValue.push({
-            ruleId: "aria-valid-attr-value",
+            ruleId: "accesslint-056",
             selector: v.selector,
             html: v.html,
             impact: "critical",
@@ -220,7 +220,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
           if (!TOKEN_ATTRS[attr.name].has(token)) {
             const v = lazy();
             validAttrValue.push({
-              ruleId: "aria-valid-attr-value",
+              ruleId: "accesslint-056",
               selector: v.selector,
               html: v.html,
               impact: "critical",
@@ -244,7 +244,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
         if (hasAriaLabel || hasAriaLabelledby) {
           const v = lazy();
           prohibitedAttr.push({
-            ruleId: "aria-prohibited-attr",
+            ruleId: "accesslint-072",
             selector: v.selector,
             html: v.html,
             impact: "serious",
@@ -259,7 +259,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
           if (hasAriaLabel || hasAriaLabelledby) {
             const v = lazy();
             prohibitedAttr.push({
-              ruleId: "aria-prohibited-attr",
+              ruleId: "accesslint-072",
               selector: v.selector,
               html: v.html,
               impact: "serious",
@@ -278,7 +278,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
               }
               const v = lazy();
               prohibitedAttr.push({
-                ruleId: "aria-prohibited-attr",
+                ruleId: "accesslint-072",
                 selector: v.selector,
                 html: v.html,
                 impact: "serious",

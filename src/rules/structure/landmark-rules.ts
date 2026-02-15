@@ -18,7 +18,7 @@ function getTopLevelLandmarks(doc: Document, selector: string): Element[] {
 }
 
 export const landmarkMain: Rule = {
-  id: "landmark-one-main",
+  id: "accesslint-036",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -30,7 +30,7 @@ export const landmarkMain: Rule = {
     const mains = doc.querySelectorAll('main, [role="main"]');
     if (mains.length === 0) {
       return [{
-        ruleId: "landmark-one-main",
+        ruleId: "accesslint-036",
         selector: "html",
         html: "<html>",
         impact: "moderate" as const,
@@ -39,7 +39,7 @@ export const landmarkMain: Rule = {
     }
     if (mains.length > 1) {
       return Array.from(mains).slice(1).map((el) => ({
-        ruleId: "landmark-one-main",
+        ruleId: "accesslint-036",
         selector: getSelector(el),
         html: getHtmlSnippet(el),
         impact: "moderate" as const,
@@ -51,7 +51,7 @@ export const landmarkMain: Rule = {
 };
 
 export const landmarkNoDuplicateBanner: Rule = {
-  id: "landmark-no-duplicate-banner",
+  id: "accesslint-037",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -67,7 +67,7 @@ export const landmarkNoDuplicateBanner: Rule = {
     if (topLevel.length > 1) {
       topLevel.slice(1).forEach((el) =>
         violations.push({
-          ruleId: "landmark-no-duplicate-banner",
+          ruleId: "accesslint-037",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "moderate" as const,
@@ -80,7 +80,7 @@ export const landmarkNoDuplicateBanner: Rule = {
 };
 
 export const landmarkNoDuplicateContentinfo: Rule = {
-  id: "landmark-no-duplicate-contentinfo",
+  id: "accesslint-038",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -96,7 +96,7 @@ export const landmarkNoDuplicateContentinfo: Rule = {
     if (topLevel.length > 1) {
       topLevel.slice(1).forEach((el) =>
         violations.push({
-          ruleId: "landmark-no-duplicate-contentinfo",
+          ruleId: "accesslint-038",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "moderate" as const,
@@ -109,7 +109,7 @@ export const landmarkNoDuplicateContentinfo: Rule = {
 };
 
 export const landmarkNoDuplicateMain: Rule = {
-  id: "landmark-no-duplicate-main",
+  id: "accesslint-039",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -124,7 +124,7 @@ export const landmarkNoDuplicateMain: Rule = {
     if (mains.length > 1) {
       Array.from(mains).slice(1).forEach((el) =>
         violations.push({
-          ruleId: "landmark-no-duplicate-main",
+          ruleId: "accesslint-039",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "moderate" as const,
@@ -137,7 +137,7 @@ export const landmarkNoDuplicateMain: Rule = {
 };
 
 export const landmarkBannerIsTopLevel: Rule = {
-  id: "landmark-banner-is-top-level",
+  id: "accesslint-040",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -152,7 +152,7 @@ export const landmarkBannerIsTopLevel: Rule = {
     for (const banner of banners) {
       if (banner.closest(SECTIONING_SELECTOR)) {
         violations.push({
-          ruleId: "landmark-banner-is-top-level",
+          ruleId: "accesslint-040",
           selector: getSelector(banner),
           html: getHtmlSnippet(banner),
           impact: "moderate" as const,
@@ -165,7 +165,7 @@ export const landmarkBannerIsTopLevel: Rule = {
 };
 
 export const landmarkContentinfoIsTopLevel: Rule = {
-  id: "landmark-contentinfo-is-top-level",
+  id: "accesslint-041",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -180,7 +180,7 @@ export const landmarkContentinfoIsTopLevel: Rule = {
     for (const el of contentinfos) {
       if (el.closest(SECTIONING_SELECTOR)) {
         violations.push({
-          ruleId: "landmark-contentinfo-is-top-level",
+          ruleId: "accesslint-041",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "moderate" as const,
@@ -193,7 +193,7 @@ export const landmarkContentinfoIsTopLevel: Rule = {
 };
 
 export const landmarkMainIsTopLevel: Rule = {
-  id: "landmark-main-is-top-level",
+  id: "accesslint-042",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -210,7 +210,7 @@ export const landmarkMainIsTopLevel: Rule = {
       const parent = main.parentElement;
       if (parent?.closest('article, aside, nav, section, [role="article"], [role="complementary"], [role="navigation"], [role="region"]')) {
         violations.push({
-          ruleId: "landmark-main-is-top-level",
+          ruleId: "accesslint-042",
           selector: getSelector(main),
           html: getHtmlSnippet(main),
           impact: "moderate" as const,
@@ -223,7 +223,7 @@ export const landmarkMainIsTopLevel: Rule = {
 };
 
 export const landmarkComplementaryIsTopLevel: Rule = {
-  id: "landmark-complementary-is-top-level",
+  id: "accesslint-043",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -242,7 +242,7 @@ export const landmarkComplementaryIsTopLevel: Rule = {
         // Check if nested in other sectioning elements
         if (aside.closest('article, nav, section, [role="article"], [role="navigation"], [role="region"]')) {
           violations.push({
-            ruleId: "landmark-complementary-is-top-level",
+            ruleId: "accesslint-043",
             selector: getSelector(aside),
             html: getHtmlSnippet(aside),
             impact: "moderate" as const,
@@ -256,7 +256,7 @@ export const landmarkComplementaryIsTopLevel: Rule = {
 };
 
 export const landmarkUnique: Rule = {
-  id: "landmark-unique",
+  id: "accesslint-044",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -290,7 +290,7 @@ export const landmarkUnique: Rule = {
           // All elements with duplicate (or empty) names are violations
           for (const el of elements.slice(1)) {
             violations.push({
-              ruleId: "landmark-unique",
+              ruleId: "accesslint-044",
               selector: getSelector(el),
               html: getHtmlSnippet(el),
               impact: "moderate" as const,
@@ -307,7 +307,7 @@ export const landmarkUnique: Rule = {
 };
 
 export const region: Rule = {
-  id: "region",
+  id: "accesslint-045",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -339,7 +339,7 @@ export const region: Rule = {
         const hasLandmarkChild = child.querySelector(LANDMARK_SELECTOR);
         if (!hasLandmarkChild) {
           violations.push({
-            ruleId: "region",
+            ruleId: "accesslint-045",
             selector: getSelector(child),
             html: getHtmlSnippet(child),
             impact: "moderate" as const,

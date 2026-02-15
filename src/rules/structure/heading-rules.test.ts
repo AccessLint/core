@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("empty-heading", () => {
+describe("accesslint-034", () => {
   it("reports empty h1", () => {
     const doc = makeDoc("<html><body><h1></h1></body></html>");
     const violations = emptyHeading.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("empty-heading");
+    expect(violations[0].ruleId).toBe("accesslint-034");
   });
 
   it("reports empty h2", () => {

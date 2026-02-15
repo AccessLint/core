@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("role-img-alt", () => {
+describe("accesslint-018", () => {
   it("reports div with role=img without name", () => {
     const doc = makeDoc('<div role="img" style="background: url(icon.png)"></div>');
     const violations = roleImgAlt.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("role-img-alt");
+    expect(violations[0].ruleId).toBe("accesslint-018");
   });
 
   it("passes div with role=img and aria-label", () => {

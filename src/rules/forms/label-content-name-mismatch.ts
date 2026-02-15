@@ -65,7 +65,7 @@ function getVisibleText(el: Element): string {
 }
 
 export const labelContentNameMismatch: Rule = {
-  id: "label-content-name-mismatch",
+  id: "accesslint-025",
   actRuleIds: ["2ee8b8"],
   wcag: [],
   level: "A",
@@ -106,7 +106,7 @@ export const labelContentNameMismatch: Rule = {
 
       if (!visibleTextMatches(accessibleName, visibleText)) {
         violations.push({
-          ruleId: "label-content-name-mismatch",
+          ruleId: "accesslint-025",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -141,7 +141,7 @@ export const labelContentNameMismatch: Rule = {
 
       if (!visibleTextMatches(accessibleName, visibleLabel)) {
         violations.push({
-          ruleId: "label-content-name-mismatch",
+          ruleId: "accesslint-025",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,

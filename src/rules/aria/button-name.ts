@@ -31,7 +31,7 @@ function getButtonContext(btn: Element): string | undefined {
 }
 
 export const buttonName: Rule = {
-  id: "button-name",
+  id: "accesslint-075",
   actRuleIds: ["97a4e1"],
   wcag: ["4.1.2"],
   level: "A",
@@ -63,7 +63,7 @@ export const buttonName: Rule = {
       const name = getAccessibleName(btn);
       if (!name) {
         violations.push({
-          ruleId: "button-name",
+          ruleId: "accesslint-075",
           selector: getSelector(btn),
           html: getHtmlSnippet(btn),
           impact: "critical" as const,

@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("meta-viewport", () => {
+describe("accesslint-006", () => {
   it("passes without viewport meta", () => {
     const doc = makeDoc("<html><head></head><body></body></html>");
     expect(metaViewport.run(doc)).toHaveLength(0);
@@ -70,7 +70,7 @@ describe("meta-viewport", () => {
   });
 });
 
-describe("meta-refresh", () => {
+describe("accesslint-007", () => {
   it("passes without refresh meta", () => {
     const doc = makeDoc("<html><head></head><body></body></html>");
     expect(metaRefresh.run(doc)).toHaveLength(0);

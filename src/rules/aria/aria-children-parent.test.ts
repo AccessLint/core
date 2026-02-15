@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("aria-required-children", () => {
+describe("accesslint-060", () => {
   it("passes list with listitems", () => {
     const doc = makeDoc('<ul role="list"><li role="listitem">Item</li></ul>');
     expect(ariaRequiredChildren.run(doc)).toHaveLength(0);
@@ -100,7 +100,7 @@ describe("aria-required-children", () => {
   });
 });
 
-describe("aria-required-parent", () => {
+describe("accesslint-061", () => {
   it("passes listitem in list", () => {
     const doc = makeDoc('<ul><li role="listitem">Item</li></ul>');
     expect(ariaRequiredParent.run(doc)).toHaveLength(0);

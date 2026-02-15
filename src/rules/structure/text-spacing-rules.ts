@@ -226,7 +226,7 @@ function checkTextSpacing(
 }
 
 export const importantLetterSpacing: Rule = {
-  id: "important-letter-spacing",
+  id: "accesslint-050",
   actRuleIds: ["24afc2"],
   wcag: ["1.4.12"],
   level: "AA",
@@ -271,7 +271,7 @@ function hasHorizontalOnlyScroll(el: Element): boolean {
 }
 
 export const importantLineHeight: Rule = {
-  id: "important-line-height",
+  id: "accesslint-051",
   actRuleIds: ["78fd32"],
   wcag: ["1.4.12"],
   level: "AA",
@@ -310,7 +310,7 @@ export const importantLineHeight: Rule = {
       if (violates) {
         const displayValue = result.em !== null ? `${result.em}` : `${result.px}px`;
         violations.push({
-          ruleId: "important-line-height",
+          ruleId: "accesslint-051",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -324,7 +324,7 @@ export const importantLineHeight: Rule = {
 };
 
 export const importantWordSpacing: Rule = {
-  id: "important-word-spacing",
+  id: "accesslint-052",
   actRuleIds: ["9e45ec"],
   wcag: ["1.4.12"],
   level: "AA",

@@ -16,7 +16,7 @@ function isHiddenFrame(frame: Element): boolean {
 }
 
 export const frameTitle: Rule = {
-  id: "frame-title",
+  id: "accesslint-004",
   actRuleIds: ["cae760"],
   wcag: ["4.1.2"],
   level: "A",
@@ -33,7 +33,7 @@ export const frameTitle: Rule = {
       if (!name) {
         const src = frame.getAttribute("src");
         violations.push({
-          ruleId: "frame-title",
+          ruleId: "accesslint-004",
           selector: getSelector(frame),
           html: getHtmlSnippet(frame),
           impact: "serious" as const,
@@ -47,7 +47,7 @@ export const frameTitle: Rule = {
 };
 
 export const frameTitleUnique: Rule = {
-  id: "frame-title-unique",
+  id: "accesslint-005",
   wcag: ["4.1.2"],
   level: "A",
   tags: ["best-practice"],
@@ -77,7 +77,7 @@ export const frameTitleUnique: Rule = {
         // Report all but the first as violations
         for (const frame of elements.slice(1)) {
           violations.push({
-            ruleId: "frame-title-unique",
+            ruleId: "accesslint-005",
             selector: getSelector(frame),
             html: getHtmlSnippet(frame),
             impact: "moderate" as const,

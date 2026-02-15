@@ -18,7 +18,7 @@ const REQUIRED_ATTRS: Record<string, string[]> = {
 };
 
 export const ariaRequiredAttr: Rule = {
-  id: "aria-required-attr",
+  id: "accesslint-057",
   actRuleIds: ["4e8ab6"],
   wcag: ["4.1.2"],
   level: "A",
@@ -54,7 +54,7 @@ export const ariaRequiredAttr: Rule = {
       for (const attr of required) {
         if (!el.hasAttribute(attr)) {
           violations.push({
-            ruleId: "aria-required-attr",
+            ruleId: "accesslint-057",
             selector: getSelector(el),
             html: getHtmlSnippet(el),
             impact: "critical" as const,

@@ -9,7 +9,7 @@ import {
 } from "../utils/color";
 
 export const skipLink: Rule = {
-  id: "skip-link",
+  id: "accesslint-078",
   wcag: ["2.4.1"],
   level: "A",
   tags: ["best-practice"],
@@ -41,7 +41,7 @@ export const skipLink: Rule = {
       const target = doc.getElementById(targetId);
       if (!target) {
         violations.push({
-          ruleId: "skip-link",
+          ruleId: "accesslint-078",
           selector: getSelector(a),
           html: getHtmlSnippet(a),
           impact: "moderate" as const,
@@ -243,7 +243,7 @@ function toHex(r: number, g: number, b: number): string {
 }
 
 export const linkInTextBlock: Rule = {
-  id: "link-in-text-block",
+  id: "accesslint-079",
   wcag: ["1.4.1"],
   level: "A",
   description: "Links within text blocks must be distinguishable by more than color alone.",
@@ -303,7 +303,7 @@ export const linkInTextBlock: Rule = {
         `ratio: ${ratio.toFixed(2)}:1`;
 
       violations.push({
-        ruleId: "link-in-text-block",
+        ruleId: "accesslint-079",
         selector: getSelector(link),
         html: getHtmlSnippet(link),
         impact: "serious" as const,

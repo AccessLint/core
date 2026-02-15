@@ -5,12 +5,12 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("video-caption", () => {
+describe("accesslint-090", () => {
   it("reports video without captions track", () => {
     const doc = makeDoc('<html><body><video src="movie.mp4"></video></body></html>');
     const violations = videoCaptions.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("video-caption");
+    expect(violations[0].ruleId).toBe("accesslint-090");
   });
 
   it("passes video with captions track", () => {
@@ -59,12 +59,12 @@ describe("video-caption", () => {
   });
 });
 
-describe("audio-caption", () => {
+describe("accesslint-091", () => {
   it("reports audio without transcript", () => {
     const doc = makeDoc('<html><body><audio src="podcast.mp3"></audio></body></html>');
     const violations = audioCaptions.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("audio-caption");
+    expect(violations[0].ruleId).toBe("accesslint-091");
   });
 
   it("passes audio with captions track", () => {

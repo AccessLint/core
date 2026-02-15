@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("link-name", () => {
+describe("accesslint-077", () => {
   it("reports empty links", () => {
     const doc = makeDoc('<html><body><a href="/page"></a></body></html>');
     expect(linkName.run(doc)).toHaveLength(1);

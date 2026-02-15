@@ -30,7 +30,7 @@ function getObjectAccessibleName(el: Element): string {
 }
 
 export const objectAlt: Rule = {
-  id: "object-alt",
+  id: "accesslint-017",
   actRuleIds: ["8fc3b6"],
   wcag: ["1.1.1"],
   level: "A",
@@ -75,7 +75,7 @@ export const objectAlt: Rule = {
       }
 
       violations.push({
-        ruleId: "object-alt",
+        ruleId: "accesslint-017",
         selector: getSelector(obj),
         html: getHtmlSnippet(obj),
         impact: "serious" as const,

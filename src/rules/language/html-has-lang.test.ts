@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("html-has-lang", () => {
+describe("accesslint-080", () => {
   it("reports missing lang", () => {
     const doc = makeDoc("<html><body></body></html>");
     expect(htmlHasLang.run(doc)).toHaveLength(1);
@@ -22,7 +22,7 @@ describe("html-has-lang", () => {
   });
 });
 
-describe("html-lang-valid", () => {
+describe("accesslint-081", () => {
   it("passes valid lang", () => {
     const doc = makeDoc('<html lang="en"><body></body></html>');
     expect(htmlLangValid.run(doc)).toHaveLength(0);

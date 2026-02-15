@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
 export const roleImgAlt: Rule = {
-  id: "role-img-alt",
+  id: "accesslint-018",
   wcag: ["1.1.1"],
   level: "A",
   description: "Elements with role='img' must have an accessible name.",
@@ -25,7 +25,7 @@ export const roleImgAlt: Rule = {
       const name = getAccessibleName(el);
       if (!name) {
         violations.push({
-          ruleId: "role-img-alt",
+          ruleId: "accesslint-018",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,

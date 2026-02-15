@@ -2,7 +2,7 @@ import type { DeclarativeRule } from "../types";
 import { compileDeclarativeRule } from "../engine";
 
 const serverSideImageMapSpec: DeclarativeRule = {
-  id: "server-side-image-map",
+  id: "accesslint-019",
   selector: "img[ismap], input[type='image'][ismap]",
   check: { type: "selector-exists" },
   impact: "minor",

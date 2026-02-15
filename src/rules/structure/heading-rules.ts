@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden, getAccessibleName } from "../utils/aria";
 
 export const emptyHeading: Rule = {
-  id: "empty-heading",
+  id: "accesslint-034",
   actRuleIds: ["ffd0e9"],
   wcag: [],
   level: "A",
@@ -29,7 +29,7 @@ export const emptyHeading: Rule = {
         }
 
         violations.push({
-          ruleId: "empty-heading",
+          ruleId: "accesslint-034",
           selector: getSelector(heading),
           html: getHtmlSnippet(heading),
           impact: "minor" as const,

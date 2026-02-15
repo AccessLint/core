@@ -57,7 +57,7 @@ function getConflictIssues(el: Element): string[] {
 }
 
 export const presentationRoleConflict: Rule = {
-  id: "presentation-role-conflict",
+  id: "accesslint-073",
   actRuleIds: ["46ca7f"],
   wcag: ["4.1.2"],
   level: "A",
@@ -75,7 +75,7 @@ export const presentationRoleConflict: Rule = {
       const issues = getConflictIssues(el);
       if (issues.length > 0) {
         violations.push({
-          ruleId: "presentation-role-conflict",
+          ruleId: "accesslint-073",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
@@ -94,7 +94,7 @@ export const presentationRoleConflict: Rule = {
       const issues = getConflictIssues(img);
       if (issues.length > 0) {
         violations.push({
-          ruleId: "presentation-role-conflict",
+          ruleId: "accesslint-073",
           selector: getSelector(img),
           html: getHtmlSnippet(img),
           impact: "serious" as const,

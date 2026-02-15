@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("td-headers-attr", () => {
+describe("accesslint-084", () => {
   it("passes valid headers attribute", () => {
     const doc = makeDoc(`
       <table>
@@ -39,7 +39,7 @@ describe("td-headers-attr", () => {
   });
 });
 
-describe("th-has-data-cells", () => {
+describe("accesslint-085", () => {
   it("passes table with headers and data", () => {
     const doc = makeDoc(`
       <table>
@@ -71,7 +71,7 @@ describe("th-has-data-cells", () => {
   });
 });
 
-describe("td-has-header", () => {
+describe("accesslint-086", () => {
   it("passes small table without explicit headers", () => {
     const doc = makeDoc(`
       <table>
@@ -107,7 +107,7 @@ describe("td-has-header", () => {
   });
 });
 
-describe("scope-attr-valid", () => {
+describe("accesslint-087", () => {
   it("passes valid scope values", () => {
     const doc = makeDoc(`
       <table>
@@ -149,7 +149,7 @@ describe("scope-attr-valid", () => {
   });
 });
 
-describe("empty-table-header", () => {
+describe("accesslint-088", () => {
   it("passes header with text", () => {
     const doc = makeDoc(`
       <table>
@@ -167,7 +167,7 @@ describe("empty-table-header", () => {
     `);
     const violations = emptyTableHeader.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("empty-table-header");
+    expect(violations[0].ruleId).toBe("accesslint-088");
   });
 
   it("passes header with aria-label", () => {

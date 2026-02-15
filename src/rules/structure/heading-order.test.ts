@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("heading-order", () => {
+describe("accesslint-033", () => {
   it("passes sequential headings", () => {
     const doc = makeDoc("<html><body><h1>A</h1><h2>B</h2><h3>C</h3></body></html>");
     expect(headingOrder.run(doc)).toHaveLength(0);

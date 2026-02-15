@@ -2,7 +2,7 @@ import type { Rule } from "../types";
 import { runAriaAttrAudit } from "./aria-attr-audit";
 
 export const ariaValidAttrValue: Rule = {
-  id: "aria-valid-attr-value",
+  id: "accesslint-056",
   actRuleIds: ["6a7281"],
   wcag: ["4.1.2"],
   level: "A",

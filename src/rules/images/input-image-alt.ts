@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
 export const inputImageAlt: Rule = {
-  id: "input-image-alt",
+  id: "accesslint-013",
   actRuleIds: ["59796f"],
   wcag: ["1.1.1", "4.1.2"],
   level: "A",
@@ -18,7 +18,7 @@ export const inputImageAlt: Rule = {
       if (isAriaHidden(input)) continue;
       if (!getAccessibleName(input)) {
         violations.push({
-          ruleId: "input-image-alt",
+          ruleId: "accesslint-013",
           selector: getSelector(input),
           html: getHtmlSnippet(input),
           impact: "critical" as const,

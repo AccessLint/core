@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("label-content-name-mismatch", () => {
+describe("accesslint-025", () => {
   it("passes button without aria-label", () => {
     const doc = makeDoc("<button>Submit</button>");
     expect(labelContentNameMismatch.run(doc)).toHaveLength(0);
@@ -20,7 +20,7 @@ describe("label-content-name-mismatch", () => {
     const doc = makeDoc('<button aria-label="Send email">Submit</button>');
     const violations = labelContentNameMismatch.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("label-content-name-mismatch");
+    expect(violations[0].ruleId).toBe("accesslint-025");
   });
 
   it("passes when aria-label contains visible text", () => {

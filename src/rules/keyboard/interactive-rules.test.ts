@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("nested-interactive", () => {
+describe("accesslint-029", () => {
   it("reports button inside link", () => {
     const doc = makeDoc('<a href="/page"><button>Click</button></a>');
     const violations = nestedInteractive.run(doc);
@@ -132,7 +132,7 @@ describe("nested-interactive", () => {
   });
 });
 
-describe("scrollable-region-focusable", () => {
+describe("accesslint-030", () => {
   it("passes scrollable region with tabindex", () => {
     const doc = makeDoc(`
       <div style="overflow: auto; height: 100px;" tabindex="0">

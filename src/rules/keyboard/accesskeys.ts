@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
 
 export const accesskeys: Rule = {
-  id: "accesskeys",
+  id: "accesslint-031",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -31,7 +31,7 @@ export const accesskeys: Rule = {
         // Report all duplicates except the first
         for (const el of elements.slice(1)) {
           violations.push({
-            ruleId: "accesskeys",
+            ruleId: "accesslint-031",
             selector: getSelector(el),
             html: getHtmlSnippet(el),
             impact: "serious" as const,

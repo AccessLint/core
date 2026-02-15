@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
 
 export const videoCaptions: Rule = {
-  id: "video-caption",
+  id: "accesslint-090",
   actRuleIds: ["eac66b"],
   wcag: ["1.2.2"],
   level: "A",
@@ -24,7 +24,7 @@ export const videoCaptions: Rule = {
       const track = video.querySelector('track[kind="captions"], track[kind="subtitles"]');
       if (!track) {
         violations.push({
-          ruleId: "video-caption",
+          ruleId: "accesslint-090",
           selector: getSelector(video),
           html: getHtmlSnippet(video),
           impact: "critical" as const,
@@ -37,7 +37,7 @@ export const videoCaptions: Rule = {
 };
 
 export const audioCaptions: Rule = {
-  id: "audio-caption",
+  id: "accesslint-091",
   actRuleIds: ["e7aa44"],
   wcag: ["1.2.1"],
   level: "A",
@@ -66,7 +66,7 @@ export const audioCaptions: Rule = {
       }
 
       violations.push({
-        ruleId: "audio-caption",
+        ruleId: "accesslint-091",
         selector: getSelector(audio),
         html: getHtmlSnippet(audio),
         impact: "critical" as const,

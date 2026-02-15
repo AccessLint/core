@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("aria-roles", () => {
+describe("accesslint-054", () => {
   it("passes valid roles", () => {
     const doc = makeDoc('<html><body><div role="button">Click</div></body></html>');
     expect(ariaRoles.run(doc)).toHaveLength(0);

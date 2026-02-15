@@ -5,7 +5,7 @@ function makeDoc(html: string): Document {
   return new DOMParser().parseFromString(html, "text/html");
 }
 
-describe("aria-hidden-body", () => {
+describe("accesslint-062", () => {
   it("passes when body has no aria-hidden", () => {
     const doc = makeDoc("<html><body><main>Content</main></body></html>");
     expect(ariaHiddenBody.run(doc)).toHaveLength(0);
@@ -20,12 +20,12 @@ describe("aria-hidden-body", () => {
     const doc = makeDoc('<html><body aria-hidden="true"><main>Content</main></body></html>');
     const violations = ariaHiddenBody.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("aria-hidden-body");
+    expect(violations[0].ruleId).toBe("accesslint-062");
     expect(violations[0].impact).toBe("critical");
   });
 });
 
-describe("aria-hidden-focus", () => {
+describe("accesslint-063", () => {
   it("passes when aria-hidden region has no focusable elements", () => {
     const doc = makeDoc('<div aria-hidden="true"><p>Just text</p></div>');
     expect(ariaHiddenFocus.run(doc)).toHaveLength(0);
@@ -35,7 +35,7 @@ describe("aria-hidden-focus", () => {
     const doc = makeDoc('<div aria-hidden="true"><button>Click</button></div>');
     const violations = ariaHiddenFocus.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("aria-hidden-focus");
+    expect(violations[0].ruleId).toBe("accesslint-063");
   });
 
   it("reports focusable link in aria-hidden region", () => {

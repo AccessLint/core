@@ -3,7 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName } from "../utils/aria";
 
 export const documentTitle: Rule = {
-  id: "document-title",
+  id: "accesslint-001",
   actRuleIds: ["2779a5"],
   wcag: ["2.4.2"],
   level: "A",
@@ -24,7 +24,7 @@ export const documentTitle: Rule = {
         if (text) textSample = `Page text: "${text.slice(0, 150)}"`;
       }
       return [{
-        ruleId: "document-title",
+        ruleId: "accesslint-001",
         selector: "html",
         html: "<html>",
         impact: "serious" as const,
@@ -37,7 +37,7 @@ export const documentTitle: Rule = {
 };
 
 export const bypass: Rule = {
-  id: "bypass",
+  id: "accesslint-002",
   actRuleIds: ["cf77f2"],
   wcag: [],
   level: "A",
@@ -75,7 +75,7 @@ export const bypass: Rule = {
     missing.push("no headings");
 
     return [{
-      ruleId: "bypass",
+      ruleId: "accesslint-002",
       selector: "html",
       html: "<html>",
       impact: "serious" as const,
@@ -86,7 +86,7 @@ export const bypass: Rule = {
 };
 
 export const pageHasHeadingOne: Rule = {
-  id: "page-has-heading-one",
+  id: "accesslint-003",
   wcag: [],
   level: "A",
   tags: ["best-practice"],
@@ -115,7 +115,7 @@ export const pageHasHeadingOne: Rule = {
     }
 
     return [{
-      ruleId: "page-has-heading-one",
+      ruleId: "accesslint-003",
       selector: "html",
       html: "<html>",
       impact: "moderate" as const,

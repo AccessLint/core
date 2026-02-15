@@ -13,7 +13,7 @@ const FOCUSABLE_SELECTOR = [
 ].join(", ");
 
 export const focusVisible: Rule = {
-  id: "focus-visible",
+  id: "accesslint-032",
   actRuleIds: ["oj04fd"],
   wcag: ["2.4.7"],
   level: "AA",
@@ -38,7 +38,7 @@ export const focusVisible: Rule = {
         const hasBoxShadow = /box-shadow\s*:/i.test(style);
         if (!hasBorder && !hasBoxShadow) {
           violations.push({
-            ruleId: "focus-visible",
+            ruleId: "accesslint-032",
             selector: getSelector(el),
             html: getHtmlSnippet(el),
             impact: "serious" as const,
