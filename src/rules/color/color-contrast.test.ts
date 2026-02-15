@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { colorContrast } from "./color-contrast";
-import { clearColorCaches } from "../utils/color";
+import { clearColorCaches, parseTextShadow, getEffectiveBackgroundColor } from "../utils/color";
 
 function makeDoc(html: string): Document {
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -243,5 +243,108 @@ describe("accesslint-092", () => {
         "</div></body>"
     );
     expect(colorContrast.run(doc)).toHaveLength(1);
+  });
+
+  // --- Semi-transparent background compositing ---
+
+  it("composites semi-transparent background over parent opaque background", () => {
+    // rgba(255,0,0,0.5) over white → rgb(255,128,128) ≈ pink
+    // Black text on pink should pass contrast
+    const doc = makeDoc(
+      '<body><div style="background-color: rgb(255, 255, 255);">' +
+        '<p style="color: rgb(0, 0, 0); background-color: rgba(255, 0, 0, 0.5);">Text</p>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("composites multiple semi-transparent layers", () => {
+    // Two semi-transparent layers over white
+    const doc = makeDoc(
+      '<body><div style="background-color: rgb(255, 255, 255);">' +
+        '<div style="background-color: rgba(0, 0, 0, 0.5);">' +
+        '<p style="color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0.5);">Text</p>' +
+        "</div></div></body>"
+    );
+    // Two 50% black layers over white → dark background, white text should pass
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("composites semi-transparent background over default white", () => {
+    // No explicit parent background — defaults to white
+    // rgba(0,0,0,0.9) over white → nearly black → white text should pass
+    const doc = makeDoc(
+      '<body><p style="color: rgb(255, 255, 255); background-color: rgba(0, 0, 0, 0.9);">Text</p></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("uses composited bg for effective background color", () => {
+    // rgba(0,0,0,0.5) over white = rgb(128,128,128) approximately
+    const doc = makeDoc(
+      '<body><div style="background-color: rgb(255, 255, 255);">' +
+        '<p style="background-color: rgba(0, 0, 0, 0.5);">Text</p>' +
+        "</div></body>"
+    );
+    const p = doc.querySelector("p")!;
+    const bg = getEffectiveBackgroundColor(p);
+    expect(bg).not.toBeNull();
+    // 0*0.5 + 255*0.5 = 127.5 → rounded to 128
+    expect(bg![0]).toBe(128);
+    expect(bg![1]).toBe(128);
+    expect(bg![2]).toBe(128);
+  });
+
+  // --- Text-shadow handling ---
+
+  it("passes: text with high-contrast shadow (shadow helps contrast)", () => {
+    // Black text on gray bg (base ~4.18:1 fails 4.5), but white shadow → fg-vs-shadow=21:1
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0, 0, 0); background-color: rgb(115, 115, 115); text-shadow: 0px 0px 0px rgb(255, 255, 255);">Text</p></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("fails: text-shadow does not help insufficient contrast", () => {
+    // Dark gray text on dark gray bg with dark shadow — all similar, all low contrast
+    const doc = makeDoc(
+      '<body><p style="color: rgb(100, 100, 100); background-color: rgb(120, 120, 120); text-shadow: 0px 0px 0px rgb(110, 110, 110);">Text</p></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(1);
+  });
+
+  it("passes: high-contrast text is not affected by irrelevant shadow", () => {
+    // Black text on white bg (21:1), black shadow — shadow is irrelevant
+    const doc = makeDoc(
+      '<body><p style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255); text-shadow: 1px 1px 2px rgb(0, 0, 0);">Text</p></body>'
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  // --- parseTextShadow unit tests ---
+
+  it("parseTextShadow: parses single shadow", () => {
+    const result = parseTextShadow("rgb(0, 0, 0) 1px 1px 2px");
+    expect(result).toHaveLength(1);
+    expect(result![0].color).toEqual([0, 0, 0]);
+    expect(result![0].blur).toBe(2);
+  });
+
+  it("parseTextShadow: parses multiple shadows", () => {
+    const result = parseTextShadow("rgb(255, 0, 0) 1px 1px 0px, rgb(0, 0, 255) 2px 2px 3px");
+    expect(result).toHaveLength(2);
+    expect(result![0].color).toEqual([255, 0, 0]);
+    expect(result![1].color).toEqual([0, 0, 255]);
+    expect(result![1].blur).toBe(3);
+  });
+
+  it("parseTextShadow: returns null for unparseable shadow", () => {
+    expect(parseTextShadow("invalid-shadow")).toBeNull();
+  });
+
+  it("parseTextShadow: shadow without blur defaults to 0", () => {
+    const result = parseTextShadow("rgb(0, 0, 0) 1px 1px");
+    expect(result).toHaveLength(1);
+    expect(result![0].blur).toBe(0);
   });
 });

@@ -12,7 +12,10 @@ import {
   isLargeText,
   mayBeOverImage,
   parseGradientStops,
+  parseTextShadow,
+  hasPseudoElementBackground,
 } from "../utils/color";
+import type { TextShadow } from "../utils/color";
 
 const NON_TEXT_TAGS = new Set([
   "SCRIPT",
@@ -33,6 +36,25 @@ const NON_TEXT_TAGS = new Set([
 
 function rgbToHex([r, g, b]: [number, number, number]): string {
   return "#" + [r, g, b].map((c) => c.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * Compute the effective contrast considering text shadows.
+ * Uses the maximum of: fg-vs-bg, fg-vs-shadow, shadow-vs-bg for each shadow.
+ */
+function getContrastWithShadow(
+  fg: [number, number, number],
+  bg: [number, number, number],
+  shadows: TextShadow[],
+): number {
+  const fgLum = getLuminance(fg[0], fg[1], fg[2]);
+  const bgLum = getLuminance(bg[0], bg[1], bg[2]);
+  let best = getContrastRatio(fgLum, bgLum);
+  for (const shadow of shadows) {
+    const sLum = getLuminance(shadow.color[0], shadow.color[1], shadow.color[2]);
+    best = Math.max(best, getContrastRatio(fgLum, sLum), getContrastRatio(sLum, bgLum));
+  }
+  return best;
 }
 
 function isDisabledFormElement(el: Element): boolean {
@@ -247,7 +269,7 @@ function findAncestorGradient(el: Element): { bgImage: string; gradientEl: Eleme
       continue;
     }
     // Nearly transparent — keep looking
-    if (parseColorAlpha(bg) < 0.1) {
+    if (parseColorAlpha(bg) < 0.01) {
       current = current.parentElement;
       continue;
     }
@@ -352,12 +374,19 @@ function checkContrast(doc: Document, ruleId: string, level: "AA" | "AAA") {
       // Skip effectively invisible elements
       if (accumulatedOpacity < 0.1) continue;
 
-      // Skip elements with text-shadow — shadow alters effective contrast
+      // Parse text-shadow for three-way contrast computation
       const textShadow = style.textShadow;
-      if (textShadow && textShadow !== "none" && textShadow !== "initial") continue;
+      let parsedShadows: TextShadow[] | null = null;
+      if (textShadow && textShadow !== "none" && textShadow !== "initial") {
+        parsedShadows = parseTextShadow(textShadow);
+        if (!parsedShadows) continue; // unparseable → skip (conservative)
+      }
 
       // Bail out on visual effects that make contrast unreliable
       if (hasUnreliableVisualEffects(el)) continue;
+
+      // Skip elements where a pseudo-element provides a visual background
+      if (hasPseudoElementBackground(el)) continue;
 
       const fg = parseColor(style.color);
       if (!fg) continue;
@@ -377,6 +406,8 @@ function checkContrast(doc: Document, ruleId: string, level: "AA" | "AAA") {
 
       // If no solid background found, check ancestor chain for gradient backgrounds
       if (!bg) {
+        // Gradient + text-shadow is too complex — skip
+        if (parsedShadows) continue;
         const gradientInfo = findAncestorGradient(el);
         if (gradientInfo) {
           const parentBg = gradientInfo.gradientEl.parentElement
@@ -404,7 +435,9 @@ function checkContrast(doc: Document, ruleId: string, level: "AA" | "AAA") {
 
       const fgLum = getLuminance(effectiveFg[0], effectiveFg[1], effectiveFg[2]);
       const bgLum = getLuminance(bg[0], bg[1], bg[2]);
-      const ratio = getContrastRatio(fgLum, bgLum);
+      const ratio = parsedShadows
+        ? getContrastWithShadow(effectiveFg, bg, parsedShadows)
+        : getContrastRatio(fgLum, bgLum);
 
       if (ratio < threshold) {
         const roundedRatio = Math.round(ratio * 100) / 100;

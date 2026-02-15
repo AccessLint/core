@@ -114,18 +114,37 @@ export function getEffectiveBackgroundColor(el: Element): [number, number, numbe
   return result;
 }
 
+/**
+ * Composite a stack of semi-transparent layers (outermost first) over a base color.
+ */
+function _compositeStack(
+  layers: { color: [number, number, number]; alpha: number }[],
+  base: [number, number, number],
+): [number, number, number] {
+  let result = base;
+  // Apply layers from outermost (bottom of stack) to innermost (top of stack)
+  for (let i = layers.length - 1; i >= 0; i--) {
+    result = compositeColors(layers[i].color, result, layers[i].alpha);
+  }
+  return result;
+}
+
 function _computeEffectiveBg(el: Element): [number, number, number] | null {
+  const layers: { color: [number, number, number]; alpha: number }[] = [];
   let current: Element | null = el;
+
   while (current) {
     const style = getCachedComputedStyle(current);
     const bgImg = style.backgroundImage;
     if (bgImg && bgImg !== "none" && bgImg !== "initial") {
-      // For gradient backgrounds, try to use the solid backgroundColor if available.
-      // The gradient may partially/fully obscure it, but if the solid color alone
-      // fails contrast, the gradient only makes the result less predictable.
+      // Background image found — composite accumulated layers over
+      // the solid backgroundColor if available, otherwise return null.
       const bg = style.backgroundColor;
       if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)" && bg !== "rgba(0 0 0 / 0)") {
-        return parseColor(bg);
+        const base = parseColor(bg);
+        if (base) {
+          return layers.length > 0 ? _compositeStack(layers, base) : base;
+        }
       }
       return null;
     }
@@ -135,32 +154,35 @@ function _computeEffectiveBg(el: Element): [number, number, number] | null {
       current = current.parentElement;
       continue;
     }
-    // Extract alpha: legacy rgba(r, g, b, a) or modern rgb(r g b / a)
-    const alphaMatch = bg.match(/rgba\(.+?,\s*([\d.]+)\s*\)/) ||
-      bg.match(/rgba?\(.+?\/\s*([\d.]+%?)\s*\)/);
-    if (alphaMatch) {
-      const alpha = alphaMatch[1].endsWith("%")
-        ? parseFloat(alphaMatch[1]) / 100
-        : parseFloat(alphaMatch[1]);
-      if (alpha < 0.1) {
-        current = current.parentElement;
-        continue;
-      }
+    const alpha = parseColorAlpha(bg);
+    // Skip nearly transparent (< 1% opacity)
+    if (alpha < 0.01) {
+      current = current.parentElement;
+      continue;
     }
-    return parseColor(bg);
+    const color = parseColor(bg);
+    if (!color) {
+      current = current.parentElement;
+      continue;
+    }
+    // Opaque background — composite any accumulated layers over it and return
+    if (alpha >= 1) {
+      return layers.length > 0 ? _compositeStack(layers, color) : color;
+    }
+    // Semi-transparent — accumulate for compositing
+    layers.push({ color, alpha });
+    current = current.parentElement;
   }
-  // Default to white if nothing found — correct for real browsers where the
-  // default page background is white. In test environments with limited CSS
-  // resolution (happy-dom, jsdom) this fallback can cause false positives when
-  // a dark background is applied via stylesheets rather than inline styles.
-  return [255, 255, 255];
+  // Default to white; composite any accumulated layers over it
+  const white: [number, number, number] = [255, 255, 255];
+  return layers.length > 0 ? _compositeStack(layers, white) : white;
 }
 
 /**
- * Split a gradient argument string by commas, respecting parentheses.
+ * Split a string by commas, respecting parentheses.
  * e.g. "to right, rgb(255, 0, 0), blue 50%" → ["to right", "rgb(255, 0, 0)", "blue 50%"]
  */
-function splitGradientArgs(content: string): string[] {
+export function splitByComma(content: string): string[] {
   const segments: string[] = [];
   let depth = 0;
   let start = 0;
@@ -200,7 +222,7 @@ export function parseGradientStops(
   }
   const content = bgImage.slice(openParen + 1, i - 1);
 
-  const segments = splitGradientArgs(content);
+  const segments = splitByComma(content);
   for (const seg of segments) {
     const trimmed = seg.trim();
     // Skip direction tokens like "to right", "90deg", etc.
@@ -281,4 +303,75 @@ export function isLargeText(el: Element): boolean {
   // Large text: >= 18pt (24px) or >= 14pt (18.66px) bold.
   // Use small tolerance (0.5px) for DOM environments with imprecise pt→px conversion.
   return fontSizePx >= 23.5 || (fontSizePx >= 18.5 && fontWeight >= 700);
+}
+
+export interface TextShadow {
+  color: [number, number, number];
+  blur: number;
+}
+
+/**
+ * Parse a CSS text-shadow value into structured shadow objects.
+ * Computed styles always use rgb()/rgba() format.
+ * Returns null if any shadow is unparseable.
+ */
+export function parseTextShadow(textShadow: string): TextShadow[] | null {
+  const parts = splitByComma(textShadow);
+  const shadows: TextShadow[] = [];
+  for (const part of parts) {
+    const trimmed = part.trim();
+    if (!trimmed) continue;
+    // Extract rgb()/rgba() color
+    const colorMatch = trimmed.match(/rgba?\([^)]+\)/);
+    const color = colorMatch ? parseColor(colorMatch[0]) : null;
+    if (!color) return null;
+    // Extract px lengths (offset-x, offset-y, optional blur)
+    const lengths = trimmed.replace(/rgba?\([^)]+\)/, "").match(/[\d.]+px/g);
+    const blur = lengths && lengths.length >= 3 ? parseFloat(lengths[2]) : 0;
+    shadows.push({ color, blur });
+  }
+  return shadows.length > 0 ? shadows : null;
+}
+
+function isTransparent(bg: string): boolean {
+  return bg === "transparent" || bg === "rgba(0, 0, 0, 0)" || bg === "rgba(0 0 0 / 0)";
+}
+
+/**
+ * Check if an element (or an ancestor up to the nearest opaque background)
+ * has a ::before or ::after pseudo-element that provides a visual background.
+ */
+export function hasPseudoElementBackground(el: Element): boolean {
+  let current: Element | null = el;
+  while (current) {
+    for (const pseudo of ["::before", "::after"] as const) {
+      try {
+        const ps = getComputedStyle(current, pseudo);
+        const content = ps.content;
+        // No pseudo-element if content is none/normal/empty
+        if (!content || content === "none" || content === "normal" || content === '""') continue;
+        // Check for non-transparent background color
+        const bgColor = ps.backgroundColor;
+        if (bgColor && !isTransparent(bgColor) && parseColorAlpha(bgColor) >= 0.1) return true;
+        // Check for background image
+        const bgImg = ps.backgroundImage;
+        if (bgImg && bgImg !== "none" && bgImg !== "initial") return true;
+        // Check for absolute/fixed positioning with meaningful dimensions
+        const pos = ps.position;
+        if (pos === "absolute" || pos === "fixed") {
+          const w = parseFloat(ps.width);
+          const h = parseFloat(ps.height);
+          if (w > 1 && h > 1) return true;
+        }
+      } catch {
+        // Some environments (happy-dom) don't support pseudo-element styles
+      }
+    }
+    // Stop at the nearest opaque background ancestor
+    const style = getCachedComputedStyle(current);
+    const bg = style.backgroundColor;
+    if (bg && !isTransparent(bg) && parseColorAlpha(bg) >= 1) break;
+    current = current.parentElement;
+  }
+  return false;
 }
