@@ -98,7 +98,10 @@ function getTextBlockContext(
     }
   }
 
-  if (!textColor || !/\p{L}{2,}/u.test(nonLinkText)) return null;
+  // Require at least two 3-letter words — ensures real prose, not short
+  // labels like "By:" or "Source:" or pipe-separated link lists.
+  const words = nonLinkText.match(/\p{L}{3,}/gu);
+  if (!textColor || !words || words.length < 2) return null;
   return { block, textColor };
 }
 
@@ -109,6 +112,15 @@ function hasDistinctDecoration(style: CSSStyleDeclaration, parentDeco: string): 
 
 function fontWeight(w: string): number {
   return w === "bold" ? 700 : w === "normal" ? 400 : parseInt(w) || 400;
+}
+
+function _hasOnlyMediaContent(link: Element): boolean {
+  const walker = link.ownerDocument.createTreeWalker(link, NodeFilter.SHOW_TEXT);
+  let node: Text | null;
+  while ((node = walker.nextNode() as Text | null)) {
+    if (node.data.trim()) return false;
+  }
+  return true;
 }
 
 export const linkInTextBlock: Rule = {
@@ -125,7 +137,8 @@ export const linkInTextBlock: Rule = {
     for (const link of doc.querySelectorAll("a[href]")) {
       if (isAriaHidden(link)) continue;
       if (!getAccessibleTextContent(link).trim()) continue;
-      if (link.closest('nav, header, footer, [role="navigation"], [role="banner"], [role="contentinfo"]')) continue;
+      if (_hasOnlyMediaContent(link)) continue;
+      if (link.closest('nav, header, footer, aside, [role="navigation"], [role="banner"], [role="contentinfo"], [role="complementary"]')) continue;
 
       const linkStyle = getCachedComputedStyle(link);
       if (!INLINE_DISPLAYS.has(linkStyle.display || "inline")) continue;
