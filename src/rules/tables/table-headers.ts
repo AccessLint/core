@@ -79,6 +79,44 @@ export const thHasDataCells: Rule = {
   },
 };
 
+/**
+ * Determine whether a <table> is a data table (as opposed to a layout table).
+ * Layout tables should not be checked for header associations.
+ */
+function isDataTable(table: Element): boolean {
+  const role = table.getAttribute("role");
+  if (role === "presentation" || role === "none") return false;
+  if (role === "table" || role === "grid" || role === "treegrid") return true;
+
+  // Strong data-table signals
+  if (table.querySelector("caption") || table.getAttribute("summary")) return true;
+  if (table.querySelector("thead, tfoot, colgroup")) return true;
+  if (table.querySelector("th[scope]")) return true;
+  if (table.querySelector("td[headers]")) return true;
+
+  // Has th elements with meaningful text content
+  const ths = table.querySelectorAll("th");
+  if (ths.length === 0) return false;
+  for (const th of ths) {
+    if (th.textContent?.trim()) return true;
+  }
+
+  return false;
+}
+
+/**
+ * Compute the column index of a cell accounting for preceding colspan values.
+ */
+function getColIndex(cell: Element): number {
+  let idx = 0;
+  let prev = cell.previousElementSibling;
+  while (prev) {
+    idx += parseInt(prev.getAttribute("colspan") || "1", 10);
+    prev = prev.previousElementSibling;
+  }
+  return idx;
+}
+
 export const tdHasHeader: Rule = {
   id: "accesslint-086",
   wcag: ["1.3.1"],
@@ -92,7 +130,7 @@ export const tdHasHeader: Rule = {
 
     for (const table of doc.querySelectorAll("table")) {
       if (isAriaHidden(table)) continue;
-      if (table.getAttribute("role") === "presentation" || table.getAttribute("role") === "none") continue;
+      if (!isDataTable(table)) continue;
 
       // Count rows and columns
       const rows = table.querySelectorAll("tr");
@@ -110,49 +148,43 @@ export const tdHasHeader: Rule = {
       // Skip small tables (3x3 or smaller)
       if (rowCount <= 3 && maxCols <= 3) continue;
 
-      // Check if table has headers
-      const hasThElements = table.querySelector("th") !== null;
       const hasScope = table.querySelector("th[scope]") !== null;
       const hasHeadersAttr = table.querySelector("td[headers]") !== null;
-
-      if (!hasThElements) continue; // No headers at all - different issue
 
       // Check each data cell
       for (const td of table.querySelectorAll("td")) {
         if (isAriaHidden(td)) continue;
 
+        // Skip empty cells — no content to associate
+        if (!td.textContent?.trim() && !td.querySelector("img, svg, input, select, textarea")) continue;
+
+        // Skip cells with their own accessible name
+        if (td.hasAttribute("aria-label") || td.hasAttribute("aria-labelledby")) continue;
+
         // If cell has headers attribute, it's associated
         if (td.hasAttribute("headers")) continue;
 
-        // Check if there's a th with scope in same row or column
+        // Check if there's a th in same row or column
         const row = td.closest("tr");
         if (!row) continue;
 
         // Check for row header in same row
         const rowHasHeader = row.querySelector("th") !== null;
 
-        // Check for column header
-        const cellIndex = Array.from(row.children).indexOf(td);
+        // Check for column header (colspan-aware)
+        const colIdx = getColIndex(td);
         let colHasHeader = false;
 
-        // Look for th in thead or first row at same column position
+        // Look for th in thead or first row at the same column position
         const thead = table.querySelector("thead");
-        if (thead) {
-          const headerRow = thead.querySelector("tr");
-          if (headerRow) {
-            const headerCells = headerRow.querySelectorAll("th, td");
-            if (headerCells[cellIndex]?.tagName.toLowerCase() === "th") {
+        const headerRow = thead?.querySelector("tr") ?? table.querySelector("tbody > tr, tr");
+        if (headerRow) {
+          for (const cell of headerRow.querySelectorAll("th, td")) {
+            const ci = getColIndex(cell);
+            const span = parseInt(cell.getAttribute("colspan") || "1", 10);
+            if (cell.tagName.toLowerCase() === "th" && colIdx >= ci && colIdx < ci + span) {
               colHasHeader = true;
-            }
-          }
-        }
-        // Also check first row of tbody or table
-        if (!colHasHeader) {
-          const firstRow = table.querySelector("tbody > tr, tr");
-          if (firstRow) {
-            const firstCells = firstRow.querySelectorAll("th, td");
-            if (firstCells[cellIndex]?.tagName.toLowerCase() === "th") {
-              colHasHeader = true;
+              break;
             }
           }
         }
