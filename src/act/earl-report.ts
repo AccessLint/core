@@ -32,7 +32,7 @@ export interface EarlAssertion {
 }
 
 export interface EarlTestSubject {
-  "@type": "TestSubject";
+  "@type": ["TestSubject", "WebPage"];
   source: string;
   assertions: EarlAssertion[];
 }
@@ -86,7 +86,7 @@ export function generateEarlReport(
   }
 
   const subjects: EarlTestSubject[] = [...subjectMap].map(([source, assertions]) => ({
-    "@type": "TestSubject",
+    "@type": ["TestSubject", "WebPage"],
     source,
     assertions,
   }));

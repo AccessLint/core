@@ -56,7 +56,8 @@ function main() {
   const ruleStats = new Map<string, RuleStats>();
 
   for (const node of report["@graph"]) {
-    if ((node as EarlTestSubject)["@type"] !== "TestSubject") continue;
+    const nodeType = (node as EarlTestSubject)["@type"];
+    if (!Array.isArray(nodeType) || !nodeType.includes("TestSubject")) continue;
     const subject = node as EarlTestSubject;
 
     // Extract testcase ID from source URL
