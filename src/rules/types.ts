@@ -2,7 +2,7 @@ export interface Rule {
   id: string;
   actRuleIds?: string[];
   wcag: string[];
-  level: "A" | "AA";
+  level: "A" | "AA" | "AAA";
   tags?: string[];
   description: string;
   /** Generic remediation guidance for the AI to contextualize */
@@ -87,7 +87,7 @@ export interface DeclarativeRule {
   message: string;
   description: string;
   wcag: string[];
-  level: "A" | "AA";
+  level: "A" | "AA" | "AAA";
   tags?: string[];
   guidance?: string;
   prompt?: string;
