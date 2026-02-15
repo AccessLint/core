@@ -72,9 +72,8 @@ export default class BrowserEarlReporter implements Reporter {
     if (this.outcomes.length === 0) return;
 
     const pkg = JSON.parse(readFileSync(PACKAGE_JSON_PATH, "utf-8"));
-    const assertedBy = `https://github.com/AccessLint/core/releases/tag/v${pkg.version}`;
 
-    const report = generateEarlReport(this.outcomes, assertedBy);
+    const report = generateEarlReport(this.outcomes, pkg.version);
     const outputDir = dirname(EARL_OUTPUT_PATH);
     mkdirSync(outputDir, { recursive: true });
     writeFileSync(EARL_OUTPUT_PATH, JSON.stringify(report, null, 2) + "\n");

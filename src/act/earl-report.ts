@@ -2,8 +2,11 @@
  * Generate a W3C EARL (Evaluation and Report Language) JSON-LD report
  * from ACT conformance test results.
  *
+ * Format follows https://www.w3.org/WAI/standards-guidelines/act/report/earl/
+ * using the W3C-hosted context at:
+ *   https://www.w3.org/WAI/content-assets/wcag-act-rules/earl-context.json
+ *
  * @see https://www.w3.org/TR/EARL10-Schema/
- * @see https://act-rules.github.io/pages/implementations/reporting/
  */
 
 export interface FixtureOutcome {
@@ -16,28 +19,38 @@ export interface FixtureOutcome {
   correct: boolean;
 }
 
-export interface EarlGraphReport {
-  "@context": Record<string, string>;
-  "@graph": EarlAssertion[];
-}
-
-interface EarlAssertion {
+export interface EarlAssertion {
   "@type": "Assertion";
   mode: "earl:automatic";
-  assertedBy: string;
-  subject: {
-    "@type": ["earl:TestSubject", "sch:WebPage"];
-    source: string;
+  test: {
+    title: string;
+    isPartOf: string[];
   };
   result: {
-    "@type": "TestResult";
     outcome: `earl:${string}`;
   };
-  test: {
-    "@type": "TestCase";
-    title: string;
-    isPartOf: [string];
+}
+
+export interface EarlTestSubject {
+  "@type": "TestSubject";
+  source: string;
+  assertions: EarlAssertion[];
+}
+
+interface EarlAssertor {
+  "@type": "Assertor";
+  name: string;
+  description: string;
+  homepage: string;
+  release: {
+    "@type": "Version";
+    revision: string;
   };
+}
+
+export interface EarlGraphReport {
+  "@context": string;
+  "@graph": (EarlTestSubject | EarlAssertor)[];
 }
 
 const ACT_TESTCASE_URL_PREFIX =
@@ -47,37 +60,50 @@ const ACT_RULE_URL_PREFIX =
 
 export function generateEarlReport(
   outcomes: FixtureOutcome[],
-  assertedBy: string,
+  version: string,
 ): EarlGraphReport {
-  const graph: EarlAssertion[] = outcomes.map((outcome) => ({
-    "@type": "Assertion",
-    mode: "earl:automatic",
-    assertedBy,
-    subject: {
-      "@type": ["earl:TestSubject", "sch:WebPage"],
-      source: `${ACT_TESTCASE_URL_PREFIX}/${outcome.actRuleId}/${outcome.testcaseId}.html`,
-    },
-    result: {
-      "@type": "TestResult",
-      outcome: `earl:${outcome.actual}`,
-    },
-    test: {
-      "@type": "TestCase",
-      title: outcome.testcaseTitle,
-      isPartOf: [`${ACT_RULE_URL_PREFIX}/${outcome.actRuleId}/`],
-    },
+  // Group outcomes by test page (source URL)
+  const subjectMap = new Map<string, EarlAssertion[]>();
+
+  for (const outcome of outcomes) {
+    const source = `${ACT_TESTCASE_URL_PREFIX}/${outcome.actRuleId}/${outcome.testcaseId}.html`;
+    let assertions = subjectMap.get(source);
+    if (!assertions) {
+      assertions = [];
+      subjectMap.set(source, assertions);
+    }
+    assertions.push({
+      "@type": "Assertion",
+      mode: "earl:automatic",
+      test: {
+        title: outcome.coreRuleId,
+        isPartOf: [`${ACT_RULE_URL_PREFIX}/${outcome.actRuleId}/`],
+      },
+      result: {
+        outcome: `earl:${outcome.actual}`,
+      },
+    });
+  }
+
+  const subjects: EarlTestSubject[] = [...subjectMap].map(([source, assertions]) => ({
+    "@type": "TestSubject",
+    source,
+    assertions,
   }));
 
-  return {
-    "@context": {
-      "@vocab": "http://www.w3.org/ns/earl#",
-      earl: "http://www.w3.org/ns/earl#",
-      WCAG21: "https://www.w3.org/TR/WCAG21/#",
-      sch: "https://schema.org/",
-      doap: "http://usefulinc.com/ns/doap#",
-      foaf: "http://xmlns.com/foaf/0.1/",
-      dct: "http://purl.org/dc/terms/",
+  const assertor: EarlAssertor = {
+    "@type": "Assertor",
+    name: "AccessLint",
+    description: "Automated accessibility testing engine",
+    homepage: "https://github.com/AccessLint/core",
+    release: {
+      "@type": "Version",
+      revision: version,
     },
-    "@graph": graph,
+  };
+
+  return {
+    "@context": "https://www.w3.org/WAI/content-assets/wcag-act-rules/earl-context.json",
+    "@graph": [assertor, ...subjects],
   };
 }
