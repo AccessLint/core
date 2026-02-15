@@ -1,12 +1,17 @@
 import { describe, it, expect, beforeEach, afterAll } from "vitest";
-import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
-import { getRuleById, clearAllCaches } from "../rules/index";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { resolve, dirname } from "node:path";
+import { rules, clearAllCaches } from "../rules/index";
 import { ACT_TO_CORE_RULE, HAPPY_DOM_LIMITED_RULES } from "./act-mapping";
+import { generateEarlReport, type FixtureOutcome } from "./earl-report";
 
 const FIXTURE_PATH = resolve(
   import.meta.dirname,
   "../../act-fixtures/act-testcases.json",
+);
+const EARL_OUTPUT_PATH = resolve(
+  import.meta.dirname,
+  "../../act-fixtures/earl-report.json",
 );
 const fixturesExist = existsSync(FIXTURE_PATH);
 
@@ -39,6 +44,7 @@ interface RuleResult {
 }
 
 const ruleResults: RuleResult[] = [];
+const allFixtureOutcomes: FixtureOutcome[] = [];
 
 describe.skipIf(!fixturesExist)("ACT Conformance", () => {
   const fixtures = loadFixtures();
@@ -51,11 +57,15 @@ describe.skipIf(!fixturesExist)("ACT Conformance", () => {
     byRule.set(entry.coreRuleId, list);
   }
 
+  // Use the full rules array directly to ensure all rules are testable,
+  // including default-disabled ones.
+  const ruleMap = new Map(rules.map((r) => [r.id, r]));
+
   for (const [coreRuleId, entries] of byRule) {
-    const rule = getRuleById(coreRuleId);
+    const rule = ruleMap.get(coreRuleId);
     if (!rule) {
       it(`${coreRuleId}: rule not found`, () => {
-        expect.fail(`getRuleById("${coreRuleId}") returned undefined`);
+        expect.fail(`Rule "${coreRuleId}" not found in rules array`);
       });
       continue;
     }
@@ -83,6 +93,26 @@ describe.skipIf(!fixturesExist)("ACT Conformance", () => {
           }
           const hasViolations = violations.length > 0;
           const assert = isLimited ? expect.soft : expect;
+
+          const correct =
+            entry.expected === "failed" ? hasViolations : !hasViolations;
+
+          const actual: "passed" | "failed" | "inapplicable" = hasViolations
+            ? "failed"
+            : entry.expected === "inapplicable"
+              ? "inapplicable"
+              : "passed";
+
+          allFixtureOutcomes.push({
+            testcaseId: entry.testcaseId,
+            testcaseTitle: entry.testcaseTitle,
+            actRuleId: entry.actRuleId,
+            coreRuleId,
+            expected: entry.expected,
+            actual,
+            correct,
+            limited: isLimited,
+          });
 
           if (entry.expected === "failed") {
             try {
@@ -170,5 +200,14 @@ describe.skipIf(!fixturesExist)("ACT Conformance", () => {
         overallRate,
     );
     console.log("\n* = happy-dom limited (soft failures)\n");
+
+    // Generate EARL report
+    if (allFixtureOutcomes.length > 0) {
+      const report = generateEarlReport(allFixtureOutcomes);
+      const outputDir = dirname(EARL_OUTPUT_PATH);
+      mkdirSync(outputDir, { recursive: true });
+      writeFileSync(EARL_OUTPUT_PATH, JSON.stringify(report, null, 2) + "\n");
+      console.log(`EARL report written to ${EARL_OUTPUT_PATH}\n`);
+    }
   });
 });
