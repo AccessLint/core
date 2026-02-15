@@ -246,9 +246,11 @@ export function parseGradientStops(
 const MEDIA_TAGS = new Set(["IMG", "PICTURE", "VIDEO", "SVG"]);
 
 /**
- * Detects whether text may be visually overlaid on a media element (<img>,
- * <picture>, <video>, <svg>) via CSS positioning. Returns true when either
- * the text or a sibling media element is positioned out of normal flow
+ * Detects whether text may be visually overlaid on an image via CSS
+ * positioning. Checks sibling branches for media elements (<img>, <picture>,
+ * <video>, <svg>) — including those nested inside wrapper divs — and for
+ * positioned siblings with CSS background-image. Returns true when either
+ * the text or a sibling visual element is positioned out of normal flow
  * within a shared positioning context — the common hero/card overlay pattern.
  */
 export function mayBeOverImage(el: Element): boolean {
@@ -257,6 +259,11 @@ export function mayBeOverImage(el: Element): boolean {
   const result = _checkOverImage(el);
   _overImageCache.set(el, result);
   return result;
+}
+
+function _hasMedia(child: Element): boolean {
+  if (MEDIA_TAGS.has(child.tagName)) return true;
+  return !!child.querySelector("img, picture, video, svg");
 }
 
 function _checkOverImage(el: Element): boolean {
@@ -270,14 +277,21 @@ function _checkOverImage(el: Element): boolean {
       textIsOutOfFlow = true;
     }
 
-    // At a positioning context, check sibling branches for media elements
+    // At a positioning context, check sibling branches for visual backgrounds
     if (current !== el && pos !== "static") {
       for (const child of current.children) {
         if (child === el || child.contains(el)) continue;
-        if (MEDIA_TAGS.has(child.tagName)) {
+        // Media element (direct or nested in wrapper div)
+        if (_hasMedia(child)) {
           if (textIsOutOfFlow) return true;
           const childPos = getCachedComputedStyle(child).position;
           if (childPos === "absolute" || childPos === "fixed") return true;
+        }
+        // Positioned sibling with CSS background-image (hero/card backdrop pattern)
+        const childStyle = getCachedComputedStyle(child);
+        if (childStyle.position === "absolute" || childStyle.position === "fixed") {
+          const bgImg = childStyle.backgroundImage;
+          if (bgImg && bgImg !== "none" && bgImg !== "initial") return true;
         }
       }
       // Only check the nearest positioning context for the text

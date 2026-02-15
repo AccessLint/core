@@ -347,4 +347,47 @@ describe("accesslint-092", () => {
     expect(result).toHaveLength(1);
     expect(result![0].blur).toBe(0);
   });
+
+  // --- Visual background overlap detection ---
+
+  it("skips: positioned text over sibling div with background-image", () => {
+    const doc = makeDoc(
+      '<body><div style="position: relative;">' +
+        '<div style="position: absolute; background-image: url(hero.jpg);"></div>' +
+        '<h1 style="position: absolute; color: rgb(255, 255, 255);">Overlay</h1>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("skips: text over positioned sibling div with background-image (text in flow)", () => {
+    const doc = makeDoc(
+      '<body><div style="position: relative;">' +
+        '<div style="position: absolute; background-image: url(hero.jpg);"></div>' +
+        '<p style="color: rgb(255, 255, 255);">Caption</p>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("skips: positioned text over sibling with nested img (wrapper div)", () => {
+    const doc = makeDoc(
+      '<body><div style="position: relative;">' +
+        '<div class="image-wrapper"><picture><img src="hero.jpg"></picture></div>' +
+        '<h1 style="position: absolute; color: rgb(255, 255, 255);">Overlay</h1>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(0);
+  });
+
+  it("does not skip: normal-flow sibling div with background-image (not positioned)", () => {
+    // Sibling has bg-image but is NOT positioned — no visual overlap
+    const doc = makeDoc(
+      '<body><div style="position: relative;">' +
+        '<div style="background-image: url(icon.png);"></div>' +
+        '<p style="color: rgb(200, 200, 200); background-color: rgb(200, 200, 200);">Text</p>' +
+        "</div></body>"
+    );
+    expect(colorContrast.run(doc)).toHaveLength(1);
+  });
 });
