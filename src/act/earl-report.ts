@@ -103,7 +103,7 @@ export function generateEarlReport(
   };
 
   return {
-    "@context": "https://www.w3.org/WAI/content-assets/wcag-act-rules/earl-context.json",
+    "@context": "https://act-rules.github.io/earl-context.json",
     "@graph": [assertor, ...subjects],
   };
 }
