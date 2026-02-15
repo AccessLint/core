@@ -285,6 +285,7 @@ export function getActiveRules(): Rule[] {
     if (disabledRuleIds.has(r.id)) return false;
     if (enabledRuleIds.has(r.id)) return true;
     if (defaultDisabledRuleIds.has(r.id)) return false;
+    if (r.level === "AAA") return false;
     return true;
   });
   const combined = active.concat(additionalRules);
