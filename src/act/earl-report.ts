@@ -16,67 +16,68 @@ export interface FixtureOutcome {
   correct: boolean;
 }
 
-export interface EarlReport {
-  "@context": string;
-  "@type": string;
-  name: string;
-  vendor: {
-    "@type": string;
-    name: string;
-    url: string;
-  };
-  assertions: EarlAssertion[];
+export interface EarlGraphReport {
+  "@context": Record<string, string>;
+  "@graph": EarlAssertion[];
 }
 
 interface EarlAssertion {
-  "@type": string;
-  test: {
-    "@type": string;
-    title: string;
-    url: string;
-  };
+  "@type": "Assertion";
+  mode: "earl:automatic";
+  assertedBy: string;
   subject: {
-    "@type": string;
-    description: string;
+    "@type": ["earl:TestSubject", "sch:WebPage"];
+    source: string;
   };
   result: {
-    "@type": string;
-    outcome: string;
+    "@type": "TestResult";
+    outcome: `earl:${string}`;
   };
-  mode: string;
+  test: {
+    "@type": "TestCase";
+    title: string;
+    isPartOf: [string];
+  };
 }
 
-const EARL_CONTEXT = "https://act-rules.github.io/earl-context.json";
-const ACT_RULE_URL_PREFIX = "https://www.w3.org/WAI/standards-guidelines/act/rules/";
+const ACT_TESTCASE_URL_PREFIX =
+  "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases";
+const ACT_RULE_URL_PREFIX =
+  "https://www.w3.org/WAI/standards-guidelines/act/rules";
 
-export function generateEarlReport(outcomes: FixtureOutcome[]): EarlReport {
-  const assertions: EarlAssertion[] = outcomes.map((outcome) => ({
+export function generateEarlReport(
+  outcomes: FixtureOutcome[],
+  assertedBy: string,
+): EarlGraphReport {
+  const graph: EarlAssertion[] = outcomes.map((outcome) => ({
     "@type": "Assertion",
-    test: {
-      "@type": "TestCase",
-      title: outcome.testcaseTitle,
-      url: `${ACT_RULE_URL_PREFIX}${outcome.actRuleId}/#${outcome.testcaseId}`,
-    },
+    mode: "earl:automatic",
+    assertedBy,
     subject: {
-      "@type": "TestSubject",
-      description: `ACT test case: ${outcome.testcaseTitle}`,
+      "@type": ["earl:TestSubject", "sch:WebPage"],
+      source: `${ACT_TESTCASE_URL_PREFIX}/${outcome.actRuleId}/${outcome.testcaseId}.html`,
     },
     result: {
       "@type": "TestResult",
-      outcome: outcome.correct ? "earl:passed" : "earl:failed",
+      outcome: `earl:${outcome.actual}`,
     },
-    mode: "earl:automatic",
+    test: {
+      "@type": "TestCase",
+      title: outcome.testcaseTitle,
+      isPartOf: [`${ACT_RULE_URL_PREFIX}/${outcome.actRuleId}/`],
+    },
   }));
 
   return {
-    "@context": EARL_CONTEXT,
-    "@type": "Assertor",
-    name: "@accesslint/core",
-    vendor: {
-      "@type": "Organization",
-      name: "AccessLint",
-      url: "https://github.com/AccessLint/core",
+    "@context": {
+      "@vocab": "http://www.w3.org/ns/earl#",
+      earl: "http://www.w3.org/ns/earl#",
+      WCAG21: "https://www.w3.org/TR/WCAG21/#",
+      sch: "https://schema.org/",
+      doap: "http://usefulinc.com/ns/doap#",
+      foaf: "http://xmlns.com/foaf/0.1/",
+      dct: "http://purl.org/dc/terms/",
     },
-    assertions,
+    "@graph": graph,
   };
 }

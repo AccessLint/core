@@ -6,11 +6,15 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { defaultDisabledRuleIds } from "../rules/index";
 import { ACT_TO_CORE_RULE } from "./act-mapping";
-import type { EarlReport } from "./earl-report";
+import type { EarlGraphReport } from "./earl-report";
 
 const EARL_PATH = resolve(
   import.meta.dirname,
   "../../act-fixtures/earl-report-browser.json",
+);
+const FIXTURES_PATH = resolve(
+  import.meta.dirname,
+  "../../act-fixtures/act-testcases.json",
 );
 const THRESHOLD = 0.8;
 
@@ -21,8 +25,13 @@ interface RuleStats {
   cantTell: number;
 }
 
+interface Fixture {
+  testcaseId: string;
+  expected: "passed" | "failed" | "inapplicable";
+}
+
 function main() {
-  let report: EarlReport;
+  let report: EarlGraphReport;
   try {
     report = JSON.parse(readFileSync(EARL_PATH, "utf-8"));
   } catch {
@@ -31,22 +40,47 @@ function main() {
     process.exit(1);
   }
 
+  // Build a lookup from testcaseId to expected outcome
+  let fixtures: Fixture[];
+  try {
+    fixtures = JSON.parse(readFileSync(FIXTURES_PATH, "utf-8"));
+  } catch {
+    console.error(`Failed to read fixtures at ${FIXTURES_PATH}`);
+    process.exit(1);
+  }
+  const expectedByTestcase = new Map<string, string>();
+  for (const f of fixtures) {
+    expectedByTestcase.set(f.testcaseId, f.expected);
+  }
+
   // Aggregate per-rule stats
   const ruleStats = new Map<string, RuleStats>();
 
-  for (const assertion of report.assertions) {
-    // Extract ACT rule ID from the test URL
-    const urlMatch = assertion.test.url.match(/\/rules\/([^/]+)\//);
-    if (!urlMatch) continue;
-    const actRuleId = urlMatch[1];
+  for (const assertion of report["@graph"]) {
+    // Extract ACT rule ID from isPartOf URL
+    const ruleUrl = assertion.test.isPartOf[0];
+    const ruleMatch = ruleUrl.match(/\/rules\/([^/]+)\//);
+    if (!ruleMatch) continue;
+    const actRuleId = ruleMatch[1];
+
+    // Extract testcase ID from subject source URL
+    const sourceMatch = assertion.subject.source.match(/\/([^/]+)\.html$/);
+    if (!sourceMatch) continue;
+    const testcaseId = sourceMatch[1];
+
+    const expected = expectedByTestcase.get(testcaseId);
+    if (!expected) continue;
+
+    // Determine correctness: does the actual outcome match expected?
+    const actualOutcome = assertion.result.outcome.replace("earl:", "");
+    const correct = actualOutcome === expected;
 
     const stats = ruleStats.get(actRuleId) ?? { total: 0, passed: 0, failed: 0, cantTell: 0 };
     stats.total++;
 
-    const outcome = assertion.result.outcome;
-    if (outcome === "earl:passed") stats.passed++;
-    else if (outcome === "earl:failed") stats.failed++;
-    else if (outcome === "earl:cantTell") stats.cantTell++;
+    if (correct) stats.passed++;
+    else if (actualOutcome === "cantTell") stats.cantTell++;
+    else stats.failed++;
 
     ruleStats.set(actRuleId, stats);
   }
