@@ -66,6 +66,7 @@ function getVisibleText(el: Element): string {
 
 export const labelContentNameMismatch: Rule = {
   id: "label-content-name-mismatch",
+  actRuleIds: ["2ee8b8"],
   wcag: [],
   level: "A",
   tags: ["best-practice"],

@@ -187,6 +187,7 @@ function isInsideNativeSelect(el: Element): boolean {
 
 export const colorContrast: Rule = {
   id: "color-contrast",
+  actRuleIds: ["afw4f7"],
   wcag: ["1.4.3"],
   level: "AA",
   description:
@@ -276,6 +277,89 @@ export const colorContrast: Rule = {
           html: getHtmlSnippet(el),
           impact: "serious" as const,
           message: `Insufficient color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
+          context: `foreground: ${fgHex} rgb(${fg.join(", ")}), background: ${bgHex} rgb(${bg.join(", ")}), ratio: ${roundedRatio}:1, required: ${threshold}:1`,
+        });
+      }
+    }
+
+    return violations;
+  },
+};
+
+export const colorContrastEnhanced: Rule = {
+  id: "color-contrast-enhanced",
+  actRuleIds: ["09o5cg"],
+  wcag: ["1.4.6"],
+  level: "AAA",
+  description:
+    "Text elements must have enhanced color contrast against the background (WCAG AAA).",
+  guidance:
+    "WCAG SC 1.4.6 (AAA) requires a contrast ratio of at least 7:1 for normal text and 4.5:1 for large text (>=24px or >=18.66px bold).",
+  run(doc) {
+    const violations = [];
+    const body = doc.body;
+    if (!body) return [];
+
+    const walker = doc.createTreeWalker(body, NodeFilter.SHOW_TEXT);
+    const checked = new Set<Element>();
+
+    let node: Text | null;
+    while ((node = walker.nextNode() as Text | null)) {
+      if (!node.textContent || !node.textContent.trim()) continue;
+
+      const el = node.parentElement;
+      if (!el) continue;
+      if (checked.has(el)) continue;
+      checked.add(el);
+
+      if (NON_TEXT_TAGS.has(el.tagName)) continue;
+      const tag = el.tagName;
+      if (tag === "BODY" || tag === "HTML") continue;
+      if (isInsideNativeSelect(el)) continue;
+      if (isDisabledFormElement(el)) continue;
+      if (isLabelForDisabledControl(el, doc)) continue;
+      if (isHidden(el)) continue;
+
+      const style = getCachedComputedStyle(el);
+      if (parseFloat(style.opacity) === 0) continue;
+      if (getAccumulatedOpacity(el) < 0.1) continue;
+
+      const textShadow = style.textShadow;
+      if (textShadow && textShadow !== "none" && textShadow !== "initial") continue;
+      if (hasUnreliableVisualEffects(el)) continue;
+
+      const fg = parseColor(style.color);
+      if (!fg) continue;
+
+      const fgAlphaMatch = style.color.match(/rgba\(.+?,\s*([\d.]+)\s*\)/) ||
+        style.color.match(/rgba?\(.+?\/\s*([\d.]+%?)\s*\)/);
+      if (fgAlphaMatch) {
+        const fgAlpha = fgAlphaMatch[1].endsWith("%")
+          ? parseFloat(fgAlphaMatch[1]) / 100
+          : parseFloat(fgAlphaMatch[1]);
+        if (fgAlpha === 0) continue;
+      }
+
+      if (mayBeOverImage(el)) continue;
+
+      const bg = getEffectiveBackgroundColor(el);
+      if (!bg) continue;
+
+      const fgLum = getLuminance(fg[0], fg[1], fg[2]);
+      const bgLum = getLuminance(bg[0], bg[1], bg[2]);
+      const ratio = getContrastRatio(fgLum, bgLum);
+      const threshold = isLargeText(el) ? 4.5 : 7;
+
+      if (ratio < threshold) {
+        const roundedRatio = Math.round(ratio * 100) / 100;
+        const fgHex = rgbToHex(fg);
+        const bgHex = rgbToHex(bg);
+        violations.push({
+          ruleId: "color-contrast-enhanced",
+          selector: getSelector(el),
+          html: getHtmlSnippet(el),
+          impact: "serious" as const,
+          message: `Insufficient enhanced contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
           context: `foreground: ${fgHex} rgb(${fg.join(", ")}), background: ${bgHex} rgb(${bg.join(", ")}), ratio: ${roundedRatio}:1, required: ${threshold}:1`,
         });
       }

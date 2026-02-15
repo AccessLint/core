@@ -26,6 +26,7 @@ function getLinkContext(el: Element): string | undefined {
 
 export const linkName: Rule = {
   id: "link-name",
+  actRuleIds: ["c487ae"],
   wcag: ["2.4.4", "4.1.2"],
   level: "A",
   description: "Links must have discernible text via content, aria-label, or aria-labelledby.",

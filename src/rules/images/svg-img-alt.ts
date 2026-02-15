@@ -34,6 +34,7 @@ function getSvgAccessibleName(el: Element): string {
 
 export const svgImgAlt: Rule = {
   id: "svg-img-alt",
+  actRuleIds: ["7d6734"],
   wcag: ["1.1.1"],
   level: "A",
   description:

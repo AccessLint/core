@@ -139,6 +139,7 @@ export const nestedInteractive: Rule = {
 
 export const scrollableRegionFocusable: Rule = {
   id: "scrollable-region-focusable",
+  actRuleIds: ["0ssw9k"],
   wcag: ["2.1.1"],
   level: "A",
   description: "Scrollable regions must be keyboard accessible.",

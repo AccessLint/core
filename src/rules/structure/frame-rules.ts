@@ -17,6 +17,7 @@ function isHiddenFrame(frame: Element): boolean {
 
 export const frameTitle: Rule = {
   id: "frame-title",
+  actRuleIds: ["cae760"],
   wcag: ["4.1.2"],
   level: "A",
   description: "Frames must have an accessible name.",

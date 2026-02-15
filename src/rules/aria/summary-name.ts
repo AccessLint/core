@@ -4,6 +4,7 @@ import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
 export const summaryName: Rule = {
   id: "summary-name",
+  actRuleIds: ["2t702h"],
   wcag: ["4.1.2"],
   level: "A",
   description: "<summary> elements must have an accessible name.",

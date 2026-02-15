@@ -3,6 +3,7 @@ import { runAriaAttrAudit } from "./aria-attr-audit";
 
 export const ariaValidAttr: Rule = {
   id: "aria-valid-attr",
+  actRuleIds: ["5f99a7"],
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA attributes must be valid (correctly spelled).",

@@ -4,6 +4,7 @@ import { getAccessibleName } from "../utils/aria";
 
 export const documentTitle: Rule = {
   id: "document-title",
+  actRuleIds: ["2779a5"],
   wcag: ["2.4.2"],
   level: "A",
   description: "Documents must have a <title> element to provide users with an overview of content.",
@@ -37,6 +38,7 @@ export const documentTitle: Rule = {
 
 export const bypass: Rule = {
   id: "bypass",
+  actRuleIds: ["cf77f2"],
   wcag: [],
   level: "A",
   tags: ["best-practice"],

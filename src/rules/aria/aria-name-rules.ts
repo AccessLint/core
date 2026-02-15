@@ -65,6 +65,7 @@ function createNameRule(
 
 export const ariaCommandName: Rule = {
   id: "aria-command-name",
+  actRuleIds: ["m6b1q3"],
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA commands must have an accessible name.",
@@ -81,8 +82,14 @@ export const ariaCommandName: Rule = {
       // Skip shadow DOM elements — name resolution can't reliably cross shadow boundaries
       if (el.getRootNode() instanceof ShadowRoot) continue;
 
-      // Skip native elements that are handled by other rules
-      if (el.tagName.toLowerCase() === "button" || el.tagName.toLowerCase() === "a") continue;
+      // Skip native elements handled by other rules, UNLESS the explicit
+      // role is menuitem (ACT m6b1q3 — a <button role="menuitem"> is a
+      // command that this rule must check).
+      const explicitRole = el.getAttribute("role");
+      if (
+        (el.tagName.toLowerCase() === "button" || el.tagName.toLowerCase() === "a") &&
+        explicitRole !== "menuitem"
+      ) continue;
 
       const name = getAccessibleName(el);
       if (!name) {

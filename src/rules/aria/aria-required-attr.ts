@@ -19,6 +19,7 @@ const REQUIRED_ATTRS: Record<string, string[]> = {
 
 export const ariaRequiredAttr: Rule = {
   id: "aria-required-attr",
+  actRuleIds: ["4e8ab6"],
   wcag: ["4.1.2"],
   level: "A",
   description: "Elements with ARIA roles must have all required ARIA attributes.",

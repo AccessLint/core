@@ -88,6 +88,7 @@ const GLOBAL_ARIA_ATTRS = new Set([
 
 export const ariaAllowedAttr: Rule = {
   id: "aria-allowed-attr",
+  actRuleIds: ["5c01ea"],
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA attributes must be allowed for the element's role.",

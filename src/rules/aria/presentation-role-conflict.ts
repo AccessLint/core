@@ -58,6 +58,7 @@ function getConflictIssues(el: Element): string[] {
 
 export const presentationRoleConflict: Rule = {
   id: "presentation-role-conflict",
+  actRuleIds: ["46ca7f"],
   wcag: ["4.1.2"],
   level: "A",
   description: "Elements with role='presentation' or role='none' must not be focusable or have global ARIA attributes.",

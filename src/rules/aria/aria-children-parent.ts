@@ -86,6 +86,7 @@ function checkRequiredChildren(el: Element, requiredGroups: string[][]): "pass" 
 
 export const ariaRequiredChildren: Rule = {
   id: "aria-required-children",
+  actRuleIds: ["bc4a75"],
   wcag: ["1.3.1"],
   level: "A",
   description: "Certain ARIA roles require specific child roles to be present.",
@@ -137,6 +138,7 @@ export const ariaRequiredChildren: Rule = {
 
 export const ariaRequiredParent: Rule = {
   id: "aria-required-parent",
+  actRuleIds: ["ff89c9"],
   wcag: ["1.3.1"],
   level: "A",
   description: "Certain ARIA roles must be contained within specific parent roles.",

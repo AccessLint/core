@@ -4,6 +4,7 @@ import { isAriaHidden, getAccessibleName } from "../utils/aria";
 
 export const emptyHeading: Rule = {
   id: "empty-heading",
+  actRuleIds: ["ffd0e9"],
   wcag: [],
   level: "A",
   tags: ["best-practice"],

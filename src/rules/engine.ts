@@ -113,6 +113,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
 
   return {
     id: spec.id,
+    actRuleIds: spec.actRuleIds,
     wcag: spec.wcag,
     level: spec.level,
     tags: spec.tags,

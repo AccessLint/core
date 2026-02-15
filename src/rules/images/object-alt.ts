@@ -31,6 +31,7 @@ function getObjectAccessibleName(el: Element): string {
 
 export const objectAlt: Rule = {
   id: "object-alt",
+  actRuleIds: ["8fc3b6"],
   wcag: ["1.1.1"],
   level: "A",
   description: "<object> elements must have alternative text.",

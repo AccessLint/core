@@ -4,6 +4,7 @@ import { isAriaHidden } from "../utils/aria";
 
 export const htmlHasLang: Rule = {
   id: "html-has-lang",
+  actRuleIds: ["b5c3f8"],
   wcag: ["3.1.1"],
   level: "A",
   description: "The <html> element must have a lang attribute.",
@@ -83,6 +84,7 @@ function isValidLangTag(lang: string): boolean {
 
 export const htmlLangValid: Rule = {
   id: "html-lang-valid",
+  actRuleIds: ["bf051a"],
   wcag: ["3.1.1"],
   level: "A",
   description: "The lang attribute on <html> must have a valid value.",
@@ -150,6 +152,7 @@ function hasVisibleLangText(el: Element): boolean {
 
 export const validLang: Rule = {
   id: "valid-lang",
+  actRuleIds: ["de46e4"],
   wcag: ["3.1.2"],
   level: "AA",
   description: "The lang attribute must have a valid value on all elements.",

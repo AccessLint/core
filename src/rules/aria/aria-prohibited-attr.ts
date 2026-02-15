@@ -3,6 +3,7 @@ import { runAriaAttrAudit } from "./aria-attr-audit";
 
 export const ariaProhibitedAttr: Rule = {
   id: "aria-prohibited-attr",
+  actRuleIds: ["kb1m8s"],
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA attributes must not be prohibited for the element's role.",

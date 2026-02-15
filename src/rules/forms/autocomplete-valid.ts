@@ -71,6 +71,7 @@ function isValidAutocomplete(value: string): boolean {
 
 export const autocompleteValid: Rule = {
   id: "autocomplete-valid",
+  actRuleIds: ["73f2c2"],
   wcag: ["1.3.5"],
   level: "AA",
   description: "Autocomplete attribute must use valid values from the HTML specification.",

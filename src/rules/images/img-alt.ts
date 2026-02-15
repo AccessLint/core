@@ -44,6 +44,7 @@ function isVisibilityHidden(el: Element): boolean {
 
 export const imgAlt: Rule = {
   id: "img-alt",
+  actRuleIds: ["23a2a8"],
   wcag: ["1.1.1"],
   level: "A",
   description:

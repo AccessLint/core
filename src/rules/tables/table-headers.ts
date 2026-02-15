@@ -4,6 +4,7 @@ import { isAriaHidden, getAccessibleName } from "../utils/aria";
 
 export const tdHeadersAttr: Rule = {
   id: "td-headers-attr",
+  actRuleIds: ["a25f45"],
   wcag: ["1.3.1"],
   level: "A",
   description: "All cells in a table using headers attribute must reference valid header IDs.",
@@ -48,6 +49,7 @@ export const tdHeadersAttr: Rule = {
 
 export const thHasDataCells: Rule = {
   id: "th-has-data-cells",
+  actRuleIds: ["d0f69e"],
   wcag: ["1.3.1"],
   level: "A",
   description: "Table headers should be associated with data cells.",

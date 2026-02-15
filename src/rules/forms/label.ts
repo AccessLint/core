@@ -97,6 +97,7 @@ function getFormFieldName(el: Element): string {
 
 export const formLabel: Rule = {
   id: "label",
+  actRuleIds: ["e086e5"],
   wcag: ["4.1.2"],
   level: "A",
   description: "Form elements must have labels. Use <label>, aria-label, or aria-labelledby.",

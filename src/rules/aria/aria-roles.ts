@@ -4,6 +4,7 @@ import { isValidRole } from "../utils/aria";
 
 export const ariaRoles: Rule = {
   id: "aria-roles",
+  actRuleIds: ["674b10"],
   wcag: ["4.1.2"],
   level: "A",
   description: "ARIA role values must be valid.",

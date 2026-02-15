@@ -28,6 +28,7 @@ import { tabindex } from "./keyboard/tabindex";
 import { focusOrderSemantics } from "./keyboard/focus-order-semantics";
 import { nestedInteractive, scrollableRegionFocusable } from "./keyboard/interactive-rules";
 import { accesskeys } from "./keyboard/accesskeys";
+import { focusVisible } from "./keyboard/focus-visible";
 
 // Structure
 import { headingOrder } from "./structure/heading-order";
@@ -47,7 +48,9 @@ import { list, listitem, dlitem, definitionList } from "./structure/list-rules";
 import { documentTitle, bypass, pageHasHeadingOne } from "./structure/document-rules";
 import { frameTitle, frameTitleUnique } from "./structure/frame-rules";
 import { emptyHeading } from "./structure/heading-rules";
-import { metaViewport, metaRefresh } from "./structure/meta-rules";
+import { metaViewport, metaRefresh, metaRefreshNoException } from "./structure/meta-rules";
+import { importantLetterSpacing, importantLineHeight, importantWordSpacing } from "./structure/text-spacing-rules";
+import { cssOrientationLock } from "./structure/orientation-lock";
 import { blink, marquee } from "./structure/deprecated-elements";
 import { pAsHeading } from "./structure/semantic-rules";
 
@@ -73,6 +76,7 @@ import {
 } from "./aria/aria-name-rules";
 import { ariaProhibitedAttr } from "./aria/aria-prohibited-attr";
 import { presentationRoleConflict } from "./aria/presentation-role-conflict";
+import { presentationalChildrenFocusable } from "./aria/presentational-children-focusable";
 import { summaryName } from "./aria/summary-name";
 
 // Links
@@ -92,7 +96,7 @@ import { duplicateIdAria } from "./parsing/duplicate-id";
 import { videoCaptions, audioCaptions } from "./media/media-captions";
 
 // Color
-import { colorContrast } from "./color/color-contrast";
+import { colorContrast, colorContrastEnhanced } from "./color/color-contrast";
 
 export const rules: Rule[] = [
   // Document Structure
@@ -103,6 +107,7 @@ export const rules: Rule[] = [
   frameTitleUnique,
   metaViewport,
   metaRefresh,
+  metaRefreshNoException,
   blink,
   marquee,
 
@@ -132,6 +137,7 @@ export const rules: Rule[] = [
   nestedInteractive,
   scrollableRegionFocusable,
   accesskeys,
+  focusVisible,
 
   // Structure
   headingOrder,
@@ -151,6 +157,10 @@ export const rules: Rule[] = [
   listitem,
   dlitem,
   definitionList,
+  importantLetterSpacing,
+  importantLineHeight,
+  importantWordSpacing,
+  cssOrientationLock,
 
   // ARIA
   ariaRoles,
@@ -173,6 +183,7 @@ export const rules: Rule[] = [
   ariaTreeitemName,
   ariaProhibitedAttr,
   presentationRoleConflict,
+  presentationalChildrenFocusable,
   buttonName,
   summaryName,
 
@@ -203,6 +214,7 @@ export const rules: Rule[] = [
 
   // Color
   colorContrast,
+  colorContrastEnhanced,
 ];
 
 
@@ -213,25 +225,22 @@ export interface ChunkedAudit {
   getViolations(): Violation[];
 }
 
-// --- Default-disabled rules (< 80% agreement with axe-core) ---
+// --- Default-disabled rules ---
+// Rules with ACT mapping: disabled if < 80% ACT conformance (excluding
+// happy-dom-limited rules, which get a pass since failures are environmental).
+// Rules without ACT mapping: disabled due to known precision issues.
 
 export const defaultDisabledRuleIds = new Set([
+  // No ACT mapping; disabled due to known precision issues
   "aria-allowed-role",
   "aria-progressbar-name",
-  "aria-prohibited-attr",
-  "aria-required-children",
-  "aria-required-parent",
   "aria-tooltip-name",
-  "autocomplete-valid",
   "definition-list",
   "dlitem",
   "link-in-text-block",
   "list",
   "listitem",
-  "scrollable-region-focusable",
   "td-has-header",
-  "th-has-data-cells",
-  "valid-lang",
 ]);
 
 // --- Configuration state ---

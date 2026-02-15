@@ -64,6 +64,7 @@ export const ariaHiddenBody = compileDeclarativeRule(ariaHiddenBodySpec);
 
 export const ariaHiddenFocus: Rule = {
   id: "aria-hidden-focus",
+  actRuleIds: ["6cfa84"],
   wcag: ["4.1.2"],
   level: "A",
   description: "Elements with aria-hidden='true' must not contain focusable elements.",

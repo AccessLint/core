@@ -32,6 +32,7 @@ function getButtonContext(btn: Element): string | undefined {
 
 export const buttonName: Rule = {
   id: "button-name",
+  actRuleIds: ["97a4e1"],
   wcag: ["4.1.2"],
   level: "A",
   description: "Buttons must have discernible text.",

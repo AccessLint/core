@@ -4,6 +4,7 @@ import { isAriaHidden } from "../utils/aria";
 
 export const videoCaptions: Rule = {
   id: "video-caption",
+  actRuleIds: ["eac66b"],
   wcag: ["1.2.2"],
   level: "A",
   description: "Video elements must have captions via <track kind='captions'>.",
@@ -37,6 +38,7 @@ export const videoCaptions: Rule = {
 
 export const audioCaptions: Rule = {
   id: "audio-caption",
+  actRuleIds: ["e7aa44"],
   wcag: ["1.2.1"],
   level: "A",
   description: "Audio elements should have a text alternative or transcript.",

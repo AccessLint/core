@@ -3,6 +3,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 
 export const metaViewport: Rule = {
   id: "meta-viewport",
+  actRuleIds: ["b4f0c3"],
   wcag: ["1.4.4"],
   level: "AA",
   description: "Viewport meta tag must not disable user scaling.",
@@ -58,8 +59,57 @@ export const metaViewport: Rule = {
   },
 };
 
+export const metaRefreshNoException: Rule = {
+  id: "meta-refresh-no-exception",
+  actRuleIds: ["bisz58"],
+  wcag: ["2.2.1", "3.2.5"],
+  level: "A",
+  description: "Meta refresh must not be used with a delay (no exceptions).",
+  guidance:
+    "Automatic page refreshes and delayed redirects disorient users. Instant redirects (delay=0) are acceptable, but any positive delay is not. Use server-side redirects instead.",
+  run(doc) {
+    for (const refresh of doc.querySelectorAll('meta[http-equiv="refresh"]')) {
+      const content = refresh.getAttribute("content") || "";
+      const match = content.match(/^(\d+)/);
+      if (!match) continue;
+      const seconds = parseInt(match[1], 10);
+
+      // Check for valid URL redirect (browser processes the first one)
+      const hasValidUrl = /^\d+\s*[;,]\s*url\s*=/i.test(content) ||
+        /^\d+\s*[;,]\s*['""]?\s*https?:/i.test(content);
+
+      if (hasValidUrl) {
+        if (seconds > 0) {
+          return [{
+            ruleId: "meta-refresh-no-exception",
+            selector: getSelector(refresh),
+            html: getHtmlSnippet(refresh),
+            impact: "critical" as const,
+            message: `Page has a ${seconds}-second meta refresh delay.`,
+          }];
+        }
+        // Delay 0 with valid URL is OK; this redirect wins, stop checking
+        return [];
+      }
+
+      // Same-page refresh (no URL)
+      if (seconds > 0) {
+        return [{
+          ruleId: "meta-refresh-no-exception",
+          selector: getSelector(refresh),
+          html: getHtmlSnippet(refresh),
+          impact: "critical" as const,
+          message: `Page has a ${seconds}-second meta refresh delay.`,
+        }];
+      }
+    }
+    return [];
+  },
+};
+
 export const metaRefresh: Rule = {
   id: "meta-refresh",
+  actRuleIds: ["bc659a"],
   wcag: ["2.2.1", "2.2.4", "3.2.5"],
   level: "A",
   description: "Meta refresh must not redirect or refresh automatically.",

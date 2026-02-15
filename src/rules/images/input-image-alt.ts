@@ -4,6 +4,7 @@ import { getAccessibleName, isAriaHidden } from "../utils/aria";
 
 export const inputImageAlt: Rule = {
   id: "input-image-alt",
+  actRuleIds: ["59796f"],
   wcag: ["1.1.1", "4.1.2"],
   level: "A",
   description: 'Image inputs (<input type="image">) must have alternate text via alt, aria-label, or aria-labelledby. The text should describe the button action, not the image.',

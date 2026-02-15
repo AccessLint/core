@@ -1,5 +1,6 @@
 export interface Rule {
   id: string;
+  actRuleIds?: string[];
   wcag: string[];
   level: "A" | "AA";
   tags?: string[];
@@ -79,6 +80,7 @@ export type CheckType =
 
 export interface DeclarativeRule {
   id: string;
+  actRuleIds?: string[];
   selector: string;
   check: CheckType;
   impact: "critical" | "serious" | "moderate" | "minor";
