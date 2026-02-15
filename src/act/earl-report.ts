@@ -38,7 +38,7 @@ export interface EarlTestSubject {
 }
 
 interface EarlAssertor {
-  "@type": "Assertor";
+  "@type": ["Project", "Assertor"];
   name: string;
   description: string;
   homepage: string;
@@ -92,7 +92,7 @@ export function generateEarlReport(
   }));
 
   const assertor: EarlAssertor = {
-    "@type": "Assertor",
+    "@type": ["Project", "Assertor"],
     name: "AccessLint",
     description: "Automated accessibility testing engine",
     homepage: "https://github.com/AccessLint/core",
