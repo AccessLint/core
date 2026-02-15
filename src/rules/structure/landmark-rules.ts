@@ -208,7 +208,7 @@ export const landmarkMainIsTopLevel: Rule = {
     for (const main of mains) {
       // Check if nested in other landmarks (not just sectioning elements, but other landmarks)
       const parent = main.parentElement;
-      if (parent?.closest('article, aside, nav, section, [role="article"], [role="complementary"], [role="navigation"], [role="region"]')) {
+      if (parent?.closest('article, aside, nav, section[aria-label], section[aria-labelledby], [role="article"], [role="complementary"], [role="navigation"], [role="region"]')) {
         violations.push({
           ruleId: "accesslint-042",
           selector: getSelector(main),
@@ -240,7 +240,7 @@ export const landmarkComplementaryIsTopLevel: Rule = {
       const parent = aside.parentElement;
       if (parent && !parent.matches('body, main, [role="main"]')) {
         // Check if nested in other sectioning elements
-        if (aside.closest('article, nav, section, [role="article"], [role="navigation"], [role="region"]')) {
+        if (aside.closest('article, nav, section[aria-label], section[aria-labelledby], [role="article"], [role="navigation"], [role="region"]')) {
           violations.push({
             ruleId: "accesslint-043",
             selector: getSelector(aside),

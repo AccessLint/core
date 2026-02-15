@@ -118,6 +118,17 @@ describe("accesslint-042", () => {
     expect(landmarkMainIsTopLevel.run(doc)).toHaveLength(0);
   });
 
+  it("passes for main inside bare section (no landmark role)", () => {
+    const doc = makeDoc('<html><body><section id="primary"><main>Content</main></section></body></html>');
+    expect(landmarkMainIsTopLevel.run(doc)).toHaveLength(0);
+  });
+
+  it("reports main nested in named section (region landmark)", () => {
+    const doc = makeDoc('<html><body><section aria-label="Region"><main>Nested</main></section></body></html>');
+    const violations = landmarkMainIsTopLevel.run(doc);
+    expect(violations).toHaveLength(1);
+  });
+
   it("reports main nested in article", () => {
     const doc = makeDoc("<html><body><article><main>Nested</main></article></body></html>");
     const violations = landmarkMainIsTopLevel.run(doc);
@@ -133,6 +144,11 @@ describe("accesslint-043", () => {
 
   it("passes for aside inside main", () => {
     const doc = makeDoc("<html><body><main><aside>Related</aside></main></body></html>");
+    expect(landmarkComplementaryIsTopLevel.run(doc)).toHaveLength(0);
+  });
+
+  it("passes for aside inside bare section (no landmark role)", () => {
+    const doc = makeDoc('<html><body><section><aside>Sidebar</aside></section></body></html>');
     expect(landmarkComplementaryIsTopLevel.run(doc)).toHaveLength(0);
   });
 
