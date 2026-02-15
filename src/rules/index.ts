@@ -235,11 +235,6 @@ export const defaultDisabledRuleIds = new Set([
   "accesslint-059",
   "accesslint-068",
   "accesslint-070",
-  "accesslint-049",
-  "accesslint-048",
-  "accesslint-079",
-  "accesslint-046",
-  "accesslint-047",
   "accesslint-086",
 ]);
 

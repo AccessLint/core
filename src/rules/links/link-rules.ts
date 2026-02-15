@@ -55,191 +55,60 @@ export const skipLink: Rule = {
 };
 
 const BLOCK_DISPLAYS = new Set([
-  "block",
-  "flex",
-  "grid",
-  "table",
-  "table-cell",
-  "list-item",
-  "flow-root",
+  "block", "flex", "grid", "table", "table-cell", "list-item", "flow-root",
 ]);
 
 const INLINE_DISPLAYS = new Set([
-  "inline",
-  "inline-block",
-  "inline-flex",
-  "inline-grid",
+  "inline", "inline-block", "inline-flex", "inline-grid",
 ]);
 
 /**
- * Find the nearest block-level ancestor that contains non-link text,
- * indicating the link is embedded in a paragraph of running text.
- * Returns null when the nearest block has no non-link text (link lists,
- * nav menus) — only walks one level up to avoid over-matching.
+ * Walk up from `link` to its nearest block-level ancestor.  When that block
+ * contains non-link prose (multiple words), return the block and the computed
+ * foreground color of the first non-link text node.  A single pass replaces
+ * the old findParentTextBlock / hasNonLinkText / getSurroundingTextColor trio.
  */
-function findParentTextBlock(link: Element): Element | null {
-  let el: Element | null = link.parentElement;
-  while (el) {
-    const display = getCachedComputedStyle(el).display;
-    if (BLOCK_DISPLAYS.has(display)) {
-      // Only consider the nearest block; don't walk further.
-      return hasNonLinkText(el) ? el : null;
-    }
-    el = el.parentElement;
-  }
-  return null;
-}
-
-/** Returns true when `block` contains substantive prose text that is NOT
- *  inside an `<a>` element.  Punctuation-only separators between links
- *  (e.g. " | ", " · ") do not count — the text must contain at least one
- *  word (two or more consecutive letters) to qualify as a text block. */
-function hasNonLinkText(block: Element): boolean {
-  const walker = block.ownerDocument.createTreeWalker(
-    block,
-    NodeFilter.SHOW_TEXT,
-  );
-  let nonLinkText = "";
-  let node: Text | null;
-  while ((node = walker.nextNode() as Text | null)) {
-    if (!node.data.trim()) continue;
-    // Walk up to see if we're inside a link
-    let parent: Element | null = node.parentElement;
-    let insideLink = false;
-    while (parent && parent !== block) {
-      if (parent.tagName === "A") {
-        insideLink = true;
-        break;
-      }
-      parent = parent.parentElement;
-    }
-    if (!insideLink) nonLinkText += node.data;
-  }
-  // Require at least one word (2+ consecutive letters in any script) to count as prose
-  return /\p{L}{2,}/u.test(nonLinkText);
-}
-
-/**
- * Get the computed foreground color of the first non-link text node in `block`.
- */
-function getSurroundingTextColor(
-  block: Element,
+function getTextBlockContext(
   link: Element,
-): [number, number, number] | null {
-  const walker = block.ownerDocument.createTreeWalker(
-    block,
-    NodeFilter.SHOW_TEXT,
-  );
+): { block: Element; textColor: [number, number, number] } | null {
+  let block: Element | null = link.parentElement;
+  while (block) {
+    if (BLOCK_DISPLAYS.has(getCachedComputedStyle(block).display)) break;
+    block = block.parentElement;
+  }
+  if (!block) return null;
+
+  const walker = block.ownerDocument.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+  let nonLinkText = "";
+  let textColor: [number, number, number] | null = null;
   let node: Text | null;
+
   while ((node = walker.nextNode() as Text | null)) {
     if (!node.data.trim()) continue;
-    let parent: Element | null = node.parentElement;
+    let cur: Element | null = node.parentElement;
     let insideLink = false;
-    let cur: Element | null = parent;
     while (cur && cur !== block) {
-      if (cur.tagName === "A") {
-        insideLink = true;
-        break;
-      }
+      if (cur.tagName === "A") { insideLink = true; break; }
       cur = cur.parentElement;
     }
     if (insideLink) continue;
-    if (!parent) continue;
-    return parseColor(getCachedComputedStyle(parent).color);
-  }
-  return null;
-}
-
-/**
- * Check if the link has a non-color visual distinction from surrounding text.
- * Examines both the link element itself and its descendants (e.g. an inner
- * `<span>` with an underline).
- */
-function isVisuallyDistinct(
-  link: Element,
-  linkStyle: CSSStyleDeclaration,
-  parentStyle: CSSStyleDeclaration,
-): boolean {
-  const parentDecoration = parentStyle.textDecorationLine || parentStyle.textDecoration || "";
-
-  // Underline or line-through that differs from parent
-  const linkDecoration = linkStyle.textDecorationLine || linkStyle.textDecoration || "";
-  if (
-    (linkDecoration.includes("underline") || linkDecoration.includes("line-through")) &&
-    linkDecoration !== parentDecoration
-  ) {
-    return true;
-  }
-
-  // Border-bottom
-  const borderWidth = parseFloat(linkStyle.borderBottomWidth) || 0;
-  const borderStyle = linkStyle.borderBottomStyle || "";
-  if (borderWidth > 0 && borderStyle !== "none" && borderStyle !== "hidden") {
-    return true;
-  }
-
-  // Outline
-  const outlineWidth = parseFloat(linkStyle.outlineWidth) || 0;
-  const outlineStyle = linkStyle.outlineStyle || "";
-  if (outlineWidth > 0 && outlineStyle !== "none") {
-    return true;
-  }
-
-  // Background image on the link itself
-  const bgImage = linkStyle.backgroundImage || "";
-  if (bgImage && bgImage !== "none" && bgImage !== "initial") {
-    return true;
-  }
-
-  // Font-weight difference >= 300
-  const parentWeight = parseFontWeight(parentStyle.fontWeight);
-  const linkWeight = parseFontWeight(linkStyle.fontWeight);
-  if (Math.abs(linkWeight - parentWeight) >= 300) {
-    return true;
-  }
-
-  // Font-style differs (italic vs normal)
-  if (linkStyle.fontStyle !== parentStyle.fontStyle) {
-    return true;
-  }
-
-  // Font-size ratio >= 1.2
-  const linkSize = parseFloat(linkStyle.fontSize) || 16;
-  const parentSize = parseFloat(parentStyle.fontSize) || 16;
-  if (parentSize > 0 && linkSize / parentSize >= 1.2) {
-    return true;
-  }
-
-  // Check descendant elements for visual distinction (e.g. inner <span>
-  // with text-decoration: underline or bold font-weight)
-  for (const desc of link.querySelectorAll("*")) {
-    const descStyle = getCachedComputedStyle(desc);
-    const deco = descStyle.textDecorationLine || descStyle.textDecoration || "";
-    if (
-      (deco.includes("underline") || deco.includes("line-through")) &&
-      deco !== parentDecoration
-    ) {
-      return true;
-    }
-    if (Math.abs(parseFontWeight(descStyle.fontWeight) - parentWeight) >= 300) {
-      return true;
+    nonLinkText += node.data;
+    if (!textColor && node.parentElement) {
+      textColor = parseColor(getCachedComputedStyle(node.parentElement).color);
     }
   }
 
-  return false;
+  if (!textColor || !/\p{L}{2,}/u.test(nonLinkText)) return null;
+  return { block, textColor };
 }
 
-function parseFontWeight(w: string): number {
-  if (w === "bold") return 700;
-  if (w === "normal") return 400;
-  return parseInt(w) || 400;
+function hasDistinctDecoration(style: CSSStyleDeclaration, parentDeco: string): boolean {
+  const deco = style.textDecorationLine || style.textDecoration || "";
+  return (deco.includes("underline") || deco.includes("line-through")) && deco !== parentDeco;
 }
 
-function toHex(r: number, g: number, b: number): string {
-  return (
-    "#" +
-    [r, g, b].map((c) => c.toString(16).padStart(2, "0")).join("")
-  );
+function fontWeight(w: string): number {
+  return w === "bold" ? 700 : w === "normal" ? 400 : parseInt(w) || 400;
 }
 
 export const linkInTextBlock: Rule = {
@@ -255,52 +124,55 @@ export const linkInTextBlock: Rule = {
 
     for (const link of doc.querySelectorAll("a[href]")) {
       if (isAriaHidden(link)) continue;
-
-      // Skip links with no text content (e.g. image-only links)
       if (!getAccessibleTextContent(link).trim()) continue;
-
-      // Skip links in landmark regions — navigation, banner, and
-      // contentinfo regions are structurally distinct from article prose
-      // and links there are identified by context, not inline color cues.
       if (link.closest('nav, header, footer, [role="navigation"], [role="banner"], [role="contentinfo"]')) continue;
 
-      // Skip non-inline links (block-level links are visually distinct)
       const linkStyle = getCachedComputedStyle(link);
-      const linkDisplay = linkStyle.display || "inline"; // default for <a>
-      if (!INLINE_DISPLAYS.has(linkDisplay)) continue;
+      if (!INLINE_DISPLAYS.has(linkStyle.display || "inline")) continue;
 
-      // Find the parent text block
-      const block = findParentTextBlock(link);
-      if (!block) continue;
+      const ctx = getTextBlockContext(link);
+      if (!ctx) continue;
 
-      const blockStyle = getCachedComputedStyle(block);
+      // --- Non-color visual distinction ---
+      const blockStyle = getCachedComputedStyle(ctx.block);
+      const parentDeco = blockStyle.textDecorationLine || blockStyle.textDecoration || "";
 
-      // Check 1: non-color visual distinction
-      if (isVisuallyDistinct(link, linkStyle, blockStyle)) continue;
+      if (hasDistinctDecoration(linkStyle, parentDeco)) continue;
 
-      // Check 2: 3:1 color contrast with surrounding text
+      const bw = parseFloat(linkStyle.borderBottomWidth) || 0;
+      if (bw > 0 && linkStyle.borderBottomStyle !== "none" && linkStyle.borderBottomStyle !== "hidden") continue;
+
+      if (Math.abs(fontWeight(linkStyle.fontWeight) - fontWeight(blockStyle.fontWeight)) >= 300) continue;
+      if (linkStyle.fontStyle !== blockStyle.fontStyle) continue;
+
+      const linkSize = parseFloat(linkStyle.fontSize) || 16;
+      const parentSize = parseFloat(blockStyle.fontSize) || 16;
+      if (parentSize > 0 && linkSize / parentSize >= 1.2) continue;
+
+      // Check descendants (e.g. inner <span> with underline or bold)
+      let descendantDistinct = false;
+      for (const desc of link.querySelectorAll("*")) {
+        const ds = getCachedComputedStyle(desc);
+        if (hasDistinctDecoration(ds, parentDeco) ||
+            Math.abs(fontWeight(ds.fontWeight) - fontWeight(blockStyle.fontWeight)) >= 300) {
+          descendantDistinct = true;
+          break;
+        }
+      }
+      if (descendantDistinct) continue;
+
+      // --- Color contrast with surrounding text ---
       const linkColor = parseColor(linkStyle.color);
-      const textColor = getSurroundingTextColor(block, link);
-
-      // Conservative: skip when colors can't be determined
-      if (!linkColor || !textColor) continue;
+      if (!linkColor) continue;
 
       const linkLum = getLuminance(...linkColor);
-      const textLum = getLuminance(...textColor);
+      const textLum = getLuminance(...ctx.textColor);
       const ratio = getContrastRatio(linkLum, textLum);
 
-      // When link and text colors are effectively identical, color is not
-      // being used as a means of distinction — not a 1.4.1 issue.
-      if (ratio < 1.1) continue;
+      if (ratio < 1.1 || ratio >= 3) continue;
 
-      if (ratio >= 3) continue;
-
-      const linkHex = toHex(...linkColor);
-      const textHex = toHex(...textColor);
-      const context =
-        `link color: ${linkHex} rgb(${linkColor.join(", ")}), ` +
-        `surrounding text: ${textHex} rgb(${textColor.join(", ")}), ` +
-        `ratio: ${ratio.toFixed(2)}:1`;
+      const hex = (c: [number, number, number]) =>
+        "#" + c.map((v) => v.toString(16).padStart(2, "0")).join("");
 
       violations.push({
         ruleId: "accesslint-079",
@@ -309,7 +181,10 @@ export const linkInTextBlock: Rule = {
         impact: "serious" as const,
         message:
           "Link in text block is not visually distinguishable from surrounding text. Add a non-color visual indicator such as an underline or border.",
-        context,
+        context:
+          `link color: ${hex(linkColor)} rgb(${linkColor.join(", ")}), ` +
+          `surrounding text: ${hex(ctx.textColor)} rgb(${ctx.textColor.join(", ")}), ` +
+          `ratio: ${ratio.toFixed(2)}:1`,
       });
     }
 
