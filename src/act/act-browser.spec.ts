@@ -39,7 +39,7 @@ const deduped = fixtures.filter((f) => {
   return true;
 });
 
-// Group by the fixture's coreRuleId (old slug names from fixture data)
+// Group by the fixture's coreRuleId
 const byRule = new Map<string, FixtureEntry[]>();
 for (const entry of deduped) {
   const list = byRule.get(entry.coreRuleId) ?? [];
@@ -48,8 +48,7 @@ for (const entry of deduped) {
 }
 
 // Rules whose test fixtures may trigger browser navigation (meta refresh with delay=0)
-// These use the old fixture slug names since we group by coreRuleId from fixture data
-const NAVIGATION_RULES = new Set(["meta-refresh", "meta-refresh-no-exception"]);
+const NAVIGATION_RULES = new Set(["accesslint-007", "accesslint-008"]);
 
 // Test fixtures that reference external or root-relative stylesheets that
 // can't be loaded in the test environment (page.setContent doesn't resolve
