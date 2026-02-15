@@ -161,6 +161,9 @@ export const scrollableRegionFocusable: Rule = {
       const role = el.getAttribute("role");
       if (role === "presentation" || role === "none") continue;
 
+      // Skip widget containers that manage their own keyboard interaction
+      if (role === "listbox" || role === "menu" || role === "tree" || role === "tabpanel") continue;
+
       // Check if element is scrollable
       const style = getCachedComputedStyle(el);
 
@@ -192,10 +195,9 @@ export const scrollableRegionFocusable: Rule = {
         const hasMedia = el.querySelector("img, svg, video, canvas, picture") !== null;
         if (textLen === 0 && !hasMedia) continue;
       } else {
-        const hasDimensions = style.height !== "" || style.maxHeight !== "";
-        // Require text content > 50 chars to consider it a meaningful scrollable region
-        const textLen = el.textContent?.trim().length ?? 0;
-        if (!hasDimensions || textLen <= 50) continue;
+        // DOM-only environment (e.g. happy-dom): scroll metrics unavailable,
+        // cannot determine if content actually overflows — skip.
+        continue;
       }
 
       // Check if it's focusable
