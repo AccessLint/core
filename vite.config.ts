@@ -28,5 +28,6 @@ export default defineConfig({
   },
   benchmark: {
     include: ["src/**/*.bench.ts"],
+    hookTimeout: 120_000,
   },
 });
