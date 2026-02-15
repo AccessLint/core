@@ -185,7 +185,7 @@ Helpers for building custom rules:
 | `frame-title` | A | 4.1.2 | Frames must have an accessible name. |
 | `frame-title-unique` | A | 4.1.2 | Frame titles should be unique. |
 | `meta-viewport` | AA | 1.4.4 | Viewport meta must not disable user scaling. |
-| `meta-refresh` | A | 2.2.1, 2.2.4, 3.2.5 | Meta refresh must not redirect automatically. |
+| `meta-refresh` | A | 2.2.1 | Meta refresh must not redirect automatically. |
 | `blink` | A | 2.2.2 | `<blink>` must not be used. |
 | `marquee` | A | 2.2.2 | `<marquee>` must not be used. |
 | `img-alt` | A | 1.1.1 | Images must have alternate text. |

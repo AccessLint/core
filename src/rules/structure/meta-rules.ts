@@ -62,7 +62,7 @@ export const metaViewport: Rule = {
 export const metaRefreshNoException: Rule = {
   id: "accesslint-008",
   actRuleIds: ["bisz58"],
-  wcag: ["2.2.1", "3.2.5"],
+  wcag: ["2.2.1"],
   level: "A",
   description: "Meta refresh must not be used with a delay (no exceptions).",
   guidance:
@@ -110,7 +110,7 @@ export const metaRefreshNoException: Rule = {
 export const metaRefresh: Rule = {
   id: "accesslint-007",
   actRuleIds: ["bc659a"],
-  wcag: ["2.2.1", "2.2.4", "3.2.5"],
+  wcag: ["2.2.1"],
   level: "A",
   description: "Meta refresh must not redirect or refresh automatically.",
   guidance: "Automatic page refreshes or redirects can disorient users, especially those using screen readers or with cognitive disabilities. They may lose their place or not have time to read content. If a redirect is needed, use a server-side redirect (HTTP 301/302) instead. For timed refreshes, provide user controls.",
