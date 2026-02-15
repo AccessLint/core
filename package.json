@@ -24,6 +24,9 @@
     "test:memory": "vitest run --config vite.memory.config.ts",
     "act:download": "npx tsx src/act/download-fixtures.ts",
     "test:act": "vitest run src/act/act.test.ts",
+    "act:check": "npx tsx src/act/check-conformance.ts",
+    "test:browser": "npx playwright test",
+    "test:browser:update": "npm run build && npx playwright test",
     "prepublishOnly": "npm run build",
     "release": "scripts/release.sh"
   },
@@ -37,6 +40,7 @@
   },
   "devDependencies": {
     "@codspeed/vitest-plugin": "^5.1.0",
+    "@playwright/test": "^1.58.2",
     "happy-dom": "^20.4.0",
     "typescript": "^5.7.0",
     "vite": "^6.0.0",
