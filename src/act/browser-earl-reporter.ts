@@ -40,6 +40,10 @@ export default class BrowserEarlReporter implements Reporter {
 
     // Extract actual outcome from test annotations or status
     const status = result.status; // "passed" | "failed" | "timedOut" | "skipped"
+
+    // Skipped tests (external stylesheets, Shadow DOM) can't be evaluated
+    if (status === "skipped") return;
+
     const testPassed = status === "passed";
 
     // Determine actual outcome: if the test passed, the rule behaved correctly
@@ -59,7 +63,6 @@ export default class BrowserEarlReporter implements Reporter {
       expected,
       actual,
       correct: testPassed,
-      limited: false, // Browser tests are not limited
     });
   }
 

@@ -115,17 +115,6 @@ export const formLabel: Rule = {
       if (isAriaHidden(input)) continue;
       if (isComputedHidden(input)) continue;
 
-      // Skip disabled form elements — axe-core doesn't flag these
-      if (
-        (input instanceof HTMLInputElement ||
-         input instanceof HTMLTextAreaElement ||
-         input instanceof HTMLSelectElement ||
-         input instanceof HTMLButtonElement) &&
-        input.disabled
-      ) continue;
-      if (input.closest("fieldset[disabled]")) continue;
-      if (input.getAttribute("aria-disabled") === "true") continue;
-
       // Skip elements with presentation/none role
       const role = input.getAttribute("role")?.trim().toLowerCase();
       if (role === "presentation" || role === "none") continue;

@@ -46,6 +46,7 @@ function isActuallyVisible(el: HTMLElement): boolean {
 }
 
 
+
 const ariaHiddenBodySpec: DeclarativeRule = {
   id: "aria-hidden-body",
   selector: 'body[aria-hidden="true"]',
@@ -99,6 +100,26 @@ export const ariaHiddenFocus: Rule = {
           // pattern: modals/menus closed with aria-hidden that also hide
           // content via display:none or visibility:hidden.
           if (!isActuallyVisible(el)) continue;
+
+          // ACT 6cfa84 Passed Example 4: focus sentinel pattern — if
+          // focusing the element causes focus to be programmatically
+          // redirected (via a focus event listener), the element is not
+          // a real focus trap and should not be flagged.
+          try {
+            const prevActive = doc.activeElement;
+            el.focus();
+            if (doc.activeElement && doc.activeElement !== el) {
+              // Focus was redirected — restore and skip
+              if (prevActive instanceof HTMLElement) prevActive.focus();
+              else el.blur();
+              continue;
+            }
+            // Restore original focus state
+            if (prevActive instanceof HTMLElement) prevActive.focus();
+            else el.blur();
+          } catch {
+            // focus() failed — continue with violation check
+          }
 
           // Determine why this element is focusable
           const tag = el.tagName.toLowerCase();

@@ -186,6 +186,11 @@ export const scrollableRegionFocusable: Rule = {
         if (overflowH < 14 && overflowW < 14) continue;
         // Skip elements under 64x64px — too small to be meaningful scroll regions
         if (el.clientWidth < 64 && el.clientHeight < 64) continue;
+        // Skip scrollable regions with no meaningful content
+        // (e.g. decorative scrollbar illustrations with only spacer elements)
+        const textLen = el.textContent?.trim().length ?? 0;
+        const hasMedia = el.querySelector("img, svg, video, canvas, picture") !== null;
+        if (textLen === 0 && !hasMedia) continue;
       } else {
         const hasDimensions = style.height !== "" || style.maxHeight !== "";
         // Require text content > 50 chars to consider it a meaningful scrollable region

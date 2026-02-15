@@ -14,7 +14,6 @@ export interface FixtureOutcome {
   expected: "passed" | "failed" | "inapplicable";
   actual: "passed" | "failed" | "inapplicable";
   correct: boolean;
-  limited: boolean;
 }
 
 export interface EarlReport {
@@ -50,13 +49,6 @@ interface EarlAssertion {
 const EARL_CONTEXT = "https://act-rules.github.io/earl-context.json";
 const ACT_RULE_URL_PREFIX = "https://www.w3.org/WAI/standards-guidelines/act/rules/";
 
-function mapOutcome(outcome: FixtureOutcome): string {
-  if (outcome.limited) {
-    return "earl:cantTell";
-  }
-  return outcome.correct ? "earl:passed" : "earl:failed";
-}
-
 export function generateEarlReport(outcomes: FixtureOutcome[]): EarlReport {
   const assertions: EarlAssertion[] = outcomes.map((outcome) => ({
     "@type": "Assertion",
@@ -71,7 +63,7 @@ export function generateEarlReport(outcomes: FixtureOutcome[]): EarlReport {
     },
     result: {
       "@type": "TestResult",
-      outcome: mapOutcome(outcome),
+      outcome: outcome.correct ? "earl:passed" : "earl:failed",
     },
     mode: "earl:automatic",
   }));

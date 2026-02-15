@@ -72,6 +72,39 @@ export function parseColor(color: string): [number, number, number] | null {
   return null;
 }
 
+/**
+ * Extract the alpha channel from a CSS color string.
+ * Returns 1.0 if no alpha is specified.
+ */
+export function parseColorAlpha(color: string): number {
+  // Legacy: rgba(r, g, b, a)
+  const legacy = color.match(/rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*([\d.]+)\s*\)/);
+  if (legacy) return parseFloat(legacy[1]);
+  // Modern: rgb(r g b / a) or rgba(r g b / a)
+  const modern = color.match(/rgba?\([^)]+\/\s*([\d.]+%?)\s*\)/);
+  if (modern) {
+    const val = modern[1];
+    return val.endsWith("%") ? parseFloat(val) / 100 : parseFloat(val);
+  }
+  return 1.0;
+}
+
+/**
+ * Composite a semi-transparent foreground color over an opaque background.
+ * Returns the resulting opaque RGB color.
+ */
+export function compositeColors(
+  fg: [number, number, number],
+  bg: [number, number, number],
+  alpha: number,
+): [number, number, number] {
+  return [
+    Math.round(fg[0] * alpha + bg[0] * (1 - alpha)),
+    Math.round(fg[1] * alpha + bg[1] * (1 - alpha)),
+    Math.round(fg[2] * alpha + bg[2] * (1 - alpha)),
+  ];
+}
+
 export function getEffectiveBackgroundColor(el: Element): [number, number, number] | null {
   const cached = _effectiveBgCache.get(el);
   if (cached !== undefined) return cached;
@@ -85,12 +118,17 @@ function _computeEffectiveBg(el: Element): [number, number, number] | null {
   let current: Element | null = el;
   while (current) {
     const style = getCachedComputedStyle(current);
-    // Has a background image — can't reliably determine color.
-    // Must check before transparency so we don't skip past image backgrounds
-    // whose backgroundColor resolves to transparent (the default).
-    // "initial" is excluded because happy-dom returns it for `background` shorthand without an image.
     const bgImg = style.backgroundImage;
-    if (bgImg && bgImg !== "none" && bgImg !== "initial") return null;
+    if (bgImg && bgImg !== "none" && bgImg !== "initial") {
+      // For gradient backgrounds, try to use the solid backgroundColor if available.
+      // The gradient may partially/fully obscure it, but if the solid color alone
+      // fails contrast, the gradient only makes the result less predictable.
+      const bg = style.backgroundColor;
+      if (bg && bg !== "transparent" && bg !== "rgba(0, 0, 0, 0)" && bg !== "rgba(0 0 0 / 0)") {
+        return parseColor(bg);
+      }
+      return null;
+    }
     const bg = style.backgroundColor;
     // Skip fully transparent
     if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)" || bg === "rgba(0 0 0 / 0)") {
@@ -116,6 +154,68 @@ function _computeEffectiveBg(el: Element): [number, number, number] | null {
   // resolution (happy-dom, jsdom) this fallback can cause false positives when
   // a dark background is applied via stylesheets rather than inline styles.
   return [255, 255, 255];
+}
+
+/**
+ * Split a gradient argument string by commas, respecting parentheses.
+ * e.g. "to right, rgb(255, 0, 0), blue 50%" → ["to right", "rgb(255, 0, 0)", "blue 50%"]
+ */
+function splitGradientArgs(content: string): string[] {
+  const segments: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < content.length; i++) {
+    if (content[i] === "(") depth++;
+    else if (content[i] === ")") depth--;
+    else if (content[i] === "," && depth === 0) {
+      segments.push(content.slice(start, i).trim());
+      start = i + 1;
+    }
+  }
+  segments.push(content.slice(start).trim());
+  return segments;
+}
+
+/**
+ * Extract color stops from a CSS gradient value.
+ * Returns parsed RGB colors for each stop, skipping positions/angles.
+ * For "transparent", returns [255,255,255] (assumes white page background).
+ */
+export function parseGradientStops(bgImage: string): [number, number, number][] {
+  const colors: [number, number, number][] = [];
+  // Match the outermost gradient function — use balanced parens matching
+  const gradIdx = bgImage.search(/(?:linear|radial|conic)-gradient\(/);
+  if (gradIdx === -1) return colors;
+  const openParen = bgImage.indexOf("(", gradIdx);
+  if (openParen === -1) return colors;
+  // Find matching close paren
+  let depth = 1;
+  let i = openParen + 1;
+  for (; i < bgImage.length && depth > 0; i++) {
+    if (bgImage[i] === "(") depth++;
+    else if (bgImage[i] === ")") depth--;
+  }
+  const content = bgImage.slice(openParen + 1, i - 1);
+
+  const segments = splitGradientArgs(content);
+  for (const seg of segments) {
+    const trimmed = seg.trim();
+    // Skip direction tokens like "to right", "90deg", etc.
+    if (/^(to\s|[\d.]+deg|[\d.]+turn|[\d.]+rad)/i.test(trimmed)) continue;
+
+    // Handle "transparent" keyword
+    if (trimmed === "transparent" || trimmed.startsWith("transparent ")) {
+      colors.push([255, 255, 255]); // Assume white page background shows through
+      continue;
+    }
+
+    // Try parsing the full segment as a color (for simple colors like "black")
+    // or just the color part (before position like "3.3em" or "50%")
+    const colorPart = trimmed.replace(/\s+[\d.]+(%|em|px|rem|vh|vw).*$/i, "").trim();
+    const parsed = parseColor(colorPart);
+    if (parsed) colors.push(parsed);
+  }
+  return colors;
 }
 
 const MEDIA_TAGS = new Set(["IMG", "PICTURE", "VIDEO", "SVG"]);

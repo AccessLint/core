@@ -1,20 +1,28 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
+import { getCachedComputedStyle } from "../utils/color";
+
+/**
+ * Parsed result from an !important inline style property.
+ */
+interface ImportantResult {
+  /** Value in em or unitless ratio (directly comparable to threshold) */
+  em: number | null;
+  /** Raw px value (needs per-text-element font-size conversion) */
+  px: number | null;
+}
 
 /**
  * Parse the *last* CSS property value with !important from an inline style.
  *
- * Returns:
- * - A numeric value (in em or unitless) when the unit is relative
- * - `0` for keyword values like "normal" / "initial" (effectively zero spacing)
- * - `-Infinity` for absolute units (px, cm, etc.) which always violate
- * - `null` when the property is not set with !important
+ * Returns em/unitless values directly, and px values separately so callers
+ * can convert using the affected text element's computed font-size.
  */
 function getImportantValue(
   el: Element,
   property: string,
-): number | null {
+): ImportantResult | null {
   const style = el.getAttribute("style");
   if (!style) return null;
 
@@ -37,23 +45,76 @@ function getImportantValue(
   if (/^(inherit|unset|revert)$/i.test(raw)) return null;
 
   // normal / initial — effectively zero spacing (below any positive threshold)
-  if (/^(normal|initial)$/i.test(raw)) return 0;
+  if (/^(normal|initial)$/i.test(raw)) return { em: 0, px: null };
 
   // em units — directly comparable
   const emMatch = raw.match(/^(-?[\d.]+)\s*em$/i);
-  if (emMatch) return parseFloat(emMatch[1]);
+  if (emMatch) return { em: parseFloat(emMatch[1]), px: null };
 
   // Unitless number (used for line-height)
   const unitless = raw.match(/^(-?[\d.]+)$/);
-  if (unitless) return parseFloat(unitless[1]);
+  if (unitless) return { em: parseFloat(unitless[1]), px: null };
 
   // Percentage (used for line-height) — convert to ratio (120% → 1.2)
   const pctMatch = raw.match(/^(-?[\d.]+)\s*%$/);
-  if (pctMatch) return parseFloat(pctMatch[1]) / 100;
+  if (pctMatch) return { em: parseFloat(pctMatch[1]) / 100, px: null };
 
-  // Absolute units (px, cm, etc.) — need font-size context to evaluate
-  // relative to the threshold; skip since we can't compute this reliably.
+  // Absolute units (px, pt, cm, mm, in) — return as px for caller to convert
+  const pxMatch = raw.match(/^(-?[\d.]+)\s*(px|pt|cm|mm|in)$/i);
+  if (pxMatch) {
+    const value = parseFloat(pxMatch[1]);
+    const unit = pxMatch[2].toLowerCase();
+    let px: number;
+    switch (unit) {
+      case "px": px = value; break;
+      case "pt": px = value * (4 / 3); break;
+      case "cm": px = value * (96 / 2.54); break;
+      case "mm": px = value * (96 / 25.4); break;
+      case "in": px = value * 96; break;
+      default: return null;
+    }
+    return { em: null, px };
+  }
+
   return null;
+}
+
+/**
+ * Check if any text descendant of `el` (affected by the inherited property)
+ * has the px spacing value below the threshold relative to its own computed font-size.
+ */
+function anyTextViolatesPx(
+  el: Element,
+  property: string,
+  pxValue: number,
+  threshold: number,
+): boolean {
+  function walk(node: Element): boolean {
+    // If child overrides with its own !important, its text is NOT affected
+    if (node !== el) {
+      const childStyle = node.getAttribute("style") || "";
+      const hasOwn = new RegExp(
+        `${property}\\s*:\\s*[^;!]+\\s*!\\s*important`, "i"
+      ).test(childStyle);
+      if (hasOwn) return false;
+    }
+
+    // Check direct text nodes
+    for (const child of node.childNodes) {
+      if (child.nodeType === 3 && child.textContent?.trim()) {
+        const fontSize = parseFloat(getCachedComputedStyle(node).fontSize);
+        if (fontSize > 0 && pxValue / fontSize < threshold) return true;
+        break; // found text at this level, no need to check more text nodes
+      }
+    }
+
+    // Recurse into child elements
+    for (const child of node.children) {
+      if (walk(child)) return true;
+    }
+    return false;
+  }
+  return walk(el);
 }
 
 /** Check if element has direct text node children (non-whitespace). */
@@ -114,6 +175,51 @@ function hasAffectedText(el: Element, property: string): boolean {
   return false;
 }
 
+/**
+ * Shared logic for all three text-spacing rules.
+ */
+function checkTextSpacing(
+  doc: Document,
+  ruleId: string,
+  property: string,
+  threshold: number,
+): { ruleId: string; selector: string; html: string; impact: "serious"; message: string }[] {
+  const violations: { ruleId: string; selector: string; html: string; impact: "serious"; message: string }[] = [];
+
+  for (const el of doc.querySelectorAll("[style]")) {
+    if (isAriaHidden(el)) continue;
+    if (!isHtmlElement(el)) continue;
+    if (isOffscreen(el)) continue;
+    if (!hasAffectedText(el, property)) continue;
+
+    const result = getImportantValue(el, property);
+    if (!result) continue;
+
+    let violates = false;
+    if (result.em !== null) {
+      violates = result.em < threshold;
+    } else if (result.px !== null) {
+      // For px values, check each affected text node using its own computed font-size
+      violates = anyTextViolatesPx(el, property, result.px, threshold);
+    }
+
+    if (violates) {
+      const displayValue = result.em !== null
+        ? `${result.em}${property === "line-height" ? "" : "em"}`
+        : `${result.px}px`;
+      violations.push({
+        ruleId,
+        selector: getSelector(el),
+        html: getHtmlSnippet(el),
+        impact: "serious" as const,
+        message: `${property} ${displayValue} with !important is below the ${threshold}${property === "line-height" ? "" : "em"} minimum.`,
+      });
+    }
+  }
+
+  return violations;
+}
+
 export const importantLetterSpacing: Rule = {
   id: "important-letter-spacing",
   actRuleIds: ["24afc2"],
@@ -124,29 +230,40 @@ export const importantLetterSpacing: Rule = {
   guidance:
     "WCAG 1.4.12 requires users to be able to override text spacing. Using !important on letter-spacing with a value below 0.12em prevents this. Either increase the value to at least 0.12em or remove !important.",
   run(doc) {
-    const violations = [];
-
-    for (const el of doc.querySelectorAll("[style]")) {
-      if (isAriaHidden(el)) continue;
-      if (!isHtmlElement(el)) continue;
-      if (isOffscreen(el)) continue;
-      if (!hasAffectedText(el, "letter-spacing")) continue;
-
-      const value = getImportantValue(el, "letter-spacing");
-      if (value !== null && value < 0.12) {
-        violations.push({
-          ruleId: "important-letter-spacing",
-          selector: getSelector(el),
-          html: getHtmlSnippet(el),
-          impact: "serious" as const,
-          message: `Letter spacing ${value}em with !important is below the 0.12em minimum.`,
-        });
-      }
-    }
-
-    return violations;
+    return checkTextSpacing(doc, "important-letter-spacing", "letter-spacing", 0.12);
   },
 };
+
+/**
+ * Check if the element's text doesn't wrap vertically because it's inside
+ * a horizontal-only scroll container with wide content.
+ */
+function hasHorizontalOnlyScroll(el: Element): boolean {
+  let current: Element | null = el;
+  let wideChild = false;
+
+  while (current) {
+    const style = getCachedComputedStyle(current);
+
+    // Check if this element prevents wrapping via width or white-space
+    const width = parseFloat(style.width);
+    if (width > 500) wideChild = true;
+    if (style.whiteSpace === "nowrap" || style.whiteSpace === "pre") wideChild = true;
+
+    const overflowX = style.overflowX;
+    const overflowY = style.overflowY;
+    // Found a horizontal scroll container
+    if (
+      (overflowX === "scroll" || overflowX === "auto") &&
+      overflowY !== "scroll" && overflowY !== "auto"
+    ) {
+      return wideChild;
+    }
+
+    current = current.parentElement;
+  }
+  return false;
+}
 
 export const importantLineHeight: Rule = {
   id: "important-line-height",
@@ -158,22 +275,39 @@ export const importantLineHeight: Rule = {
   guidance:
     "WCAG 1.4.12 requires users to be able to override text spacing. Using !important on line-height with a value below 1.5 prevents this. Either increase the value to at least 1.5 or remove !important.",
   run(doc) {
-    const violations = [];
+    const violations: { ruleId: string; selector: string; html: string; impact: "serious"; message: string }[] = [];
 
     for (const el of doc.querySelectorAll("[style]")) {
       if (isAriaHidden(el)) continue;
       if (!isHtmlElement(el)) continue;
       if (isOffscreen(el)) continue;
       if (!hasAffectedText(el, "line-height")) continue;
+      // Line-height is only relevant when text wraps vertically
+      if (hasHorizontalOnlyScroll(el)) continue;
+      // Line-height only matters for multi-line text — skip single-line elements
+      if (el instanceof HTMLElement && el.scrollHeight > 0) {
+        const lh = parseFloat(getCachedComputedStyle(el).lineHeight);
+        if (lh > 0 && el.scrollHeight <= lh * 1.5) continue;
+      }
 
-      const value = getImportantValue(el, "line-height");
-      if (value !== null && value < 1.5) {
+      const result = getImportantValue(el, "line-height");
+      if (!result) continue;
+
+      let violates = false;
+      if (result.em !== null) {
+        violates = result.em < 1.5;
+      } else if (result.px !== null) {
+        violates = anyTextViolatesPx(el, "line-height", result.px, 1.5);
+      }
+
+      if (violates) {
+        const displayValue = result.em !== null ? `${result.em}` : `${result.px}px`;
         violations.push({
           ruleId: "important-line-height",
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
-          message: `Line height ${value} with !important is below the 1.5 minimum.`,
+          message: `Line height ${displayValue} with !important is below the 1.5 minimum.`,
         });
       }
     }
@@ -192,26 +326,6 @@ export const importantWordSpacing: Rule = {
   guidance:
     "WCAG 1.4.12 requires users to be able to override text spacing. Using !important on word-spacing with a value below 0.16em prevents this. Either increase the value to at least 0.16em or remove !important.",
   run(doc) {
-    const violations = [];
-
-    for (const el of doc.querySelectorAll("[style]")) {
-      if (isAriaHidden(el)) continue;
-      if (!isHtmlElement(el)) continue;
-      if (isOffscreen(el)) continue;
-      if (!hasAffectedText(el, "word-spacing")) continue;
-
-      const value = getImportantValue(el, "word-spacing");
-      if (value !== null && value < 0.16) {
-        violations.push({
-          ruleId: "important-word-spacing",
-          selector: getSelector(el),
-          html: getHtmlSnippet(el),
-          impact: "serious" as const,
-          message: `Word spacing ${value}em with !important is below the 0.16em minimum.`,
-        });
-      }
-    }
-
-    return violations;
+    return checkTextSpacing(doc, "important-word-spacing", "word-spacing", 0.16);
   },
 };

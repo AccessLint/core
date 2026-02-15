@@ -4,11 +4,14 @@ import { isAriaHidden } from "../utils/aria";
 import {
   getCachedComputedStyle,
   parseColor,
+  parseColorAlpha,
+  compositeColors,
   getEffectiveBackgroundColor,
   getLuminance,
   getContrastRatio,
   isLargeText,
   mayBeOverImage,
+  parseGradientStops,
 } from "../utils/color";
 
 const NON_TEXT_TAGS = new Set([
@@ -185,6 +188,20 @@ function isInsideNativeSelect(el: Element): boolean {
   return el.closest("select") !== null;
 }
 
+/** Returns true when text consists entirely of non-letter characters (symbols, punctuation). */
+function hasOnlyNonTextCharacters(text: string): boolean {
+  // Strip whitespace, then check if any Unicode letter remains
+  const stripped = text.replace(/\s/g, "");
+  if (!stripped) return true;
+  // \p{L} matches any Unicode letter
+  return !/\p{L}/u.test(stripped);
+}
+
+/** Returns true when the element is inside an aria-disabled container. */
+function isInAriaDisabledGroup(el: Element): boolean {
+  return el.closest('[aria-disabled="true"]') !== null;
+}
+
 export const colorContrast: Rule = {
   id: "color-contrast",
   actRuleIds: ["afw4f7"],
@@ -197,92 +214,7 @@ export const colorContrast: Rule = {
   prompt:
     "Suggest changing the text or background color to meet the minimum contrast ratio.",
   run(doc) {
-    const violations = [];
-    const body = doc.body;
-    if (!body) return [];
-
-    const walker = doc.createTreeWalker(body, NodeFilter.SHOW_TEXT);
-    const checked = new Set<Element>();
-
-    let node: Text | null;
-    while ((node = walker.nextNode() as Text | null)) {
-      if (!node.textContent || !node.textContent.trim()) continue;
-
-      const el = node.parentElement;
-      if (!el) continue;
-      if (checked.has(el)) continue;
-      checked.add(el);
-
-      if (NON_TEXT_TAGS.has(el.tagName)) continue;
-
-      // Skip <body> and <html> text nodes — these are checked by
-      // scrollable-region but aren't meaningful for contrast analysis.
-      const tag = el.tagName;
-      if (tag === "BODY" || tag === "HTML") continue;
-
-      // Skip elements inside native <select> — browser-controlled rendering
-      if (isInsideNativeSelect(el)) continue;
-
-      if (isDisabledFormElement(el)) continue;
-      if (isLabelForDisabledControl(el, doc)) continue;
-      if (isHidden(el)) continue;
-
-      const style = getCachedComputedStyle(el);
-
-      // Skip transparent/zero-opacity text
-      if (parseFloat(style.opacity) === 0) continue;
-
-      // Skip effectively invisible elements (accumulated opacity < 0.1)
-      if (getAccumulatedOpacity(el) < 0.1) continue;
-
-      // Skip elements with text-shadow — shadow alters effective contrast
-      // and cannot be reliably analyzed from computed styles alone.
-      const textShadow = style.textShadow;
-      if (textShadow && textShadow !== "none" && textShadow !== "initial") continue;
-
-      // Bail out on visual effects that make contrast unreliable
-      if (hasUnreliableVisualEffects(el)) continue;
-
-      const fg = parseColor(style.color);
-      if (!fg) continue;
-
-      // Check for transparent foreground via rgba alpha (legacy or modern syntax)
-      const fgAlphaMatch = style.color.match(/rgba\(.+?,\s*([\d.]+)\s*\)/) ||
-        style.color.match(/rgba?\(.+?\/\s*([\d.]+%?)\s*\)/);
-      if (fgAlphaMatch) {
-        const fgAlpha = fgAlphaMatch[1].endsWith("%")
-          ? parseFloat(fgAlphaMatch[1]) / 100
-          : parseFloat(fgAlphaMatch[1]);
-        if (fgAlpha === 0) continue;
-      }
-
-      // Skip text that may be visually overlaid on an image/video element
-      if (mayBeOverImage(el)) continue;
-
-      const bg = getEffectiveBackgroundColor(el);
-      if (!bg) continue; // background-image or can't determine
-
-      const fgLum = getLuminance(fg[0], fg[1], fg[2]);
-      const bgLum = getLuminance(bg[0], bg[1], bg[2]);
-      const ratio = getContrastRatio(fgLum, bgLum);
-      const threshold = isLargeText(el) ? 3 : 4.5;
-
-      if (ratio < threshold) {
-        const roundedRatio = Math.round(ratio * 100) / 100;
-        const fgHex = rgbToHex(fg);
-        const bgHex = rgbToHex(bg);
-        violations.push({
-          ruleId: "color-contrast",
-          selector: getSelector(el),
-          html: getHtmlSnippet(el),
-          impact: "serious" as const,
-          message: `Insufficient color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
-          context: `foreground: ${fgHex} rgb(${fg.join(", ")}), background: ${bgHex} rgb(${bg.join(", ")}), ratio: ${roundedRatio}:1, required: ${threshold}:1`,
-        });
-      }
-    }
-
-    return violations;
+    return checkContrast(doc, "color-contrast", "AA");
   },
 };
 
@@ -296,6 +228,11 @@ export const colorContrastEnhanced: Rule = {
   guidance:
     "WCAG SC 1.4.6 (AAA) requires a contrast ratio of at least 7:1 for normal text and 4.5:1 for large text (>=24px or >=18.66px bold).",
   run(doc) {
+    return checkContrast(doc, "color-contrast-enhanced", "AAA");
+  },
+};
+
+function checkContrast(doc: Document, ruleId: string, level: "AA" | "AAA") {
     const violations = [];
     const body = doc.body;
     if (!body) return [];
@@ -307,64 +244,136 @@ export const colorContrastEnhanced: Rule = {
     while ((node = walker.nextNode() as Text | null)) {
       if (!node.textContent || !node.textContent.trim()) continue;
 
+      // Skip non-text characters (symbols, punctuation, math operators)
+      if (hasOnlyNonTextCharacters(node.textContent)) continue;
+
       const el = node.parentElement;
       if (!el) continue;
       if (checked.has(el)) continue;
       checked.add(el);
 
       if (NON_TEXT_TAGS.has(el.tagName)) continue;
+
+      // Skip <body> and <html> text nodes
       const tag = el.tagName;
       if (tag === "BODY" || tag === "HTML") continue;
+
+      // Skip elements inside native <select> — browser-controlled rendering
       if (isInsideNativeSelect(el)) continue;
+
       if (isDisabledFormElement(el)) continue;
       if (isLabelForDisabledControl(el, doc)) continue;
+      // Skip elements inside aria-disabled containers
+      if (isInAriaDisabledGroup(el)) continue;
       if (isHidden(el)) continue;
 
       const style = getCachedComputedStyle(el);
-      if (parseFloat(style.opacity) === 0) continue;
-      if (getAccumulatedOpacity(el) < 0.1) continue;
 
+      // Skip transparent/zero-opacity text
+      if (parseFloat(style.opacity) === 0) continue;
+
+      const accumulatedOpacity = getAccumulatedOpacity(el);
+      // Skip effectively invisible elements
+      if (accumulatedOpacity < 0.1) continue;
+
+      // Skip elements with text-shadow — shadow alters effective contrast
       const textShadow = style.textShadow;
       if (textShadow && textShadow !== "none" && textShadow !== "initial") continue;
+
+      // Bail out on visual effects that make contrast unreliable
       if (hasUnreliableVisualEffects(el)) continue;
 
       const fg = parseColor(style.color);
       if (!fg) continue;
 
-      const fgAlphaMatch = style.color.match(/rgba\(.+?,\s*([\d.]+)\s*\)/) ||
-        style.color.match(/rgba?\(.+?\/\s*([\d.]+%?)\s*\)/);
-      if (fgAlphaMatch) {
-        const fgAlpha = fgAlphaMatch[1].endsWith("%")
-          ? parseFloat(fgAlphaMatch[1]) / 100
-          : parseFloat(fgAlphaMatch[1]);
-        if (fgAlpha === 0) continue;
-      }
+      // Extract foreground alpha
+      const fgAlpha = parseColorAlpha(style.color);
+      if (fgAlpha === 0) continue;
 
+      // Skip text that may be visually overlaid on an image/video element
       if (mayBeOverImage(el)) continue;
 
-      const bg = getEffectiveBackgroundColor(el);
-      if (!bg) continue;
+      let bg = getEffectiveBackgroundColor(el);
 
-      const fgLum = getLuminance(fg[0], fg[1], fg[2]);
+      // If no solid background found, check for gradient backgrounds
+      if (!bg) {
+        const bgImage = style.backgroundImage;
+        if (bgImage && bgImage.includes("gradient(")) {
+          const stops = parseGradientStops(bgImage);
+          if (stops.length > 0) {
+            // Use the gradient stop that gives the BEST contrast with fg.
+            // ACT rule afw4f7: if the highest possible contrast of any text
+            // character meets the threshold, the element passes. Only flag
+            // when even the best stop fails.
+            const threshold = level === "AAA"
+              ? (isLargeText(el) ? 4.5 : 7)
+              : (isLargeText(el) ? 3 : 4.5);
+            let bestRatio = 0;
+            let bestBg = stops[0];
+            for (const stop of stops) {
+              let testFg = fg;
+              if (fgAlpha < 1) testFg = compositeColors(fg, stop, fgAlpha);
+              if (accumulatedOpacity < 1) testFg = compositeColors(testFg, stop, accumulatedOpacity);
+              const r = getContrastRatio(
+                getLuminance(testFg[0], testFg[1], testFg[2]),
+                getLuminance(stop[0], stop[1], stop[2]),
+              );
+              if (r > bestRatio) {
+                bestRatio = r;
+                bestBg = stop;
+              }
+            }
+            if (bestRatio < threshold) {
+              let effectiveFg = fg;
+              if (fgAlpha < 1) effectiveFg = compositeColors(fg, bestBg, fgAlpha);
+              if (accumulatedOpacity < 1) effectiveFg = compositeColors(effectiveFg, bestBg, accumulatedOpacity);
+              const roundedRatio = Math.round(bestRatio * 100) / 100;
+              violations.push({
+                ruleId,
+                selector: getSelector(el),
+                html: getHtmlSnippet(el),
+                impact: "serious" as const,
+                message: `Insufficient${level === "AAA" ? " enhanced" : ""} color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
+                context: `foreground: ${rgbToHex(effectiveFg)} rgb(${effectiveFg.join(", ")}), background: gradient, ratio: ${roundedRatio}:1, required: ${threshold}:1`,
+              });
+            }
+          }
+        }
+        continue;
+      }
+
+      // Composite semi-transparent foreground over background
+      let effectiveFg = fg;
+      if (fgAlpha < 1) {
+        effectiveFg = compositeColors(fg, bg, fgAlpha);
+      }
+
+      // Factor in element opacity: composite effective fg over bg at given opacity
+      if (accumulatedOpacity < 1) {
+        effectiveFg = compositeColors(effectiveFg, bg, accumulatedOpacity);
+      }
+
+      const fgLum = getLuminance(effectiveFg[0], effectiveFg[1], effectiveFg[2]);
       const bgLum = getLuminance(bg[0], bg[1], bg[2]);
       const ratio = getContrastRatio(fgLum, bgLum);
-      const threshold = isLargeText(el) ? 4.5 : 7;
+      const threshold = level === "AAA"
+        ? (isLargeText(el) ? 4.5 : 7)
+        : (isLargeText(el) ? 3 : 4.5);
 
       if (ratio < threshold) {
         const roundedRatio = Math.round(ratio * 100) / 100;
-        const fgHex = rgbToHex(fg);
+        const fgHex = rgbToHex(effectiveFg);
         const bgHex = rgbToHex(bg);
         violations.push({
-          ruleId: "color-contrast-enhanced",
+          ruleId,
           selector: getSelector(el),
           html: getHtmlSnippet(el),
           impact: "serious" as const,
-          message: `Insufficient enhanced contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
-          context: `foreground: ${fgHex} rgb(${fg.join(", ")}), background: ${bgHex} rgb(${bg.join(", ")}), ratio: ${roundedRatio}:1, required: ${threshold}:1`,
+          message: `Insufficient${level === "AAA" ? " enhanced" : ""} color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
+          context: `foreground: ${fgHex} rgb(${effectiveFg.join(", ")}), background: ${bgHex} rgb(${bg.join(", ")}), ratio: ${roundedRatio}:1, required: ${threshold}:1`,
         });
       }
     }
 
     return violations;
-  },
-};
+}

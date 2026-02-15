@@ -1,16 +1,16 @@
 /**
- * CI conformance gate: reads the EARL report and fails if any enabled,
- * non-limited rule drops below 80% ACT conformance.
+ * CI conformance gate: reads the browser EARL report and fails if any
+ * enabled rule drops below 80% ACT conformance.
  */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { defaultDisabledRuleIds } from "../rules/index";
-import { ACT_TO_CORE_RULE, HAPPY_DOM_LIMITED_RULES } from "./act-mapping";
+import { ACT_TO_CORE_RULE } from "./act-mapping";
 import type { EarlReport } from "./earl-report";
 
 const EARL_PATH = resolve(
   import.meta.dirname,
-  "../../act-fixtures/earl-report.json",
+  "../../act-fixtures/earl-report-browser.json",
 );
 const THRESHOLD = 0.8;
 
@@ -27,7 +27,7 @@ function main() {
     report = JSON.parse(readFileSync(EARL_PATH, "utf-8"));
   } catch {
     console.error(`Failed to read EARL report at ${EARL_PATH}`);
-    console.error("Run 'npm run test:act' first to generate the report.");
+    console.error("Run 'npm run test:browser' first to generate the report.");
     process.exit(1);
   }
 
@@ -53,7 +53,7 @@ function main() {
 
   let hasFailures = false;
 
-  console.log("\n=== ACT Conformance Gate ===\n");
+  console.log("\n=== ACT Conformance Gate (Browser) ===\n");
   console.log(
     "Rule".padEnd(35) +
     "Total".padEnd(8) +
@@ -71,7 +71,6 @@ function main() {
   })) {
     const coreRuleId = ACT_TO_CORE_RULE[actRuleId] ?? actRuleId;
     const isDisabled = defaultDisabledRuleIds.has(coreRuleId);
-    const isLimited = HAPPY_DOM_LIMITED_RULES.has(coreRuleId);
 
     // For rate calculation, exclude cantTell assertions
     const testable = stats.passed + stats.failed;
@@ -81,8 +80,6 @@ function main() {
     let status: string;
     if (isDisabled) {
       status = "SKIP (disabled)";
-    } else if (isLimited) {
-      status = "SKIP (limited)";
     } else if (rate >= THRESHOLD) {
       status = "OK";
     } else {
@@ -90,7 +87,7 @@ function main() {
       hasFailures = true;
     }
 
-    const marker = isLimited ? " *" : isDisabled ? " ~" : "";
+    const marker = isDisabled ? " ~" : "";
     console.log(
       (coreRuleId + marker).padEnd(35) +
       String(stats.total).padEnd(8) +
@@ -102,7 +99,7 @@ function main() {
   }
 
   console.log("-".repeat(80));
-  console.log("* = happy-dom limited, ~ = default-disabled\n");
+  console.log("~ = default-disabled\n");
 
   if (hasFailures) {
     console.error("Conformance gate FAILED: one or more enabled rules below 80% ACT conformance.");
