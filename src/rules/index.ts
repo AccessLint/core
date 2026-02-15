@@ -225,34 +225,21 @@ export interface ChunkedAudit {
   getViolations(): Violation[];
 }
 
-// --- Default-disabled rules ---
-// Rules with ACT mapping: disabled if < 80% ACT conformance (excluding
-// happy-dom-limited rules, which get a pass since failures are environmental).
-// Rules without ACT mapping: disabled due to known precision issues.
-
-export const defaultDisabledRuleIds = new Set([
-  // No ACT mapping; disabled due to known precision issues
-  "accesslint-059",
-  "accesslint-068",
-  "accesslint-070",
-  "accesslint-086",
-]);
-
 // --- Configuration state ---
 
 let additionalRules: Rule[] = [];
 let disabledRuleIds = new Set<string>();
-let enabledRuleIds = new Set<string>();
+let includeAAA = false;
 let activeLocale: string | undefined;
 let localizedRulesCache: Rule[] | undefined;
 
 export interface ConfigureOptions {
   /** Additional rules to include (e.g. compiled declarative rules) */
   additionalRules?: Rule[];
-  /** Rule IDs to disable (in addition to default-disabled rules) */
+  /** Rule IDs to disable */
   disabledRules?: string[];
-  /** Rule IDs to re-enable from the default-disabled set */
-  enabledRules?: string[];
+  /** Include AAA-level rules (excluded by default) */
+  includeAAA?: boolean;
   /** Locale for translated rule descriptions/guidance (e.g. 'en', 'es') */
   locale?: string;
 }
@@ -264,8 +251,8 @@ export function configureRules(options: ConfigureOptions): void {
   if (options.disabledRules) {
     disabledRuleIds = new Set(options.disabledRules);
   }
-  if (options.enabledRules) {
-    enabledRuleIds = new Set(options.enabledRules);
+  if ("includeAAA" in options) {
+    includeAAA = !!options.includeAAA;
   }
   if ("locale" in options) {
     activeLocale = options.locale || undefined;
@@ -274,8 +261,8 @@ export function configureRules(options: ConfigureOptions): void {
 }
 
 /**
- * Return the full set of active rules: bundled (minus default-disabled and
- * user-disabled, plus re-enabled) plus any additional rules via configureRules().
+ * Return the full set of active rules: bundled (minus user-disabled, minus
+ * AAA unless includeAAA is set) plus any additional rules via configureRules().
  * When a locale is active, returns shallow-cloned rules with translated fields.
  */
 export function getActiveRules(): Rule[] {
@@ -283,9 +270,7 @@ export function getActiveRules(): Rule[] {
 
   const active = rules.filter((r) => {
     if (disabledRuleIds.has(r.id)) return false;
-    if (enabledRuleIds.has(r.id)) return true;
-    if (defaultDisabledRuleIds.has(r.id)) return false;
-    if (r.level === "AAA") return false;
+    if (r.level === "AAA" && !includeAAA) return false;
     return true;
   });
   const combined = active.concat(additionalRules);

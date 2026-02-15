@@ -132,7 +132,7 @@ processNext();
 
 ### `configureRules(options: ConfigureOptions)`
 
-Customize which rules are active. Twenty rules are disabled by default (see `defaultDisabledRuleIds`); use `enabledRules` to re-enable them.
+Customize which rules are active.
 
 ```js
 import { configureRules } from "@accesslint/core";
@@ -142,23 +142,19 @@ configureRules({
   disabledRules: ["heading-order"],
 });
 
-// Re-enable a default-disabled rule
+// Include AAA-level rules (excluded by default)
 configureRules({
-  enabledRules: ["aria-roles"],
+  includeAAA: true,
 });
 ```
 
 ### `rules`
 
-Array of all 85 bundled `Rule` objects.
-
-### `defaultDisabledRuleIds`
-
-`Set<string>` of the 16 rule IDs that are disabled by default. These can be re-enabled via `configureRules({ enabledRules: [...] })`.
+Array of all bundled `Rule` objects.
 
 ### `getActiveRules(): Rule[]`
 
-Returns bundled rules minus default-disabled and user-disabled rules (plus any re-enabled or additional rules from `configureRules()`).
+Returns bundled rules minus user-disabled rules, excluding AAA-level rules unless `includeAAA` is set (plus any additional rules from `configureRules()`).
 
 ### `getRuleById(id: string): Rule | undefined`
 
@@ -179,7 +175,7 @@ Helpers for building custom rules:
 
 ## Rules
 
-69 rules active by default, covering WCAG 2.1 Level A and AA. An additional 16 rules are bundled but disabled by default; re-enable them via `configureRules({ enabledRules: [...] })`.
+84 rules active by default, covering WCAG 2.1 Level A and AA. One additional AAA-level rule (`color-contrast-enhanced`) is bundled but excluded by default; include it via `configureRules({ includeAAA: true })`.
 
 | Rule | Level | WCAG | Description |
 | ---- | ----- | ---- | ----------- |

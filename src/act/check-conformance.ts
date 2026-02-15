@@ -4,7 +4,6 @@
  */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { defaultDisabledRuleIds } from "../rules/index";
 import { ACT_TO_CORE_RULE } from "./act-mapping";
 import type { EarlGraphReport } from "./earl-report";
 
@@ -104,26 +103,17 @@ function main() {
     return coreA.localeCompare(coreB);
   })) {
     const coreRuleId = ACT_TO_CORE_RULE[actRuleId] ?? actRuleId;
-    const isDisabled = defaultDisabledRuleIds.has(coreRuleId);
 
     // For rate calculation, exclude cantTell assertions
     const testable = stats.passed + stats.failed;
     const rate = testable > 0 ? stats.passed / testable : 1;
     const rateStr = (rate * 100).toFixed(1) + "%";
 
-    let status: string;
-    if (isDisabled) {
-      status = "SKIP (disabled)";
-    } else if (rate >= THRESHOLD) {
-      status = "OK";
-    } else {
-      status = "FAIL";
-      hasFailures = true;
-    }
+    const status = rate >= THRESHOLD ? "OK" : "FAIL";
+    if (rate < THRESHOLD) hasFailures = true;
 
-    const marker = isDisabled ? " ~" : "";
     console.log(
-      (coreRuleId + marker).padEnd(35) +
+      coreRuleId.padEnd(35) +
       String(stats.total).padEnd(8) +
       String(stats.passed).padEnd(8) +
       String(stats.failed).padEnd(8) +
@@ -133,7 +123,6 @@ function main() {
   }
 
   console.log("-".repeat(80));
-  console.log("~ = default-disabled\n");
 
   if (hasFailures) {
     console.error("Conformance gate FAILED: one or more enabled rules below 80% ACT conformance.");
