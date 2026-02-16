@@ -6,11 +6,16 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, "src/standalone.ts"),
       formats: ["iife"],
-      name: "AccessLintCore",
+      name: "AccessLint",
       fileName: () => "index.iife.js",
     },
     outDir: "dist",
     emptyOutDir: false,
+    rollupOptions: {
+      output: {
+        footer: "if(typeof globalThis!=='undefined')globalThis.AccessLintCore=globalThis.AccessLint;",
+      },
+    },
   },
   resolve: {
     alias: {

@@ -68,7 +68,7 @@ test("page has no accessibility violations", async ({ page }) => {
   await page.addScriptTag({ path: iife });
 
   const violations = await page.evaluate(() => {
-    const { runAudit } = (window as any).AccessLintCore;
+    const { runAudit } = (window as any).AccessLint;
     return runAudit(document).violations.map(
       (v: any) => ({ ruleId: v.ruleId, message: v.message, selector: v.selector, impact: v.impact })
     );
@@ -90,7 +90,7 @@ Cypress.Commands.add("audit", () => {
     .then((src) => {
       return cy.window().then((win) => {
         win.eval(src);
-        const result = win.AccessLintCore.runAudit(win.document);
+        const result = win.AccessLint.runAudit(win.document);
         return result.violations;
       });
     });

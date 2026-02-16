@@ -86,7 +86,7 @@ for (const [coreRuleId, entries] of byRule) {
           await page.addScriptTag({ path: IIFE_PATH });
 
           violations = await page.evaluate((actId) => {
-            const { rules, clearAllCaches } = (window as any).AccessLintCore;
+            const { rules, clearAllCaches } = (window as any).AccessLint;
             clearAllCaches();
             const rule = rules.find((r: any) => r.actRuleIds?.includes(actId));
             if (!rule) return [];
