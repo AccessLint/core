@@ -71,7 +71,7 @@
     });
   }
 
-  // Stacked bar: concordance per WCAG criterion
+  // Stacked bar: AL detections with confirmation breakdown
   function renderConcordanceChart() {
     var data = readData("concordance");
     var container = document.getElementById("chart-concordance");
@@ -101,13 +101,14 @@
       },
       legend: { reversed: true },
       series: [
-        { name: "All three", data: data.allThree, color: "#1a7f37" },
-        { name: "Two of three", data: data.twoOfThree, color: "#0055cc" },
-        { name: "One only", data: data.oneOnly, color: "#bf8700" },
+        { name: "Both confirm", data: data.bothConfirm, color: "#1a7f37" },
+        { name: "axe confirms", data: data.axeConfirms, color: COLORS.axe },
+        { name: "IBM confirms", data: data.ibmConfirms, color: COLORS.ibm },
+        { name: "AL unique", data: data.alUnique, color: "#bf8700" },
       ],
       accessibility: {
         description:
-          "Stacked bar chart showing agreement levels per WCAG criterion.",
+          "Stacked bar chart showing @accesslint/core detections and confirmation by other tools per WCAG criterion.",
       },
     });
   }
