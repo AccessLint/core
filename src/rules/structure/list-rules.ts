@@ -30,7 +30,9 @@ export const dlitem: Rule = {
   run(doc) {
     const violations = [];
     for (const el of doc.querySelectorAll("dt, dd")) {
-      if (!el.parentElement || el.parentElement.tagName.toLowerCase() !== "dl") {
+      const parent = el.parentElement;
+      const tag = parent?.tagName.toLowerCase();
+      if (!parent || (tag !== "dl" && !(tag === "div" && parent.parentElement?.tagName.toLowerCase() === "dl"))) {
         violations.push({
           ruleId: "accesslint-048",
           selector: getSelector(el),

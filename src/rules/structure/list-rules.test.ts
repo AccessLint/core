@@ -36,6 +36,11 @@ describe("accesslint-048", () => {
     expect(dlitem.run(doc)).toHaveLength(0);
   });
 
+  it("passes dt/dd inside div inside dl", () => {
+    const doc = makeDoc("<html><body><dl><div><dt>T</dt><dd>D</dd></div></dl></body></html>");
+    expect(dlitem.run(doc)).toHaveLength(0);
+  });
+
   it("reports dt outside dl", () => {
     const doc = makeDoc("<html><body><dt>Bad</dt></body></html>");
     expect(dlitem.run(doc)).toHaveLength(1);
