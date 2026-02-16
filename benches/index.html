@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Benchmarks — a11y agent</title>
-<meta name="description" content="axe-core vs @accesslint/core benchmarks tested against 5,000 sites from the Chrome UX Report.">
+<meta name="description" content="axe-core vs @accesslint/core vs IBM Equal Access benchmarks tested against 5,000 sites from the Chrome UX Report.">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/styles.css">
 </head>
@@ -26,7 +26,7 @@
 <main id="main">
   <section class="section">
     <h1>Benchmarks</h1>
-    <p>axe-core vs <code>@accesslint/core</code>, tested against 5,000 sites from the Chrome UX Report.</p>
+    <p>axe-core vs <code>@accesslint/core</code> vs IBM Equal Access, tested against 5,000 sites from the Chrome UX Report.</p>
 
     <dl class="bench-stats">
       <div>
@@ -34,128 +34,171 @@
         <dd>sites tested</dd>
       </div>
       <div>
-        <dt>12&times;</dt>
+        <dt>23&times;</dt>
         <dd>faster at median</dd>
       </div>
       <div>
-        <dt>99.8%</dt>
+        <dt>98.0%</dt>
         <dd>of sites faster</dd>
       </div>
       <div>
-        <dt>53 ms</dt>
+        <dt>73 ms</dt>
         <dd>median audit time</dd>
       </div>
     </dl>
 
     <h2>Speed</h2>
-    <p>Median audit time across 4,482 successful site audits.</p>
-    <div class="bench-bars" role="img" aria-label="Bar chart: axe-core 656 ms, @accesslint/core 53 ms">
+    <p>Median audit time across 4,249 successful site audits.</p>
+    <div class="bench-bars" role="img" aria-label="Bar chart: axe-core 691 ms, @accesslint/core 73 ms, IBM EA 1689 ms">
       <div class="bench-bar">
         <span class="bench-bar-label">axe-core</span>
         <div class="bench-bar-track">
-          <div class="bench-bar-fill bench-bar-fill--axe" style="width: 100%"></div>
+          <div class="bench-bar-fill bench-bar-fill--axe" style="width: 41%"></div>
         </div>
-        <span class="bench-bar-value">656 ms</span>
+        <span class="bench-bar-value">691 ms</span>
       </div>
       <div class="bench-bar">
         <span class="bench-bar-label"><code>@accesslint/core</code></span>
         <div class="bench-bar-track">
-          <div class="bench-bar-fill bench-bar-fill--al" style="width: 8%"></div>
+          <div class="bench-bar-fill bench-bar-fill--al" style="width: 4%"></div>
         </div>
-        <span class="bench-bar-value">53 ms</span>
+        <span class="bench-bar-value">73 ms</span>
+      </div>
+      <div class="bench-bar">
+        <span class="bench-bar-label">IBM EA</span>
+        <div class="bench-bar-track">
+          <div class="bench-bar-fill bench-bar-fill--ibm" style="width: 100%"></div>
+        </div>
+        <span class="bench-bar-value">1689 ms</span>
       </div>
     </div>
+    <div id="chart-speed"></div>
 
     <h2>Coverage</h2>
-    <p>Per-criterion detection rates. &ldquo;Both&rdquo; means both tools flagged the criterion on the same site.</p>
-    <div class="bench-table-wrap" tabindex="0" role="region" aria-label="Coverage comparison">
+    <p>Per-criterion concordance across all three tools. Click a criterion to see examples.</p>
+    <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
           <tr>
             <th>WCAG Criterion</th>
-            <th>Both</th>
-            <th>axe-only</th>
-            <th>@accesslint/core only</th>
-            <th>Agreement</th>
+            <th>All three</th>
+            <th>Two of three</th>
+            <th>One only</th>
+            <th>Any tool</th>
+            <th>Axe↔AL κ</th>
+            <th>Axe↔IBM κ</th>
+            <th>AL↔IBM κ</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><a href="/benches/criteria/4.1.2/">4.1.2 Name, Role, Value</a></td>
-            <td>2,584</td>
-            <td>54</td>
-            <td>338</td>
-            <td>87%</td>
+            <td>2,318</td>
+            <td>318</td>
+            <td>391</td>
+            <td>3,027</td>
+            <td>0.78</td>
+            <td>0.75</td>
+            <td>0.76</td>
           </tr>
           <tr>
             <td><a href="/benches/criteria/1.4.3/">1.4.3 Contrast (Minimum)</a></td>
-            <td>2,339</td>
-            <td>162</td>
-            <td>454</td>
-            <td>79%</td>
-          </tr>
-          <tr>
-            <td><a href="/benches/criteria/2.4.4/">2.4.4 Link Purpose</a></td>
-            <td>2,006</td>
-            <td>41</td>
-            <td>41</td>
-            <td>96%</td>
+            <td>1,794</td>
+            <td>660</td>
+            <td>408</td>
+            <td>2,862</td>
+            <td>0.67</td>
+            <td>0.69</td>
+            <td>0.62</td>
           </tr>
           <tr>
             <td><a href="/benches/criteria/1.1.1/">1.1.1 Non-text Content</a></td>
-            <td>1,363</td>
-            <td>24</td>
-            <td>169</td>
-            <td>88%</td>
+            <td>1,261</td>
+            <td>121</td>
+            <td>1,150</td>
+            <td>2,532</td>
+            <td>0.90</td>
+            <td>0.47</td>
+            <td>0.48</td>
           </tr>
           <tr>
-            <td><a href="/benches/criteria/1.4.4/">1.4.4 Resize Text</a></td>
-            <td>907</td>
-            <td>45</td>
-            <td>5</td>
-            <td>95%</td>
+            <td><a href="/benches/criteria/2.4.4/">2.4.4 Link Purpose (In Context)</a></td>
+            <td>1,739</td>
+            <td>92</td>
+            <td>214</td>
+            <td>2,045</td>
+            <td>0.96</td>
+            <td>0.88</td>
+            <td>0.87</td>
           </tr>
           <tr>
             <td><a href="/benches/criteria/1.3.1/">1.3.1 Info and Relationships</a></td>
-            <td>578</td>
-            <td>111</td>
-            <td>350</td>
-            <td>56%</td>
+            <td>202</td>
+            <td>447</td>
+            <td>902</td>
+            <td>1,551</td>
+            <td>0.65</td>
+            <td>0.16</td>
+            <td>0.15</td>
           </tr>
           <tr>
             <td><a href="/benches/criteria/3.1.1/">3.1.1 Language of Page</a></td>
-            <td>829</td>
-            <td>9</td>
-            <td>3</td>
-            <td>99%</td>
+            <td>815</td>
+            <td>7</td>
+            <td>424</td>
+            <td>1,246</td>
+            <td>1.00</td>
+            <td>0.73</td>
+            <td>0.73</td>
+          </tr>
+          <tr>
+            <td><a href="/benches/criteria/1.4.4/">1.4.4 Resize Text</a></td>
+            <td>0</td>
+            <td>819</td>
+            <td>48</td>
+            <td>867</td>
+            <td>0.96</td>
+            <td>0.00</td>
+            <td>0.00</td>
           </tr>
           <tr>
             <td><a href="/benches/criteria/2.1.1/">2.1.1 Keyboard</a></td>
-            <td>121</td>
-            <td>24</td>
-            <td>219</td>
-            <td>33%</td>
+            <td>5</td>
+            <td>131</td>
+            <td>162</td>
+            <td>298</td>
+            <td>0.81</td>
+            <td>0.01</td>
+            <td>0.01</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <div id="chart-concordance"></div>
+
+    <h2>Inter-rater Agreement</h2>
+    <p>Mean Cohen&rsquo;s kappa (κ) across all criteria. Values above 0.6 indicate substantial agreement.</p>
+    <div id="chart-kappa"></div>
+
     <h2>Key findings</h2>
     <ul class="bench-takeaways">
-      <li><code>@accesslint/core</code> is <strong>12&times; faster</strong> at median (<a href="/benches/performance/">why?</a>)</li>
-      <li>High agreement on major criteria like link-name (96%), resize-text (95%), and image-alt (88%)</li>
+      <li><code>@accesslint/core</code> is <strong>23&times; faster</strong> at median</li>
+      <li>High agreement on major criteria like link-name, resize-text, and image-alt</li>
+      <li>Three-tool concordance provides a stronger signal than any single tool alone</li>
     </ul>
 
     <h2>Methodology</h2>
     <ul class="bench-methodology">
       <li><strong>Sample</strong>: 5,000 origins from the <a href="https://developer.chrome.com/docs/crux">Chrome UX Report</a>, seeded random sample</li>
-      <li><strong>Runner</strong>: Chromium 145 via <a href="https://playwright.dev">Playwright</a> 1.58, headless, on GitHub Actions (<code>ubuntu-latest</code>)</li>
-      <li><strong>axe-core</strong>: v4.11.1, default configuration (no custom rules enabled). Only violations are compared</li>
+      <li><strong>Runner</strong>: Chromium via <a href="https://playwright.dev">Playwright</a>, headless, on GitHub Actions (<code>ubuntu-latest</code>)</li>
+      <li><strong>axe-core</strong>: default configuration (no custom rules enabled). Only violations are compared</li>
       <li><strong><code>@accesslint/core</code></strong>: latest, default configuration</li>
+      <li><strong>IBM Equal Access</strong>: latest, default configuration</li>
       <li><strong>Per-site timeout</strong>: 15 s (navigation + audit), 5 concurrent pages per shard, 20 shards</li>
       <li><strong>Source</strong>: <a href="https://github.com/accesslint/accesslint-bench">accesslint/accesslint-bench</a></li>
     </ul>
 
-    <p class="bench-updated">Last updated <time datetime="2026-02-15">February 15, 2026</time></p>
+    <p class="bench-updated">Last updated <time datetime="2026-02-16">February 16, 2026</time></p>
   </section>
 </main>
 
@@ -163,5 +206,13 @@
   <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
 </footer>
 
+<script type="application/json" id="chart-data-speed">{"categories":["axe-core","@accesslint/core","IBM EA"],"values":[691,73,1689],"colors":["#555555","#0055cc","#be95ff"]}</script>
+<script type="application/json" id="chart-data-concordance">{"categories":["4.1.2 Name, Role, Value","1.4.3 Contrast (Minimum)","1.1.1 Non-text Content","2.4.4 Link Purpose (In Context)","1.3.1 Info and Relationships","3.1.1 Language of Page","1.4.4 Resize Text","2.1.1 Keyboard"],"allThree":[2318,1794,1261,1739,202,815,0,5],"twoOfThree":[318,660,121,92,447,7,819,131],"oneOnly":[391,408,1150,214,902,424,48,162]}</script>
+<script type="application/json" id="chart-data-kappa">{"labels":["axe-core","@accesslint/core","IBM EA"],"data":[[0,0,1],[0,1,0.62],[0,2,0.39],[1,0,0.62],[1,1,1],[1,2,0.29],[2,0,0.39],[2,1,0.29],[2,2,1]]}</script>
+<script src="https://code.highcharts.com/highcharts.js" defer></script>
+<script src="https://code.highcharts.com/highcharts-more.js" defer></script>
+<script src="https://code.highcharts.com/modules/heatmap.js" defer></script>
+<script src="https://code.highcharts.com/modules/accessibility.js" defer></script>
+<script src="/benches/charts.js" defer></script>
 </body>
 </html>

@@ -29,22 +29,23 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>1,251</dt>
+        <dt>1,261</dt>
         <dd>all three tools</dd>
       </div>
       <div>
-        <dt>139</dt>
+        <dt>121</dt>
         <dd>two of three</dd>
       </div>
       <div>
-        <dt>1,140</dt>
+        <dt>1,150</dt>
         <dd>one tool only</dd>
       </div>
       <div>
-        <dt>2,530</dt>
+        <dt>2,532</dt>
         <dd>any tool</dd>
       </div>
     </dl>
+    <div id="chart-agreement"></div>
 
     <h2>Rules</h2>
     <p>Which rule IDs fire for this criterion and how many sites they appear on.</p>
@@ -63,35 +64,35 @@
         <tbody>
           <tr>
             <td>image-alt</td>
-            <td>1222</td>
+            <td>1230</td>
             <td>accesslint-011</td>
-            <td>1395</td>
+            <td>1392</td>
             <td>svg_graphics_labelled</td>
-            <td>1412</td>
+            <td>1429</td>
           </tr>
           <tr>
             <td>svg-img-alt</td>
-            <td>34</td>
+            <td>35</td>
             <td>accesslint-012</td>
-            <td>54</td>
+            <td>53</td>
             <td>img_alt_valid</td>
-            <td>1258</td>
+            <td>1265</td>
           </tr>
           <tr>
             <td>aria-progressbar-name</td>
-            <td>30</td>
+            <td>26</td>
             <td>accesslint-018</td>
             <td>27</td>
             <td>img_alt_redundant</td>
-            <td>447</td>
+            <td>438</td>
           </tr>
           <tr>
             <td>role-img-alt</td>
-            <td>24</td>
+            <td>25</td>
             <td>accesslint-013</td>
-            <td>14</td>
+            <td>15</td>
             <td>img_alt_null</td>
-            <td>87</td>
+            <td>89</td>
           </tr>
           <tr>
             <td>input-image-alt</td>
@@ -99,13 +100,13 @@
             <td>accesslint-017</td>
             <td>9</td>
             <td>img_alt_decorative</td>
-            <td>16</td>
+            <td>17</td>
           </tr>
           <tr>
             <td>object-alt</td>
             <td>7</td>
             <td>accesslint-016</td>
-            <td>7</td>
+            <td>8</td>
             <td>imagebutton_alt_exists</td>
             <td>10</td>
           </tr>
@@ -115,6 +116,14 @@
             <td></td>
             <td></td>
             <td>imagemap_alt_exists</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>area_alt_exists</td>
             <td>9</td>
           </tr>
           <tr>
@@ -125,21 +134,14 @@
             <td>object_text_exists</td>
             <td>8</td>
           </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>area_alt_exists</td>
-            <td>8</td>
-          </tr>
         </tbody>
       </table>
     </div>
+    <div id="chart-rules"></div>
 
     <h2>Examples</h2>
 
-    <h3>All three: 1251 sites</h3>
+    <h3>All three: 1261 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="All three examples">
       <table class="bench-table">
         <thead>
@@ -247,9 +249,9 @@
         </tbody>
       </table>
     </div>
-    <p>1241 more not shown.</p>
+    <p>1251 more not shown.</p>
 
-    <h3>Two of three: 139 sites</h3>
+    <h3>Two of three: 121 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="Two of three examples">
       <table class="bench-table">
         <thead>
@@ -265,13 +267,13 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://smpbocil.wiki</td>
+            <td>https://www.gupy.io</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>accesslint-011</td>
             <td>1</td>
-            <td>img_alt_valid</td>
-            <td>1</td>
+            <td>svg_graphics_labelled, img_alt_decorative, img_alt_valid</td>
+            <td>179</td>
           </tr>
           <tr>
             <td>https://www.kudoboard.com</td>
@@ -292,24 +294,6 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://bonak.market</td>
-            <td>aria-progressbar-name</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>img_alt_redundant</td>
-            <td>73</td>
-          </tr>
-          <tr>
-            <td>https://shop.ygex.jp</td>
-            <td>image-alt</td>
-            <td>4</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>svg_graphics_labelled, img_alt_valid</td>
-            <td>5</td>
-          </tr>
-          <tr>
             <td>https://www.pse.cz</td>
             <td>svg-img-alt</td>
             <td>1</td>
@@ -319,13 +303,40 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://app.omie.com.br</td>
+            <td>https://www.scarva.com</td>
+            <td>aria-progressbar-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>svg_graphics_labelled</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.saruwa.co.kr</td>
+            <td>image-alt</td>
+            <td>37</td>
+            <td>accesslint-011</td>
+            <td>45</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.botanistii.ro</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-016</td>
+            <td>4</td>
+            <td>svg_graphics_labelled, imagemap_alt_exists, area_alt_exists</td>
+            <td>72</td>
+          </tr>
+          <tr>
+            <td>https://www.quepasasalta.com.ar</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>accesslint-011</td>
             <td>1</td>
-            <td>svg_graphics_labelled, img_alt_valid</td>
-            <td>3</td>
+            <td>svg_graphics_labelled</td>
+            <td>4</td>
           </tr>
           <tr>
             <td>https://status.riotgames.com</td>
@@ -345,21 +356,12 @@
             <td>&mdash;</td>
             <td>0</td>
           </tr>
-          <tr>
-            <td>https://www.scarva.com</td>
-            <td>aria-progressbar-name</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>svg_graphics_labelled</td>
-            <td>1</td>
-          </tr>
         </tbody>
       </table>
     </div>
-    <p>129 more not shown.</p>
+    <p>111 more not shown.</p>
 
-    <h3>axe-only: 8 sites</h3>
+    <h3>axe-only: 6 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="axe-only examples">
       <table class="bench-table">
         <thead>
@@ -384,24 +386,6 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://jobs.readysethire.com</td>
-            <td>aria-progressbar-name</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://ph-nn777.one</td>
-            <td>image-alt</td>
-            <td>5</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
             <td>https://tradenation.com</td>
             <td>aria-progressbar-name, image-alt</td>
             <td>2</td>
@@ -420,9 +404,18 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://ressourcesecole-creteil.beneylu.com</td>
-            <td>aria-progressbar-name</td>
-            <td>1</td>
+            <td>https://ph-nn777.one</td>
+            <td>image-alt</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://birite.com.au</td>
+            <td>image-alt</td>
+            <td>5</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>&mdash;</td>
@@ -431,15 +424,6 @@
           <tr>
             <td>https://www.arewagate.com</td>
             <td>image-alt</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://bo.tgs.moe.gov.sg</td>
-            <td>aria-progressbar-name</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
@@ -511,6 +495,24 @@
             <td>0</td>
           </tr>
           <tr>
+            <td>http://faovel.banavih.gob.ve</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-011</td>
+            <td>9</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://my.findoctave.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-012</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
             <td>https://m.avtovokzaly.ru</td>
             <td>&mdash;</td>
             <td>0</td>
@@ -520,7 +522,7 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.shirleyandstout.com</td>
+            <td>https://www.chapmanfuneral.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>accesslint-012</td>
@@ -529,29 +531,11 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.tiendainglesa.com.uy</td>
+            <td>https://vidyakul.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>accesslint-011</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.helicaltool.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-012</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>http://faovel.banavih.gob.ve</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-011</td>
-            <td>9</td>
+            <td>4</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -560,7 +544,7 @@
     </div>
     <p>57 more not shown.</p>
 
-    <h3>IBM EA only: 1065 sites</h3>
+    <h3>IBM EA only: 1077 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="IBM EA only examples">
       <table class="bench-table">
         <thead>
@@ -612,15 +596,6 @@
             <td>1</td>
           </tr>
           <tr>
-            <td>https://www.awekas.at</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>img_alt_decorative</td>
-            <td>1</td>
-          </tr>
-          <tr>
             <td>https://www.braspress.com.br</td>
             <td>&mdash;</td>
             <td>0</td>
@@ -630,45 +605,54 @@
             <td>6</td>
           </tr>
           <tr>
-            <td>https://firefaucet.win</td>
+            <td>https://www.awekas.at</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>img_alt_decorative</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.footmercato.net</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>svg_graphics_labelled</td>
-            <td>1</td>
+            <td>27</td>
           </tr>
           <tr>
-            <td>https://m.tribunnews.com</td>
+            <td>https://doram-ru.org</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>img_alt_redundant</td>
-            <td>3</td>
+            <td>img_alt_redundant, svg_graphics_labelled, img_alt_null</td>
+            <td>23</td>
           </tr>
           <tr>
-            <td>https://soranews24.com</td>
+            <td>https://geacron.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>img_alt_valid</td>
-            <td>1</td>
+            <td>7</td>
           </tr>
           <tr>
-            <td>https://ciclismointernacional.com</td>
+            <td>https://garri-potter.org</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>img_alt_null</td>
-            <td>2</td>
+            <td>1</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>1055 more not shown.</p>
+    <p>1067 more not shown.</p>
 
     <p><a href="/benches/">&larr; Back to benchmarks</a></p>
 
@@ -679,5 +663,11 @@
 <footer class="site-footer">
   <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
 </footer>
+
+<script type="application/json" id="chart-data-agreement">{"allThree":1261,"twoOfThree":121,"oneOnly":1150}</script>
+<script type="application/json" id="chart-data-rules">{"axe":[{"ruleId":"image-alt","count":1230},{"ruleId":"svg-img-alt","count":35},{"ruleId":"aria-progressbar-name","count":26},{"ruleId":"role-img-alt","count":25},{"ruleId":"input-image-alt","count":8},{"ruleId":"object-alt","count":7},{"ruleId":"aria-meter-name","count":1}],"al":[{"ruleId":"accesslint-011","count":1392},{"ruleId":"accesslint-012","count":53},{"ruleId":"accesslint-018","count":27},{"ruleId":"accesslint-013","count":15},{"ruleId":"accesslint-017","count":9},{"ruleId":"accesslint-016","count":8}],"ibm":[{"ruleId":"svg_graphics_labelled","count":1429},{"ruleId":"img_alt_valid","count":1265},{"ruleId":"img_alt_redundant","count":438},{"ruleId":"img_alt_null","count":89},{"ruleId":"img_alt_decorative","count":17},{"ruleId":"imagebutton_alt_exists","count":10},{"ruleId":"imagemap_alt_exists","count":10},{"ruleId":"area_alt_exists","count":9},{"ruleId":"object_text_exists","count":8}]}</script>
+<script src="https://code.highcharts.com/highcharts.js" defer></script>
+<script src="https://code.highcharts.com/modules/accessibility.js" defer></script>
+<script src="/benches/charts.js" defer></script>
 </body>
 </html>

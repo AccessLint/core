@@ -29,22 +29,23 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>1,781</dt>
+        <dt>1,794</dt>
         <dd>all three tools</dd>
       </div>
       <div>
-        <dt>674</dt>
+        <dt>660</dt>
         <dd>two of three</dd>
       </div>
       <div>
-        <dt>406</dt>
+        <dt>408</dt>
         <dd>one tool only</dd>
       </div>
       <div>
-        <dt>2,861</dt>
+        <dt>2,862</dt>
         <dd>any tool</dd>
       </div>
     </dl>
+    <div id="chart-agreement"></div>
 
     <h2>Rules</h2>
     <p>Which rule IDs fire for this criterion and how many sites they appear on.</p>
@@ -63,19 +64,20 @@
         <tbody>
           <tr>
             <td>color-contrast</td>
-            <td>2376</td>
+            <td>2384</td>
             <td>accesslint-092</td>
-            <td>2518</td>
+            <td>2517</td>
             <td>text_contrast_sufficient</td>
-            <td>2203</td>
+            <td>2209</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <div id="chart-rules"></div>
 
     <h2>Examples</h2>
 
-    <h3>All three: 1781 sites</h3>
+    <h3>All three: 1794 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="All three examples">
       <table class="bench-table">
         <thead>
@@ -91,6 +93,15 @@
         </thead>
         <tbody>
           <tr>
+            <td>https://m.fanfiction.net</td>
+            <td>color-contrast</td>
+            <td>2</td>
+            <td>accesslint-092</td>
+            <td>2</td>
+            <td>text_contrast_sufficient</td>
+            <td>2</td>
+          </tr>
+          <tr>
             <td>https://www.otomoto.pl</td>
             <td>color-contrast</td>
             <td>2</td>
@@ -100,13 +111,31 @@
             <td>2</td>
           </tr>
           <tr>
-            <td>https://m.fanfiction.net</td>
+            <td>https://www.augsburger-allgemeine.de</td>
             <td>color-contrast</td>
-            <td>2</td>
+            <td>5</td>
             <td>accesslint-092</td>
-            <td>2</td>
+            <td>71</td>
             <td>text_contrast_sufficient</td>
-            <td>2</td>
+            <td>90</td>
+          </tr>
+          <tr>
+            <td>https://www.parentsquare.com</td>
+            <td>color-contrast</td>
+            <td>10</td>
+            <td>accesslint-092</td>
+            <td>10</td>
+            <td>text_contrast_sufficient</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>https://diariodocomercio.com.br</td>
+            <td>color-contrast</td>
+            <td>5</td>
+            <td>accesslint-092</td>
+            <td>5</td>
+            <td>text_contrast_sufficient</td>
+            <td>5</td>
           </tr>
           <tr>
             <td>https://member.studying.jp</td>
@@ -127,15 +156,6 @@
             <td>1</td>
           </tr>
           <tr>
-            <td>https://diariodocomercio.com.br</td>
-            <td>color-contrast</td>
-            <td>5</td>
-            <td>accesslint-092</td>
-            <td>5</td>
-            <td>text_contrast_sufficient</td>
-            <td>5</td>
-          </tr>
-          <tr>
             <td>https://www.espn.com.ve</td>
             <td>color-contrast</td>
             <td>23</td>
@@ -147,45 +167,27 @@
           <tr>
             <td>https://www.znanylekarz.pl</td>
             <td>color-contrast</td>
-            <td>40</td>
-            <td>accesslint-092</td>
-            <td>42</td>
-            <td>text_contrast_sufficient</td>
             <td>39</td>
+            <td>accesslint-092</td>
+            <td>41</td>
+            <td>text_contrast_sufficient</td>
+            <td>38</td>
           </tr>
           <tr>
             <td>https://tr.investing.com</td>
             <td>color-contrast</td>
-            <td>20</td>
+            <td>23</td>
             <td>accesslint-092</td>
             <td>15</td>
             <td>text_contrast_sufficient</td>
-            <td>18</td>
-          </tr>
-          <tr>
-            <td>https://www.augsburger-allgemeine.de</td>
-            <td>color-contrast</td>
-            <td>5</td>
-            <td>accesslint-092</td>
-            <td>70</td>
-            <td>text_contrast_sufficient</td>
-            <td>89</td>
-          </tr>
-          <tr>
-            <td>https://www.parentsquare.com</td>
-            <td>color-contrast</td>
-            <td>10</td>
-            <td>accesslint-092</td>
-            <td>10</td>
-            <td>text_contrast_sufficient</td>
-            <td>10</td>
+            <td>21</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>1771 more not shown.</p>
+    <p>1784 more not shown.</p>
 
-    <h3>Two of three: 674 sites</h3>
+    <h3>Two of three: 660 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="Two of three examples">
       <table class="bench-table">
         <thead>
@@ -201,13 +203,22 @@
         </thead>
         <tbody>
           <tr>
+            <td>https://ocjene.skole.hr</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>accesslint-092</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
             <td>https://m.tribunnews.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>accesslint-092</td>
             <td>1</td>
             <td>text_contrast_sufficient</td>
-            <td>1</td>
+            <td>3</td>
           </tr>
           <tr>
             <td>https://firefaucet.win</td>
@@ -215,60 +226,6 @@
             <td>7</td>
             <td>accesslint-092</td>
             <td>22</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.bahn.de</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-092</td>
-            <td>1</td>
-            <td>text_contrast_sufficient</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://av3.malaka.my</td>
-            <td>color-contrast</td>
-            <td>1</td>
-            <td>accesslint-092</td>
-            <td>4</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://snapdrop.net</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-092</td>
-            <td>1</td>
-            <td>text_contrast_sufficient</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://cclcricket.com</td>
-            <td>color-contrast</td>
-            <td>68</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>text_contrast_sufficient</td>
-            <td>68</td>
-          </tr>
-          <tr>
-            <td>https://pinside.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-092</td>
-            <td>55</td>
-            <td>text_contrast_sufficient</td>
-            <td>43</td>
-          </tr>
-          <tr>
-            <td>https://superheng789hr.com</td>
-            <td>color-contrast</td>
-            <td>12</td>
-            <td>accesslint-092</td>
-            <td>2</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -282,20 +239,65 @@
             <td>7</td>
           </tr>
           <tr>
-            <td>https://online.bnovo.ru</td>
+            <td>https://av3.malaka.my</td>
             <td>color-contrast</td>
-            <td>5</td>
+            <td>1</td>
             <td>accesslint-092</td>
-            <td>7</td>
+            <td>4</td>
             <td>&mdash;</td>
             <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.medicoverhospitals.in</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>44</td>
+            <td>text_contrast_sufficient</td>
+            <td>44</td>
+          </tr>
+          <tr>
+            <td>https://cclcricket.com</td>
+            <td>color-contrast</td>
+            <td>68</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>68</td>
+          </tr>
+          <tr>
+            <td>https://www.szukajwarchiwach.gov.pl</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>1</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://superheng789hr.com</td>
+            <td>color-contrast</td>
+            <td>12</td>
+            <td>accesslint-092</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://snapdrop.net</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>1</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>664 more not shown.</p>
+    <p>650 more not shown.</p>
 
-    <h3>axe-only: 89 sites</h3>
+    <h3>axe-only: 95 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="axe-only examples">
       <table class="bench-table">
         <thead>
@@ -311,9 +313,27 @@
         </thead>
         <tbody>
           <tr>
+            <td>https://sistema.ecofactura.mx</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://vote.eurovision2026.bg</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
             <td>https://www.crosswordsolver.org</td>
             <td>color-contrast</td>
-            <td>2</td>
+            <td>3</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>&mdash;</td>
@@ -338,16 +358,7 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://sistema.ecofactura.mx</td>
-            <td>color-contrast</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://vote.eurovision2026.bg</td>
+            <td>https://ssm.gov.bn</td>
             <td>color-contrast</td>
             <td>1</td>
             <td>&mdash;</td>
@@ -374,15 +385,6 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.wj2-avia.com</td>
-            <td>color-contrast</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
             <td>https://americamonumental.bolavip.com</td>
             <td>color-contrast</td>
             <td>1</td>
@@ -403,9 +405,9 @@
         </tbody>
       </table>
     </div>
-    <p>79 more not shown.</p>
+    <p>85 more not shown.</p>
 
-    <h3>@accesslint/core only: 247 sites</h3>
+    <h3>@accesslint/core only: 243 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="@accesslint/core only examples">
       <table class="bench-table">
         <thead>
@@ -421,25 +423,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://fia80725.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-092</td>
-            <td>6</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://kurdcinama.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-092</td>
-            <td>4</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://brestcity.com</td>
+            <td>https://www.rentascordoba.gob.ar</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>accesslint-092</td>
@@ -448,34 +432,7 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://duabilan0126h.koipasti.tv</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-092</td>
-            <td>2</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.jp.se</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-092</td>
-            <td>2</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.leader.ir</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-092</td>
-            <td>45</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.rentascordoba.gob.ar</td>
+            <td>https://www.skyscanner.cz</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>accesslint-092</td>
@@ -502,18 +459,63 @@
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.egyptair.com</td>
+            <td>https://sspensions.ap.gov.in</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>accesslint-092</td>
-            <td>13</td>
+            <td>4</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.thespruceeats.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>18</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://fia80725.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://kurdcinama.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>4</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://brestcity.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://duabilan0126h.koipasti.tv</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>3</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>237 more not shown.</p>
+    <p>233 more not shown.</p>
 
     <h3>IBM EA only: 70 sites</h3>
     <div class="bench-table-wrap" tabindex="0" role="region" aria-label="IBM EA only examples">
@@ -540,13 +542,22 @@
             <td>10</td>
           </tr>
           <tr>
-            <td>https://www.clicars.com</td>
+            <td>https://bcgame52.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>text_contrast_sufficient</td>
-            <td>1</td>
+            <td>30</td>
+          </tr>
+          <tr>
+            <td>https://jobs.oec.gov.pk</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>3</td>
           </tr>
           <tr>
             <td>https://hdhub4u.us.in</td>
@@ -567,15 +578,6 @@
             <td>2</td>
           </tr>
           <tr>
-            <td>https://jobs.oec.gov.pk</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>text_contrast_sufficient</td>
-            <td>3</td>
-          </tr>
-          <tr>
             <td>https://dekleinebassin.be</td>
             <td>&mdash;</td>
             <td>0</td>
@@ -591,7 +593,7 @@
             <td>&mdash;</td>
             <td>0</td>
             <td>text_contrast_sufficient</td>
-            <td>113</td>
+            <td>111</td>
           </tr>
           <tr>
             <td>https://avantages-et-services.gmf.fr</td>
@@ -612,13 +614,13 @@
             <td>4</td>
           </tr>
           <tr>
-            <td>https://shopvochicong.com</td>
+            <td>https://www.ocdsb.ca</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>text_contrast_sufficient</td>
-            <td>101</td>
+            <td>3</td>
           </tr>
         </tbody>
       </table>
@@ -634,5 +636,11 @@
 <footer class="site-footer">
   <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
 </footer>
+
+<script type="application/json" id="chart-data-agreement">{"allThree":1794,"twoOfThree":660,"oneOnly":408}</script>
+<script type="application/json" id="chart-data-rules">{"axe":[{"ruleId":"color-contrast","count":2384}],"al":[{"ruleId":"accesslint-092","count":2517}],"ibm":[{"ruleId":"text_contrast_sufficient","count":2209}]}</script>
+<script src="https://code.highcharts.com/highcharts.js" defer></script>
+<script src="https://code.highcharts.com/modules/accessibility.js" defer></script>
+<script src="/benches/charts.js" defer></script>
 </body>
 </html>
