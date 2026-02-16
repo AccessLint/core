@@ -17,6 +17,8 @@
     <ul>
       <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
+      <li><a href="https://a11yagent.ai">a11y agent</a></li>
+      <li><a href="https://app.accesslint.com">CI</a></li>
     </ul>
   </nav>
 </header>
@@ -27,19 +29,19 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>4</dt>
+        <dt>7</dt>
         <dd>all three tools</dd>
       </div>
       <div>
-        <dt>125</dt>
+        <dt>127</dt>
         <dd>two of three</dd>
       </div>
       <div>
-        <dt>204</dt>
+        <dt>173</dt>
         <dd>one tool only</dd>
       </div>
       <div>
-        <dt>333</dt>
+        <dt>307</dt>
         <dd>any tool</dd>
       </div>
     </dl>
@@ -61,11 +63,11 @@
         <tbody>
           <tr>
             <td>scrollable-region-focusable</td>
-            <td>153</td>
+            <td>173</td>
             <td>accesslint-030</td>
-            <td>160</td>
+            <td>165</td>
             <td>aria_child_tabbable</td>
-            <td>138</td>
+            <td>107</td>
           </tr>
           <tr>
             <td></td>
@@ -73,15 +75,7 @@
             <td></td>
             <td></td>
             <td>iframe_interactive_tabbable</td>
-            <td>15</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>aria_activedescendant_tabindex_valid</td>
-            <td>1</td>
+            <td>3</td>
           </tr>
         </tbody>
       </table>
@@ -89,7 +83,7 @@
 
     <h2>Examples</h2>
 
-    <h3>All three: 4 sites</h3>
+    <h3>All three: 7 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -105,376 +99,73 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://gokil33f.com</td>
+            <td>https://www.kutahyaninsesi.com</td>
             <td>scrollable-region-focusable</td>
             <td>1</td>
             <td>accesslint-030</td>
             <td>1</td>
             <td>aria_child_tabbable</td>
-            <td>2</td>
+            <td>9</td>
           </tr>
           <tr>
-            <td>https://elty.it</td>
+            <td>https://www.thuellen.de</td>
             <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>aria_child_tabbable</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>https://www.resortrealty.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>accesslint-030</td>
-            <td>4</td>
-            <td>aria_child_tabbable</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>https://www.pianetarisparmioshop.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>accesslint-030</td>
-            <td>2</td>
-            <td>aria_child_tabbable</td>
-            <td>1</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <h3>Two of three: 125 sites</h3>
-    <div class="bench-table-wrap">
-      <table class="bench-table">
-        <thead>
-          <tr>
-            <th>Site</th>
-            <th>axe rules</th>
-            <th>axe nodes</th>
-            <th>@accesslint/core rules</th>
-            <th>@accesslint/core nodes</th>
-            <th>IBM EA rules</th>
-            <th>IBM EA nodes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>https://www.sme.sk</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://777loco04.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>aria_child_tabbable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://vglive.vg.no</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://eu.crealityfalcon.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>2</td>
-            <td>aria_child_tabbable</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>https://sp.macour.jp</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://saunapiter.ru</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>aria_child_tabbable</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>https://macanempire10.xyz</td>
-            <td>scrollable-region-focusable</td>
-            <td>4</td>
-            <td>accesslint-030</td>
-            <td>5</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://shreemaruti.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>2</td>
-            <td>accesslint-030</td>
-            <td>2</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.sonline.hu</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.ulefone.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>aria_child_tabbable</td>
-            <td>1</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>115 more not shown.</p>
-
-    <h3>axe-only: 27 sites</h3>
-    <div class="bench-table-wrap">
-      <table class="bench-table">
-        <thead>
-          <tr>
-            <th>Site</th>
-            <th>axe rules</th>
-            <th>axe nodes</th>
-            <th>@accesslint/core rules</th>
-            <th>@accesslint/core nodes</th>
-            <th>IBM EA rules</th>
-            <th>IBM EA nodes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>https://www.americanas.com.br</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://e28bd8.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>7</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.captainjackcasino.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://bubbabags.cl</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://indoagb99.monster</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.7u777.vip</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://macanslot138ah.store</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://wizardofodds.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://gurita4doke.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://justice.gov.az</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>17 more not shown.</p>
-
-    <h3>@accesslint/core only: 33 sites</h3>
-    <div class="bench-table-wrap">
-      <table class="bench-table">
-        <thead>
-          <tr>
-            <th>Site</th>
-            <th>axe rules</th>
-            <th>axe nodes</th>
-            <th>@accesslint/core rules</th>
-            <th>@accesslint/core nodes</th>
-            <th>IBM EA rules</th>
-            <th>IBM EA nodes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>https://namazvakitleri.diyanet.gov.tr</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>4</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.betkfc12.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://eurovilla.hr</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.edweek.org</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>4</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.wickeditor.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>2</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.gesundheitsfrage.net</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
-            <td>5</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.kurokawaonsen.or.jp</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>accesslint-030</td>
             <td>8</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.dandy-g.jp</td>
-            <td>&mdash;</td>
-            <td>0</td>
             <td>accesslint-030</td>
             <td>5</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>20</td>
           </tr>
           <tr>
-            <td>https://sagarchudesara.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>https://main.pusatnaga.cfd</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
             <td>accesslint-030</td>
             <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>2</td>
           </tr>
           <tr>
-            <td>https://tytan.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>https://banggia.dnse.com.vn</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
             <td>accesslint-030</td>
             <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://powersportsbusiness.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>aria_child_tabbable</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://gacormanias14.xyz</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>aria_child_tabbable</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://feng4d2a.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>iframe_interactive_tabbable</td>
+            <td>1</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>23 more not shown.</p>
 
-    <h3>IBM EA only: 144 sites</h3>
+    <h3>Two of three: 127 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -490,99 +181,429 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://www.infojobs.net</td>
+            <td>https://m.povar.ru</td>
+            <td>scrollable-region-focusable</td>
+            <td>37</td>
+            <td>accesslint-030</td>
+            <td>36</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>aria_activedescendant_tabindex_valid</td>
-            <td>1</td>
           </tr>
           <tr>
-            <td>https://cmhelpline.mp.gov.in</td>
+            <td>https://jandjoy.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
             <td>aria_child_tabbable</td>
-            <td>1</td>
+            <td>2</td>
           </tr>
           <tr>
-            <td>https://www.sarmasdolas.me</td>
+            <td>https://cclcricket.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>9</td>
+            <td>accesslint-030</td>
+            <td>9</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>iframe_interactive_tabbable</td>
-            <td>1</td>
           </tr>
           <tr>
-            <td>https://about.usps.com</td>
+            <td>https://ordemparanormal.fandom.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>accesslint-030</td>
+            <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>aria_child_tabbable</td>
-            <td>5</td>
           </tr>
           <tr>
-            <td>https://myspecialdates.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>iframe_interactive_tabbable</td>
+            <td>https://lucksvipmtg2.cfd</td>
+            <td>scrollable-region-focusable</td>
             <td>1</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
-            <td>https://www.tanguay.ca</td>
+            <td>https://aldousbio.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>2</td>
+            <td>accesslint-030</td>
+            <td>2</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>aria_child_tabbable</td>
-            <td>1</td>
           </tr>
           <tr>
-            <td>https://riangterang.xyz</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>iframe_interactive_tabbable</td>
+            <td>https://slotmax.win</td>
+            <td>scrollable-region-focusable</td>
             <td>1</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
-            <td>https://app.sli.do</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>aria_child_tabbable</td>
+            <td>https://1xslot45360.world</td>
+            <td>scrollable-region-focusable</td>
             <td>1</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
-            <td>https://sznew.seozoom.it</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>iframe_interactive_tabbable</td>
+            <td>https://app.aposta1.bet.br</td>
+            <td>scrollable-region-focusable</td>
             <td>1</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
-            <td>https://moodle.bath.ac.uk</td>
+            <td>https://www.kashjob.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>2</td>
+            <td>accesslint-030</td>
+            <td>2</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>aria_child_tabbable</td>
-            <td>1</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>134 more not shown.</p>
+    <p>117 more not shown.</p>
+
+    <h3>axe-only: 40 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.olbg.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.kkfb.net</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://chefpreserve.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://sensa838p.site</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.vichy.gr</td>
+            <td>scrollable-region-focusable</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://orderseahorsesteakhouse.pages.dev</td>
+            <td>scrollable-region-focusable</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.schewelshome.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://jala77oke.online</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://rajabotakjimdo.b-cdn.net</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.firenzemeteo.it</td>
+            <td>scrollable-region-focusable</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>30 more not shown.</p>
+
+    <h3>@accesslint/core only: 31 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.augsburger-allgemeine.de</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.truity.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://profsalon.org</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.lewisboe.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.mtbiker.hu</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://ph-nn777.one</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://b2b.ostrovok.ru</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.cruise.co.uk</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.v7v766.games</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://hobnob.pk</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-030</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>21 more not shown.</p>
+
+    <h3>IBM EA only: 102 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://9jarocks.net</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>https://www.actievehonden.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>iframe_interactive_tabbable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://sede.dgt.gob.es</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://tarikcepat.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>iframe_interactive_tabbable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.pseb.ac.in</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.clicars.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://www.tiendainglesa.com.uy</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.rspb.org.uk</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.ghafaridiet.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>https://link7.duniaslot77apk.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_child_tabbable</td>
+            <td>3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>92 more not shown.</p>
 
     <p><a href="/benches/">&larr; Back to benchmarks</a></p>
 
