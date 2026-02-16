@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 3.1.1: Language of Page — a11y agent</title>
 <meta name="description" content="WCAG 3.1.1: Language of Page: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/benches/">@accesslint/core</a>
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
     </ul>
   </nav>
@@ -27,15 +27,15 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>853</dt>
+        <dt>821</dt>
         <dd>both tools</dd>
       </div>
       <div>
-        <dt>3</dt>
+        <dt>4</dt>
         <dd>axe-only</dd>
       </div>
       <div>
-        <dt>1</dt>
+        <dt>3</dt>
         <dd>@accesslint/core only</dd>
       </div>
       <div>
@@ -59,21 +59,15 @@
         <tbody>
           <tr>
             <td>html-has-lang</td>
-            <td>829</td>
+            <td>803</td>
             <td>html-has-lang</td>
-            <td>827</td>
+            <td>803</td>
           </tr>
           <tr>
             <td>html-lang-valid</td>
-            <td>26</td>
+            <td>22</td>
             <td>html-lang-valid</td>
-            <td>26</td>
-          </tr>
-          <tr>
-            <td>html-xml-lang-mismatch</td>
-            <td>1</td>
-            <td>html-xml-lang-mismatch</td>
-            <td>1</td>
+            <td>21</td>
           </tr>
         </tbody>
       </table>
@@ -81,7 +75,7 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 853 sites</h3>
+    <h3>Both: 821 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -95,81 +89,81 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://fast.com</td>
+            <td>https://www.torrid.com</td>
             <td>html-has-lang</td>
             <td>1</td>
             <td>html-has-lang</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://www.passline.com</td>
+            <td>https://spotidownloader.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
             <td>html-lang-valid</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://promup.sharework.it</td>
-            <td>html-xml-lang-mismatch</td>
-            <td>1</td>
-            <td>html-xml-lang-mismatch</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://www.royal558.com</td>
+            <td>https://filelist.io</td>
             <td>html-has-lang</td>
             <td>1</td>
             <td>html-has-lang</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://moonlandshop.ir</td>
+            <td>https://www.indiafastjobalert.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
             <td>html-lang-valid</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://www.mybrt.it</td>
+            <td>https://www.crocs.com</td>
             <td>html-has-lang</td>
             <td>1</td>
             <td>html-has-lang</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://ribas.esaude.genesiscloud.tec.br</td>
+            <td>https://www.relaischateaux.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
             <td>html-lang-valid</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://bancainternet.bancocredicoop.coop</td>
+            <td>https://cmhelpline.mp.gov.in</td>
             <td>html-has-lang</td>
             <td>1</td>
             <td>html-has-lang</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://www.wow69th1.com</td>
+            <td>https://www.efexploreamerica.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
             <td>html-lang-valid</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://datingprudethimble.com</td>
+            <td>https://tamil.mykhel.com</td>
             <td>html-has-lang</td>
             <td>1</td>
             <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.pro.cloud-thomas.com</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+            <td>html-lang-valid</td>
             <td>1</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>843 more not shown.</p>
+    <p>811 more not shown.</p>
 
-    <h3>axe-only: 3 sites</h3>
+    <h3>axe-only: 4 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -183,21 +177,28 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://misskey.flowers</td>
+            <td>https://ml.holalacell.net</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.43winph.net</td>
             <td>html-has-lang</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.kx8.info</td>
+            <td>https://www.xbajee8.club</td>
             <td>html-has-lang</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://m.weimmer.de</td>
+            <td>https://www.9rmx.makeup</td>
             <td>html-has-lang</td>
             <td>1</td>
             <td>&mdash;</td>
@@ -207,7 +208,7 @@
       </table>
     </div>
 
-    <h3>@accesslint/core only: 1 site</h3>
+    <h3>@accesslint/core only: 3 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -221,7 +222,21 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://sislameesm.caedufjf.net</td>
+            <td>http://la-k52.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://aeonbigedi.myaeon.com.my</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://webdosen.budiluhur.ac.id</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>html-has-lang</td>
@@ -231,9 +246,8 @@
       </table>
     </div>
 
-    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
-      <p class="bench-updated">Last updated <time datetime="2026-02-15">February 15, 2026</time></p>
-</article>
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
 </main>
 
 <footer class="site-footer">

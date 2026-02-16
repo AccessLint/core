@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 1.3.1: Info and Relationships — a11y agent</title>
 <meta name="description" content="WCAG 1.3.1: Info and Relationships: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/benches/">@accesslint/core</a>
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
     </ul>
   </nav>
@@ -27,15 +27,15 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>552</dt>
+        <dt>578</dt>
         <dd>both tools</dd>
       </div>
       <div>
-        <dt>117</dt>
+        <dt>105</dt>
         <dd>axe-only</dd>
       </div>
       <div>
-        <dt>319</dt>
+        <dt>359</dt>
         <dd>@accesslint/core only</dd>
       </div>
       <div>
@@ -59,51 +59,51 @@
         <tbody>
           <tr>
             <td>list</td>
-            <td>376</td>
+            <td>394</td>
             <td>list</td>
-            <td>524</td>
-          </tr>
-          <tr>
-            <td>aria-required-children</td>
-            <td>223</td>
-            <td>aria-required-children</td>
-            <td>249</td>
+            <td>590</td>
           </tr>
           <tr>
             <td>listitem</td>
-            <td>217</td>
+            <td>250</td>
             <td>listitem</td>
-            <td>232</td>
+            <td>286</td>
+          </tr>
+          <tr>
+            <td>aria-required-children</td>
+            <td>221</td>
+            <td>aria-required-children</td>
+            <td>236</td>
           </tr>
           <tr>
             <td>aria-required-parent</td>
-            <td>77</td>
+            <td>86</td>
             <td>aria-required-parent</td>
-            <td>64</td>
+            <td>74</td>
           </tr>
           <tr>
             <td>definition-list</td>
-            <td>40</td>
+            <td>34</td>
             <td>dlitem</td>
-            <td>39</td>
+            <td>38</td>
           </tr>
           <tr>
             <td>dlitem</td>
-            <td>11</td>
+            <td>10</td>
             <td>td-has-header</td>
-            <td>26</td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td>definition-list</td>
-            <td>19</td>
+            <td>28</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
             <td>th-has-data-cells</td>
-            <td>16</td>
+            <td>23</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>definition-list</td>
+            <td>22</td>
           </tr>
         </tbody>
       </table>
@@ -111,7 +111,7 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 552 sites</h3>
+    <h3>Both: 578 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -125,81 +125,81 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://keirin.jp</td>
+            <td>https://www.letras.com</td>
             <td>list</td>
-            <td>1</td>
+            <td>3</td>
             <td>list</td>
-            <td>1</td>
+            <td>3</td>
           </tr>
           <tr>
-            <td>https://www.royal558.com</td>
-            <td>listitem</td>
-            <td>37</td>
-            <td>listitem</td>
-            <td>37</td>
-          </tr>
-          <tr>
-            <td>https://stardewvalleywiki.com</td>
-            <td>definition-list</td>
-            <td>36</td>
-            <td>td-has-header</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://www.hebe.pl</td>
+            <td>https://www.yasyadong.tv</td>
+            <td>aria-required-children, listitem</td>
+            <td>13</td>
             <td>aria-required-children</td>
             <td>2</td>
-            <td>list, aria-required-children</td>
-            <td>5</td>
           </tr>
           <tr>
-            <td>https://www.vaprio.cz</td>
+            <td>https://www.arhaus.com</td>
             <td>aria-required-parent</td>
-            <td>7</td>
+            <td>11</td>
             <td>aria-required-parent</td>
+            <td>22</td>
+          </tr>
+          <tr>
+            <td>https://converse.co.jp</td>
+            <td>listitem</td>
+            <td>8</td>
+            <td>list</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://m.zhipin.com</td>
+            <td>definition-list, list</td>
+            <td>28</td>
+            <td>list</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://skillsider.pk</td>
+            <td>dlitem, list</td>
+            <td>7</td>
+            <td>list, dlitem</td>
             <td>7</td>
           </tr>
           <tr>
-            <td>https://www.mundonets.com</td>
-            <td>dlitem</td>
+            <td>https://www.nicematin.com</td>
+            <td>list, listitem</td>
             <td>5</td>
-            <td>dlitem</td>
+            <td>list, listitem</td>
             <td>5</td>
           </tr>
           <tr>
-            <td>https://nhathuoclongchau.com.vn</td>
+            <td>https://cmhelpline.mp.gov.in</td>
+            <td>aria-required-children</td>
+            <td>1</td>
+            <td>aria-required-children</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.drlumbar.hu</td>
+            <td>aria-required-parent</td>
+            <td>1</td>
+            <td>list, listitem, aria-required-parent</td>
+            <td>29</td>
+          </tr>
+          <tr>
+            <td>https://www.womanandhome.com</td>
+            <td>listitem</td>
+            <td>1</td>
             <td>list, listitem</td>
             <td>11</td>
-            <td>list, listitem</td>
-            <td>14</td>
-          </tr>
-          <tr>
-            <td>https://tenshoku.mynavi.jp</td>
-            <td>listitem</td>
-            <td>4</td>
-            <td>listitem</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>https://www.kagukuro.com</td>
-            <td>definition-list</td>
-            <td>1</td>
-            <td>definition-list</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://jojo.fandom.com</td>
-            <td>aria-required-children, definition-list, listitem</td>
-            <td>16</td>
-            <td>aria-required-children, th-has-data-cells, td-has-header</td>
-            <td>7</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>542 more not shown.</p>
+    <p>568 more not shown.</p>
 
-    <h3>axe-only: 117 sites</h3>
+    <h3>axe-only: 105 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -213,81 +213,81 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://www.hyundaicard.com</td>
+            <td>https://asunnot.oikotie.fi</td>
             <td>aria-required-children, aria-required-parent, listitem</td>
-            <td>5</td>
+            <td>9</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.smp.no</td>
+            <td>https://yugioh.fandom.com</td>
             <td>definition-list</td>
-            <td>2</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://m.wooricard.com</td>
-            <td>list</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://sleep.airweave.jp</td>
-            <td>listitem</td>
-            <td>10</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.toyotatownpartsdirect.com</td>
-            <td>aria-required-parent</td>
             <td>5</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://onlinebanking.rhbgroup.com</td>
-            <td>aria-required-children, aria-required-parent, list</td>
-            <td>5</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://dailyupdatenews2477.blogspot.com</td>
-            <td>definition-list</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.kaspersky.ru</td>
-            <td>list</td>
+            <td>https://www.barclaycard.co.uk</td>
+            <td>list, listitem</td>
             <td>4</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://mazenspb.com</td>
-            <td>listitem</td>
-            <td>6</td>
+            <td>https://cellgenic.com</td>
+            <td>aria-required-parent</td>
+            <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.imrpress.com</td>
-            <td>aria-required-parent</td>
+            <td>https://ripslyme.com</td>
+            <td>listitem</td>
+            <td>7</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.levante-emv.com</td>
+            <td>aria-required-children</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://emulation.gametechwiki.com</td>
+            <td>definition-list</td>
             <td>3</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
+          <tr>
+            <td>https://shop.clubjt.jp</td>
+            <td>list</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://casecoach.com</td>
+            <td>aria-required-parent</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.kdischool.ac.kr</td>
+            <td>listitem</td>
+            <td>14</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
         </tbody>
       </table>
     </div>
-    <p>107 more not shown.</p>
+    <p>95 more not shown.</p>
 
-    <h3>@accesslint/core only: 319 sites</h3>
+    <h3>@accesslint/core only: 359 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -301,83 +301,82 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://mail.google.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>listitem</td>
-            <td>4</td>
-          </tr>
-          <tr>
-            <td>https://www.jstor.org</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>aria-required-parent</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>https://webtoonhatti.club</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>list</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://sg.search.yahoo.com</td>
+            <td>https://ph.search.yahoo.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>aria-required-children</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://br.investing.com</td>
+            <td>https://www.bitunix.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>td-has-header</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://www.vedur.is</td>
+            <td>https://about.usps.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria-required-parent</td>
+            <td>64</td>
+          </tr>
+          <tr>
+            <td>https://www.honda2wheelersindia.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>list, td-has-header</td>
+            <td>11</td>
+          </tr>
+          <tr>
+            <td>https://m.bat688.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>th-has-data-cells</td>
-            <td>1</td>
+            <td>3</td>
           </tr>
           <tr>
-            <td>https://tubemate.en.softonic.com</td>
+            <td>https://www.deandeluca.co.jp</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>dlitem</td>
-            <td>10</td>
+            <td>dlitem, definition-list</td>
+            <td>5</td>
           </tr>
           <tr>
-            <td>https://www.ns-okuwa.jp</td>
+            <td>https://seanslt.pro</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>listitem</td>
+            <td>11</td>
+          </tr>
+          <tr>
+            <td>https://www.uszcn.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>definition-list</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://s1.tennismania.com</td>
+            <td>https://www.comuniate.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>listitem</td>
-            <td>32</td>
+            <td>aria-required-children</td>
+            <td>4</td>
           </tr>
           <tr>
-            <td>https://forum.lowyat.net</td>
+            <td>https://calendar.gameiroiro.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-required-parent, td-has-header</td>
-            <td>11</td>
+            <td>td-has-header</td>
+            <td>1</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>309 more not shown.</p>
+    <p>349 more not shown.</p>
 
-    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
-      <p class="bench-updated">Last updated <time datetime="2026-02-15">February 15, 2026</time></p>
-</article>
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
 </main>
 
 <footer class="site-footer">

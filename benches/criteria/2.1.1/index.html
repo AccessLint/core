@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 2.1.1: Keyboard — a11y agent</title>
 <meta name="description" content="WCAG 2.1.1: Keyboard: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/benches/">@accesslint/core</a>
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
     </ul>
   </nav>
@@ -27,19 +27,19 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>108</dt>
+        <dt>122</dt>
         <dd>both tools</dd>
       </div>
       <div>
-        <dt>35</dt>
+        <dt>29</dt>
         <dd>axe-only</dd>
       </div>
       <div>
-        <dt>220</dt>
+        <dt>211</dt>
         <dd>@accesslint/core only</dd>
       </div>
       <div>
-        <dt>94%</dt>
+        <dt>95%</dt>
         <dd>agreement</dd>
       </div>
     </dl>
@@ -59,9 +59,9 @@
         <tbody>
           <tr>
             <td>scrollable-region-focusable</td>
-            <td>143</td>
+            <td>151</td>
             <td>scrollable-region-focusable</td>
-            <td>328</td>
+            <td>333</td>
           </tr>
         </tbody>
       </table>
@@ -69,7 +69,7 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 108 sites</h3>
+    <h3>Both: 122 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -83,246 +83,246 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://svet24.si</td>
+            <td>https://www.sme.sk</td>
             <td>scrollable-region-focusable</td>
             <td>1</td>
             <td>scrollable-region-focusable</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://finance.vietstock.vn</td>
+            <td>https://sp.macour.jp</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://macanempire10.xyz</td>
+            <td>scrollable-region-focusable</td>
+            <td>4</td>
+            <td>scrollable-region-focusable</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>https://shreemaruti.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>2</td>
             <td>scrollable-region-focusable</td>
             <td>3</td>
+          </tr>
+          <tr>
+            <td>https://www.sonline.hu</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.10tv.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
             <td>scrollable-region-focusable</td>
             <td>2</td>
           </tr>
           <tr>
-            <td>https://jogabets.co.mz</td>
+            <td>https://suzyshier.com</td>
             <td>scrollable-region-focusable</td>
-            <td>2</td>
+            <td>1</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://m.101hotels.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.kitchencenter.cl</td>
+            <td>scrollable-region-focusable</td>
+            <td>5</td>
+            <td>scrollable-region-focusable</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>https://kurir89pro.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>4</td>
+            <td>scrollable-region-focusable</td>
+            <td>6</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>112 more not shown.</p>
+
+    <h3>axe-only: 29 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.americanas.com.br</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://e28bd8.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.ulefone.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.captainjackcasino.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://bubbabags.cl</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://indoagb99.monster</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://enroll.getcovered.illinois.gov</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://macanslot138ah.store</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://gurita4doke.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.onlinelcec.com</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>19 more not shown.</p>
+
+    <h3>@accesslint/core only: 211 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://namazvakitleri.diyanet.gov.tr</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>scrollable-region-focusable</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://www.wellcare.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>scrollable-region-focusable</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.tataaia.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
             <td>scrollable-region-focusable</td>
             <td>9</td>
           </tr>
           <tr>
-            <td>https://www.maison-etanche.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://aune-jp.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>2</td>
-            <td>scrollable-region-focusable</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>https://7x7.games</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>scrollable-region-focusable</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>https://relaxkharkiv.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://www.11hibajee.vip</td>
-            <td>scrollable-region-focusable</td>
-            <td>2</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://www.spring-gds.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://riwi-buildit.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>98 more not shown.</p>
-
-    <h3>axe-only: 35 sites</h3>
-    <div class="bench-table-wrap">
-      <table class="bench-table">
-        <thead>
-          <tr>
-            <th>Site</th>
-            <th>axe rules</th>
-            <th>axe nodes</th>
-            <th>@accesslint/core rules</th>
-            <th>@accesslint/core nodes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>https://f1.upornia.online</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://slotcash888.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://thesparescompany.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.marymaxim.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.villages-news.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://ampgagak.top</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://majujp160.top</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.relentlessgrooming.com</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://coachkanchon.academy</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.wall-art.nl</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>25 more not shown.</p>
-
-    <h3>@accesslint/core only: 220 sites</h3>
-    <div class="bench-table-wrap">
-      <table class="bench-table">
-        <thead>
-          <tr>
-            <th>Site</th>
-            <th>axe rules</th>
-            <th>axe nodes</th>
-            <th>@accesslint/core rules</th>
-            <th>@accesslint/core nodes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>https://www.bidcom.com.ar</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://tradersunion.com</td>
+            <td>https://www.piraeusbank.gr</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>scrollable-region-focusable</td>
             <td>2</td>
           </tr>
           <tr>
-            <td>https://www.internethaber.com</td>
+            <td>https://ikioi-ranking.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>scrollable-region-focusable</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://m.bat688.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>scrollable-region-focusable</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://discussionsjapan.apple.com</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>scrollable-region-focusable</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://onboarding.getharbour.com</td>
+            <td>https://www.vilanova.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>scrollable-region-focusable</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://news.un.org</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>scrollable-region-focusable</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://www.aloyoga.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>scrollable-region-focusable</td>
-            <td>3</td>
-          </tr>
-          <tr>
-            <td>https://play.tv2.dk</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://varese.bakecaincontrii.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://www.smp.no</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://lotteriaswiateczna.pl</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>scrollable-region-focusable</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://onlinebanking.rhbgroup.com</td>
+            <td>https://ilu.th-koeln.de</td>
             <td>&mdash;</td>
             <td>0</td>
             <td>scrollable-region-focusable</td>
@@ -331,11 +331,10 @@
         </tbody>
       </table>
     </div>
-    <p>210 more not shown.</p>
+    <p>201 more not shown.</p>
 
-    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
-      <p class="bench-updated">Last updated <time datetime="2026-02-15">February 15, 2026</time></p>
-</article>
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
 </main>
 
 <footer class="site-footer">

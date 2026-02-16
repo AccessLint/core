@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 2.4.4: Link Purpose (In Context) — a11y agent</title>
 <meta name="description" content="WCAG 2.4.4: Link Purpose (In Context): detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/benches/">@accesslint/core</a>
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
     </ul>
   </nav>
@@ -27,19 +27,19 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>1,957</dt>
+        <dt>2,004</dt>
         <dd>both tools</dd>
       </div>
       <div>
-        <dt>84</dt>
+        <dt>41</dt>
         <dd>axe-only</dd>
       </div>
       <div>
-        <dt>32</dt>
+        <dt>40</dt>
         <dd>@accesslint/core only</dd>
       </div>
       <div>
-        <dt>97%</dt>
+        <dt>98%</dt>
         <dd>agreement</dd>
       </div>
     </dl>
@@ -59,13 +59,13 @@
         <tbody>
           <tr>
             <td>link-name</td>
-            <td>2041</td>
+            <td>2045</td>
             <td>link-name</td>
-            <td>1989</td>
+            <td>2044</td>
           </tr>
           <tr>
             <td>area-alt</td>
-            <td>8</td>
+            <td>2</td>
             <td></td>
             <td></td>
           </tr>
@@ -75,7 +75,7 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 1957 sites</h3>
+    <h3>Both: 2004 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -89,259 +89,258 @@
         </thead>
         <tbody>
           <tr>
-            <td>https://keirin.jp</td>
+            <td>https://www.shaalaa.com</td>
             <td>link-name</td>
-            <td>10</td>
-            <td>link-name</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td>https://www.taein.co.kr</td>
-            <td>area-alt, link-name</td>
-            <td>106</td>
-            <td>link-name</td>
-            <td>105</td>
-          </tr>
-          <tr>
-            <td>https://www.ardentnews.co.kr</td>
-            <td>link-name</td>
-            <td>5</td>
-            <td>link-name</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>https://mmmtest1.mmm-software.at</td>
-            <td>area-alt, link-name</td>
             <td>3</td>
             <td>link-name</td>
             <td>3</td>
           </tr>
           <tr>
-            <td>https://www.royal558.com</td>
-            <td>link-name</td>
-            <td>1</td>
-            <td>link-name</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://store.shelburnemuseum.org</td>
+            <td>https://www.tokyo-park.or.jp</td>
             <td>area-alt, link-name</td>
-            <td>3</td>
+            <td>6</td>
             <td>link-name</td>
-            <td>3</td>
+            <td>1</td>
           </tr>
           <tr>
-            <td>https://stardewvalleywiki.com</td>
+            <td>https://m.bild.de</td>
             <td>link-name</td>
-            <td>7</td>
+            <td>33</td>
             <td>link-name</td>
-            <td>7</td>
+            <td>33</td>
           </tr>
           <tr>
-            <td>https://gogojapan.co.kr</td>
+            <td>https://www.supermedica.co.il</td>
             <td>area-alt, link-name</td>
-            <td>101</td>
+            <td>4</td>
             <td>link-name</td>
-            <td>102</td>
+            <td>4</td>
           </tr>
           <tr>
-            <td>https://m.kenh14.vn</td>
-            <td>link-name</td>
-            <td>2</td>
-            <td>link-name</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>https://www.smautomall.com</td>
-            <td>area-alt, link-name</td>
-            <td>37</td>
-            <td>link-name</td>
-            <td>37</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>1947 more not shown.</p>
-
-    <h3>axe-only: 84 sites</h3>
-    <div class="bench-table-wrap">
-      <table class="bench-table">
-        <thead>
-          <tr>
-            <th>Site</th>
-            <th>axe rules</th>
-            <th>axe nodes</th>
-            <th>@accesslint/core rules</th>
-            <th>@accesslint/core nodes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>https://www.screener.in</td>
+            <td>https://www.romsgames.net</td>
             <td>link-name</td>
             <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.watson.ch</td>
-            <td>link-name</td>
-            <td>3</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://svet24.si</td>
-            <td>link-name</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.marymaxim.com</td>
-            <td>link-name</td>
-            <td>5</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://parkviewarthk.pages.dev</td>
-            <td>link-name</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.cellspare.com</td>
-            <td>link-name</td>
-            <td>11</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://peavey.com</td>
-            <td>link-name</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.svet-koupelny.cz</td>
-            <td>link-name</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://mols.gov.et</td>
-            <td>link-name</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://crysp.co</td>
-            <td>link-name</td>
-            <td>5</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p>74 more not shown.</p>
-
-    <h3>@accesslint/core only: 32 sites</h3>
-    <div class="bench-table-wrap">
-      <table class="bench-table">
-        <thead>
-          <tr>
-            <th>Site</th>
-            <th>axe rules</th>
-            <th>axe nodes</th>
-            <th>@accesslint/core rules</th>
-            <th>@accesslint/core nodes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>https://sg.search.yahoo.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
             <td>link-name</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://www.parfumo.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>https://www.tvguia.es</td>
+            <td>link-name</td>
+            <td>107</td>
+            <td>link-name</td>
+            <td>107</td>
+          </tr>
+          <tr>
+            <td>https://www.infojobs.net</td>
+            <td>link-name</td>
+            <td>1</td>
             <td>link-name</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://daotaosieusao.lienquan.garena.vn</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>https://www.yasyadong.tv</td>
+            <td>link-name</td>
+            <td>1</td>
             <td>link-name</td>
             <td>1</td>
           </tr>
           <tr>
-            <td>https://ksavisa.sa</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>https://www.nicematin.com</td>
             <td>link-name</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://lazersvit.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>link-name</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://www.camiseteriatattoos.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>link-name</td>
-            <td>29</td>
-          </tr>
-          <tr>
-            <td>https://www.c2c-online.co.uk</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>link-name</td>
-            <td>10</td>
-          </tr>
-          <tr>
-            <td>https://www.biligame.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>link-name</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://www.siddhivinayak.org</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>link-name</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>https://asianportal-fishing.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>18</td>
             <td>link-name</td>
             <td>18</td>
           </tr>
+          <tr>
+            <td>https://www.nit.pt</td>
+            <td>link-name</td>
+            <td>42</td>
+            <td>link-name</td>
+            <td>42</td>
+          </tr>
         </tbody>
       </table>
     </div>
-    <p>22 more not shown.</p>
+    <p>1994 more not shown.</p>
 
-    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
-      <p class="bench-updated">Last updated <time datetime="2026-02-15">February 15, 2026</time></p>
-</article>
+    <h3>axe-only: 41 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.ulefone.com</td>
+            <td>link-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.virustotal.com</td>
+            <td>link-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://kosmetista.ru</td>
+            <td>link-name</td>
+            <td>31</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://internetowykantor.pl</td>
+            <td>link-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://rickeystokesnews.com</td>
+            <td>link-name</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.gant.fr</td>
+            <td>link-name</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://tr.iherb.com</td>
+            <td>link-name</td>
+            <td>114</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.intelligence-rh.com</td>
+            <td>link-name</td>
+            <td>3</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://tripmall.online</td>
+            <td>link-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.tantonet.jp</td>
+            <td>link-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>31 more not shown.</p>
+
+    <h3>@accesslint/core only: 40 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://ph.search.yahoo.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.reddybook.club</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://targetpublications.org</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>https://www.10tv.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.poulpeo.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://design.raksul.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.facciabuco.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://kenzz.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.voyce.me</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://www.fitshow.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>30 more not shown.</p>
+
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
 </main>
 
 <footer class="site-footer">
