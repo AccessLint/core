@@ -71,7 +71,7 @@
     });
   }
 
-  // Stacked bar: AL detections with confirmation breakdown
+  // Stacked bar: @accesslint/core detections with confirmation breakdown
   function renderConcordanceChart() {
     var data = readData("concordance");
     var container = document.getElementById("chart-concordance");
@@ -104,7 +104,7 @@
         { name: "Both confirm", data: data.bothConfirm, color: "#1a7f37" },
         { name: "axe confirms", data: data.axeConfirms, color: COLORS.axe },
         { name: "IBM confirms", data: data.ibmConfirms, color: COLORS.ibm },
-        { name: "AL unique", data: data.alUnique, color: "#bf8700" },
+        { name: "Unique", data: data.alUnique, color: "#bf8700" },
       ],
       accessibility: {
         description:
