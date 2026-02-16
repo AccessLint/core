@@ -25,14 +25,16 @@ export interface EarlAssertion {
   "@type": "Assertion";
   mode: "earl:automatic";
   subject: {
-    "@type": ["TestSubject", "WebPage"];
+    "@type": "TestSubject";
     source: string;
   };
   test: {
+    "@type": "TestCase";
     title: string;
     isPartOf: string[];
   };
   result: {
+    "@type": "TestResult";
     outcome: `earl:${string}`;
   };
 }
@@ -63,14 +65,16 @@ export function generateEarlReport(
     "@type": "Assertion",
     mode: "earl:automatic",
     subject: {
-      "@type": ["TestSubject", "WebPage"],
+      "@type": "TestSubject",
       source: `${ACT_TESTCASE_URL_PREFIX}/${outcome.actRuleId}/${outcome.testcaseId}.html`,
     },
     test: {
+      "@type": "TestCase",
       title: outcome.coreRuleId,
       isPartOf: [`${ACT_RULE_URL_PREFIX}/${outcome.actRuleId}/`],
     },
     result: {
+      "@type": "TestResult",
       outcome: `earl:${outcome.actual}`,
     },
   }));
