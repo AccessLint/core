@@ -51,6 +51,7 @@ export interface EarlReport {
   release: {
     "@type": "Version";
     revision: string;
+    created: string;
   };
   assertedThat: EarlAssertion[];
 }
@@ -95,11 +96,12 @@ export function generateEarlReport(
     description:
       "Automated accessibility testing engine covering WCAG 2.1 Level A, AA, and AAA. Runs in any browser or DOM environment with zero dependencies.",
     homepage: "https://github.com/AccessLint/core",
-    license: "https://opensource.org/licenses/MIT",
+    license: "https://raw.githubusercontent.com/AccessLint/core/main/LICENSE",
     vendor: "AccessLint",
     release: {
       "@type": "Version",
       revision: version,
+      created: new Date().toISOString().slice(0, 10),
     },
     assertedThat: assertions,
   };
