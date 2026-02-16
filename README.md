@@ -1,13 +1,29 @@
 # @accesslint/core
 
+[![npm version](https://img.shields.io/npm/v/@accesslint/core)](https://www.npmjs.com/package/@accesslint/core)
+[![license](https://img.shields.io/npm/l/@accesslint/core)](https://github.com/AccessLint/core/blob/main/LICENSE)
+
 Pure accessibility rule engine for WCAG auditing. 93 bundled rules (92 active by default) and zero browser dependencies.
 
-## Highlights
+> Automated testing catches a meaningful subset of accessibility issues, but not all of them. You'll still need to test with assistive technologies and include people with disabilities in user research.
 
-- **Lightweight** — 44 KB gzipped (IIFE), with zero runtime dependencies
+## Contents
+
+- [Why @accesslint/core](#why-accesslintcore)
+- [Install](#install)
+- [Quick start](#quick-start)
+- [API](#api)
+- [Rules](#rules)
+- [Compatibility](#compatibility)
+- [Development](#development)
+
+## Why @accesslint/core
+
+- **Synchronous API** — `runAudit()` returns results immediately, no async/await needed
+- **Works with happy-dom** — full support for happy-dom, jsdom, and real browsers with no polyfills or workarounds, including color contrast checks in virtual DOMs
+- **Lightweight** — 43 KB gzipped (IIFE), zero runtime dependencies
 - **Chunked audits** — time-budgeted processing via [`createChunkedAudit`](#createchunkedauditdoc-document-chunkedaudit) to avoid long tasks on the main thread
 - **ESM, CJS, and IIFE** — tree-shakable ES modules, CommonJS for Node, and a single-file IIFE for script injection into any page
-- **Runs anywhere** — works with happy-dom, jsdom, and real browsers with no DOM polyfills or compatibility workarounds. Run accessibility audits in Vitest and React Testing Library using the same environment as the rest of your tests
 - **MIT licensed**
 
 ## Install
@@ -273,14 +289,29 @@ Helpers for building custom rules:
 | `accesslint-092` | AA | 1.4.3 | Text must have sufficient color contrast. |
 | `accesslint-093` | AAA | 1.4.6 | Text must have enhanced color contrast (AAA). |
 
+## Compatibility
+
+Tested in the following environments:
+
+| Environment | Support |
+| ----------- | ------- |
+| Node.js 18+ | Yes |
+| happy-dom | Yes |
+| jsdom | Yes |
+| Chrome / Edge | Yes |
+| Firefox | Yes |
+| Safari | Yes |
+
 ## Development
 
 ```sh
 npm install
-npm test        # 1029 tests
+npm test        # 1030 tests
 npm run bench   # performance benchmarks
 npm run build   # produces dist/index.js, dist/index.cjs, dist/index.d.ts
 ```
+
+Found a bug or have a suggestion? [Open an issue](https://github.com/AccessLint/core/issues).
 
 ## License
 
