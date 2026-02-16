@@ -5,7 +5,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { ACT_TO_CORE_RULE } from "./act-mapping";
-import type { EarlGraphReport, EarlTestSubject, EarlAssertion } from "./earl-report";
+import type { EarlReport } from "./earl-report";
 
 const EARL_PATH = resolve(
   import.meta.dirname,
@@ -30,7 +30,7 @@ interface Fixture {
 }
 
 function main() {
-  let report: EarlGraphReport;
+  let report: EarlReport;
   try {
     report = JSON.parse(readFileSync(EARL_PATH, "utf-8"));
   } catch {
@@ -52,42 +52,36 @@ function main() {
     expectedByTestcase.set(f.testcaseId, f.expected);
   }
 
-  // Aggregate per-rule stats from TestSubject-grouped EARL report
+  // Aggregate per-rule stats from flat assertedThat array
   const ruleStats = new Map<string, RuleStats>();
 
-  for (const node of report["@graph"]) {
-    const nodeType = (node as EarlTestSubject)["@type"];
-    if (!Array.isArray(nodeType) || !nodeType.includes("TestSubject")) continue;
-    const subject = node as EarlTestSubject;
+  for (const assertion of report.assertedThat) {
+    // Extract ACT rule ID from isPartOf URL
+    const ruleUrl = assertion.test.isPartOf[0];
+    const ruleMatch = ruleUrl.match(/\/rules\/([^/]+)\//);
+    if (!ruleMatch) continue;
+    const actRuleId = ruleMatch[1];
 
-    // Extract testcase ID from source URL
-    const sourceMatch = subject.source.match(/\/([^/]+)\.html$/);
+    // Extract testcase ID from subject source URL
+    const sourceMatch = assertion.subject.source.match(/\/([^/]+)\.html$/);
     if (!sourceMatch) continue;
     const testcaseId = sourceMatch[1];
 
     const expected = expectedByTestcase.get(testcaseId);
     if (!expected) continue;
 
-    for (const assertion of subject.assertions) {
-      // Extract ACT rule ID from isPartOf URL
-      const ruleUrl = assertion.test.isPartOf[0];
-      const ruleMatch = ruleUrl.match(/\/rules\/([^/]+)\//);
-      if (!ruleMatch) continue;
-      const actRuleId = ruleMatch[1];
+    // Determine correctness: does the actual outcome match expected?
+    const actualOutcome = assertion.result.outcome.replace("earl:", "");
+    const correct = actualOutcome === expected;
 
-      // Determine correctness: does the actual outcome match expected?
-      const actualOutcome = assertion.result.outcome.replace("earl:", "");
-      const correct = actualOutcome === expected;
+    const stats = ruleStats.get(actRuleId) ?? { total: 0, passed: 0, failed: 0, cantTell: 0 };
+    stats.total++;
 
-      const stats = ruleStats.get(actRuleId) ?? { total: 0, passed: 0, failed: 0, cantTell: 0 };
-      stats.total++;
+    if (correct) stats.passed++;
+    else if (actualOutcome === "cantTell") stats.cantTell++;
+    else stats.failed++;
 
-      if (correct) stats.passed++;
-      else if (actualOutcome === "cantTell") stats.cantTell++;
-      else stats.failed++;
-
-      ruleStats.set(actRuleId, stats);
-    }
+    ruleStats.set(actRuleId, stats);
   }
 
   let hasFailures = false;
