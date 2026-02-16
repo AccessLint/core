@@ -166,16 +166,6 @@
 <footer class="site-footer">
   <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
 </footer>
-<script src="/accesslint-core.js"></script>
-<script>
-var t0 = performance.now();
-var result = AccessLintCore.runAudit(document);
-var ms = Math.round(performance.now() - t0);
-var el = document.createElement("p");
-el.className = "bench-updated";
-el.textContent = "Self-audit: " + result.violations.length + " violations from " +
-  result.ruleCount + " rules in " + ms + " ms";
-document.querySelector(".site-footer").appendChild(el);
-</script>
+
 </body>
 </html>
