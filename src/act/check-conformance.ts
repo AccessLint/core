@@ -57,7 +57,7 @@ function main() {
 
   for (const assertion of report.assertedThat) {
     // Extract ACT rule ID from isPartOf URL
-    const ruleUrl = assertion.test.isPartOf[0];
+    const ruleUrl = assertion.test.isPartOf[0].title;
     const ruleMatch = ruleUrl.match(/\/rules\/([^/]+)\//);
     if (!ruleMatch) continue;
     const actRuleId = ruleMatch[1];

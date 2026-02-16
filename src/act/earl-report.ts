@@ -31,7 +31,7 @@ export interface EarlAssertion {
   test: {
     "@type": "TestCase";
     title: string;
-    isPartOf: string[];
+    isPartOf: { "@type": "TestRequirement"; title: string }[];
   };
   result: {
     "@type": "TestResult";
@@ -71,7 +71,12 @@ export function generateEarlReport(
     test: {
       "@type": "TestCase",
       title: outcome.coreRuleId,
-      isPartOf: [`${ACT_RULE_URL_PREFIX}/${outcome.actRuleId}/`],
+      isPartOf: [
+        {
+          "@type": "TestRequirement" as const,
+          title: `${ACT_RULE_URL_PREFIX}/${outcome.actRuleId}/`,
+        },
+      ],
     },
     result: {
       "@type": "TestResult",
