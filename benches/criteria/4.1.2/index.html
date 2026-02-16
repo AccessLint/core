@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WCAG 4.1.2: Name, Role, Value — a11y agent</title>
+<meta name="description" content="WCAG 4.1.2: Name, Role, Value: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header>
+  <nav class="site-nav" aria-label="Main">
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <ul>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="https://github.com/accesslint/core">GitHub</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <article class="section prose">
+    <h1>WCAG 4.1.2: Name, Role, Value</h1>
+
+    <dl class="bench-stats">
+      <div>
+        <dt>2,527</dt>
+        <dd>both tools</dd>
+      </div>
+      <div>
+        <dt>73</dt>
+        <dd>axe-only</dd>
+      </div>
+      <div>
+        <dt>339</dt>
+        <dd>@accesslint/core only</dd>
+      </div>
+      <div>
+        <dt>91%</dt>
+        <dd>agreement</dd>
+      </div>
+    </dl>
+
+    <h2>Rules</h2>
+    <p>Which rule IDs fire for this criterion and how many sites they appear on.</p>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>axe rule</th>
+            <th>Sites</th>
+            <th>@accesslint/core rule</th>
+            <th>Sites</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>link-name</td>
+            <td>2041</td>
+            <td>link-name</td>
+            <td>1989</td>
+          </tr>
+          <tr>
+            <td>button-name</td>
+            <td>674</td>
+            <td>button-name</td>
+            <td>732</td>
+          </tr>
+          <tr>
+            <td>label</td>
+            <td>411</td>
+            <td>label</td>
+            <td>680</td>
+          </tr>
+          <tr>
+            <td>frame-title</td>
+            <td>283</td>
+            <td>aria-allowed-role</td>
+            <td>495</td>
+          </tr>
+          <tr>
+            <td>select-name</td>
+            <td>208</td>
+            <td>nested-interactive</td>
+            <td>426</td>
+          </tr>
+          <tr>
+            <td>nested-interactive</td>
+            <td>194</td>
+            <td>frame-title</td>
+            <td>387</td>
+          </tr>
+          <tr>
+            <td>aria-hidden-focus</td>
+            <td>182</td>
+            <td>aria-hidden-focus</td>
+            <td>330</td>
+          </tr>
+          <tr>
+            <td>aria-allowed-attr</td>
+            <td>177</td>
+            <td>duplicate-id-aria</td>
+            <td>291</td>
+          </tr>
+          <tr>
+            <td>aria-input-field-name</td>
+            <td>142</td>
+            <td>presentation-role-conflict</td>
+            <td>168</td>
+          </tr>
+          <tr>
+            <td>aria-valid-attr-value</td>
+            <td>84</td>
+            <td>frame-title-unique</td>
+            <td>118</td>
+          </tr>
+          <tr>
+            <td>aria-prohibited-attr</td>
+            <td>83</td>
+            <td>aria-dialog-name</td>
+            <td>74</td>
+          </tr>
+          <tr>
+            <td>aria-command-name</td>
+            <td>42</td>
+            <td>aria-required-attr</td>
+            <td>73</td>
+          </tr>
+          <tr>
+            <td>input-button-name</td>
+            <td>33</td>
+            <td>input-button-name</td>
+            <td>48</td>
+          </tr>
+          <tr>
+            <td>aria-roles</td>
+            <td>18</td>
+            <td>aria-roles</td>
+            <td>46</td>
+          </tr>
+          <tr>
+            <td>aria-required-attr</td>
+            <td>16</td>
+            <td>aria-progressbar-name</td>
+            <td>46</td>
+          </tr>
+          <tr>
+            <td>aria-toggle-field-name</td>
+            <td>16</td>
+            <td>aria-command-name</td>
+            <td>44</td>
+          </tr>
+          <tr>
+            <td>summary-name</td>
+            <td>11</td>
+            <td>aria-input-field-name</td>
+            <td>43</td>
+          </tr>
+          <tr>
+            <td>input-image-alt</td>
+            <td>9</td>
+            <td>aria-prohibited-attr</td>
+            <td>26</td>
+          </tr>
+          <tr>
+            <td>area-alt</td>
+            <td>8</td>
+            <td>aria-valid-attr-value</td>
+            <td>25</td>
+          </tr>
+          <tr>
+            <td>aria-valid-attr</td>
+            <td>5</td>
+            <td>aria-valid-attr</td>
+            <td>23</td>
+          </tr>
+          <tr>
+            <td>aria-tooltip-name</td>
+            <td>2</td>
+            <td>summary-name</td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>select-name</td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>input-image-alt</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>aria-tooltip-name</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>area-alt</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>aria-toggle-field-name</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Examples</h2>
+
+    <h3>Both: 2527 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://keirin.jp</td>
+            <td>aria-hidden-focus, aria-roles, button-name, label, link-name, select-name</td>
+            <td>60</td>
+            <td>label, aria-roles, aria-allowed-role, aria-hidden-focus, button-name, link-name</td>
+            <td>67</td>
+          </tr>
+          <tr>
+            <td>https://www.royal558.com</td>
+            <td>link-name</td>
+            <td>1</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://stardewvalleywiki.com</td>
+            <td>frame-title, link-name</td>
+            <td>8</td>
+            <td>frame-title, link-name</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://eu19.proxysite.com</td>
+            <td>select-name</td>
+            <td>2</td>
+            <td>label</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.employeenavigator.com</td>
+            <td>button-name, link-name</td>
+            <td>3</td>
+            <td>button-name, link-name</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>https://nhathuoclongchau.com.vn</td>
+            <td>aria-valid-attr-value, button-name, label, link-name</td>
+            <td>54</td>
+            <td>label, nested-interactive, aria-toggle-field-name, aria-progressbar-name, button-name, link-name</td>
+            <td>82</td>
+          </tr>
+          <tr>
+            <td>https://www.ebay.es</td>
+            <td>aria-required-attr, link-name</td>
+            <td>3</td>
+            <td>aria-required-attr, aria-allowed-role, link-name</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://sellercentral-japan.amazon.com</td>
+            <td>aria-allowed-attr, label</td>
+            <td>8</td>
+            <td>label</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://la1ere.franceinfo.fr</td>
+            <td>aria-roles, button-name, link-name</td>
+            <td>21</td>
+            <td>aria-allowed-role, button-name, link-name</td>
+            <td>21</td>
+          </tr>
+          <tr>
+            <td>https://www.hebe.pl</td>
+            <td>aria-command-name, button-name, link-name</td>
+            <td>68</td>
+            <td>aria-allowed-role, aria-hidden-focus, button-name, link-name</td>
+            <td>5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>2517 more not shown.</p>
+
+    <h3>axe-only: 73 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.screener.in</td>
+            <td>link-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://hurawatch.cc</td>
+            <td>aria-allowed-attr</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://ebonybaddies.com</td>
+            <td>select-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://filmycab.onl</td>
+            <td>frame-title</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://userconf.exblog.jp</td>
+            <td>nested-interactive</td>
+            <td>17</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://personas.supervielle.com.ar</td>
+            <td>aria-prohibited-attr, button-name, input-button-name, label</td>
+            <td>4</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://myboa.of.africa</td>
+            <td>label</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://sea-style-m.yamaha-motor.co.jp</td>
+            <td>button-name</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://app.seoshope.com</td>
+            <td>aria-roles</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://pudding.cool</td>
+            <td>aria-valid-attr-value</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>63 more not shown.</p>
+
+    <h3>@accesslint/core only: 339 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://porntv69.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>nested-interactive</td>
+            <td>19</td>
+          </tr>
+          <tr>
+            <td>https://www.sportingnews.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria-required-attr</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>https://sg.search.yahoo.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>link-name</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://eu2.concursolutions.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria-allowed-role, presentation-role-conflict</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://onboarding.getharbour.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>frame-title</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://tatacapital.my.site.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria-hidden-focus</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://m.wooricard.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria-roles, aria-allowed-role, aria-hidden-focus</td>
+            <td>56</td>
+          </tr>
+          <tr>
+            <td>https://m.nadorcity.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>frame-title-unique</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://sa2.smacc.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>duplicate-id-aria</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://ksavisa.sa</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>button-name, link-name</td>
+            <td>7</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>329 more not shown.</p>
+
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WCAG 1.4.3: Contrast (Minimum) — a11y agent</title>
+<meta name="description" content="WCAG 1.4.3: Contrast (Minimum): detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header>
+  <nav class="site-nav" aria-label="Main">
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <ul>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="https://github.com/accesslint/core">GitHub</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <article class="section prose">
+    <h1>WCAG 1.4.3: Contrast (Minimum)</h1>
+
+    <dl class="bench-stats">
+      <div>
+        <dt>2,399</dt>
+        <dd>both tools</dd>
+      </div>
+      <div>
+        <dt>147</dt>
+        <dd>axe-only</dd>
+      </div>
+      <div>
+        <dt>436</dt>
+        <dd>@accesslint/core only</dd>
+      </div>
+      <div>
+        <dt>87%</dt>
+        <dd>agreement</dd>
+      </div>
+    </dl>
+
+    <h2>Rules</h2>
+    <p>Which rule IDs fire for this criterion and how many sites they appear on.</p>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>axe rule</th>
+            <th>Sites</th>
+            <th>@accesslint/core rule</th>
+            <th>Sites</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>color-contrast</td>
+            <td>2546</td>
+            <td>color-contrast</td>
+            <td>2835</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Examples</h2>
+
+    <h3>Both: 2399 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://videw.online</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>color-contrast</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://mail.google.com</td>
+            <td>color-contrast</td>
+            <td>2</td>
+            <td>color-contrast</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>https://keirin.jp</td>
+            <td>color-contrast</td>
+            <td>44</td>
+            <td>color-contrast</td>
+            <td>44</td>
+          </tr>
+          <tr>
+            <td>https://www.ardentnews.co.kr</td>
+            <td>color-contrast</td>
+            <td>17</td>
+            <td>color-contrast</td>
+            <td>16</td>
+          </tr>
+          <tr>
+            <td>https://eu19.proxysite.com</td>
+            <td>color-contrast</td>
+            <td>8</td>
+            <td>color-contrast</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://m.kenh14.vn</td>
+            <td>color-contrast</td>
+            <td>17</td>
+            <td>color-contrast</td>
+            <td>27</td>
+          </tr>
+          <tr>
+            <td>https://www.employeenavigator.com</td>
+            <td>color-contrast</td>
+            <td>6</td>
+            <td>color-contrast</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://arabic-porn-tube.com</td>
+            <td>color-contrast</td>
+            <td>2</td>
+            <td>color-contrast</td>
+            <td>65</td>
+          </tr>
+          <tr>
+            <td>https://mosbatesabz.com</td>
+            <td>color-contrast</td>
+            <td>49</td>
+            <td>color-contrast</td>
+            <td>156</td>
+          </tr>
+          <tr>
+            <td>https://www.watson.ch</td>
+            <td>color-contrast</td>
+            <td>59</td>
+            <td>color-contrast</td>
+            <td>201</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>2389 more not shown.</p>
+
+    <h3>axe-only: 147 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://stardewvalleywiki.com</td>
+            <td>color-contrast</td>
+            <td>12</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.ontrac.com</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://prdcfms.apcfss.in:44300</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://tatacapital.my.site.com</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://conwaysd.schoology.com</td>
+            <td>color-contrast</td>
+            <td>4</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://m.wooricard.com</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://shiftlis.afip.com.br</td>
+            <td>color-contrast</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://esd.eschooldata.com</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://sa2.smacc.com</td>
+            <td>color-contrast</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://home.mi.com</td>
+            <td>color-contrast</td>
+            <td>26</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>137 more not shown.</p>
+
+    <h3>@accesslint/core only: 436 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://fast.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.fogaonet.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>84</td>
+          </tr>
+          <tr>
+            <td>https://sellercentral-japan.amazon.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.news247.gr</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>161</td>
+          </tr>
+          <tr>
+            <td>https://www.dumpert.nl</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>9</td>
+          </tr>
+          <tr>
+            <td>https://www.zwjate.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td>https://shop.kingarthurbaking.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://lacocinadefrabisa.lavozdegalicia.es</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>40</td>
+          </tr>
+          <tr>
+            <td>https://aloraplus.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.livehd7.sx</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>color-contrast</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>426 more not shown.</p>
+
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
+</footer>
+</body>
+</html>

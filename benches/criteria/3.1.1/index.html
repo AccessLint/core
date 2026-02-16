@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WCAG 3.1.1: Language of Page — a11y agent</title>
+<meta name="description" content="WCAG 3.1.1: Language of Page: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header>
+  <nav class="site-nav" aria-label="Main">
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <ul>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="https://github.com/accesslint/core">GitHub</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <article class="section prose">
+    <h1>WCAG 3.1.1: Language of Page</h1>
+
+    <dl class="bench-stats">
+      <div>
+        <dt>853</dt>
+        <dd>both tools</dd>
+      </div>
+      <div>
+        <dt>3</dt>
+        <dd>axe-only</dd>
+      </div>
+      <div>
+        <dt>1</dt>
+        <dd>@accesslint/core only</dd>
+      </div>
+      <div>
+        <dt>100%</dt>
+        <dd>agreement</dd>
+      </div>
+    </dl>
+
+    <h2>Rules</h2>
+    <p>Which rule IDs fire for this criterion and how many sites they appear on.</p>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>axe rule</th>
+            <th>Sites</th>
+            <th>@accesslint/core rule</th>
+            <th>Sites</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>html-has-lang</td>
+            <td>829</td>
+            <td>html-has-lang</td>
+            <td>827</td>
+          </tr>
+          <tr>
+            <td>html-lang-valid</td>
+            <td>26</td>
+            <td>html-lang-valid</td>
+            <td>26</td>
+          </tr>
+          <tr>
+            <td>html-xml-lang-mismatch</td>
+            <td>1</td>
+            <td>html-xml-lang-mismatch</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Examples</h2>
+
+    <h3>Both: 853 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://fast.com</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.passline.com</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://promup.sharework.it</td>
+            <td>html-xml-lang-mismatch</td>
+            <td>1</td>
+            <td>html-xml-lang-mismatch</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.royal558.com</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://moonlandshop.ir</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.mybrt.it</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://ribas.esaude.genesiscloud.tec.br</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://bancainternet.bancocredicoop.coop</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.wow69th1.com</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+            <td>html-lang-valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://datingprudethimble.com</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>843 more not shown.</p>
+
+    <h3>axe-only: 3 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://misskey.flowers</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.kx8.info</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://m.weimmer.de</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>@accesslint/core only: 1 site</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://sislameesm.caedufjf.net</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
+</footer>
+</body>
+</html>

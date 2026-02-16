@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WCAG 1.3.1: Info and Relationships — a11y agent</title>
+<meta name="description" content="WCAG 1.3.1: Info and Relationships: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header>
+  <nav class="site-nav" aria-label="Main">
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <ul>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="https://github.com/accesslint/core">GitHub</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <article class="section prose">
+    <h1>WCAG 1.3.1: Info and Relationships</h1>
+
+    <dl class="bench-stats">
+      <div>
+        <dt>552</dt>
+        <dd>both tools</dd>
+      </div>
+      <div>
+        <dt>117</dt>
+        <dd>axe-only</dd>
+      </div>
+      <div>
+        <dt>319</dt>
+        <dd>@accesslint/core only</dd>
+      </div>
+      <div>
+        <dt>90%</dt>
+        <dd>agreement</dd>
+      </div>
+    </dl>
+
+    <h2>Rules</h2>
+    <p>Which rule IDs fire for this criterion and how many sites they appear on.</p>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>axe rule</th>
+            <th>Sites</th>
+            <th>@accesslint/core rule</th>
+            <th>Sites</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>list</td>
+            <td>376</td>
+            <td>list</td>
+            <td>524</td>
+          </tr>
+          <tr>
+            <td>aria-required-children</td>
+            <td>223</td>
+            <td>aria-required-children</td>
+            <td>249</td>
+          </tr>
+          <tr>
+            <td>listitem</td>
+            <td>217</td>
+            <td>listitem</td>
+            <td>232</td>
+          </tr>
+          <tr>
+            <td>aria-required-parent</td>
+            <td>77</td>
+            <td>aria-required-parent</td>
+            <td>64</td>
+          </tr>
+          <tr>
+            <td>definition-list</td>
+            <td>40</td>
+            <td>dlitem</td>
+            <td>39</td>
+          </tr>
+          <tr>
+            <td>dlitem</td>
+            <td>11</td>
+            <td>td-has-header</td>
+            <td>26</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>definition-list</td>
+            <td>19</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>th-has-data-cells</td>
+            <td>16</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Examples</h2>
+
+    <h3>Both: 552 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://keirin.jp</td>
+            <td>list</td>
+            <td>1</td>
+            <td>list</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.royal558.com</td>
+            <td>listitem</td>
+            <td>37</td>
+            <td>listitem</td>
+            <td>37</td>
+          </tr>
+          <tr>
+            <td>https://stardewvalleywiki.com</td>
+            <td>definition-list</td>
+            <td>36</td>
+            <td>td-has-header</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.hebe.pl</td>
+            <td>aria-required-children</td>
+            <td>2</td>
+            <td>list, aria-required-children</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>https://www.vaprio.cz</td>
+            <td>aria-required-parent</td>
+            <td>7</td>
+            <td>aria-required-parent</td>
+            <td>7</td>
+          </tr>
+          <tr>
+            <td>https://www.mundonets.com</td>
+            <td>dlitem</td>
+            <td>5</td>
+            <td>dlitem</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>https://nhathuoclongchau.com.vn</td>
+            <td>list, listitem</td>
+            <td>11</td>
+            <td>list, listitem</td>
+            <td>14</td>
+          </tr>
+          <tr>
+            <td>https://tenshoku.mynavi.jp</td>
+            <td>listitem</td>
+            <td>4</td>
+            <td>listitem</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://www.kagukuro.com</td>
+            <td>definition-list</td>
+            <td>1</td>
+            <td>definition-list</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://jojo.fandom.com</td>
+            <td>aria-required-children, definition-list, listitem</td>
+            <td>16</td>
+            <td>aria-required-children, th-has-data-cells, td-has-header</td>
+            <td>7</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>542 more not shown.</p>
+
+    <h3>axe-only: 117 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.hyundaicard.com</td>
+            <td>aria-required-children, aria-required-parent, listitem</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.smp.no</td>
+            <td>definition-list</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://m.wooricard.com</td>
+            <td>list</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://sleep.airweave.jp</td>
+            <td>listitem</td>
+            <td>10</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.toyotatownpartsdirect.com</td>
+            <td>aria-required-parent</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://onlinebanking.rhbgroup.com</td>
+            <td>aria-required-children, aria-required-parent, list</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://dailyupdatenews2477.blogspot.com</td>
+            <td>definition-list</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.kaspersky.ru</td>
+            <td>list</td>
+            <td>4</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://mazenspb.com</td>
+            <td>listitem</td>
+            <td>6</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.imrpress.com</td>
+            <td>aria-required-parent</td>
+            <td>3</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>107 more not shown.</p>
+
+    <h3>@accesslint/core only: 319 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://mail.google.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>listitem</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://www.jstor.org</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria-required-parent</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://webtoonhatti.club</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>list</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://sg.search.yahoo.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria-required-children</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://br.investing.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>td-has-header</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.vedur.is</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>th-has-data-cells</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://tubemate.en.softonic.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>dlitem</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>https://www.ns-okuwa.jp</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>definition-list</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://s1.tennismania.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>listitem</td>
+            <td>32</td>
+          </tr>
+          <tr>
+            <td>https://forum.lowyat.net</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria-required-parent, td-has-header</td>
+            <td>11</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>309 more not shown.</p>
+
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
+</footer>
+</body>
+</html>

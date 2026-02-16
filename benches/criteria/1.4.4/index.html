@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WCAG 1.4.4: Resize Text — a11y agent</title>
+<meta name="description" content="WCAG 1.4.4: Resize Text: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
+<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/core/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<header>
+  <nav class="site-nav" aria-label="Main">
+    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <ul>
+      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="https://github.com/accesslint/core">GitHub</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <article class="section prose">
+    <h1>WCAG 1.4.4: Resize Text</h1>
+
+    <dl class="bench-stats">
+      <div>
+        <dt>923</dt>
+        <dd>both tools</dd>
+      </div>
+      <div>
+        <dt>45</dt>
+        <dd>axe-only</dd>
+      </div>
+      <div>
+        <dt>11</dt>
+        <dd>@accesslint/core only</dd>
+      </div>
+      <div>
+        <dt>99%</dt>
+        <dd>agreement</dd>
+      </div>
+    </dl>
+
+    <h2>Rules</h2>
+    <p>Which rule IDs fire for this criterion and how many sites they appear on.</p>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>axe rule</th>
+            <th>Sites</th>
+            <th>@accesslint/core rule</th>
+            <th>Sites</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>meta-viewport</td>
+            <td>968</td>
+            <td>meta-viewport</td>
+            <td>934</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Examples</h2>
+
+    <h3>Both: 923 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://esia.gosuslugi.ru</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.watson.ch</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://nhathuoclongchau.com.vn</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.waze.com</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://datingprudethimble.com</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.hebe.pl</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://porntv69.com</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.centris.ca</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.sportingnews.com</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>meta-viewport</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.bangbet.com</td>
+            <td>meta-viewport</td>
+            <td>2</td>
+            <td>meta-viewport</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>913 more not shown.</p>
+
+    <h3>axe-only: 45 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.bauhaus.info</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://tapsi-garage.ir</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.elerhetootthon.hu</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://winner11.live</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://ksavisa.sa</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://karlia.fr</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://royaltv01.com</td>
+            <td>meta-viewport</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.zivina.cz</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.notaparana.pr.gov.br</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://lululun.com</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>35 more not shown.</p>
+
+    <h3>@accesslint/core only: 11 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.orihica.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.puzzlesarcade.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.wall-art.nl</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.exodus.co.uk</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://bolliq.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://delefs.in</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.smpp.go.kr</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://mugen-online.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://fibre.mtn.co.za</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://pyatnitsa.by</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>1 more not shown.</p>
+
+    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>Built by <a href="https://github.com/accesslint">AccessLint</a>. MIT License.</p>
+</footer>
+</body>
+</html>
