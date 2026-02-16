@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Why is @accesslint/core faster? — a11y agent</title>
 <meta name="description" content="A technical comparison of how @accesslint/core and axe-core differ architecturally, and why that produces a 12x median speed difference.">
-<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/core/styles.css">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <a class="logo" href="/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/core/benches/">Benchmarks</a></li>
+      <li><a href="/benches/">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
     </ul>
   </nav>
@@ -27,11 +27,11 @@
     <p><code>@accesslint/core</code> runs at a median of 50 ms per page vs axe-core&rsquo;s 614 ms &mdash; roughly 12&times; faster across 5,000 sites. The difference comes from architectural choices in how each tool traverses the DOM, schedules work, and computes color contrast.</p>
 
     <h2>1. No virtual DOM layer</h2>
-    <p>Before running any rules, axe-core builds a <strong>flattened virtual DOM tree</strong>. The <a href="https://github.com/dequelabs/axe-core/blob/v4.11.1/lib/core/utils/get-flattened-tree.js"><code>flattenTree</code></a> function walks every element in the document, creates a <code>VirtualNode</code> wrapper for each one, resolves Shadow DOM slot assignments, and builds a selector index (an inverted map of tag names, attributes, and IDs for fast lookup). This is an O(n) pass over the entire DOM before any accessibility checks begin.</p>
+    <p>Before running any rules, axe-core builds a <strong>flattened virtual DOM tree</strong>. The <a href="https://github.com/dequelabs/axe-core/blob/v4.11.1/lib/utils/get-flattened-tree.js"><code>flattenTree</code></a> function walks every element in the document, creates a <code>VirtualNode</code> wrapper for each one, resolves Shadow DOM slot assignments, and builds a selector index (an inverted map of tag names, attributes, and IDs for fast lookup). This is an O(n) pass over the entire DOM before any accessibility checks begin.</p>
     <p><code>@accesslint/core</code> skips this entirely. Rules query the live DOM directly with <code>querySelectorAll</code> or <code>TreeWalker</code>, targeting only the elements they need. There is no upfront cost proportional to total DOM size.</p>
 
     <h2>2. Synchronous execution vs async scheduling</h2>
-    <p>axe-core uses an async queue system with <a href="https://github.com/dequelabs/axe-core/blob/v4.11.1/lib/core/base/rule.js#L301"><code>setTimeout(resolve, 0)</code></a> between rule completions to yield to the browser event loop. This prevents long-running audits from freezing the UI in a browser extension context. However, each <code>setTimeout</code> has a minimum delay (typically 1&ndash;4 ms depending on the browser), and this overhead applies to every rule even in headless environments where there is no UI to keep responsive.</p>
+    <p>axe-core uses an async queue system with <a href="https://github.com/dequelabs/axe-core/blob/v4.11.1/lib/base/rule.js#L301"><code>setTimeout(resolve, 0)</code></a> between rule completions to yield to the browser event loop. This prevents long-running audits from freezing the UI in a browser extension context. However, each <code>setTimeout</code> has a minimum delay (typically 1&ndash;4 ms depending on the browser), and this overhead applies to every rule even in headless environments where there is no UI to keep responsive.</p>
     <p><code>@accesslint/core</code> runs all rules in a <strong>single synchronous loop</strong>:</p>
     <pre class="code-block"><code>for (const rule of activeRules) {
   violations.push(...rule.run(doc));
@@ -68,7 +68,7 @@
     <p>In the benchmark, both scripts are injected via <code>page.addScriptTag()</code> on every site, so the parse-time difference is paid 5,000 times. JavaScript parse time scales roughly linearly with code size, and on a CI runner with constrained CPU this adds up.</p>
 
     <h2>5. Frame handling</h2>
-    <p>axe-core includes a full <a href="https://github.com/dequelabs/axe-core/blob/v4.11.1/lib/core/utils/send-command-to-frame.js">cross-frame messaging protocol</a>. For each <code>&lt;iframe&gt;</code> on the page, it sends a <code>postMessage</code> ping (with a 500 ms timeout), waits for a response, then sends the audit command and waits for results. Even on pages with no iframes, it searches the virtual tree for <code>frame</code> and <code>iframe</code> elements to detect them.</p>
+    <p>axe-core includes a full <a href="https://github.com/dequelabs/axe-core/blob/v4.11.1/lib/utils/send-command-to-frame.js">cross-frame messaging protocol</a>. For each <code>&lt;iframe&gt;</code> on the page, it sends a <code>postMessage</code> ping (with a 500 ms timeout), waits for a response, then sends the audit command and waits for results. Even on pages with no iframes, it searches the virtual tree for <code>frame</code> and <code>iframe</code> elements to detect them.</p>
     <p><code>@accesslint/core</code> audits the current document only. It has rules that check attributes on <code>&lt;iframe&gt;</code> elements (like <code>title</code>), but does not crawl into iframe content or use cross-frame messaging. In the benchmark&rsquo;s Playwright environment, frames are navigated to separately if needed.</p>
 
     <h2>6. Shared caches across rules</h2>
@@ -97,7 +97,9 @@
     </ul>
     <p>For automated testing and browser extension use &mdash; the primary use cases for <code>@accesslint/core</code> &mdash; these tradeoffs are acceptable. The goal is fast, actionable results on the most common accessibility issues.</p>
 
-    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
+
+    <p class="bench-updated">Last updated <time datetime="2026-02-15">February 15, 2026</time></p>
   </article>
 </main>
 
