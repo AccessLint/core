@@ -26,7 +26,7 @@
 <main id="main">
   <article class="section prose">
     <h1>Why is <code>@accesslint/core</code> faster?</h1>
-    <p><code>@accesslint/core</code> runs at a median of 50 ms per page vs axe-core&rsquo;s 614 ms &mdash; roughly 12&times; faster across 5,000 sites. The difference comes from architectural choices in how each tool traverses the DOM, schedules work, and computes color contrast.</p>
+    <p><code>@accesslint/core</code> runs at a median of 53 ms per page vs axe-core&rsquo;s 656 ms &mdash; roughly 12&times; faster across 5,000 sites. The difference comes from architectural choices in how each tool traverses the DOM, schedules work, and computes color contrast.</p>
 
     <h2>1. No virtual DOM layer</h2>
     <p>Before running any rules, axe-core builds a <strong>flattened virtual DOM tree</strong>. The <a href="https://github.com/dequelabs/axe-core/blob/v4.11.1/lib/utils/get-flattened-tree.js"><code>flattenTree</code></a> function walks every element in the document, creates a <code>VirtualNode</code> wrapper for each one, resolves Shadow DOM slot assignments, and builds a selector index (an inverted map of tag names, attributes, and IDs for fast lookup). This is an O(n) pass over the entire DOM before any accessibility checks begin.</p>
@@ -57,12 +57,12 @@
       <tbody>
         <tr>
           <td>axe-core 4.11.1</td>
-          <td>548 KB</td>
+          <td>561 KB</td>
           <td>Bundles <a href="https://colorjs.io">Color.js</a> (~2,800 lines)</td>
         </tr>
         <tr>
           <td><code>@accesslint/core</code></td>
-          <td>141 KB</td>
+          <td>159 KB</td>
           <td>None</td>
         </tr>
       </tbody>
@@ -87,7 +87,7 @@
     <p>Because rules run synchronously in sequence, a cache populated by an early rule (e.g., <code>isAriaHidden</code> computed during the ARIA rules) is immediately available to later rules (e.g., <code>color-contrast</code>). All caches are cleared between audits to prevent stale data.</p>
 
     <h2>7. Fewer rules, narrower scope</h2>
-    <p>axe-core ships 174 rules. <code>@accesslint/core</code> ships 93. axe-core covers best practices, experimental rules, and Section 508 mappings beyond WCAG. <code>@accesslint/core</code> focuses on WCAG 2.1 Level A and AA success criteria. Fewer rules means less work per audit, but the rule count alone doesn&rsquo;t explain the 12&times; difference &mdash; the architectural choices above are the primary factors.</p>
+    <p>axe-core ships 104 rules. <code>@accesslint/core</code> ships 93. axe-core covers best practices, experimental rules, and Section 508 mappings beyond WCAG. <code>@accesslint/core</code> focuses on WCAG 2.1 Level A and AA success criteria. Fewer rules means less work per audit, but the rule count alone doesn&rsquo;t explain the 12&times; difference &mdash; the architectural choices above are the primary factors.</p>
 
     <h2>Tradeoffs</h2>
     <p>These performance gains come with tradeoffs:</p>
