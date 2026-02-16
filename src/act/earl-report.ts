@@ -43,8 +43,11 @@ export interface EarlReport {
   "@context": string;
   "@type": ["Project", "Assertor"];
   name: string;
+  shortdesc: string;
   description: string;
   homepage: string;
+  license: string;
+  vendor: string;
   release: {
     "@type": "Version";
     revision: string;
@@ -87,9 +90,13 @@ export function generateEarlReport(
   return {
     "@context": "https://act-rules.github.io/earl-context.json",
     "@type": ["Project", "Assertor"],
-    name: "AccessLint",
-    description: "Automated accessibility testing engine",
+    name: "@accesslint/core",
+    shortdesc: "WCAG 2.1 accessibility testing engine for browsers and DOM environments",
+    description:
+      "Automated accessibility testing engine covering WCAG 2.1 Level A, AA, and AAA. Runs in any browser or DOM environment with zero dependencies.",
     homepage: "https://github.com/AccessLint/core",
+    license: "https://opensource.org/licenses/MIT",
+    vendor: "AccessLint",
     release: {
       "@type": "Version",
       revision: version,
