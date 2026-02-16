@@ -3,8 +3,8 @@
  * from ACT conformance test results.
  *
  * Format follows https://www.w3.org/WAI/standards-guidelines/act/report/earl/
- * using the W3C-hosted context at:
- *   https://www.w3.org/WAI/content-assets/wcag-act-rules/earl-context.json
+ * using the ACT Rules community context at:
+ *   https://act-rules.github.io/earl-context.json
  *
  * @see https://www.w3.org/TR/EARL10-Schema/
  */
