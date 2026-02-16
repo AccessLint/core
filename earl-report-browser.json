@@ -12,7 +12,7 @@
   "vendor": "AccessLint",
   "release": {
     "@type": "Version",
-    "revision": "0.6.3",
+    "revision": "0.6.4",
     "created": "2026-02-16"
   },
   "assertedThat": [
@@ -131,6 +131,28 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/674b10/ebd0080bacb8debc7ad069072240657df38c3e2c.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-054",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/674b10/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
         "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/674b10/98f200a9611571fd8db46027c8d28616d94083c8.html"
       },
       "test": {
@@ -206,270 +228,6 @@
           {
             "@type": "TestRequirement",
             "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/674b10/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/ebd0080bacb8debc7ad069072240657df38c3e2c.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/a4cc71b0434f71f4ea0069c409f73e0207dfb403.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/8c29bcb24ac0f448846a2ffdad4c9693d5aef8c6.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/b413c09531b239e27bcf79cb57302b429ef59fe6.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/cab9b2d06e5a44e2056ccbdbb7096f55ab42859c.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/7d97d6b2f3fa16760bf66026691281a8179f3260.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/04342a3834e0003f3057807937d617e432e83d33.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/5c71cdabc04f9038e21d872e20a516cb429a7619.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/0bbd55ba8e418361f99f717418206a37d57fd978.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/37cce377c874eec22d1137977d2b8f00ebc42ea8.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/9ceceeffee45fea0d16ce4d87d4c048f1a68ca93.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/ba176379d78ef73bf17c7703ca6b512463227d13.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-013",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
           }
         ]
       },
@@ -857,6 +615,28 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/6a7281/9d80b71ad39b258fb75db804867f189d76ecdab8.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-056",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/6a7281/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
         "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/6a7281/90428c9c8cc74d6a3047775637078366994a8e88.html"
       },
       "test": {
@@ -910,314 +690,6 @@
           {
             "@type": "TestRequirement",
             "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/6a7281/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/9d80b71ad39b258fb75db804867f189d76ecdab8.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/eadf2a087a82575bcdf9f9158e698a576e9627c8.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/5b39aa37000933c7b9a766970b829ce5fada62d6.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/11c5321c05c7b83b8707eee76574a94bd44033fe.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/3da0918b07e5736d55b4b405a22860d889931c15.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/58a35afd2998bb6f9c670cb74fa7b550e80897b4.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/986038d85467255cef4ed7d72c231442427ece23.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/80462b7b8c490305d1de7e3136c0bcfaef31789f.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/907f05aed287f7407d5f95e7d39bfc1435ec0812.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/9bb1bdb3e95aa9b895fc4f32b0c2cfc917a07a72.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/43af91df529613e51429e18d43ce3df99b189c0f.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/7a1942d2d52f50c5df458877a0ee18dc5a22b0c3.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/c43c9679072e95ce85f8a7cb7581e991e73124c7.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/f473186fa351637a3c034b2df567239a39a8139c.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-057",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
           }
         ]
       },
@@ -2287,6 +1759,28 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/24afc2/92e706402d8f8cb13d73ffb759ce35ec910d272c.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-050",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/24afc2/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
         "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/24afc2/9608b535262c655f523314958f8ca3019a0968fe.html"
       },
       "test": {
@@ -2362,28 +1856,6 @@
           {
             "@type": "TestRequirement",
             "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/24afc2/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/9e45ec/92e706402d8f8cb13d73ffb759ce35ec910d272c.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-052",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/9e45ec/"
           }
         ]
       },
@@ -3937,6 +3409,28 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/97a4e1/a4cc71b0434f71f4ea0069c409f73e0207dfb403.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-075",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/97a4e1/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
         "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/97a4e1/d9adf41033a5b71a0730b6df8c1c7e01088e9022.html"
       },
       "test": {
@@ -5310,6 +4804,226 @@
           {
             "@type": "TestRequirement",
             "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/2779a5/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/8c29bcb24ac0f448846a2ffdad4c9693d5aef8c6.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/b413c09531b239e27bcf79cb57302b429ef59fe6.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/cab9b2d06e5a44e2056ccbdbb7096f55ab42859c.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/7d97d6b2f3fa16760bf66026691281a8179f3260.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/04342a3834e0003f3057807937d617e432e83d33.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/5c71cdabc04f9038e21d872e20a516cb429a7619.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/0bbd55ba8e418361f99f717418206a37d57fd978.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/37cce377c874eec22d1137977d2b8f00ebc42ea8.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/9ceceeffee45fea0d16ce4d87d4c048f1a68ca93.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/59796f/ba176379d78ef73bf17c7703ca6b512463227d13.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-013",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/59796f/"
           }
         ]
       },
@@ -8843,15 +8557,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/fd406bedf0bb3bdc4c2a718f49a3dd0f7aaa7556.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/fd406bedf0bb3bdc4c2a718f49a3dd0f7aaa7556.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -8865,15 +8579,213 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/04344f745bd9bad51292748e7893f146c045aae4.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/ab4691ef474d6263e9ceec824f07faa51a30112e.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/dc170fd015758b62d8e0141e086893a116ee724e.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/319a465113950b03502709ab573edf7deab59908.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/04344f745bd9bad51292748e7893f146c045aae4.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/aed692e9f0a1be5c87ef1de56afa8e23e14cc3ba.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/2845a8409b1c07caa856d1bfbf42ed244b0de9c2.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/c7c09c1019dcf1d1c67183001b4d459dee7a87ff.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/173cb00f20c52f35970c322dedf7bc11450b70c1.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/668856825e6d3b4e480005acf97723c7b1004ba3.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/eaf0a926896f045a498073da42ea6263a4d6d36c.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -8887,15 +8799,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/aed692e9f0a1be5c87ef1de56afa8e23e14cc3ba.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/e8f3acb1dc814b8b815c69b7150cdea67d5bd98e.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -8909,103 +8821,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/2845a8409b1c07caa856d1bfbf42ed244b0de9c2.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/41afaa9b33287aba9c608c3466e2b164f57a02ed.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/c7c09c1019dcf1d1c67183001b4d459dee7a87ff.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-093",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/173cb00f20c52f35970c322dedf7bc11450b70c1.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-093",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/668856825e6d3b4e480005acf97723c7b1004ba3.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-093",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/eaf0a926896f045a498073da42ea6263a4d6d36c.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-093",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9019,15 +8843,147 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/2347a45232c34aa309087ed099f4781cd70b5b1e.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/7b27adc8d5a8f07dca43b0f90806f40bc2a1b15b.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/7507c8139cfda2c482c394fe00aaaf69e15acabb.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/bf47c65f2854b6ac100a6f700d354b243b069231.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/308839f424ef1d9dbb5aab0cd9079827ecb00895.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/a7d34d6d1dad765c7e444d3c3f63b18ca4742e9e.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/19123c99ec390011b87736827720d5e1e794bad2.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/2347a45232c34aa309087ed099f4781cd70b5b1e.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9041,15 +8997,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/dbd2374952b96375369afe2a012bfbadd182bf6b.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/dbd2374952b96375369afe2a012bfbadd182bf6b.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9063,15 +9019,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/fc92e273e09ad225227f488e3a016fd8d4aad10c.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/fc92e273e09ad225227f488e3a016fd8d4aad10c.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9085,15 +9041,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/881897444deae644139c4b799b8eeb4b4b764c2a.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/881897444deae644139c4b799b8eeb4b4b764c2a.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9107,15 +9063,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/328b967c5b544b48f7acd8e42f2f05d355501f2a.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/20f9cd78dd0fa87ee8d40ea3ed35a1fe3ff66508.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9129,15 +9085,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/7c7d6412dae7381d90517a6f3c0a30104d63062a.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/328b967c5b544b48f7acd8e42f2f05d355501f2a.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9151,15 +9107,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/53386f68326a53798e776b48e81b32659424d6d3.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/7c7d6412dae7381d90517a6f3c0a30104d63062a.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9173,15 +9129,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/9e3383a60ab67d5988ac2144fec58a34677c52b2.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/53386f68326a53798e776b48e81b32659424d6d3.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9195,15 +9151,15 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/b4fcc1ea76d19ae86033ed687613f78297ee6069.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/9e3383a60ab67d5988ac2144fec58a34677c52b2.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9217,15 +9173,37 @@
       "mode": "earl:automatic",
       "subject": {
         "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/09o5cg/6b811d065fc243c2c94002f315891791e181d518.html"
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/b4fcc1ea76d19ae86033ed687613f78297ee6069.html"
       },
       "test": {
         "@type": "TestCase",
-        "title": "accesslint-093",
+        "title": "accesslint-092",
         "isPartOf": [
           {
             "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/6b811d065fc243c2c94002f315891791e181d518.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-092",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -9534,270 +9512,6 @@
           {
             "@type": "TestRequirement",
             "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/09o5cg/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:inapplicable"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/ab4691ef474d6263e9ceec824f07faa51a30112e.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/dc170fd015758b62d8e0141e086893a116ee724e.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/319a465113950b03502709ab573edf7deab59908.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:passed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/e8f3acb1dc814b8b815c69b7150cdea67d5bd98e.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/41afaa9b33287aba9c608c3466e2b164f57a02ed.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/7b27adc8d5a8f07dca43b0f90806f40bc2a1b15b.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/7507c8139cfda2c482c394fe00aaaf69e15acabb.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/bf47c65f2854b6ac100a6f700d354b243b069231.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/308839f424ef1d9dbb5aab0cd9079827ecb00895.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/a7d34d6d1dad765c7e444d3c3f63b18ca4742e9e.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/19123c99ec390011b87736827720d5e1e794bad2.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
-          }
-        ]
-      },
-      "result": {
-        "@type": "TestResult",
-        "outcome": "earl:failed"
-      }
-    },
-    {
-      "@type": "Assertion",
-      "mode": "earl:automatic",
-      "subject": {
-        "@type": "TestSubject",
-        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/afw4f7/20f9cd78dd0fa87ee8d40ea3ed35a1fe3ff66508.html"
-      },
-      "test": {
-        "@type": "TestCase",
-        "title": "accesslint-092",
-        "isPartOf": [
-          {
-            "@type": "TestRequirement",
-            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/afw4f7/"
           }
         ]
       },
@@ -10348,6 +10062,292 @@
           {
             "@type": "TestRequirement",
             "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/b33eff/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/eadf2a087a82575bcdf9f9158e698a576e9627c8.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/5b39aa37000933c7b9a766970b829ce5fada62d6.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/11c5321c05c7b83b8707eee76574a94bd44033fe.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/3da0918b07e5736d55b4b405a22860d889931c15.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/58a35afd2998bb6f9c670cb74fa7b550e80897b4.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/986038d85467255cef4ed7d72c231442427ece23.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:passed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/80462b7b8c490305d1de7e3136c0bcfaef31789f.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/907f05aed287f7407d5f95e7d39bfc1435ec0812.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/9bb1bdb3e95aa9b895fc4f32b0c2cfc917a07a72.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/43af91df529613e51429e18d43ce3df99b189c0f.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/7a1942d2d52f50c5df458877a0ee18dc5a22b0c3.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:failed"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/c43c9679072e95ce85f8a7cb7581e991e73124c7.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
+          }
+        ]
+      },
+      "result": {
+        "@type": "TestResult",
+        "outcome": "earl:inapplicable"
+      }
+    },
+    {
+      "@type": "Assertion",
+      "mode": "earl:automatic",
+      "subject": {
+        "@type": "TestSubject",
+        "source": "https://www.w3.org/WAI/content-assets/wcag-act-rules/testcases/4e8ab6/f473186fa351637a3c034b2df567239a39a8139c.html"
+      },
+      "test": {
+        "@type": "TestCase",
+        "title": "accesslint-057",
+        "isPartOf": [
+          {
+            "@type": "TestRequirement",
+            "title": "https://www.w3.org/WAI/standards-guidelines/act/rules/4e8ab6/"
           }
         ]
       },
