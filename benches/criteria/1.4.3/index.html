@@ -4,21 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 1.4.3: Contrast (Minimum) — a11y agent</title>
-<meta name="description" content="WCAG 1.4.3: Contrast (Minimum): detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/core/styles.css">
+<meta name="description" content="WCAG 1.4.3: Contrast (Minimum): comparison of axe-core, @accesslint/core, and IBM Equal Access detection across sites.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <a class="logo" href="/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
-      <li><a href="https://a11yagent.ai">a11y agent</a></li>
-      <li><a href="https://app.accesslint.com">CI</a></li>
     </ul>
   </nav>
 </header>
@@ -29,20 +27,20 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>2,312</dt>
-        <dd>both tools</dd>
+        <dt>1,690</dt>
+        <dd>all three tools</dd>
       </div>
       <div>
-        <dt>162</dt>
-        <dd>axe-only</dd>
+        <dt>669</dt>
+        <dd>two of three</dd>
       </div>
       <div>
-        <dt>474</dt>
-        <dd>@accesslint/core only</dd>
+        <dt>407</dt>
+        <dd>one tool only</dd>
       </div>
       <div>
-        <dt>86%</dt>
-        <dd>agreement</dd>
+        <dt>2,766</dt>
+        <dd>any tool</dd>
       </div>
     </dl>
 
@@ -56,14 +54,18 @@
             <th>Sites</th>
             <th>@accesslint/core rule</th>
             <th>Sites</th>
+            <th>IBM EA rule</th>
+            <th>Sites</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>color-contrast</td>
-            <td>2474</td>
-            <td>color-contrast</td>
-            <td>2786</td>
+            <td>2276</td>
+            <td>accesslint-092</td>
+            <td>2448</td>
+            <td>text_contrast_sufficient</td>
+            <td>2091</td>
           </tr>
         </tbody>
       </table>
@@ -71,7 +73,7 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 2312 sites</h3>
+    <h3>All three: 1690 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -81,6 +83,8 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
@@ -88,78 +92,98 @@
             <td>https://www.romsgames.net</td>
             <td>color-contrast</td>
             <td>3</td>
-            <td>color-contrast</td>
+            <td>accesslint-092</td>
+            <td>3</td>
+            <td>text_contrast_sufficient</td>
             <td>3</td>
           </tr>
           <tr>
-            <td>https://asunnot.oikotie.fi</td>
+            <td>https://openai.com</td>
             <td>color-contrast</td>
-            <td>1</td>
-            <td>color-contrast</td>
-            <td>1</td>
+            <td>24</td>
+            <td>accesslint-092</td>
+            <td>24</td>
+            <td>text_contrast_sufficient</td>
+            <td>25</td>
           </tr>
           <tr>
             <td>https://www.rtp.pt</td>
             <td>color-contrast</td>
             <td>1</td>
-            <td>color-contrast</td>
+            <td>accesslint-092</td>
             <td>35</td>
+            <td>text_contrast_sufficient</td>
+            <td>26</td>
           </tr>
           <tr>
             <td>https://www.tvguia.es</td>
             <td>color-contrast</td>
             <td>115</td>
-            <td>color-contrast</td>
-            <td>168</td>
-          </tr>
-          <tr>
-            <td>https://www.infojobs.net</td>
-            <td>color-contrast</td>
-            <td>1</td>
-            <td>color-contrast</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://aniworld.to</td>
-            <td>color-contrast</td>
-            <td>48</td>
-            <td>color-contrast</td>
-            <td>48</td>
+            <td>accesslint-092</td>
+            <td>66</td>
+            <td>text_contrast_sufficient</td>
+            <td>115</td>
           </tr>
           <tr>
             <td>https://www.letras.com</td>
             <td>color-contrast</td>
             <td>38</td>
-            <td>color-contrast</td>
-            <td>69</td>
-          </tr>
-          <tr>
-            <td>https://www.yasyadong.tv</td>
-            <td>color-contrast</td>
-            <td>95</td>
-            <td>color-contrast</td>
-            <td>123</td>
+            <td>accesslint-092</td>
+            <td>59</td>
+            <td>text_contrast_sufficient</td>
+            <td>49</td>
           </tr>
           <tr>
             <td>https://www.nicematin.com</td>
             <td>color-contrast</td>
             <td>5</td>
-            <td>color-contrast</td>
+            <td>accesslint-092</td>
             <td>8</td>
+            <td>text_contrast_sufficient</td>
+            <td>5</td>
           </tr>
           <tr>
-            <td>https://www.nit.pt</td>
+            <td>https://vglive.vg.no</td>
             <td>color-contrast</td>
-            <td>79</td>
+            <td>2</td>
+            <td>accesslint-092</td>
+            <td>2</td>
+            <td>text_contrast_sufficient</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://cmhelpline.mp.gov.in</td>
             <td>color-contrast</td>
-            <td>60</td>
+            <td>3</td>
+            <td>accesslint-092</td>
+            <td>4</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.iqair.com</td>
+            <td>color-contrast</td>
+            <td>2</td>
+            <td>accesslint-092</td>
+            <td>9</td>
+            <td>text_contrast_sufficient</td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td>https://tamil.mykhel.com</td>
+            <td>color-contrast</td>
+            <td>9</td>
+            <td>accesslint-092</td>
+            <td>20</td>
+            <td>text_contrast_sufficient</td>
+            <td>17</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>2302 more not shown.</p>
+    <p>1680 more not shown.</p>
 
-    <h3>axe-only: 162 sites</h3>
+    <h3>Two of three: 669 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -169,85 +193,217 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>https://m.bild.de</td>
+            <td>https://asunnot.oikotie.fi</td>
             <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://cuckold.net</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>1</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.sme.sk</td>
+            <td>color-contrast</td>
+            <td>4</td>
+            <td>accesslint-092</td>
             <td>3</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://openai.com</td>
-            <td>color-contrast</td>
-            <td>24</td>
+            <td>https://www.spox.com</td>
             <td>&mdash;</td>
             <td>0</td>
+            <td>accesslint-092</td>
+            <td>53</td>
+            <td>text_contrast_sufficient</td>
+            <td>53</td>
           </tr>
           <tr>
-            <td>https://vglive.vg.no</td>
+            <td>https://www.infojobs.net</td>
             <td>color-contrast</td>
+            <td>1</td>
+            <td>accesslint-092</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.flo.com.tr</td>
+            <td>https://www.americanas.com.br</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>5</td>
+            <td>text_contrast_sufficient</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>https://www.yasyadong.tv</td>
             <td>color-contrast</td>
-            <td>2</td>
+            <td>95</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>69</td>
+          </tr>
+          <tr>
+            <td>https://www.arhaus.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>9</td>
+            <td>text_contrast_sufficient</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://inakaleng.com</td>
+            <td>color-contrast</td>
+            <td>7</td>
+            <td>accesslint-092</td>
+            <td>9</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.bitunix.com</td>
-            <td>color-contrast</td>
-            <td>4</td>
+            <td>https://m.bat688.com</td>
             <td>&mdash;</td>
             <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.bgr.com</td>
-            <td>color-contrast</td>
+            <td>accesslint-092</td>
             <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
           </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>659 more not shown.</p>
+
+    <h3>axe-only: 98 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
           <tr>
-            <td>https://www.pajak.go.id</td>
-            <td>color-contrast</td>
-            <td>51</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
+        </thead>
+        <tbody>
           <tr>
             <td>https://e28bd8.com</td>
             <td>color-contrast</td>
             <td>6</td>
             <td>&mdash;</td>
             <td>0</td>
-          </tr>
-          <tr>
-            <td>https://kosmetista.ru</td>
-            <td>color-contrast</td>
-            <td>77</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.petsplace.nl</td>
+            <td>https://www.womanandhome.com</td>
             <td>color-contrast</td>
-            <td>6</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://jnu.ac.bd</td>
+            <td>color-contrast</td>
+            <td>25</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://internetowykantor.pl</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://pobb.in</td>
+            <td>color-contrast</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://altadefinizione-01.homes</td>
+            <td>color-contrast</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://espacepro.secure.lcl.fr</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://ccp.instructure.com</td>
+            <td>color-contrast</td>
+            <td>3</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://antiaviajes.com</td>
+            <td>color-contrast</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.gant.co.il</td>
+            <td>color-contrast</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>152 more not shown.</p>
+    <p>88 more not shown.</p>
 
-    <h3>@accesslint/core only: 474 sites</h3>
+    <h3>@accesslint/core only: 249 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -257,85 +413,219 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>https://www.sme.sk</td>
+            <td>https://www.jagranjosh.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>color-contrast</td>
-            <td>2</td>
+            <td>accesslint-092</td>
+            <td>139</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
-            <td>https://www.3cat.cat</td>
+            <td>https://www.bristol.com.py</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>color-contrast</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>https://www.spox.com</td>
+            <td>accesslint-092</td>
+            <td>12</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>color-contrast</td>
-            <td>52</td>
-          </tr>
-          <tr>
-            <td>https://www.lidl.hr</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>color-contrast</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>https://www.arhaus.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>color-contrast</td>
-            <td>9</td>
-          </tr>
-          <tr>
-            <td>https://moviezguru.team</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>color-contrast</td>
-            <td>1</td>
           </tr>
           <tr>
             <td>https://mayahenryjewelers.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>color-contrast</td>
+            <td>accesslint-092</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://thedigestweb.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>color-contrast</td>
+            <td>accesslint-092</td>
             <td>10</td>
-          </tr>
-          <tr>
-            <td>https://www.wellcare.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>color-contrast</td>
+          </tr>
+          <tr>
+            <td>https://www.captainjackcasino.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://s269-es.ogame.gameforge.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
             <td>2</td>
-          </tr>
-          <tr>
-            <td>https://code.visualstudio.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>color-contrast</td>
-            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://www.fastweb.it</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>6</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://members.ep88bet.io</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://it97.tribals.it</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>26</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://yok82930.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-092</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>464 more not shown.</p>
+    <p>239 more not shown.</p>
 
-    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+    <h3>IBM EA only: 60 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.3cat.cat</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>https://manager.line.biz</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://yugioh.fandom.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.piraeusbank.gr</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>https://www.10tv.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://eu.kipling.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>https://www.barclaycard.co.uk</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://cazaofertas.com.mx</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td>https://tropical.gamee.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://hit2me.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>text_contrast_sufficient</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>50 more not shown.</p>
+
+    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
+
+    <p class="bench-updated">Last updated <time datetime="2026-02-16">February 16, 2026</time></p>
   </article>
 </main>
 

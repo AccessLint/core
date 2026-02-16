@@ -4,21 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 3.1.1: Language of Page — a11y agent</title>
-<meta name="description" content="WCAG 3.1.1: Language of Page: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/core/styles.css">
+<meta name="description" content="WCAG 3.1.1: Language of Page: comparison of axe-core, @accesslint/core, and IBM Equal Access detection across sites.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <a class="logo" href="/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
-      <li><a href="https://a11yagent.ai">a11y agent</a></li>
-      <li><a href="https://app.accesslint.com">CI</a></li>
     </ul>
   </nav>
 </header>
@@ -29,20 +27,20 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>821</dt>
-        <dd>both tools</dd>
+        <dt>807</dt>
+        <dd>all three tools</dd>
       </div>
       <div>
-        <dt>4</dt>
-        <dd>axe-only</dd>
+        <dt>11</dt>
+        <dd>two of three</dd>
       </div>
       <div>
-        <dt>3</dt>
-        <dd>@accesslint/core only</dd>
+        <dt>430</dt>
+        <dd>one tool only</dd>
       </div>
       <div>
-        <dt>100%</dt>
-        <dd>agreement</dd>
+        <dt>1,248</dt>
+        <dd>any tool</dd>
       </div>
     </dl>
 
@@ -56,20 +54,26 @@
             <th>Sites</th>
             <th>@accesslint/core rule</th>
             <th>Sites</th>
+            <th>IBM EA rule</th>
+            <th>Sites</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>html-has-lang</td>
-            <td>803</td>
-            <td>html-has-lang</td>
-            <td>803</td>
+            <td>798</td>
+            <td>accesslint-080</td>
+            <td>800</td>
+            <td>html_lang_exists</td>
+            <td>1222</td>
           </tr>
           <tr>
             <td>html-lang-valid</td>
-            <td>22</td>
-            <td>html-lang-valid</td>
-            <td>21</td>
+            <td>19</td>
+            <td>accesslint-081</td>
+            <td>18</td>
+            <td>html_lang_valid</td>
+            <td>28</td>
           </tr>
         </tbody>
       </table>
@@ -77,7 +81,7 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 821 sites</h3>
+    <h3>All three: 807 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -87,6 +91,8 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
@@ -94,78 +100,98 @@
             <td>https://www.torrid.com</td>
             <td>html-has-lang</td>
             <td>1</td>
-            <td>html-has-lang</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>html_lang_exists</td>
             <td>1</td>
           </tr>
           <tr>
             <td>https://spotidownloader.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
-            <td>html-lang-valid</td>
+            <td>accesslint-081</td>
             <td>1</td>
+            <td>html_lang_valid, html_lang_exists</td>
+            <td>4</td>
           </tr>
           <tr>
             <td>https://filelist.io</td>
             <td>html-has-lang</td>
             <td>1</td>
-            <td>html-has-lang</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>html_lang_exists</td>
             <td>1</td>
           </tr>
           <tr>
             <td>https://www.indiafastjobalert.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
-            <td>html-lang-valid</td>
+            <td>accesslint-081</td>
+            <td>1</td>
+            <td>html_lang_valid</td>
             <td>1</td>
           </tr>
           <tr>
             <td>https://www.crocs.com</td>
             <td>html-has-lang</td>
             <td>1</td>
-            <td>html-has-lang</td>
+            <td>accesslint-080</td>
             <td>1</td>
+            <td>html_lang_exists</td>
+            <td>2</td>
           </tr>
           <tr>
             <td>https://www.relaischateaux.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
-            <td>html-lang-valid</td>
+            <td>accesslint-081</td>
+            <td>1</td>
+            <td>html_lang_valid</td>
             <td>1</td>
           </tr>
           <tr>
             <td>https://cmhelpline.mp.gov.in</td>
             <td>html-has-lang</td>
             <td>1</td>
-            <td>html-has-lang</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>html_lang_exists</td>
             <td>1</td>
           </tr>
           <tr>
             <td>https://www.efexploreamerica.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
-            <td>html-lang-valid</td>
+            <td>accesslint-081</td>
             <td>1</td>
+            <td>html_lang_valid, html_lang_exists</td>
+            <td>2</td>
           </tr>
           <tr>
             <td>https://tamil.mykhel.com</td>
             <td>html-has-lang</td>
             <td>1</td>
-            <td>html-has-lang</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>html_lang_exists</td>
             <td>1</td>
           </tr>
           <tr>
             <td>https://www.pro.cloud-thomas.com</td>
             <td>html-lang-valid</td>
             <td>1</td>
-            <td>html-lang-valid</td>
+            <td>accesslint-081</td>
+            <td>1</td>
+            <td>html_lang_valid</td>
             <td>1</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>811 more not shown.</p>
+    <p>797 more not shown.</p>
 
-    <h3>axe-only: 4 sites</h3>
+    <h3>Two of three: 11 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -175,33 +201,97 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>https://www.bootbarn.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://uydum.az</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
           <tr>
             <td>https://ml.holalacell.net</td>
             <td>html-lang-valid</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
+            <td>html_lang_valid</td>
+            <td>1</td>
           </tr>
           <tr>
-            <td>https://www.43winph.net</td>
+            <td>http://la-k52.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.recargastucell.com</td>
             <td>html-has-lang</td>
+            <td>1</td>
+            <td>accesslint-080</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.xbajee8.club</td>
+            <td>https://webdosen.budiluhur.ac.id</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://supermercatideco.multicedi.it</td>
             <td>html-has-lang</td>
+            <td>1</td>
+            <td>accesslint-080</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.9rmx.makeup</td>
+            <td>https://www.resurse-ortodoxe.ro</td>
             <td>html-has-lang</td>
+            <td>1</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.funnykdo.com</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.city.mihara.hiroshima.jp</td>
+            <td>html-has-lang</td>
+            <td>1</td>
+            <td>accesslint-080</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
@@ -209,8 +299,9 @@
         </tbody>
       </table>
     </div>
+    <p>1 more not shown.</p>
 
-    <h3>@accesslint/core only: 3 sites</h3>
+    <h3>axe-only: 2 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -220,35 +311,174 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>http://la-k52.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>https://www.43winph.net</td>
             <td>html-has-lang</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
-            <td>https://aeonbigedi.myaeon.com.my</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>https://play.tankesport.se</td>
             <td>html-has-lang</td>
             <td>1</td>
-          </tr>
-          <tr>
-            <td>https://webdosen.budiluhur.ac.id</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>html-has-lang</td>
-            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+    <h3>@accesslint/core only: 1 site</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://aeonbigedi.myaeon.com.my</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-080</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>IBM EA only: 427 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.romsgames.net</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.u-tools.cn</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://openai.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://betjili365.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.letras.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://yts.lt</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.novibet.bet.br</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://yorum.altin.in</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://moviezguru.team</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.sarmasdolas.me</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>html_lang_exists</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>417 more not shown.</p>
+
+    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
+
+    <p class="bench-updated">Last updated <time datetime="2026-02-16">February 16, 2026</time></p>
   </article>
 </main>
 

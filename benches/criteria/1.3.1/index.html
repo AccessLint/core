@@ -4,21 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 1.3.1: Info and Relationships — a11y agent</title>
-<meta name="description" content="WCAG 1.3.1: Info and Relationships: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/core/styles.css">
+<meta name="description" content="WCAG 1.3.1: Info and Relationships: comparison of axe-core, @accesslint/core, and IBM Equal Access detection across sites.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <a class="logo" href="/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
-      <li><a href="https://a11yagent.ai">a11y agent</a></li>
-      <li><a href="https://app.accesslint.com">CI</a></li>
     </ul>
   </nav>
 </header>
@@ -29,20 +27,20 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>578</dt>
-        <dd>both tools</dd>
+        <dt>203</dt>
+        <dd>all three tools</dd>
       </div>
       <div>
-        <dt>105</dt>
-        <dd>axe-only</dd>
+        <dt>459</dt>
+        <dd>two of three</dd>
       </div>
       <div>
-        <dt>359</dt>
-        <dd>@accesslint/core only</dd>
+        <dt>908</dt>
+        <dd>one tool only</dd>
       </div>
       <div>
-        <dt>90%</dt>
-        <dd>agreement</dd>
+        <dt>1,570</dt>
+        <dd>any tool</dd>
       </div>
     </dl>
 
@@ -56,56 +54,90 @@
             <th>Sites</th>
             <th>@accesslint/core rule</th>
             <th>Sites</th>
+            <th>IBM EA rule</th>
+            <th>Sites</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>list</td>
-            <td>394</td>
-            <td>list</td>
-            <td>590</td>
+            <td>354</td>
+            <td>accesslint-046</td>
+            <td>528</td>
+            <td>aria_hidden_nontabbable</td>
+            <td>303</td>
           </tr>
           <tr>
             <td>listitem</td>
-            <td>250</td>
-            <td>listitem</td>
-            <td>286</td>
+            <td>229</td>
+            <td>accesslint-047</td>
+            <td>249</td>
+            <td>table_headers_exists</td>
+            <td>293</td>
           </tr>
           <tr>
             <td>aria-required-children</td>
-            <td>221</td>
-            <td>aria-required-children</td>
-            <td>236</td>
+            <td>197</td>
+            <td>accesslint-060</td>
+            <td>203</td>
+            <td>label_ref_valid</td>
+            <td>232</td>
           </tr>
           <tr>
             <td>aria-required-parent</td>
-            <td>86</td>
-            <td>aria-required-parent</td>
-            <td>74</td>
+            <td>76</td>
+            <td>accesslint-061</td>
+            <td>61</td>
+            <td>fieldset_label_valid</td>
+            <td>135</td>
           </tr>
           <tr>
             <td>definition-list</td>
-            <td>34</td>
-            <td>dlitem</td>
-            <td>38</td>
-          </tr>
-          <tr>
-            <td>dlitem</td>
-            <td>10</td>
-            <td>td-has-header</td>
             <td>28</td>
+            <td>accesslint-048</td>
+            <td>33</td>
+            <td>table_headers_related</td>
+            <td>133</td>
+          </tr>
+          <tr>
+            <td>dlitem</td>
+            <td>9</td>
+            <td>accesslint-086</td>
+            <td>28</td>
+            <td>input_checkboxes_grouped</td>
+            <td>70</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
-            <td>th-has-data-cells</td>
-            <td>23</td>
+            <td>accesslint-085</td>
+            <td>21</td>
+            <td>form_label_unique</td>
+            <td>42</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
-            <td>definition-list</td>
-            <td>22</td>
+            <td>accesslint-049</td>
+            <td>19</td>
+            <td>aria_parent_required</td>
+            <td>41</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>table_caption_empty</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>table_scope_valid</td>
+            <td>1</td>
           </tr>
         </tbody>
       </table>
@@ -113,7 +145,7 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 578 sites</h3>
+    <h3>All three: 203 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -123,6 +155,118 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.arhaus.com</td>
+            <td>aria-required-parent</td>
+            <td>11</td>
+            <td>accesslint-061</td>
+            <td>22</td>
+            <td>aria_parent_required</td>
+            <td>11</td>
+          </tr>
+          <tr>
+            <td>https://dapurpurnama.com</td>
+            <td>list</td>
+            <td>7</td>
+            <td>accesslint-046</td>
+            <td>7</td>
+            <td>table_headers_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.rkguns.com</td>
+            <td>aria-required-children, list</td>
+            <td>4</td>
+            <td>accesslint-046, accesslint-048, accesslint-060</td>
+            <td>10</td>
+            <td>fieldset_label_valid</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://converse.co.jp</td>
+            <td>listitem</td>
+            <td>8</td>
+            <td>accesslint-046</td>
+            <td>1</td>
+            <td>aria_hidden_nontabbable</td>
+            <td>15</td>
+          </tr>
+          <tr>
+            <td>https://www.kurokawaonsen.or.jp</td>
+            <td>definition-list, dlitem</td>
+            <td>4</td>
+            <td>accesslint-048, accesslint-049</td>
+            <td>2</td>
+            <td>input_checkboxes_grouped</td>
+            <td>39</td>
+          </tr>
+          <tr>
+            <td>https://coo-premium-online.com</td>
+            <td>dlitem, list, listitem</td>
+            <td>77</td>
+            <td>accesslint-046, accesslint-047</td>
+            <td>2</td>
+            <td>aria_hidden_nontabbable</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>https://www.drlumbar.hu</td>
+            <td>aria-required-parent</td>
+            <td>1</td>
+            <td>accesslint-046, accesslint-047, accesslint-061</td>
+            <td>29</td>
+            <td>aria_hidden_nontabbable, aria_parent_required</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>https://www.ulefone.com</td>
+            <td>list</td>
+            <td>23</td>
+            <td>accesslint-046</td>
+            <td>28</td>
+            <td>aria_hidden_nontabbable</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://theloudhouse.fandom.com</td>
+            <td>aria-required-children, listitem</td>
+            <td>4</td>
+            <td>accesslint-060</td>
+            <td>1</td>
+            <td>table_headers_exists</td>
+            <td>61</td>
+          </tr>
+          <tr>
+            <td>https://www.womanandhome.com</td>
+            <td>listitem</td>
+            <td>1</td>
+            <td>accesslint-046, accesslint-047</td>
+            <td>11</td>
+            <td>label_ref_valid</td>
+            <td>2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>193 more not shown.</p>
+
+    <h3>Two of three: 459 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
@@ -130,78 +274,98 @@
             <td>https://www.letras.com</td>
             <td>list</td>
             <td>3</td>
-            <td>list</td>
+            <td>accesslint-046</td>
             <td>3</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.yasyadong.tv</td>
             <td>aria-required-children, listitem</td>
             <td>13</td>
-            <td>aria-required-children</td>
+            <td>accesslint-060</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://about.usps.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-061</td>
+            <td>64</td>
+            <td>aria_parent_required</td>
+            <td>64</td>
+          </tr>
+          <tr>
+            <td>https://www.honda2wheelersindia.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-046</td>
+            <td>10</td>
+            <td>table_headers_related</td>
+            <td>269</td>
+          </tr>
+          <tr>
+            <td>https://yugioh.fandom.com</td>
+            <td>definition-list</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>table_headers_exists</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>https://k.3sk.media</td>
+            <td>listitem</td>
+            <td>4</td>
+            <td>accesslint-046, accesslint-060</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://eto.szerencsejatek.hu</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-060</td>
+            <td>1</td>
+            <td>label_ref_valid</td>
             <td>2</td>
           </tr>
           <tr>
-            <td>https://www.arhaus.com</td>
-            <td>aria-required-parent</td>
-            <td>11</td>
-            <td>aria-required-parent</td>
-            <td>22</td>
+            <td>https://shop.wanchan-life.jp</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-085, accesslint-086</td>
+            <td>5</td>
+            <td>table_headers_exists, table_headers_related</td>
+            <td>7</td>
           </tr>
           <tr>
-            <td>https://converse.co.jp</td>
-            <td>listitem</td>
-            <td>8</td>
-            <td>list</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://m.zhipin.com</td>
-            <td>definition-list, list</td>
-            <td>28</td>
-            <td>list</td>
+            <td>https://www.luisaworld.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-047</td>
+            <td>7</td>
+            <td>input_checkboxes_grouped</td>
             <td>2</td>
           </tr>
           <tr>
-            <td>https://skillsider.pk</td>
-            <td>dlitem, list</td>
-            <td>7</td>
-            <td>list, dlitem</td>
-            <td>7</td>
-          </tr>
-          <tr>
-            <td>https://www.nicematin.com</td>
-            <td>list, listitem</td>
-            <td>5</td>
-            <td>list, listitem</td>
-            <td>5</td>
-          </tr>
-          <tr>
-            <td>https://cmhelpline.mp.gov.in</td>
-            <td>aria-required-children</td>
+            <td>https://www.mijnmedicijn.nl</td>
+            <td>aria-required-parent, list</td>
+            <td>2</td>
+            <td>accesslint-046</td>
             <td>1</td>
-            <td>aria-required-children</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://www.drlumbar.hu</td>
-            <td>aria-required-parent</td>
-            <td>1</td>
-            <td>list, listitem, aria-required-parent</td>
-            <td>29</td>
-          </tr>
-          <tr>
-            <td>https://www.womanandhome.com</td>
-            <td>listitem</td>
-            <td>1</td>
-            <td>list, listitem</td>
-            <td>11</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>568 more not shown.</p>
+    <p>449 more not shown.</p>
 
-    <h3>axe-only: 105 sites</h3>
+    <h3>axe-only: 55 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -211,6 +375,8 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
@@ -220,11 +386,6 @@
             <td>9</td>
             <td>&mdash;</td>
             <td>0</td>
-          </tr>
-          <tr>
-            <td>https://yugioh.fandom.com</td>
-            <td>definition-list</td>
-            <td>5</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -234,46 +395,42 @@
             <td>4</td>
             <td>&mdash;</td>
             <td>0</td>
-          </tr>
-          <tr>
-            <td>https://cellgenic.com</td>
-            <td>aria-required-parent</td>
-            <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://ripslyme.com</td>
+            <td>https://www.farmacistipreparatori.it</td>
             <td>listitem</td>
-            <td>7</td>
+            <td>9</td>
+            <td>&mdash;</td>
+            <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://www.levante-emv.com</td>
-            <td>aria-required-children</td>
+            <td>https://www.redemption.news</td>
+            <td>definition-list</td>
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
-          </tr>
-          <tr>
-            <td>https://emulation.gametechwiki.com</td>
-            <td>definition-list</td>
-            <td>3</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
           <tr>
-            <td>https://shop.clubjt.jp</td>
-            <td>list</td>
-            <td>2</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://casecoach.com</td>
-            <td>aria-required-parent</td>
+            <td>https://www.virustotal.com</td>
+            <td>aria-required-children, listitem</td>
             <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.ishifukushop.com</td>
+            <td>list</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -283,13 +440,42 @@
             <td>14</td>
             <td>&mdash;</td>
             <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.nukumorinoouchi.com</td>
+            <td>definition-list</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://market.591.com.tw</td>
+            <td>aria-required-children, definition-list</td>
+            <td>11</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.flormiss.com</td>
+            <td>list</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>95 more not shown.</p>
+    <p>45 more not shown.</p>
 
-    <h3>@accesslint/core only: 359 sites</h3>
+    <h3>@accesslint/core only: 211 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -299,6 +485,8 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
@@ -306,78 +494,210 @@
             <td>https://ph.search.yahoo.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-required-children</td>
+            <td>accesslint-060</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://vglive.vg.no</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-046</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.bitunix.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>td-has-header</td>
+            <td>accesslint-086</td>
             <td>1</td>
-          </tr>
-          <tr>
-            <td>https://about.usps.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-required-parent</td>
-            <td>64</td>
           </tr>
           <tr>
-            <td>https://www.honda2wheelersindia.com</td>
+            <td>https://www.agroads.com.ar</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>list, td-has-header</td>
-            <td>11</td>
+            <td>accesslint-061</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://m.bat688.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>th-has-data-cells</td>
+            <td>accesslint-085</td>
             <td>3</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.deandeluca.co.jp</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>dlitem, definition-list</td>
+            <td>accesslint-048, accesslint-049</td>
             <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://seanslt.pro</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>listitem</td>
+            <td>accesslint-047</td>
             <td>11</td>
-          </tr>
-          <tr>
-            <td>https://www.uszcn.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>definition-list</td>
-            <td>1</td>
           </tr>
           <tr>
             <td>https://www.comuniate.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-required-children</td>
+            <td>accesslint-060</td>
             <td>4</td>
-          </tr>
-          <tr>
-            <td>https://calendar.gameiroiro.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>td-has-header</td>
+          </tr>
+          <tr>
+            <td>https://web.gekisaka.jp</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-046</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://5622-34.portal.athenahealth.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-086</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>349 more not shown.</p>
+    <p>201 more not shown.</p>
 
-    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+    <h3>IBM EA only: 642 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://www.kleinanzeigen.de</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_hidden_nontabbable</td>
+            <td>13</td>
+          </tr>
+          <tr>
+            <td>https://www.rtp.pt</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>label_ref_valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://ko.wikipedia.org</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>input_checkboxes_grouped</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://proxer.me</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>table_headers_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.piraeusbank.gr</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>form_label_unique</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://astronet.borsonline.hu</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>fieldset_label_valid, label_ref_valid</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://www.betpro360.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>table_headers_related, table_headers_exists</td>
+            <td>71</td>
+          </tr>
+          <tr>
+            <td>https://www.hornbach.nl</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_hidden_nontabbable, label_ref_valid</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td>https://www.infojobs.net</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>label_ref_valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://ekantipur.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>input_checkboxes_grouped</td>
+            <td>4</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>632 more not shown.</p>
+
+    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
+
+    <p class="bench-updated">Last updated <time datetime="2026-02-16">February 16, 2026</time></p>
   </article>
 </main>
 

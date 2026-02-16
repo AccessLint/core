@@ -4,21 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 4.1.2: Name, Role, Value — a11y agent</title>
-<meta name="description" content="WCAG 4.1.2: Name, Role, Value: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/core/styles.css">
+<meta name="description" content="WCAG 4.1.2: Name, Role, Value: comparison of axe-core, @accesslint/core, and IBM Equal Access detection across sites.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <a class="logo" href="/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
-      <li><a href="https://a11yagent.ai">a11y agent</a></li>
-      <li><a href="https://app.accesslint.com">CI</a></li>
     </ul>
   </nav>
 </header>
@@ -29,20 +27,20 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>2,578</dt>
-        <dd>both tools</dd>
+        <dt>2,321</dt>
+        <dd>all three tools</dd>
       </div>
       <div>
-        <dt>52</dt>
-        <dd>axe-only</dd>
+        <dt>263</dt>
+        <dd>two of three</dd>
       </div>
       <div>
-        <dt>340</dt>
-        <dd>@accesslint/core only</dd>
+        <dt>424</dt>
+        <dd>one tool only</dd>
       </div>
       <div>
-        <dt>91%</dt>
-        <dd>agreement</dd>
+        <dt>3,008</dt>
+        <dd>any tool</dd>
       </div>
     </dl>
 
@@ -56,164 +54,226 @@
             <th>Sites</th>
             <th>@accesslint/core rule</th>
             <th>Sites</th>
+            <th>IBM EA rule</th>
+            <th>Sites</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>link-name</td>
-            <td>2045</td>
-            <td>link-name</td>
-            <td>2044</td>
+            <td>1850</td>
+            <td>accesslint-077</td>
+            <td>1846</td>
+            <td>a_text_purpose</td>
+            <td>1802</td>
           </tr>
           <tr>
             <td>button-name</td>
-            <td>727</td>
-            <td>button-name</td>
-            <td>787</td>
+            <td>646</td>
+            <td>accesslint-075</td>
+            <td>708</td>
+            <td>input_label_exists</td>
+            <td>1185</td>
           </tr>
           <tr>
             <td>label</td>
-            <td>405</td>
-            <td>label</td>
-            <td>669</td>
+            <td>374</td>
+            <td>accesslint-020</td>
+            <td>616</td>
+            <td>frame_title_exists</td>
+            <td>596</td>
           </tr>
           <tr>
             <td>frame-title</td>
-            <td>290</td>
-            <td>aria-allowed-role</td>
-            <td>489</td>
+            <td>263</td>
+            <td>accesslint-074</td>
+            <td>530</td>
+            <td>aria_eventhandler_role_valid</td>
+            <td>409</td>
           </tr>
           <tr>
             <td>nested-interactive</td>
-            <td>209</td>
-            <td>frame-title</td>
-            <td>408</td>
+            <td>191</td>
+            <td>accesslint-059</td>
+            <td>420</td>
+            <td>aria_role_valid</td>
+            <td>361</td>
           </tr>
           <tr>
             <td>select-name</td>
-            <td>204</td>
-            <td>nested-interactive</td>
-            <td>387</td>
+            <td>180</td>
+            <td>accesslint-004</td>
+            <td>368</td>
+            <td>aria_id_unique</td>
+            <td>356</td>
           </tr>
           <tr>
             <td>aria-allowed-attr</td>
-            <td>184</td>
-            <td>aria-hidden-focus</td>
-            <td>364</td>
+            <td>175</td>
+            <td>accesslint-029</td>
+            <td>358</td>
+            <td>aria_hidden_nontabbable</td>
+            <td>303</td>
           </tr>
           <tr>
             <td>aria-hidden-focus</td>
-            <td>177</td>
-            <td>duplicate-id-aria</td>
-            <td>269</td>
+            <td>145</td>
+            <td>accesslint-063</td>
+            <td>303</td>
+            <td>aria_widget_labelled</td>
+            <td>193</td>
           </tr>
           <tr>
             <td>aria-input-field-name</td>
-            <td>128</td>
-            <td>presentation-role-conflict</td>
-            <td>188</td>
+            <td>117</td>
+            <td>accesslint-089</td>
+            <td>235</td>
+            <td>label_content_exists</td>
+            <td>192</td>
           </tr>
           <tr>
             <td>aria-prohibited-attr</td>
-            <td>94</td>
-            <td>frame-title-unique</td>
-            <td>128</td>
+            <td>78</td>
+            <td>accesslint-073</td>
+            <td>168</td>
+            <td>aria_descendant_valid</td>
+            <td>41</td>
           </tr>
           <tr>
             <td>aria-valid-attr-value</td>
-            <td>86</td>
-            <td>aria-dialog-name</td>
-            <td>102</td>
+            <td>77</td>
+            <td>accesslint-005</td>
+            <td>130</td>
+            <td>aria_role_allowed</td>
+            <td>32</td>
           </tr>
           <tr>
             <td>input-button-name</td>
             <td>34</td>
-            <td>aria-required-attr</td>
-            <td>77</td>
+            <td>accesslint-069</td>
+            <td>95</td>
+            <td>aria_attribute_required</td>
+            <td>23</td>
+          </tr>
+          <tr>
+            <td>aria-roles</td>
+            <td>33</td>
+            <td>accesslint-057</td>
+            <td>61</td>
+            <td>aria_attribute_allowed</td>
+            <td>22</td>
           </tr>
           <tr>
             <td>aria-command-name</td>
-            <td>33</td>
-            <td>aria-roles</td>
-            <td>59</td>
+            <td>30</td>
+            <td>accesslint-054</td>
+            <td>51</td>
+            <td>list_children_valid</td>
+            <td>19</td>
           </tr>
           <tr>
             <td>aria-toggle-field-name</td>
-            <td>27</td>
-            <td>select-name</td>
-            <td>51</td>
-          </tr>
-          <tr>
-            <td>aria-roles</td>
             <td>23</td>
-            <td>aria-input-field-name</td>
-            <td>49</td>
+            <td>accesslint-023</td>
+            <td>46</td>
+            <td>combobox_design_valid</td>
+            <td>11</td>
           </tr>
           <tr>
             <td>aria-required-attr</td>
-            <td>21</td>
-            <td>input-button-name</td>
-            <td>47</td>
-          </tr>
-          <tr>
-            <td>summary-name</td>
-            <td>9</td>
-            <td>aria-prohibited-attr</td>
-            <td>39</td>
+            <td>15</td>
+            <td>accesslint-065</td>
+            <td>43</td>
+            <td>combobox_haspopup_valid</td>
+            <td>10</td>
           </tr>
           <tr>
             <td>input-image-alt</td>
-            <td>9</td>
-            <td>aria-command-name</td>
-            <td>36</td>
+            <td>8</td>
+            <td>accesslint-022</td>
+            <td>41</td>
+            <td>combobox_popup_reference</td>
+            <td>10</td>
           </tr>
           <tr>
             <td>aria-valid-attr</td>
             <td>8</td>
-            <td>aria-progressbar-name</td>
+            <td>accesslint-064</td>
+            <td>37</td>
+            <td>aria_attribute_value_valid</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>summary-name</td>
+            <td>7</td>
+            <td>accesslint-072</td>
             <td>35</td>
+            <td>aria_activedescendant_valid</td>
+            <td>3</td>
           </tr>
           <tr>
             <td>area-alt</td>
-            <td>2</td>
-            <td>summary-name</td>
-            <td>35</td>
-          </tr>
-          <tr>
-            <td>aria-tooltip-name</td>
             <td>1</td>
-            <td>aria-valid-attr</td>
-            <td>29</td>
+            <td>accesslint-068</td>
+            <td>32</td>
+            <td>table_aria_descendants</td>
+            <td>2</td>
           </tr>
           <tr>
             <td>aria-deprecated-role</td>
             <td>1</td>
-            <td>aria-valid-attr-value</td>
-            <td>23</td>
+            <td>accesslint-076</td>
+            <td>29</td>
+            <td>aria_attribute_conflict</td>
+            <td>2</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
-            <td>aria-tooltip-name</td>
-            <td>11</td>
+            <td>accesslint-055</td>
+            <td>28</td>
+            <td></td>
+            <td></td>
           </tr>
           <tr>
             <td></td>
             <td></td>
-            <td>input-image-alt</td>
+            <td>accesslint-056</td>
+            <td>18</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>accesslint-070</td>
             <td>9</td>
+            <td></td>
+            <td></td>
           </tr>
           <tr>
             <td></td>
             <td></td>
-            <td>area-alt</td>
-            <td>3</td>
+            <td>accesslint-013</td>
+            <td>8</td>
+            <td></td>
+            <td></td>
           </tr>
           <tr>
             <td></td>
             <td></td>
-            <td>aria-toggle-field-name</td>
-            <td>1</td>
+            <td>accesslint-066</td>
+            <td>2</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>accesslint-016</td>
+            <td>2</td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
@@ -221,7 +281,7 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 2578 sites</h3>
+    <h3>All three: 2321 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -231,6 +291,8 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
@@ -238,78 +300,98 @@
             <td>https://www.shaalaa.com</td>
             <td>link-name</td>
             <td>3</td>
-            <td>link-name</td>
+            <td>accesslint-074, accesslint-077</td>
+            <td>5</td>
+            <td>a_text_purpose</td>
             <td>3</td>
           </tr>
           <tr>
-            <td>https://m.bild.de</td>
-            <td>frame-title, link-name</td>
-            <td>34</td>
-            <td>frame-title, aria-dialog-name, link-name</td>
-            <td>36</td>
+            <td>https://www.kleinanzeigen.de</td>
+            <td>aria-hidden-focus</td>
+            <td>3</td>
+            <td>accesslint-063</td>
+            <td>13</td>
+            <td>aria_hidden_nontabbable</td>
+            <td>13</td>
           </tr>
           <tr>
             <td>https://asunnot.oikotie.fi</td>
             <td>aria-allowed-attr, aria-valid-attr-value, button-name, select-name</td>
             <td>6</td>
-            <td>label, aria-input-field-name, aria-dialog-name, button-name, duplicate-id-aria</td>
-            <td>6</td>
+            <td>accesslint-020, accesslint-029, accesslint-065, accesslint-069, accesslint-074, accesslint-075, accesslint-089</td>
+            <td>18</td>
+            <td>input_label_exists, combobox_design_valid, aria_id_unique</td>
+            <td>9</td>
           </tr>
           <tr>
             <td>https://futbollibreplay.pe</td>
             <td>select-name</td>
             <td>1</td>
-            <td>label</td>
+            <td>accesslint-020</td>
+            <td>1</td>
+            <td>input_label_exists</td>
             <td>1</td>
           </tr>
           <tr>
             <td>https://www.infojobs.net</td>
             <td>aria-input-field-name, aria-valid-attr-value, label, link-name</td>
             <td>4</td>
-            <td>label, aria-input-field-name, link-name</td>
+            <td>accesslint-020, accesslint-065, accesslint-077</td>
             <td>4</td>
-          </tr>
-          <tr>
-            <td>https://aniworld.to</td>
-            <td>nested-interactive</td>
-            <td>5</td>
-            <td>aria-allowed-role, presentation-role-conflict</td>
-            <td>10</td>
+            <td>a_text_purpose, input_label_exists, aria_id_unique</td>
+            <td>4</td>
           </tr>
           <tr>
             <td>https://www.letras.com</td>
             <td>label</td>
             <td>1</td>
-            <td>label, nested-interactive</td>
+            <td>accesslint-020, accesslint-029, accesslint-074</td>
+            <td>5</td>
+            <td>label_content_exists, input_label_exists</td>
             <td>3</td>
           </tr>
           <tr>
             <td>https://www.yasyadong.tv</td>
             <td>button-name, link-name</td>
             <td>2</td>
-            <td>button-name, link-name</td>
+            <td>accesslint-075, accesslint-077</td>
             <td>2</td>
+            <td>a_text_purpose, input_label_exists, aria_eventhandler_role_valid, aria_id_unique</td>
+            <td>5</td>
           </tr>
           <tr>
-            <td>https://www.nit.pt</td>
-            <td>aria-hidden-focus, button-name, frame-title, link-name</td>
-            <td>47</td>
-            <td>frame-title, aria-hidden-focus, button-name, link-name</td>
-            <td>84</td>
+            <td>https://www.iqair.com</td>
+            <td>nested-interactive</td>
+            <td>6</td>
+            <td>accesslint-029, accesslint-069, accesslint-074</td>
+            <td>21</td>
+            <td>aria_id_unique</td>
+            <td>1</td>
           </tr>
           <tr>
             <td>https://web.gekisaka.jp</td>
             <td>aria-valid-attr-value, button-name, link-name, nested-interactive</td>
             <td>16</td>
-            <td>input-button-name, aria-allowed-role, presentation-role-conflict, button-name, link-name</td>
-            <td>29</td>
+            <td>accesslint-023, accesslint-059, accesslint-073, accesslint-074, accesslint-075, accesslint-077</td>
+            <td>41</td>
+            <td>input_label_exists, aria_id_unique, aria_role_valid, aria_widget_labelled</td>
+            <td>16</td>
+          </tr>
+          <tr>
+            <td>https://www.jobs-beim-staat.de</td>
+            <td>aria-prohibited-attr, link-name, nested-interactive</td>
+            <td>11</td>
+            <td>accesslint-020, accesslint-029, accesslint-065, accesslint-066, accesslint-074, accesslint-075, accesslint-077</td>
+            <td>21</td>
+            <td>a_text_purpose, aria_eventhandler_role_valid, combobox_design_valid, input_label_exists, aria_id_unique, aria_descendant_valid</td>
+            <td>19</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>2568 more not shown.</p>
+    <p>2311 more not shown.</p>
 
-    <h3>axe-only: 52 sites</h3>
+    <h3>Two of three: 263 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -319,13 +401,89 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>https://openai.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-063, accesslint-069</td>
+            <td>4</td>
+            <td>label_content_exists, aria_id_unique, frame_title_exists</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>https://www.3cat.cat</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-054, accesslint-074</td>
+            <td>50</td>
+            <td>aria_role_valid, aria_role_allowed</td>
+            <td>34</td>
+          </tr>
+          <tr>
+            <td>https://vglive.vg.no</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-075</td>
+            <td>20</td>
+            <td>input_label_exists</td>
+            <td>20</td>
+          </tr>
+          <tr>
+            <td>https://about.usps.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-059</td>
+            <td>1</td>
+            <td>aria_role_valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://mayahenryjewelers.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-020, accesslint-022, accesslint-059, accesslint-089</td>
+            <td>19</td>
+            <td>aria_role_valid, aria_id_unique, input_label_exists, label_content_exists</td>
+            <td>21</td>
+          </tr>
+          <tr>
+            <td>https://macanempire10.xyz</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-029, accesslint-074</td>
+            <td>12</td>
+            <td>frame_title_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://e28bd8.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-004</td>
+            <td>1</td>
+            <td>frame_title_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
             <td>https://www.virustotal.com</td>
             <td>aria-command-name, link-name</td>
             <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>input_label_exists</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>https://portswigger.net</td>
+            <td>summary-name</td>
+            <td>1</td>
+            <td>accesslint-029, accesslint-074, accesslint-076</td>
+            <td>59</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -335,69 +493,15 @@
             <td>38</td>
             <td>&mdash;</td>
             <td>0</td>
-          </tr>
-          <tr>
-            <td>https://onboarding.santander.com.mx</td>
-            <td>frame-title</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.thestudypath.com</td>
-            <td>aria-allowed-attr</td>
-            <td>4</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://rickeystokesnews.com</td>
-            <td>link-name</td>
-            <td>2</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://mega888download.me</td>
-            <td>aria-hidden-focus</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.intelligence-rh.com</td>
-            <td>aria-prohibited-attr, link-name</td>
-            <td>9</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://conectados.com.co</td>
-            <td>aria-valid-attr-value</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://e4.h5strikers.com</td>
-            <td>nested-interactive</td>
-            <td>10</td>
-            <td>&mdash;</td>
-            <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.aramcoestaciones.cl</td>
-            <td>label</td>
-            <td>1</td>
-            <td>&mdash;</td>
-            <td>0</td>
+            <td>aria_eventhandler_role_valid, a_text_purpose, input_label_exists</td>
+            <td>61</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>42 more not shown.</p>
+    <p>253 more not shown.</p>
 
-    <h3>@accesslint/core only: 340 sites</h3>
+    <h3>axe-only: 15 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -407,85 +511,329 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>https://www.kleinanzeigen.de</td>
+            <td>https://www.thestudypath.com</td>
+            <td>aria-allowed-attr</td>
+            <td>4</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>frame-title, aria-hidden-focus</td>
-            <td>16</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
-            <td>https://openai.com</td>
+            <td>https://softnetpay.ng</td>
+            <td>aria-prohibited-attr</td>
+            <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-hidden-focus, aria-dialog-name</td>
-            <td>4</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
+          <tr>
+            <td>https://www.5gbet85.com</td>
+            <td>aria-roles</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://apk4all.com.im</td>
+            <td>frame-title</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.asahibus.jp</td>
+            <td>select-name</td>
+            <td>4</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://123-movies.vc</td>
+            <td>aria-allowed-attr</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.espoonasunnot.fi</td>
+            <td>aria-prohibited-attr</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://80win11.com</td>
+            <td>aria-roles</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://mygamatoto.com</td>
+            <td>aria-allowed-attr, aria-prohibited-attr</td>
+            <td>5</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://r4.err.ee</td>
+            <td>aria-prohibited-attr</td>
+            <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>5 more not shown.</p>
+
+    <h3>@accesslint/core only: 151 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
           <tr>
             <td>https://ph.search.yahoo.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-dialog-name, link-name</td>
+            <td>accesslint-069, accesslint-077</td>
             <td>2</td>
-          </tr>
-          <tr>
-            <td>https://www.3cat.cat</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-roles</td>
-            <td>33</td>
           </tr>
           <tr>
-            <td>https://www.americanas.com.br</td>
+            <td>https://lightingport.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>nested-interactive</td>
+            <td>accesslint-029, accesslint-074</td>
+            <td>8</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.free-anatomy-quiz.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-005</td>
             <td>2</td>
-          </tr>
-          <tr>
-            <td>https://about.usps.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-allowed-role</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>https://mayahenryjewelers.com</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>label, select-name, aria-allowed-role, duplicate-id-aria</td>
-            <td>19</td>
-          </tr>
-          <tr>
-            <td>https://www.reddybook.club</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>link-name</td>
-            <td>1</td>
           </tr>
           <tr>
             <td>https://theintactone.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-prohibited-attr, presentation-role-conflict</td>
+            <td>accesslint-072, accesslint-073</td>
             <td>2</td>
-          </tr>
-          <tr>
-            <td>https://www.xmorex.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>aria-valid-attr</td>
+          </tr>
+          <tr>
+            <td>https://www.sanity.io</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-020</td>
+            <td>3</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.facciabuco.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-077</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://antiphishing.biz</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-074</td>
+            <td>4</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.concordia.ca</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-059, accesslint-072, accesslint-073, accesslint-089</td>
+            <td>136</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.deandeluca.co.jp</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-022</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://poiskm.net</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-056</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>141 more not shown.</p>
+
+    <h3>IBM EA only: 258 sites</h3>
+    <div class="bench-table-wrap">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Site</th>
+            <th>axe rules</th>
+            <th>axe nodes</th>
+            <th>@accesslint/core rules</th>
+            <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>https://imgsrc.ru</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_eventhandler_role_valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://betjili365.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>frame_title_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.jagranjosh.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>label_content_exists</td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td>https://www.rtp.pt</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_role_valid</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://xnxxxxxxarab.coupons</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_id_unique</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://minhaloja.eudora.com.br</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>input_label_exists</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://jeecup.admissions.nic.in</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>combobox_popup_reference</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td>https://www.floridastateparks.org</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_widget_labelled</td>
+            <td>8</td>
+          </tr>
+          <tr>
+            <td>https://www.radioluisteren.fm</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>a_text_purpose, aria_eventhandler_role_valid</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>https://auth.iu.org</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>aria_attribute_allowed</td>
             <td>5</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>330 more not shown.</p>
+    <p>248 more not shown.</p>
 
-    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
+
+    <p class="bench-updated">Last updated <time datetime="2026-02-16">February 16, 2026</time></p>
   </article>
 </main>
 

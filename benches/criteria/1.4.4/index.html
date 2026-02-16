@@ -4,21 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>WCAG 1.4.4: Resize Text — a11y agent</title>
-<meta name="description" content="WCAG 1.4.4: Resize Text: detailed comparison of axe-core and @accesslint/core detection across 5,000 sites.">
-<link rel="icon" href="/core/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/core/styles.css">
+<meta name="description" content="WCAG 1.4.4: Resize Text: comparison of axe-core, @accesslint/core, and IBM Equal Access detection across sites.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <header>
   <nav class="site-nav" aria-label="Main">
-    <a class="logo" href="/core/benches/">@accesslint/core</a>
+    <a class="logo" href="/benches/">@accesslint/core</a>
     <ul>
-      <li><a href="/core/benches/" aria-current="true">Benchmarks</a></li>
+      <li><a href="/benches/" aria-current="true">Benchmarks</a></li>
       <li><a href="https://github.com/accesslint/core">GitHub</a></li>
-      <li><a href="https://a11yagent.ai">a11y agent</a></li>
-      <li><a href="https://app.accesslint.com">CI</a></li>
     </ul>
   </nav>
 </header>
@@ -29,20 +27,20 @@
 
     <dl class="bench-stats">
       <div>
-        <dt>909</dt>
-        <dd>both tools</dd>
+        <dt>0</dt>
+        <dd>all three tools</dd>
       </div>
       <div>
-        <dt>39</dt>
-        <dd>axe-only</dd>
+        <dt>826</dt>
+        <dd>two of three</dd>
       </div>
       <div>
-        <dt>6</dt>
-        <dd>@accesslint/core only</dd>
+        <dt>43</dt>
+        <dd>one tool only</dd>
       </div>
       <div>
-        <dt>99%</dt>
-        <dd>agreement</dd>
+        <dt>869</dt>
+        <dd>any tool</dd>
       </div>
     </dl>
 
@@ -56,14 +54,18 @@
             <th>Sites</th>
             <th>@accesslint/core rule</th>
             <th>Sites</th>
+            <th>IBM EA rule</th>
+            <th>Sites</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>meta-viewport</td>
-            <td>948</td>
-            <td>meta-viewport</td>
-            <td>915</td>
+            <td>863</td>
+            <td>accesslint-006</td>
+            <td>832</td>
+            <td></td>
+            <td></td>
           </tr>
         </tbody>
       </table>
@@ -71,7 +73,10 @@
 
     <h2>Examples</h2>
 
-    <h3>Both: 909 sites</h3>
+<h3>All three: 0 sites</h3>
+<p>No sites in this bucket.</p>
+
+    <h3>Two of three: 826 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -81,6 +86,8 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
@@ -88,78 +95,98 @@
             <td>https://www.shaalaa.com</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.rtp.pt</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.infojobs.net</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://yts.lt</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://tamil.mykhel.com</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://giphy.com</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.flo.com.tr</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://reserve.489ban.net</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.novibet.bet.br</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.spox.com</td>
             <td>meta-viewport</td>
             <td>1</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>899 more not shown.</p>
+    <p>816 more not shown.</p>
 
-    <h3>axe-only: 39 sites</h3>
+    <h3>axe-only: 37 sites</h3>
     <div class="bench-table-wrap">
       <table class="bench-table">
         <thead>
@@ -169,6 +196,8 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
@@ -178,11 +207,15 @@
             <td>2</td>
             <td>&mdash;</td>
             <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://pocha3.com</td>
             <td>meta-viewport</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -192,11 +225,15 @@
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://sistema.eetad.com.br</td>
             <td>meta-viewport</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -206,6 +243,8 @@
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://pkam.kemkes.go.id</td>
@@ -213,11 +252,6 @@
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
-          </tr>
-          <tr>
-            <td>https://www.seasonmade.com</td>
-            <td>meta-viewport</td>
-            <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -227,11 +261,15 @@
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://macanslot138ah.store</td>
             <td>meta-viewport</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
             <td>&mdash;</td>
             <td>0</td>
           </tr>
@@ -241,11 +279,22 @@
             <td>1</td>
             <td>&mdash;</td>
             <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://www.gpsmele.it</td>
+            <td>meta-viewport</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p>29 more not shown.</p>
+    <p>27 more not shown.</p>
 
     <h3>@accesslint/core only: 6 sites</h3>
     <div class="bench-table-wrap">
@@ -257,56 +306,75 @@
             <th>axe nodes</th>
             <th>@accesslint/core rules</th>
             <th>@accesslint/core nodes</th>
+            <th>IBM EA rules</th>
+            <th>IBM EA nodes</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>https://www.voyce.me</td>
-            <td>&mdash;</td>
-            <td>0</td>
-            <td>meta-viewport</td>
-            <td>1</td>
-          </tr>
-          <tr>
             <td>https://www.hanjin.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>2</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.stevenhills.bet</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://kurtisofjaipur.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://www.sunsail.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
           <tr>
             <td>https://juwelr.com</td>
             <td>&mdash;</td>
             <td>0</td>
-            <td>meta-viewport</td>
+            <td>accesslint-006</td>
             <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>https://app.shiftkey.com</td>
+            <td>&mdash;</td>
+            <td>0</td>
+            <td>accesslint-006</td>
+            <td>1</td>
+            <td>&mdash;</td>
+            <td>0</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <p><a href="/core/benches/">&larr; Back to benchmarks</a></p>
+<h3>IBM EA only: 0 sites</h3>
+<p>No sites in this bucket.</p>
+
+    <p><a href="/benches/">&larr; Back to benchmarks</a></p>
+
+    <p class="bench-updated">Last updated <time datetime="2026-02-16">February 16, 2026</time></p>
   </article>
 </main>
 
