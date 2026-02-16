@@ -22,7 +22,7 @@
     "test": "vitest run",
     "bench": "vitest bench",
     "test:memory": "vitest run --config vite.memory.config.ts",
-    "act:download": "npx tsx src/act/download-fixtures.ts",
+    "act:download": "scripts/download-act-fixtures.sh && npx tsx src/act/download-fixtures.ts",
     "test:act": "vitest run src/act/act.test.ts",
     "act:check": "npx tsx src/act/check-conformance.ts",
     "test:browser": "npx playwright test",
