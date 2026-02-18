@@ -50,6 +50,10 @@ function buildSelectorWithinRoot(el: Element): string {
 
   const root = el.getRootNode() as Document | ShadowRoot;
   const docEl = root instanceof ShadowRoot ? null : (root as Document).documentElement;
+
+  // The document element itself — just use its tag name (unique by definition)
+  if (el === docEl) return el.tagName.toLowerCase();
+
   const parts: string[] = [];
   let current: Element | null = el;
 

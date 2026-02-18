@@ -11,6 +11,12 @@ describe("accesslint-080", () => {
     expect(htmlHasLang.run(doc)).toHaveLength(1);
   });
 
+  it("returns 'html' as the selector", () => {
+    const doc = makeDoc("<html><body></body></html>");
+    const violations = htmlHasLang.run(doc);
+    expect(violations[0].selector).toBe("html");
+  });
+
   it("passes with lang", () => {
     const doc = makeDoc('<html lang="en"><body></body></html>');
     expect(htmlHasLang.run(doc)).toHaveLength(0);
