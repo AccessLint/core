@@ -5,7 +5,7 @@
 
 Pure accessibility rule engine for WCAG auditing. 93 bundled rules (92 active by default) and zero browser dependencies.
 
-> Looking for CI? [AccessLint](https://app.accesslint.com) runs accessibility checks on every pull request and posts review comments directly on your GitHub PRs.
+> Looking for CI? [AccessLint](https://www.accesslint.com?ref=readme_core) runs accessibility checks on every pull request and posts review comments directly on your GitHub PRs.
 
 > Automated testing catches a meaningful subset of accessibility issues, but not all of them. You'll still need to test with assistive technologies and include people with disabilities in user research.
 
