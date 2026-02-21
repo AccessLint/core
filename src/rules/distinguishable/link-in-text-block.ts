@@ -153,7 +153,7 @@ export const linkInTextBlock: Rule = {
           `link color: ${hex(linkColor)} rgb(${linkColor.join(", ")}), ` +
           `surrounding text: ${hex(ctx.textColor)} rgb(${ctx.textColor.join(", ")}), ` +
           `ratio: ${ratio.toFixed(2)}:1`,
-        fix: { type: "suggest", suggestion: "Add text-decoration: underline to the link, or add a visible border-bottom. If relying on color contrast alone, ensure at least 3:1 ratio between the link color and surrounding text color." },
+        fix: { type: "suggest", suggestion: "Add text-decoration: underline to the link, or add a visible border-bottom. If relying on color contrast alone, ensure at least 3:1 ratio between the link color and surrounding text color." } as const,
       });
     }
 

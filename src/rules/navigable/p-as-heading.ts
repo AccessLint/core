@@ -47,7 +47,7 @@ export const pAsHeading: Rule = {
             html: getHtmlSnippet(p),
             impact: "serious" as const,
             message: "Paragraph appears to be styled as a heading. Use an h1-h6 element instead.",
-            fix: { type: "suggest", suggestion: "Replace the <p> element with the appropriate heading level (h1-h6) based on the document outline. Preserve the text content and move any inline styles to a CSS class on the new heading element." },
+            fix: { type: "suggest", suggestion: "Replace the <p> element with the appropriate heading level (h1-h6) based on the document outline. Preserve the text content and move any inline styles to a CSS class on the new heading element." } as const,
           });
         }
       }
