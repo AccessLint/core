@@ -1,6 +1,5 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { isAriaHidden } from "../utils/aria";
 import {
   getCachedComputedStyle,
   parseColor,
@@ -14,215 +13,21 @@ import {
   parseGradientStops,
   parseTextShadow,
   hasPseudoElementBackground,
+  rgbToHex,
+  getContrastWithShadow,
+  getAccumulatedOpacity,
 } from "../utils/color";
 import type { TextShadow } from "../utils/color";
-
-const NON_TEXT_TAGS = new Set([
-  "SCRIPT",
-  "STYLE",
-  "NOSCRIPT",
-  "TEMPLATE",
-  "IFRAME",
-  "OBJECT",
-  "EMBED",
-  "SVG",
-  "CANVAS",
-  "VIDEO",
-  "AUDIO",
-  "IMG",
-  "BR",
-  "HR",
-]);
-
-function rgbToHex([r, g, b]: [number, number, number]): string {
-  return "#" + [r, g, b].map((c) => c.toString(16).padStart(2, "0")).join("");
-}
-
-/**
- * Compute the effective contrast considering text shadows.
- * Uses the maximum of: fg-vs-bg, fg-vs-shadow, shadow-vs-bg for each shadow.
- */
-function getContrastWithShadow(
-  fg: [number, number, number],
-  bg: [number, number, number],
-  shadows: TextShadow[],
-): number {
-  const fgLum = getLuminance(fg[0], fg[1], fg[2]);
-  const bgLum = getLuminance(bg[0], bg[1], bg[2]);
-  let best = getContrastRatio(fgLum, bgLum);
-  for (const shadow of shadows) {
-    const sLum = getLuminance(shadow.color[0], shadow.color[1], shadow.color[2]);
-    best = Math.max(best, getContrastRatio(fgLum, sLum), getContrastRatio(sLum, bgLum));
-  }
-  return best;
-}
-
-function isDisabledFormElement(el: Element): boolean {
-  if (
-    el instanceof HTMLInputElement ||
-    el instanceof HTMLTextAreaElement ||
-    el instanceof HTMLSelectElement ||
-    el instanceof HTMLButtonElement
-  ) {
-    return el.disabled;
-  }
-  // fieldset[disabled] disables all descendants
-  if (el.closest("fieldset[disabled]")) return true;
-  // aria-disabled="true" on the element itself or an interactive role ancestor
-  if (el.getAttribute("aria-disabled") === "true") return true;
-  return false;
-}
-
-/** Check if a label's associated control is disabled. */
-function isLabelForDisabledControl(el: Element, doc: Document): boolean {
-  if (el.tagName !== "LABEL") return false;
-  const label = el as HTMLLabelElement;
-  // Explicit for= association
-  const forId = label.htmlFor;
-  if (forId) {
-    const target = doc.getElementById(forId);
-    if (target && (
-      (target as HTMLInputElement).disabled ||
-      target.getAttribute("aria-disabled") === "true"
-    )) return true;
-  }
-  // Implicit association (control nested inside label)
-  const control = label.querySelector("input, select, textarea, button");
-  if (control && (
-    (control as HTMLInputElement).disabled ||
-    control.getAttribute("aria-disabled") === "true"
-  )) return true;
-  // Label referencing an aria-disabled widget via for + aria-labelledby
-  const id = label.id;
-  if (id) {
-    const referenced = doc.querySelector(`[aria-labelledby~="${id}"][aria-disabled="true"]`);
-    if (referenced) return true;
-  }
-  return false;
-}
-
-function isVisuallyHidden(style: CSSStyleDeclaration): boolean {
-  // Classic sr-only / visuallyhidden: clip: rect(0 0 0 0)
-  // Computed format varies: "rect(0px, 0px, 0px, 0px)", "rect(0, 0, 0, 0)",
-  // "rect(0 0 0 0)" — extract numbers and check all are zero.
-  const clip = style.clip;
-  if (clip && clip.startsWith("rect(")) {
-    const nums = clip.match(/[\d.]+/g);
-    if (!nums || nums.every((n) => parseFloat(n) === 0)) return true;
-  }
-  // Modern equivalent: clip-path: inset(50%) or inset(100%)
-  const clipPath = style.clipPath;
-  if (clipPath === "inset(50%)" || clipPath === "inset(100%)") return true;
-  // Tiny box with overflow hidden (1px × 1px sr-only without clip)
-  if (style.overflow === "hidden" && style.position === "absolute") {
-    const w = parseFloat(style.width);
-    const h = parseFloat(style.height);
-    if (w <= 1 && h <= 1) return true;
-  }
-  return false;
-}
-
-function isHidden(el: Element): boolean {
-  if (isAriaHidden(el)) return true;
-  let current: Element | null = el;
-  while (current) {
-    const style = getCachedComputedStyle(current);
-    if (style.display === "none" || style.visibility === "hidden") return true;
-    if (isVisuallyHidden(style)) return true;
-    current = current.parentElement;
-  }
-  return false;
-}
-
-/**
- * Walk up the tree and multiply opacity values.
- * Returns the accumulated opacity (0–1).
- */
-function getAccumulatedOpacity(el: Element): number {
-  let opacity = 1;
-  let current: Element | null = el;
-  while (current) {
-    const style = getCachedComputedStyle(current);
-    const o = parseFloat(style.opacity);
-    if (!isNaN(o)) opacity *= o;
-    current = current.parentElement;
-  }
-  return opacity;
-}
-
-/**
- * Filter functions and their identity (no-op) values.  A CSS filter is a
- * no-op when every function evaluates to its identity value.  Dark-mode
- * plugins commonly set `filter: grayscale(0)` on `<html>` as a toggle
- * hook — this must not cause us to skip contrast checking.
- *
- * Identity = 0: grayscale, blur, hue-rotate, invert, sepia
- * Identity = 1: brightness, contrast, saturate, opacity
- */
-const FILTER_IDENTITY: Record<string, number> = {
-  grayscale: 0, blur: 0, "hue-rotate": 0, invert: 0, sepia: 0,
-  brightness: 1, contrast: 1, saturate: 1, opacity: 1,
-};
-
-function parseFilterArg(arg: string): number {
-  const num = parseFloat(arg);
-  if (isNaN(num)) return NaN;
-  // Percentage values: 100% → 1, 0% → 0
-  return arg.trim().endsWith("%") ? num / 100 : num;
-}
-
-const FILTER_FN_RE = /([a-z-]+)\(([^)]*)\)/g;
-
-function isNoopFilter(value: string): boolean {
-  let match: RegExpExecArray | null;
-  let matched = false;
-  FILTER_FN_RE.lastIndex = 0;
-  while ((match = FILTER_FN_RE.exec(value))) {
-    matched = true;
-    const identity = FILTER_IDENTITY[match[1]];
-    if (identity === undefined) return false; // unknown function (e.g. url(), drop-shadow())
-    if (parseFilterArg(match[2]) !== identity) return false;
-  }
-  return matched;
-}
-
-/**
- * Returns true when any ancestor uses visual effects that make
- * contrast unreliable to compute (filter, mix-blend-mode, backdrop-filter).
- */
-function hasUnreliableVisualEffects(el: Element): boolean {
-  let current: Element | null = el;
-  while (current) {
-    const style = getCachedComputedStyle(current);
-    const filter = style.filter;
-    if (filter && filter !== "none" && filter !== "initial" && !isNoopFilter(filter)) return true;
-    const blendMode = style.mixBlendMode;
-    if (blendMode && blendMode !== "normal" && blendMode !== "initial") return true;
-    const backdrop = style.backdropFilter;
-    if (backdrop && backdrop !== "none" && backdrop !== "initial" && !isNoopFilter(backdrop)) return true;
-    current = current.parentElement;
-  }
-  return false;
-}
-
-/** Returns true when the element is inside a native <select>. */
-function isInsideNativeSelect(el: Element): boolean {
-  return el.closest("select") !== null;
-}
-
-/** Returns true when text consists entirely of non-letter characters (symbols, punctuation). */
-function hasOnlyNonTextCharacters(text: string): boolean {
-  // Strip whitespace, then check if any Unicode letter remains
-  const stripped = text.replace(/\s/g, "");
-  if (!stripped) return true;
-  // \p{L} matches any Unicode letter
-  return !/\p{L}/u.test(stripped);
-}
-
-/** Returns true when the element is inside an aria-disabled container. */
-function isInAriaDisabledGroup(el: Element): boolean {
-  return el.closest('[aria-disabled="true"]') !== null;
-}
+import {
+  NON_TEXT_TAGS,
+  isHidden,
+  isDisabledFormElement,
+  isLabelForDisabledControl,
+  isInsideNativeSelect,
+  hasOnlyNonTextCharacters,
+  isInAriaDisabledGroup,
+} from "../utils/visibility";
+import { hasUnreliableVisualEffects } from "../utils/filters";
 
 export const colorContrast: Rule = {
   id: "accesslint-092",

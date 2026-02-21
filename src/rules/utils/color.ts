@@ -355,6 +355,45 @@ function isTransparent(bg: string): boolean {
  * Check if an element (or an ancestor up to the nearest opaque background)
  * has a ::before or ::after pseudo-element that provides a visual background.
  */
+export function rgbToHex([r, g, b]: [number, number, number]): string {
+  return "#" + [r, g, b].map((c) => c.toString(16).padStart(2, "0")).join("");
+}
+
+/**
+ * Compute the effective contrast considering text shadows.
+ * Uses the maximum of: fg-vs-bg, fg-vs-shadow, shadow-vs-bg for each shadow.
+ */
+export function getContrastWithShadow(
+  fg: [number, number, number],
+  bg: [number, number, number],
+  shadows: TextShadow[],
+): number {
+  const fgLum = getLuminance(fg[0], fg[1], fg[2]);
+  const bgLum = getLuminance(bg[0], bg[1], bg[2]);
+  let best = getContrastRatio(fgLum, bgLum);
+  for (const shadow of shadows) {
+    const sLum = getLuminance(shadow.color[0], shadow.color[1], shadow.color[2]);
+    best = Math.max(best, getContrastRatio(fgLum, sLum), getContrastRatio(sLum, bgLum));
+  }
+  return best;
+}
+
+/**
+ * Walk up the tree and multiply opacity values.
+ * Returns the accumulated opacity (0–1).
+ */
+export function getAccumulatedOpacity(el: Element): number {
+  let opacity = 1;
+  let current: Element | null = el;
+  while (current) {
+    const style = getCachedComputedStyle(current);
+    const o = parseFloat(style.opacity);
+    if (!isNaN(o)) opacity *= o;
+    current = current.parentElement;
+  }
+  return opacity;
+}
+
 export function hasPseudoElementBackground(el: Element): boolean {
   let current: Element | null = el;
   while (current) {
