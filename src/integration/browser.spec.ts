@@ -1,22 +1,10 @@
 import { test, expect } from "@playwright/test";
-import { existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { iifeExists, runRule } from "./browser-helpers";
 
-const IIFE_PATH = resolve(import.meta.dirname, "../../dist/index.iife.js");
+test.skip(!iifeExists, "IIFE bundle not built (run npm run build)");
 
-test.skip(!existsSync(IIFE_PATH), "IIFE bundle not built (run npm run build)");
-
-/**
- * Run color-contrast (AA) rule and return violations array.
- */
 async function runColorContrast(page: import("@playwright/test").Page) {
-  await page.addScriptTag({ path: IIFE_PATH });
-  return page.evaluate(() => {
-    const { rules, clearAllCaches } = (window as any).AccessLint;
-    clearAllCaches();
-    const rule = rules.find((r: any) => r.id === "accesslint-092");
-    return rule.run(document);
-  });
+  return runRule(page, "accesslint-092");
 }
 
 // ---------------------------------------------------------------------------

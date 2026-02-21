@@ -4,22 +4,13 @@ import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { rules, clearAllCaches } from "../rules/index";
 import { ACT_TO_CORE_RULE } from "./act-mapping";
+import type { FixtureEntry } from "./earl-report";
 
 const FIXTURE_PATH = resolve(
   import.meta.dirname,
   "../../act-fixtures/act-testcases.json",
 );
 const fixturesExist = existsSync(FIXTURE_PATH);
-
-interface FixtureEntry {
-  testcaseId: string;
-  testcaseTitle: string;
-  actRuleId: string;
-  actRuleName: string;
-  coreRuleId: string;
-  expected: "passed" | "failed" | "inapplicable";
-  html: string;
-}
 
 function loadFixtures(): FixtureEntry[] {
   if (!fixturesExist) return [];

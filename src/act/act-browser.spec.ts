@@ -1,25 +1,15 @@
 import { test, expect } from "@playwright/test";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import type { FixtureEntry } from "./earl-report";
+import { iifeExists, runRuleByActId } from "../integration/browser-helpers";
 
 const FIXTURE_PATH = resolve(
   import.meta.dirname,
   "../../act-fixtures/act-testcases.json",
 );
-const IIFE_PATH = resolve(import.meta.dirname, "../../dist/index.iife.js");
-
-interface FixtureEntry {
-  testcaseId: string;
-  testcaseTitle: string;
-  actRuleId: string;
-  actRuleName: string;
-  coreRuleId: string;
-  expected: "passed" | "failed" | "inapplicable";
-  html: string;
-}
 
 const fixturesExist = existsSync(FIXTURE_PATH);
-const iifeExists = existsSync(IIFE_PATH);
 
 function loadFixtures(): FixtureEntry[] {
   if (!fixturesExist) return [];
@@ -83,15 +73,7 @@ for (const [coreRuleId, entries] of byRule) {
 
         try {
           await page.setContent(entry.html, { waitUntil: "domcontentloaded" });
-          await page.addScriptTag({ path: IIFE_PATH });
-
-          violations = await page.evaluate((actId) => {
-            const { rules, clearAllCaches } = (window as any).AccessLint;
-            clearAllCaches();
-            const rule = rules.find((r: any) => r.actRuleIds?.includes(actId));
-            if (!rule) return [];
-            return rule.run(document);
-          }, entry.actRuleId);
+          violations = await runRuleByActId(page, entry.actRuleId);
         } catch (e: any) {
           // Meta refresh with delay=0 causes instant navigation, destroying
           // the execution context. This is expected for passing meta-refresh

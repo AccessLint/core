@@ -11,6 +11,16 @@
  * @see https://www.w3.org/TR/EARL10-Schema/
  */
 
+export interface FixtureEntry {
+  testcaseId: string;
+  testcaseTitle: string;
+  actRuleId: string;
+  actRuleName: string;
+  coreRuleId: string;
+  expected: "passed" | "failed" | "inapplicable";
+  html: string;
+}
+
 export interface FixtureOutcome {
   testcaseId: string;
   testcaseTitle: string;
