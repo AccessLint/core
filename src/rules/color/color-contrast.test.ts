@@ -1,11 +1,8 @@
 import { describe, it, expect, afterEach } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { colorContrast } from "./color-contrast";
 import { clearColorCaches, parseTextShadow, getEffectiveBackgroundColor } from "../utils/color";
 
-function makeDoc(html: string): Document {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  return doc;
-}
 
 describe("accesslint-092", () => {
   afterEach(() => {

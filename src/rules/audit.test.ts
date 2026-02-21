@@ -1,10 +1,8 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "./test-helpers";
 import { runAudit } from "./index";
 import { generateDoc, SMALL_SIZE } from "../bench/fixtures";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("runAudit integration", () => {
   it(

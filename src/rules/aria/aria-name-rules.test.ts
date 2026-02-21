@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import {
   ariaCommandName,
   ariaInputFieldName,
@@ -10,9 +11,6 @@ import {
   ariaTreeitemName,
 } from "./aria-name-rules";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-064", () => {
   it("passes command with text", () => {

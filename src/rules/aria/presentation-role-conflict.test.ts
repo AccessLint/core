@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { presentationRoleConflict } from "./presentation-role-conflict";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-073", () => {
   it("passes role=presentation on non-focusable element", () => {

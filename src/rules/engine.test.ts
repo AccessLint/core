@@ -1,10 +1,8 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "./test-helpers";
 import { compileDeclarativeRule, validateDeclarativeRule } from "./engine";
 import type { DeclarativeRule } from "./types";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 function baseRule(overrides: Partial<DeclarativeRule>): DeclarativeRule {
   return {

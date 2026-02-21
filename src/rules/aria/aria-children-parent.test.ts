@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { ariaRequiredChildren, ariaRequiredParent } from "./aria-children-parent";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-060", () => {
   it("passes list with listitems", () => {

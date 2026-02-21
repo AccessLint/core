@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { ariaProhibitedAttr } from "./aria-prohibited-attr";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-072", () => {
   it("reports aria-label on role=none", () => {

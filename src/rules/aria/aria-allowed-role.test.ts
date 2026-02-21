@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { ariaAllowedRole } from "./aria-allowed-role";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-059", () => {
   it("passes valid role on div", () => {

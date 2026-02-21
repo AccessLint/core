@@ -1,10 +1,8 @@
 import { describe, it, expect, afterEach } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { linkInTextBlock } from "./link-in-text-block";
 import { clearColorCaches } from "../utils/color";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-079", () => {
   afterEach(() => {

@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { thHasDataCells } from "./th-has-data-cells";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-085", () => {
   it("passes table with headers and data", () => {

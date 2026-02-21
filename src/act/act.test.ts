@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
+import { makeDoc } from "../rules/test-helpers";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { rules, clearAllCaches } from "../rules/index";
@@ -25,9 +26,6 @@ function loadFixtures(): FixtureEntry[] {
   return JSON.parse(readFileSync(FIXTURE_PATH, "utf-8"));
 }
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 /**
  * Performance smoke test: runs all ACT fixtures through their corresponding

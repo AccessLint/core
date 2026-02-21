@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { htmlXmlLangMismatch } from "./html-xml-lang-mismatch";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-083", () => {
   it("passes when lang and xml:lang match", () => {

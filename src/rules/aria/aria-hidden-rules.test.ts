@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import { ariaHiddenBody, ariaHiddenFocus } from "./aria-hidden-rules";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-062", () => {
   it("passes when body has no aria-hidden", () => {
