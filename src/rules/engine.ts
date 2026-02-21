@@ -113,6 +113,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
 
   return {
     id: spec.id,
+    category: spec.id.split("/")[0],
     actRuleIds: spec.actRuleIds,
     wcag: spec.wcag,
     level: spec.level,

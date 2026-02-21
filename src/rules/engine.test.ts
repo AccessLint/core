@@ -192,7 +192,7 @@ describe("compileDeclarativeRule — attribute-value", () => {
 describe("compileDeclarativeRule — attribute-missing", () => {
   it("detects missing lang on html", () => {
     const rule = compileDeclarativeRule(baseRule({
-      id: "accesslint-080",
+      id: "readable/html-has-lang",
       selector: "html",
       check: { type: "attribute-missing", attribute: "lang" },
       message: "<html> must have a lang attribute",

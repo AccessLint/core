@@ -38,7 +38,7 @@ for (const entry of deduped) {
 }
 
 // Rules whose test fixtures may trigger browser navigation (meta refresh with delay=0)
-const NAVIGATION_RULES = new Set(["accesslint-007", "accesslint-008"]);
+const NAVIGATION_RULES = new Set(["enough-time/meta-refresh", "enough-time/meta-refresh-no-exception"]);
 
 // Test fixtures that reference external or root-relative stylesheets that
 // can't be loaded in the test environment (page.setContent doesn't resolve

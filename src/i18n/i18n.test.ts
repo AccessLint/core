@@ -12,78 +12,78 @@ beforeEach(() => {
 describe("i18n locale support", () => {
   it("returns original descriptions when no locale is set", () => {
     const active = getActiveRules();
-    const imgAlt = active.find((r) => r.id === "accesslint-011")!;
-    expect(imgAlt.description).toBe(rules.find((r) => r.id === "accesslint-011")!.description);
+    const imgAlt = active.find((r) => r.id === "text-alternatives/img-alt")!;
+    expect(imgAlt.description).toBe(rules.find((r) => r.id === "text-alternatives/img-alt")!.description);
   });
 
   it("applies registered locale translations", () => {
     registerLocale("test", {
-      "accesslint-011": { description: "Test description", guidance: "Test guidance" },
+      "text-alternatives/img-alt": { description: "Test description", guidance: "Test guidance" },
     });
     configureRules({ locale: "test" });
 
     const active = getActiveRules();
-    const imgAlt = active.find((r) => r.id === "accesslint-011")!;
+    const imgAlt = active.find((r) => r.id === "text-alternatives/img-alt")!;
     expect(imgAlt.description).toBe("Test description");
     expect(imgAlt.guidance).toBe("Test guidance");
   });
 
   it("falls back to original for untranslated rules", () => {
     registerLocale("partial", {
-      "accesslint-011": { description: "Translated img-alt" },
+      "text-alternatives/img-alt": { description: "Translated img-alt" },
     });
     configureRules({ locale: "partial" });
 
     const active = getActiveRules();
-    const linkName = active.find((r) => r.id === "accesslint-077")!;
-    const original = rules.find((r) => r.id === "accesslint-077")!;
+    const linkName = active.find((r) => r.id === "navigable/link-name")!;
+    const original = rules.find((r) => r.id === "navigable/link-name")!;
     expect(linkName.description).toBe(original.description);
     expect(linkName.guidance).toBe(original.guidance);
   });
 
   it("preserves guidance when translation omits it", () => {
     registerLocale("no-guidance", {
-      "accesslint-011": { description: "Translated description only" },
+      "text-alternatives/img-alt": { description: "Translated description only" },
     });
     configureRules({ locale: "no-guidance" });
 
     const active = getActiveRules();
-    const imgAlt = active.find((r) => r.id === "accesslint-011")!;
+    const imgAlt = active.find((r) => r.id === "text-alternatives/img-alt")!;
     expect(imgAlt.description).toBe("Translated description only");
-    expect(imgAlt.guidance).toBe(rules.find((r) => r.id === "accesslint-011")!.guidance);
+    expect(imgAlt.guidance).toBe(rules.find((r) => r.id === "text-alternatives/img-alt")!.guidance);
   });
 
   it("does not mutate original rule objects", () => {
-    const originalDesc = rules.find((r) => r.id === "accesslint-011")!.description;
+    const originalDesc = rules.find((r) => r.id === "text-alternatives/img-alt")!.description;
 
     registerLocale("mutate-check", {
-      "accesslint-011": { description: "Mutated?" },
+      "text-alternatives/img-alt": { description: "Mutated?" },
     });
     configureRules({ locale: "mutate-check" });
     getActiveRules();
 
-    expect(rules.find((r) => r.id === "accesslint-011")!.description).toBe(originalDesc);
+    expect(rules.find((r) => r.id === "text-alternatives/img-alt")!.description).toBe(originalDesc);
   });
 
   it("resets when locale is cleared", () => {
     registerLocale("temp", {
-      "accesslint-011": { description: "Temporary" },
+      "text-alternatives/img-alt": { description: "Temporary" },
     });
     configureRules({ locale: "temp" });
-    expect(getActiveRules().find((r) => r.id === "accesslint-011")!.description).toBe("Temporary");
+    expect(getActiveRules().find((r) => r.id === "text-alternatives/img-alt")!.description).toBe("Temporary");
 
     configureRules({ locale: undefined });
-    const original = rules.find((r) => r.id === "accesslint-011")!;
-    expect(getActiveRules().find((r) => r.id === "accesslint-011")!.description).toBe(original.description);
+    const original = rules.find((r) => r.id === "text-alternatives/img-alt")!;
+    expect(getActiveRules().find((r) => r.id === "text-alternatives/img-alt")!.description).toBe(original.description);
   });
 
   it("getRuleById respects active locale", () => {
     registerLocale("lookup", {
-      "accesslint-011": { description: "Lookup translation" },
+      "text-alternatives/img-alt": { description: "Lookup translation" },
     });
     configureRules({ locale: "lookup" });
 
-    const rule = getRuleById("accesslint-011")!;
+    const rule = getRuleById("text-alternatives/img-alt")!;
     expect(rule.description).toBe("Lookup translation");
   });
 
@@ -115,7 +115,7 @@ describe("i18n message translation", () => {
   it("translates static violation messages", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "accesslint-075", message: "Button has no discernible text.", element: "<button></button>", selector: "button" },
+      { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", element: "<button></button>", selector: "button" },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe("El botón no tiene texto discernible.");
@@ -124,7 +124,7 @@ describe("i18n message translation", () => {
   it("translates dynamic messages with single placeholder", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "accesslint-054", message: 'Invalid ARIA role "banana".', element: "<div>", selector: "div" },
+      { ruleId: "aria/aria-roles", message: 'Invalid ARIA role "banana".', element: "<div>", selector: "div" },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe('Rol ARIA inválido "banana".');
@@ -133,7 +133,7 @@ describe("i18n message translation", () => {
   it("translates dynamic messages with multiple placeholders", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "accesslint-033", message: "Heading level 4 skipped from level 2.", element: "<h4>", selector: "h4" },
+      { ruleId: "navigable/heading-order", message: "Heading level 4 skipped from level 2.", element: "<h4>", selector: "h4" },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe("Nivel de encabezado 4 saltado desde el nivel 2.");
@@ -142,7 +142,7 @@ describe("i18n message translation", () => {
   it("returns original message when no matching template exists", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "accesslint-075", message: "Some unexpected message format.", element: "<button>", selector: "button" },
+      { ruleId: "labels-and-names/button-name", message: "Some unexpected message format.", element: "<button>", selector: "button" },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe("Some unexpected message format.");
@@ -150,7 +150,7 @@ describe("i18n message translation", () => {
 
   it("returns original violations when locale is not registered", () => {
     const violations = [
-      { ruleId: "accesslint-075", message: "Button has no discernible text.", element: "<button>", selector: "button" },
+      { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", element: "<button>", selector: "button" },
     ];
     const translated = translateViolations(violations, "unknown");
     expect(translated).toBe(violations);
@@ -158,7 +158,7 @@ describe("i18n message translation", () => {
 
   it("does not mutate original violation objects", () => {
     registerLocale("es", es);
-    const original = { ruleId: "accesslint-075", message: "Button has no discernible text.", element: "<button>", selector: "button" };
+    const original = { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", element: "<button>", selector: "button" };
     const violations = [original];
     const translated = translateViolations(violations, "es");
     expect(original.message).toBe("Button has no discernible text.");
@@ -169,7 +169,7 @@ describe("i18n message translation", () => {
     registerLocale("es", es);
     // Captured value contains literal text that looks like a placeholder reference
     const violations = [
-      { ruleId: "accesslint-056", message: 'aria-checked must be "true" or "false", got "{1} weird".', element: "<div>", selector: "div" },
+      { ruleId: "aria/aria-valid-attr-value", message: 'aria-checked must be "true" or "false", got "{1} weird".', element: "<div>", selector: "div" },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe('aria-checked debe ser "true" o "false", se obtuvo "{1} weird".');

@@ -4,7 +4,7 @@ import { iifeExists, runRule } from "./browser-helpers";
 test.skip(!iifeExists, "IIFE bundle not built (run npm run build)");
 
 async function runColorContrast(page: import("@playwright/test").Page) {
-  return runRule(page, "accesslint-092");
+  return runRule(page, "distinguishable/color-contrast");
 }
 
 // ---------------------------------------------------------------------------

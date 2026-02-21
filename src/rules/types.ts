@@ -1,5 +1,6 @@
 export interface Rule {
   id: string;
+  category: string;
   actRuleIds?: string[];
   wcag: string[];
   level: "A" | "AA" | "AAA";

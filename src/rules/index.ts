@@ -5,238 +5,235 @@ import { clearColorCaches } from "./utils/color";
 import { clearSelectorCache } from "./utils/selector";
 import { applyLocale, translateViolations } from "../i18n/registry";
 
-// Structure
-import { accesslint001 } from "./structure/accesslint-001";
-import { accesslint002 } from "./structure/accesslint-002";
-import { accesslint003 } from "./structure/accesslint-003";
-import { accesslint004 } from "./structure/accesslint-004";
-import { accesslint005 } from "./structure/accesslint-005";
-import { accesslint006 } from "./structure/accesslint-006";
-import { accesslint007 } from "./structure/accesslint-007";
-import { accesslint008 } from "./structure/accesslint-008";
-import { accesslint009 } from "./structure/accesslint-009";
-import { accesslint010 } from "./structure/accesslint-010";
+// Text Alternatives
+import { imgAlt } from "./text-alternatives/img-alt";
+import { svgImgAlt } from "./text-alternatives/svg-img-alt";
+import { inputImageAlt } from "./text-alternatives/input-image-alt";
+import { imageRedundantAlt } from "./text-alternatives/image-redundant-alt";
+import { imageAltWords } from "./text-alternatives/image-alt-words";
+import { areaAlt } from "./text-alternatives/area-alt";
+import { objectAlt } from "./text-alternatives/object-alt";
+import { roleImgAlt } from "./text-alternatives/role-img-alt";
 
-// Images
-import { accesslint011 } from "./images/accesslint-011";
-import { accesslint012 } from "./images/accesslint-012";
-import { accesslint013 } from "./images/accesslint-013";
-import { accesslint014 } from "./images/accesslint-014";
-import { accesslint015 } from "./images/accesslint-015";
-import { accesslint016 } from "./images/accesslint-016";
-import { accesslint017 } from "./images/accesslint-017";
-import { accesslint018 } from "./images/accesslint-018";
-import { accesslint019 } from "./images/accesslint-019";
+// Time-based Media
+import { videoCaptions } from "./time-based-media/video-captions";
+import { audioTranscript } from "./time-based-media/audio-transcript";
 
-// Forms
-import { accesslint020 } from "./forms/accesslint-020";
-import { accesslint021 } from "./forms/accesslint-021";
-import { accesslint023 } from "./forms/accesslint-023";
-import { accesslint024 } from "./forms/accesslint-024";
-import { accesslint025 } from "./forms/accesslint-025";
-import { accesslint026 } from "./forms/accesslint-026";
+// Adaptable
+import { autocompleteValid } from "./adaptable/autocomplete-valid";
+import { listChildren } from "./adaptable/list-children";
+import { listitemParent } from "./adaptable/listitem-parent";
+import { dlChildren } from "./adaptable/dl-children";
+import { definitionList } from "./adaptable/definition-list";
+import { orientationLock } from "./adaptable/orientation-lock";
+import { ariaRequiredChildren } from "./adaptable/aria-required-children";
+import { ariaRequiredParent } from "./adaptable/aria-required-parent";
+import { tdHeadersAttr } from "./adaptable/td-headers-attr";
+import { thHasDataCells } from "./adaptable/th-has-data-cells";
+import { tdHasHeader } from "./adaptable/td-has-header";
+import { scopeAttrValid } from "./adaptable/scope-attr-valid";
+import { emptyTableHeader } from "./adaptable/empty-table-header";
 
-// Keyboard
-import { accesslint027 } from "./keyboard/accesslint-027";
-import { accesslint028 } from "./keyboard/accesslint-028";
-import { accesslint029 } from "./keyboard/accesslint-029";
-import { accesslint030 } from "./keyboard/accesslint-030";
-import { accesslint031 } from "./keyboard/accesslint-031";
-import { accesslint032 } from "./keyboard/accesslint-032";
+// Distinguishable
+import { metaViewport } from "./distinguishable/meta-viewport";
+import { letterSpacing } from "./distinguishable/letter-spacing";
+import { lineHeight } from "./distinguishable/line-height";
+import { wordSpacing } from "./distinguishable/word-spacing";
+import { linkInTextBlock } from "./distinguishable/link-in-text-block";
+import { colorContrast } from "./distinguishable/color-contrast";
+import { colorContrastEnhanced } from "./distinguishable/color-contrast-enhanced";
 
-// Structure (continued)
-import { accesslint033 } from "./structure/accesslint-033";
-import { accesslint034 } from "./structure/accesslint-034";
-import { accesslint035 } from "./structure/accesslint-035";
-import { accesslint036 } from "./structure/accesslint-036";
-import { accesslint037 } from "./structure/accesslint-037";
-import { accesslint038 } from "./structure/accesslint-038";
-import { accesslint039 } from "./structure/accesslint-039";
-import { accesslint040 } from "./structure/accesslint-040";
-import { accesslint041 } from "./structure/accesslint-041";
-import { accesslint042 } from "./structure/accesslint-042";
-import { accesslint043 } from "./structure/accesslint-043";
-import { accesslint044 } from "./structure/accesslint-044";
-import { accesslint045 } from "./structure/accesslint-045";
-import { accesslint046 } from "./structure/accesslint-046";
-import { accesslint047 } from "./structure/accesslint-047";
-import { accesslint048 } from "./structure/accesslint-048";
-import { accesslint049 } from "./structure/accesslint-049";
-import { accesslint050 } from "./structure/accesslint-050";
-import { accesslint051 } from "./structure/accesslint-051";
-import { accesslint052 } from "./structure/accesslint-052";
-import { accesslint053 } from "./structure/accesslint-053";
+// Keyboard Accessible
+import { serverImageMap } from "./keyboard-accessible/server-image-map";
+import { tabindex } from "./keyboard-accessible/tabindex";
+import { focusOrder } from "./keyboard-accessible/focus-order";
+import { nestedInteractive } from "./keyboard-accessible/nested-interactive";
+import { scrollableRegion } from "./keyboard-accessible/scrollable-region";
+import { accesskeys } from "./keyboard-accessible/accesskeys";
+import { focusVisible } from "./keyboard-accessible/focus-visible";
+
+// Enough Time
+import { metaRefresh } from "./enough-time/meta-refresh";
+import { metaRefreshNoException } from "./enough-time/meta-refresh-no-exception";
+import { blink } from "./enough-time/blink";
+import { marquee } from "./enough-time/marquee";
+
+// Navigable
+import { documentTitle } from "./navigable/document-title";
+import { bypass } from "./navigable/bypass";
+import { pageHasHeadingOne } from "./navigable/page-has-heading-one";
+import { headingOrder } from "./navigable/heading-order";
+import { emptyHeading } from "./navigable/empty-heading";
+import { pAsHeading } from "./navigable/p-as-heading";
+import { linkName } from "./navigable/link-name";
+import { skipLink } from "./navigable/skip-link";
+
+// Landmarks
+import { landmarkMain } from "./landmarks/landmark-main";
+import { noDuplicateBanner } from "./landmarks/no-duplicate-banner";
+import { noDuplicateContentinfo } from "./landmarks/no-duplicate-contentinfo";
+import { noDuplicateMain } from "./landmarks/no-duplicate-main";
+import { bannerIsTopLevel } from "./landmarks/banner-is-top-level";
+import { contentinfoIsTopLevel } from "./landmarks/contentinfo-is-top-level";
+import { mainIsTopLevel } from "./landmarks/main-is-top-level";
+import { complementaryIsTopLevel } from "./landmarks/complementary-is-top-level";
+import { landmarkUnique } from "./landmarks/landmark-unique";
+import { region } from "./landmarks/region";
+
+// Readable
+import { htmlHasLang } from "./readable/html-has-lang";
+import { htmlLangValid } from "./readable/html-lang-valid";
+import { validLang } from "./readable/valid-lang";
+import { htmlXmlLangMismatch } from "./readable/html-xml-lang-mismatch";
+
+// Labels and Names
+import { frameTitle } from "./labels-and-names/frame-title";
+import { frameTitleUnique } from "./labels-and-names/frame-title-unique";
+import { formLabel } from "./labels-and-names/form-label";
+import { multipleLabels } from "./labels-and-names/multiple-labels";
+import { inputButtonName } from "./labels-and-names/input-button-name";
+import { labelContentMismatch } from "./labels-and-names/label-content-mismatch";
+import { labelTitleOnly } from "./labels-and-names/label-title-only";
+import { ariaCommandName } from "./labels-and-names/aria-command-name";
+import { ariaInputFieldName } from "./labels-and-names/aria-input-field-name";
+import { ariaToggleFieldName } from "./labels-and-names/aria-toggle-field-name";
+import { ariaMeterName } from "./labels-and-names/aria-meter-name";
+import { ariaProgressbarName } from "./labels-and-names/aria-progressbar-name";
+import { ariaDialogName } from "./labels-and-names/aria-dialog-name";
+import { ariaTooltipName } from "./labels-and-names/aria-tooltip-name";
+import { ariaTreeitemName } from "./labels-and-names/aria-treeitem-name";
+import { buttonName } from "./labels-and-names/button-name";
+import { summaryName } from "./labels-and-names/summary-name";
+import { duplicateIdAria } from "./labels-and-names/duplicate-id-aria";
 
 // ARIA
-import { accesslint054 } from "./aria/accesslint-054";
-import { accesslint055 } from "./aria/accesslint-055";
-import { accesslint056 } from "./aria/accesslint-056";
-import { accesslint057 } from "./aria/accesslint-057";
-import { accesslint058 } from "./aria/accesslint-058";
-import { accesslint059 } from "./aria/accesslint-059";
-import { accesslint060 } from "./aria/accesslint-060";
-import { accesslint061 } from "./aria/accesslint-061";
-import { accesslint062 } from "./aria/accesslint-062";
-import { accesslint063 } from "./aria/accesslint-063";
-import { accesslint064 } from "./aria/accesslint-064";
-import { accesslint065 } from "./aria/accesslint-065";
-import { accesslint066 } from "./aria/accesslint-066";
-import { accesslint067 } from "./aria/accesslint-067";
-import { accesslint068 } from "./aria/accesslint-068";
-import { accesslint069 } from "./aria/accesslint-069";
-import { accesslint070 } from "./aria/accesslint-070";
-import { accesslint071 } from "./aria/accesslint-071";
-import { accesslint072 } from "./aria/accesslint-072";
-import { accesslint073 } from "./aria/accesslint-073";
-import { accesslint074 } from "./aria/accesslint-074";
-import { accesslint075 } from "./aria/accesslint-075";
-import { accesslint076 } from "./aria/accesslint-076";
-
-// Links
-import { accesslint077 } from "./links/accesslint-077";
-import { accesslint078 } from "./links/accesslint-078";
-import { accesslint079 } from "./links/accesslint-079";
-
-// Language
-import { accesslint080 } from "./language/accesslint-080";
-import { accesslint081 } from "./language/accesslint-081";
-import { accesslint082 } from "./language/accesslint-082";
-import { accesslint083 } from "./language/accesslint-083";
-
-// Tables
-import { accesslint084 } from "./tables/accesslint-084";
-import { accesslint085 } from "./tables/accesslint-085";
-import { accesslint086 } from "./tables/accesslint-086";
-import { accesslint087 } from "./tables/accesslint-087";
-import { accesslint088 } from "./tables/accesslint-088";
-
-// Parsing
-import { accesslint089 } from "./parsing/accesslint-089";
-
-// Media
-import { accesslint090 } from "./media/accesslint-090";
-import { accesslint091 } from "./media/accesslint-091";
-
-// Color
-import { accesslint092 } from "./color/accesslint-092";
-import { accesslint093 } from "./color/accesslint-093";
+import { ariaRoles } from "./aria/aria-roles";
+import { ariaValidAttr } from "./aria/aria-valid-attr";
+import { ariaValidAttrValue } from "./aria/aria-valid-attr-value";
+import { ariaRequiredAttr } from "./aria/aria-required-attr";
+import { ariaAllowedAttr } from "./aria/aria-allowed-attr";
+import { ariaAllowedRole } from "./aria/aria-allowed-role";
+import { ariaHiddenBody } from "./aria/aria-hidden-body";
+import { ariaHiddenFocus } from "./aria/aria-hidden-focus";
+import { ariaProhibitedAttr } from "./aria/aria-prohibited-attr";
+import { presentationRoleConflict } from "./aria/presentation-role-conflict";
+import { presentationalChildrenFocusable } from "./aria/presentational-children-focusable";
 
 export const rules: Rule[] = [
-  // Document Structure
-  accesslint001,
-  accesslint002,
-  accesslint003,
-  accesslint004,
-  accesslint005,
-  accesslint006,
-  accesslint007,
-  accesslint008,
-  accesslint009,
-  accesslint010,
+  // Text Alternatives
+  imgAlt,
+  svgImgAlt,
+  inputImageAlt,
+  imageRedundantAlt,
+  imageAltWords,
+  areaAlt,
+  objectAlt,
+  roleImgAlt,
 
-  // Images
-  accesslint011,
-  accesslint012,
-  accesslint013,
-  accesslint014,
-  accesslint015,
-  accesslint016,
-  accesslint017,
-  accesslint018,
-  accesslint019,
+  // Time-based Media
+  videoCaptions,
+  audioTranscript,
 
-  // Forms
-  accesslint020,
-  accesslint021,
-  accesslint023,
-  accesslint024,
-  accesslint025,
-  accesslint026,
+  // Adaptable
+  autocompleteValid,
+  listChildren,
+  listitemParent,
+  dlChildren,
+  definitionList,
+  orientationLock,
+  ariaRequiredChildren,
+  ariaRequiredParent,
+  tdHeadersAttr,
+  thHasDataCells,
+  tdHasHeader,
+  scopeAttrValid,
+  emptyTableHeader,
 
-  // Keyboard
-  accesslint027,
-  accesslint028,
-  accesslint029,
-  accesslint030,
-  accesslint031,
-  accesslint032,
+  // Distinguishable
+  metaViewport,
+  letterSpacing,
+  lineHeight,
+  wordSpacing,
+  linkInTextBlock,
+  colorContrast,
+  colorContrastEnhanced,
 
-  // Structure
-  accesslint033,
-  accesslint034,
-  accesslint035,
-  accesslint036,
-  accesslint037,
-  accesslint038,
-  accesslint039,
-  accesslint040,
-  accesslint041,
-  accesslint042,
-  accesslint043,
-  accesslint044,
-  accesslint045,
-  accesslint046,
-  accesslint047,
-  accesslint048,
-  accesslint049,
-  accesslint050,
-  accesslint051,
-  accesslint052,
-  accesslint053,
+  // Keyboard Accessible
+  serverImageMap,
+  tabindex,
+  focusOrder,
+  nestedInteractive,
+  scrollableRegion,
+  accesskeys,
+  focusVisible,
+
+  // Enough Time
+  metaRefresh,
+  metaRefreshNoException,
+  blink,
+  marquee,
+
+  // Navigable
+  documentTitle,
+  bypass,
+  pageHasHeadingOne,
+  headingOrder,
+  emptyHeading,
+  pAsHeading,
+  linkName,
+  skipLink,
+
+  // Landmarks
+  landmarkMain,
+  noDuplicateBanner,
+  noDuplicateContentinfo,
+  noDuplicateMain,
+  bannerIsTopLevel,
+  contentinfoIsTopLevel,
+  mainIsTopLevel,
+  complementaryIsTopLevel,
+  landmarkUnique,
+  region,
+
+  // Readable
+  htmlHasLang,
+  htmlLangValid,
+  validLang,
+  htmlXmlLangMismatch,
+
+  // Labels and Names
+  frameTitle,
+  frameTitleUnique,
+  formLabel,
+  multipleLabels,
+  inputButtonName,
+  labelContentMismatch,
+  labelTitleOnly,
+  ariaCommandName,
+  ariaInputFieldName,
+  ariaToggleFieldName,
+  ariaMeterName,
+  ariaProgressbarName,
+  ariaDialogName,
+  ariaTooltipName,
+  ariaTreeitemName,
+  buttonName,
+  summaryName,
+  duplicateIdAria,
 
   // ARIA
-  accesslint054,
-  accesslint055,
-  accesslint056,
-  accesslint057,
-  accesslint058,
-  accesslint059,
-  accesslint060,
-  accesslint061,
-  accesslint062,
-  accesslint063,
-  accesslint064,
-  accesslint065,
-  accesslint066,
-  accesslint067,
-  accesslint068,
-  accesslint069,
-  accesslint070,
-  accesslint071,
-  accesslint072,
-  accesslint073,
-  accesslint074,
-  accesslint075,
-  accesslint076,
+  ariaRoles,
+  ariaValidAttr,
+  ariaValidAttrValue,
+  ariaRequiredAttr,
+  ariaAllowedAttr,
+  ariaAllowedRole,
+  ariaHiddenBody,
+  ariaHiddenFocus,
+  ariaProhibitedAttr,
+  presentationRoleConflict,
+  presentationalChildrenFocusable,
 
-  // Links
-  accesslint077,
-  accesslint078,
-  accesslint079,
-
-  // Language
-  accesslint080,
-  accesslint081,
-  accesslint082,
-  accesslint083,
-
-  // Tables
-  accesslint084,
-  accesslint085,
-  accesslint086,
-  accesslint087,
-  accesslint088,
-
-  // Parsing
-  accesslint089,
-
-  // Media
-  accesslint090,
-  accesslint091,
-
-  // Color
-  accesslint092,
-  accesslint093,
 ];
 
 
