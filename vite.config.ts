@@ -14,6 +14,7 @@ export default defineConfig({
     environmentOptions: {
       happyDOM: {
         settings: {
+          disableCSSFileLoading: true,
           navigation: {
             disableMainFrameNavigation: true,
             disableChildFrameNavigation: true,
@@ -21,6 +22,9 @@ export default defineConfig({
           },
         },
       },
+    },
+    onConsoleLog(log) {
+      if (log.includes("CSS file loading is disabled")) return false;
     },
     include: ["src/**/*.test.ts"],
     exclude: ["src/bench/memory.test.ts"],
