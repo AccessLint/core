@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { getAccessibleName, isAriaHidden } from "../utils/aria";
+import { getAccessibleName, isAriaHidden, isComputedHidden } from "../utils/aria";
 
 export const inputButtonName: Rule = {
   id: "accesslint-023",
@@ -17,6 +17,7 @@ export const inputButtonName: Rule = {
       'input[type="submit"], input[type="button"], input[type="reset"]'
     )) {
       if (isAriaHidden(input)) continue;
+      if (isComputedHidden(input)) continue;
       const value = input.getAttribute("value")?.trim();
       // submit and reset inputs have browser-default labels when value is absent
       const type = input.getAttribute("type")?.toLowerCase();

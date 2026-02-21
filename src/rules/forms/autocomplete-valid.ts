@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { isAriaHidden } from "../utils/aria";
+import { isAriaHidden, isComputedHidden } from "../utils/aria";
 
 const VALID_AUTOCOMPLETE = new Set([
   "off", "on", "name", "honorific-prefix", "given-name", "additional-name",
@@ -84,7 +84,7 @@ export const autocompleteValid: Rule = {
     for (const el of doc.querySelectorAll("[autocomplete]")) {
       // Skip hidden, disabled, and aria-disabled elements
       if (isAriaHidden(el)) continue;
-      if (el instanceof HTMLElement && el.style.display === "none") continue;
+      if (isComputedHidden(el)) continue;
       if ((el as HTMLInputElement).disabled) continue;
       if (el.getAttribute("aria-disabled") === "true") continue;
 

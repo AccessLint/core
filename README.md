@@ -218,7 +218,6 @@ Helpers for building custom rules:
 | `accesslint-019` | A | 2.1.1 | Server-side image maps must not be used. |
 | `accesslint-020` | A | 4.1.2 | Form elements must have labels. |
 | `accesslint-021` | A | — | Form fields should not have multiple labels. |
-| `accesslint-022` | A | 4.1.2 | Select elements must have a label. |
 | `accesslint-023` | A | 4.1.2 | Input buttons must have discernible text. |
 | `accesslint-024` | AA | 1.3.5 | Autocomplete attribute must use valid values. |
 | `accesslint-025` | A | — | Accessible name must contain visible text. |

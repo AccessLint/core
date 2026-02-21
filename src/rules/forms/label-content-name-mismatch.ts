@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { getAccessibleName, isAriaHidden } from "../utils/aria";
+import { getAccessibleName, isAriaHidden, getVisibleText } from "../utils/aria";
 
 function normalizeText(text: string): string {
   return text.toLowerCase().replace(/\s+/g, " ").trim();
@@ -33,35 +33,6 @@ function visibleTextMatches(accessibleName: string, visibleText: string): boolea
   }
 
   return false;
-}
-
-/**
- * Extract truly visible text from an element, excluding:
- * - Non-rendered elements (style, script, SVG)
- * - Elements with role="img" or role="presentation"
- * - aria-hidden subtrees
- * - Elements hidden via inline display:none
- */
-function getVisibleText(el: Element): string {
-  let text = "";
-  for (const node of el.childNodes) {
-    if (node.nodeType === 3 /* TEXT_NODE */) {
-      text += node.textContent ?? "";
-    } else if (node.nodeType === 1 /* ELEMENT_NODE */) {
-      const child = node as Element;
-      const tag = child.tagName.toLowerCase();
-      // Skip non-rendered elements — their content is not visible text
-      if (tag === "style" || tag === "script" || tag === "svg") continue;
-      // Skip elements removed from the accessibility tree
-      if (child.getAttribute("aria-hidden") === "true") continue;
-      if (child instanceof HTMLElement && child.style.display === "none") continue;
-      // Skip role=img and role=presentation (icon wrappers)
-      const role = child.getAttribute("role");
-      if (role === "img" || role === "presentation" || role === "none") continue;
-      text += getVisibleText(child);
-    }
-  }
-  return text;
 }
 
 export const labelContentNameMismatch: Rule = {

@@ -1,6 +1,7 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, getAccessibleTextContent, isAriaHidden, isComputedHidden } from "../utils/aria";
+import { NATIVE_LABELABLE_SELECTOR, getAssociatedLabelText } from "./constants";
 
 // Widget roles that constitute form fields (per ACT rule e086e5)
 const WIDGET_ROLE_SELECTOR = [
@@ -68,18 +69,8 @@ function getFormFieldName(el: Element): string {
 
   // 3. <label> association (only for native labelable elements)
   if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement || el instanceof HTMLSelectElement) {
-    if (el.id) {
-      const label = el.ownerDocument.querySelector(`label[for="${CSS.escape(el.id)}"]`);
-      if (label) {
-        const text = getAccessibleTextContent(label).trim();
-        if (text) return text;
-      }
-    }
-    const parentLabel = el.closest("label");
-    if (parentLabel) {
-      const text = getAccessibleTextContent(parentLabel).trim();
-      if (text) return text;
-    }
+    const labelText = getAssociatedLabelText(el);
+    if (labelText) return labelText;
   }
 
   // 4. title
@@ -107,9 +98,7 @@ export const formLabel: Rule = {
   run(doc) {
     const violations = [];
 
-    const nativeSelector =
-      'input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"]), textarea, select';
-    const inputs = doc.querySelectorAll(`${nativeSelector}, ${WIDGET_ROLE_SELECTOR}`);
+    const inputs = doc.querySelectorAll(`${NATIVE_LABELABLE_SELECTOR}, ${WIDGET_ROLE_SELECTOR}`);
 
     for (const input of inputs) {
       if (isAriaHidden(input)) continue;

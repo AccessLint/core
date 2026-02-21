@@ -17,7 +17,6 @@ import { serverSideImageMap } from "./images/server-side-image-map";
 
 // Forms
 import { formLabel, formFieldMultipleLabels } from "./forms/label";
-import { selectName } from "./forms/select-name";
 import { inputButtonName } from "./forms/input-button-name";
 import { autocompleteValid } from "./forms/autocomplete-valid";
 import { labelContentNameMismatch } from "./forms/label-content-name-mismatch";
@@ -26,7 +25,8 @@ import { labelTitleOnly } from "./forms/label-title-only";
 // Keyboard
 import { tabindex } from "./keyboard/tabindex";
 import { focusOrderSemantics } from "./keyboard/focus-order-semantics";
-import { nestedInteractive, scrollableRegionFocusable } from "./keyboard/interactive-rules";
+import { nestedInteractive } from "./keyboard/nested-interactive";
+import { scrollableRegionFocusable } from "./keyboard/scrollable-region-focusable";
 import { accesskeys } from "./keyboard/accesskeys";
 import { focusVisible } from "./keyboard/focus-visible";
 
@@ -126,7 +126,6 @@ export const rules: Rule[] = [
   // Forms
   formLabel,
   formFieldMultipleLabels,
-  selectName,
   inputButtonName,
   autocompleteValid,
   labelContentNameMismatch,

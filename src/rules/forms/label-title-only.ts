@@ -1,6 +1,7 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
+import { NATIVE_LABELABLE_SELECTOR, findAssociatedLabel } from "./constants";
 
 export const labelTitleOnly: Rule = {
   id: "accesslint-026",
@@ -13,9 +14,7 @@ export const labelTitleOnly: Rule = {
     "The title attribute text should be moved to a visible <label> element or aria-label. Show what text to use based on the current title.",
   run(doc) {
     const violations = [];
-    const inputs = doc.querySelectorAll(
-      'input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"]), textarea, select'
-    );
+    const inputs = doc.querySelectorAll(NATIVE_LABELABLE_SELECTOR);
 
     for (const input of inputs) {
       if (isAriaHidden(input)) continue;
@@ -25,16 +24,8 @@ export const labelTitleOnly: Rule = {
       const hasAriaLabelledby = input.hasAttribute("aria-labelledby");
 
       // Check for associated <label>
-      let hasLabel = false;
-      const id = input.id;
-      if (id) {
-        const label = input.ownerDocument.querySelector(`label[for="${CSS.escape(id)}"]`);
-        if (label?.textContent?.trim()) hasLabel = true;
-      }
-
-      // Check for wrapping label
-      const parentLabel = input.closest("label");
-      if (parentLabel?.textContent?.trim()) hasLabel = true;
+      const label = findAssociatedLabel(input);
+      const hasLabel = !!label?.textContent?.trim();
 
       // Violation if only title is used
       if (hasTitle && !hasAriaLabel && !hasAriaLabelledby && !hasLabel) {

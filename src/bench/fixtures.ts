@@ -45,7 +45,7 @@ function generateElements(n: number): string {
       case 7:
         parts.push(`<input type="text" placeholder="no label ${i}">`);
         break;
-      // select-name: select without label
+      // label: select without label (exercises formLabel)
       case 8:
         parts.push(`<select><option>A</option></select>`);
         break;

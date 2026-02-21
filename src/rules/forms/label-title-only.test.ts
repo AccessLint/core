@@ -1,9 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { labelTitleOnly } from "./label-title-only";
-
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
+import { makeDoc } from "../test-helpers";
 
 describe("accesslint-026", () => {
   it("reports input with only title attribute", () => {
