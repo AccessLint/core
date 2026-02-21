@@ -46,6 +46,20 @@ export default class BrowserEarlReporter implements Reporter {
     // Skipped tests (external stylesheets, Shadow DOM) can't be evaluated
     if (status === "skipped") return;
 
+    // Timed-out tests — outcome couldn't be determined
+    if (status === "timedOut") {
+      this.outcomes.push({
+        testcaseId,
+        testcaseTitle: title.replace(/\s*\|act:[^|]+\|core:[^|]+\|tc:[^|]+$/, "").replace(/^\[(passed|failed|inapplicable)\]\s*/, ""),
+        actRuleId,
+        coreRuleId,
+        expected,
+        actual: "cantTell",
+        correct: false,
+      });
+      return;
+    }
+
     const testPassed = status === "passed";
 
     // Determine actual outcome: if the test passed, the rule behaved correctly

@@ -4,7 +4,6 @@
  */
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { ACT_TO_CORE_RULE } from "./act-mapping";
 import type { EarlReport } from "./earl-report";
 
 const EARL_PATH = resolve(
@@ -52,15 +51,22 @@ function main() {
     expectedByTestcase.set(f.testcaseId, f.expected);
   }
 
-  // Aggregate per-rule stats from flat assertedThat array
+  // Aggregate per core-rule stats from flat assertedThat array
   const ruleStats = new Map<string, RuleStats>();
+  const ruleActIds = new Map<string, Set<string>>();
 
   for (const assertion of report.assertedThat) {
-    // Extract ACT rule ID from isPartOf URL
+    // Use the core rule ID (stored as test.title) as the aggregation key
+    const coreRuleId = assertion.test.title;
+
+    // Track ACT rule IDs for display
     const ruleUrl = assertion.test.isPartOf[0].title;
-    const ruleMatch = ruleUrl.match(/\/rules\/([^/]+)\//);
-    if (!ruleMatch) continue;
-    const actRuleId = ruleMatch[1];
+    const actMatch = ruleUrl.match(/\/rules\/([^/]+)\//);
+    if (actMatch) {
+      const actIds = ruleActIds.get(coreRuleId) ?? new Set();
+      actIds.add(actMatch[1]);
+      ruleActIds.set(coreRuleId, actIds);
+    }
 
     // Extract testcase ID from subject source URL
     const sourceMatch = assertion.subject.source.match(/\/([^/]+)\.html$/);
@@ -74,35 +80,36 @@ function main() {
     const actualOutcome = assertion.result.outcome.replace("earl:", "");
     const correct = actualOutcome === expected;
 
-    const stats = ruleStats.get(actRuleId) ?? { total: 0, passed: 0, failed: 0, cantTell: 0 };
+    const stats = ruleStats.get(coreRuleId) ?? { total: 0, passed: 0, failed: 0, cantTell: 0 };
     stats.total++;
 
     if (correct) stats.passed++;
     else if (actualOutcome === "cantTell") stats.cantTell++;
     else stats.failed++;
 
-    ruleStats.set(actRuleId, stats);
+    ruleStats.set(coreRuleId, stats);
   }
 
   let hasFailures = false;
 
   console.log("\n=== ACT Conformance Gate (Browser) ===\n");
   console.log(
-    "Rule".padEnd(35) +
+    "Rule".padEnd(40) +
     "Total".padEnd(8) +
     "Pass".padEnd(8) +
     "Fail".padEnd(8) +
     "Rate".padEnd(10) +
     "Status",
   );
-  console.log("-".repeat(80));
+  console.log("-".repeat(85));
 
-  for (const [actRuleId, stats] of [...ruleStats].sort((a, b) => {
-    const coreA = ACT_TO_CORE_RULE[a[0]] ?? a[0];
-    const coreB = ACT_TO_CORE_RULE[b[0]] ?? b[0];
-    return coreA.localeCompare(coreB);
-  })) {
-    const coreRuleId = ACT_TO_CORE_RULE[actRuleId] ?? actRuleId;
+  for (const [coreRuleId, stats] of [...ruleStats].sort((a, b) =>
+    a[0].localeCompare(b[0]),
+  )) {
+    const actIds = ruleActIds.get(coreRuleId);
+    const label = actIds?.size
+      ? `${coreRuleId} (${[...actIds].sort().join(", ")})`
+      : coreRuleId;
 
     // For rate calculation, exclude cantTell assertions
     const testable = stats.passed + stats.failed;
@@ -113,7 +120,7 @@ function main() {
     if (rate < THRESHOLD) hasFailures = true;
 
     console.log(
-      coreRuleId.padEnd(35) +
+      label.padEnd(40) +
       String(stats.total).padEnd(8) +
       String(stats.passed).padEnd(8) +
       String(stats.failed).padEnd(8) +
@@ -122,7 +129,7 @@ function main() {
     );
   }
 
-  console.log("-".repeat(80));
+  console.log("-".repeat(85));
 
   if (hasFailures) {
     console.error("Conformance gate FAILED: one or more enabled rules below 80% ACT conformance.");
