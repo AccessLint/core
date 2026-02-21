@@ -91,7 +91,11 @@ import { validLang } from "./language/valid-lang";
 import { htmlXmlLangMismatch } from "./language/html-xml-lang-mismatch";
 
 // Tables
-import { tdHeadersAttr, thHasDataCells, tdHasHeader, scopeAttrValid, emptyTableHeader } from "./tables/table-headers";
+import { tdHeadersAttr } from "./tables/td-headers-attr";
+import { thHasDataCells } from "./tables/th-has-data-cells";
+import { tdHasHeader } from "./tables/td-has-header";
+import { scopeAttrValid } from "./tables/scope-attr-valid";
+import { emptyTableHeader } from "./tables/empty-table-header";
 
 // Parsing
 import { duplicateIdAria } from "./parsing/duplicate-id";
