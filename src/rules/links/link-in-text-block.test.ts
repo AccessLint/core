@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { linkInTextBlock } from "./link-rules";
+import { linkInTextBlock } from "./link-in-text-block";
 import { clearColorCaches } from "../utils/color";
 
 function makeDoc(html: string): Document {

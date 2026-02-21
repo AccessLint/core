@@ -8,52 +8,6 @@ import {
   getContrastRatio,
 } from "../utils/color";
 
-export const skipLink: Rule = {
-  id: "accesslint-078",
-  wcag: ["2.4.1"],
-  level: "A",
-  tags: ["best-practice"],
-  description: "Skip links must point to a valid target on the page.",
-  guidance: "Skip links allow keyboard users to bypass repetitive navigation and jump directly to main content. The skip link should be the first focusable element on the page, link to the main content (e.g., href='#main'), and become visible when focused. It can be visually hidden until focused using CSS.",
-  prompt:
-    "A skip link is a single <a href='#main'>Skip to main content</a> as the first element in <body>. It can be visually hidden with CSS until focused. Explain this simple pattern.",
-  run(doc) {
-    const violations = [];
-
-    // Find skip-link candidates: same-page anchor links near the top of the
-    // page whose text suggests a "skip to …" purpose.  Only validate that
-    // their targets exist — absence of a skip link is covered by the
-    // separate "bypass" rule.
-    const anchors = doc.querySelectorAll('a[href^="#"]');
-
-    for (const a of anchors) {
-      const href = a.getAttribute("href");
-      if (!href || href === "#") continue;
-
-      const text = getAccessibleTextContent(a).toLowerCase();
-      const isSkipLink =
-        text.includes("skip") || text.includes("jump") ||
-        text.includes("main content") || text.includes("navigation");
-      if (!isSkipLink) continue;
-
-      // Validate the target exists
-      const targetId = href.slice(1);
-      const target = doc.getElementById(targetId);
-      if (!target) {
-        violations.push({
-          ruleId: "accesslint-078",
-          selector: getSelector(a),
-          html: getHtmlSnippet(a),
-          impact: "moderate" as const,
-          message: `Skip link points to "#${targetId}" which does not exist on the page.`,
-        });
-      }
-    }
-
-    return violations;
-  },
-};
-
 const BLOCK_DISPLAYS = new Set([
   "block", "flex", "grid", "table", "table-cell", "list-item", "flow-root",
 ]);

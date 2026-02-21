@@ -81,7 +81,8 @@ import { summaryName } from "./aria/summary-name";
 
 // Links
 import { linkName } from "./links/link-name";
-import { skipLink, linkInTextBlock } from "./links/link-rules";
+import { skipLink } from "./links/skip-link";
+import { linkInTextBlock } from "./links/link-in-text-block";
 
 // Language
 import { htmlHasLang, htmlLangValid, validLang, htmlXmlLangMismatch } from "./language/html-has-lang";
