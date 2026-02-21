@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { duplicateIdAria } from "./duplicate-id-aria";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("labels-and-names/duplicate-id-aria", () => {
   it("reports duplicate IDs referenced by aria-labelledby", () => {

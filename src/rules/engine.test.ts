@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { makeDoc } from "./test-helpers";
+import { makeDoc } from "../test-helpers";
 import { compileDeclarativeRule, validateDeclarativeRule } from "./engine";
 import type { DeclarativeRule } from "./types";
 

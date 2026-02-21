@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { inputButtonName } from "./input-button-name";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("labels-and-names/input-button-name", () => {
   it("reports type=button with empty value", () => {

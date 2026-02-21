@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { makeDoc } from "../rules/test-helpers";
+import { makeDoc } from "../test-helpers";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { rules, clearAllCaches } from "../rules/index";

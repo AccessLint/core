@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { imageAltWords } from "./image-alt-words";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("text-alternatives/image-alt-words", () => {
   it("reports alt text containing 'image'", () => {

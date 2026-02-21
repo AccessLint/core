@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { labelContentMismatch } from "./label-content-mismatch";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("labels-and-names/label-content-mismatch", () => {
   it("passes button without aria-label", () => {

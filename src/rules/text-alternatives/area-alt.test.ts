@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { areaAlt } from "./area-alt";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("text-alternatives/area-alt", () => {
   it("reports area without alt", () => {

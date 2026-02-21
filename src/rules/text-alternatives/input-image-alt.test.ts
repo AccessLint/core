@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { inputImageAlt } from "./input-image-alt";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("text-alternatives/input-image-alt", () => {
   it("reports input[type=image] without alt", () => {

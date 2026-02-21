@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { labelTitleOnly } from "./label-title-only";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("labels-and-names/label-title-only", () => {
   it("reports input with only title attribute", () => {

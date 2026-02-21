@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { autocompleteValid } from "./autocomplete-valid";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("adaptable/autocomplete-valid", () => {
   // --- Valid values ---

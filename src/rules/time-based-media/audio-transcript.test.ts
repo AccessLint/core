@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { audioTranscript } from "./audio-transcript";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("time-based-media/audio-transcript", () => {
   it("reports audio without transcript", () => {

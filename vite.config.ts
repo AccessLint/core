@@ -31,7 +31,6 @@ export default defineConfig({
       exclude: [
         "src/rules/**/*.test.ts",
         "src/rules/**/*.bench.ts",
-        "src/rules/test-helpers.ts",
       ],
       thresholds: {
         statements: 80,

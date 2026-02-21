@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { multipleLabels } from "./multiple-labels";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("labels-and-names/multiple-labels", () => {
   it("reports input with multiple label[for] elements", () => {

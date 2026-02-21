@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { imageRedundantAlt } from "./image-redundant-alt";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("text-alternatives/image-redundant-alt", () => {
   it("reports img alt duplicating parent link text", () => {

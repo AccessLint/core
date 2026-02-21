@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { objectAlt } from "./object-alt";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("text-alternatives/object-alt", () => {
   it("reports object without alternative text", () => {

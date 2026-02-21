@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { roleImgAlt } from "./role-img-alt";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("text-alternatives/role-img-alt", () => {
   it("reports div with role=img without name", () => {

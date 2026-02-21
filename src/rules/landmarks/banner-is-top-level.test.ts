@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 import { bannerIsTopLevel } from "./banner-is-top-level";
 
 

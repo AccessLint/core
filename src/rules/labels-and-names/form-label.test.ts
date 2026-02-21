@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { formLabel } from "./form-label";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("labels-and-names/form-label", () => {
   it("reports input without label", () => {

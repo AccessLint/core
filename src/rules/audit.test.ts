@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { makeDoc } from "./test-helpers";
+import { makeDoc } from "../test-helpers";
 import { runAudit } from "./index";
 import { generateDoc, SMALL_SIZE } from "../bench/fixtures";
 

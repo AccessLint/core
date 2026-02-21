@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { imgAlt } from "./img-alt";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("text-alternatives/img-alt", () => {
   it("reports images missing alt attribute", () => {

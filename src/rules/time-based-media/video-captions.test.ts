@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { videoCaptions } from "./video-captions";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("time-based-media/video-captions", () => {
   it("reports video without captions track", () => {

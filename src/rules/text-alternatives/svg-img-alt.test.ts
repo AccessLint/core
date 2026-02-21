@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { svgImgAlt } from "./svg-img-alt";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("text-alternatives/svg-img-alt", () => {
   it("reports svg with role=img and no accessible name", () => {

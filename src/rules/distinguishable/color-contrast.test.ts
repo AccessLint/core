@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 import { colorContrast } from "./color-contrast";
 import { clearColorCaches, parseTextShadow, getEffectiveBackgroundColor } from "../utils/color";
 

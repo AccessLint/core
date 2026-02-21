@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { serverImageMap } from "./server-image-map";
-import { makeDoc } from "../test-helpers";
+import { makeDoc } from "../../test-helpers";
 
 describe("keyboard-accessible/server-image-map", () => {
   it("reports img with ismap attribute", () => {
