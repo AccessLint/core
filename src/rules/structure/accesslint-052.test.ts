@@ -17,7 +17,7 @@ describe("accesslint-052 (importantWordSpacing)", () => {
     const doc = makeDoc('<html><body><p style="word-spacing: 0.05em !important">Text</p></body></html>');
     const violations = accesslint052.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("important-word-spacing");
+    expect(violations[0].ruleId).toBe("accesslint-052");
     expect(violations[0].message).toContain("word-spacing");
     expect(violations[0].message).toContain("!important");
   });

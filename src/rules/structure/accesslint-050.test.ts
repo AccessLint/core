@@ -22,7 +22,7 @@ describe("accesslint-050 (importantLetterSpacing)", () => {
     const doc = makeDoc('<html><body><p style="letter-spacing: 0.05em !important">Text</p></body></html>');
     const violations = accesslint050.run(doc);
     expect(violations).toHaveLength(1);
-    expect(violations[0].ruleId).toBe("important-letter-spacing");
+    expect(violations[0].ruleId).toBe("accesslint-050");
     expect(violations[0].message).toContain("letter-spacing");
     expect(violations[0].message).toContain("!important");
   });

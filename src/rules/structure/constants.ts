@@ -39,6 +39,44 @@ export const SECTIONING_SELECTOR = 'article, aside, main, nav, section, [role="a
 export const LANDMARK_SELECTOR = 'main, [role="main"], header, [role="banner"], footer, [role="contentinfo"], nav, [role="navigation"], aside, [role="complementary"], section[aria-label], section[aria-labelledby], [role="region"][aria-label], [role="region"][aria-labelledby], form[aria-label], form[aria-labelledby], [role="form"][aria-label], [role="form"][aria-labelledby], [role="search"]';
 
 /**
+ * Factory for "nested landmark" rules. These rules check that elements with
+ * a given role are not nested inside sectioning content.
+ */
+export function makeNestedLandmarkRule(opts: {
+  id: string;
+  selector: string;
+  landmarkName: string;
+  description: string;
+  guidance: string;
+  prompt: string;
+}): Rule {
+  return {
+    id: opts.id,
+    wcag: [],
+    level: "A",
+    tags: ["best-practice"],
+    description: opts.description,
+    guidance: opts.guidance,
+    prompt: opts.prompt,
+    run(doc) {
+      const violations: Violation[] = [];
+      for (const el of doc.querySelectorAll(opts.selector)) {
+        if (el.closest(SECTIONING_SELECTOR)) {
+          violations.push({
+            ruleId: opts.id,
+            selector: getSelector(el),
+            html: getHtmlSnippet(el),
+            impact: "moderate" as const,
+            message: `${opts.landmarkName} landmark is nested within another landmark.`,
+          });
+        }
+      }
+      return violations;
+    },
+  };
+}
+
+/**
  * Factory for "no duplicate landmark" rules. These rules check that at most
  * one top-level element matches a given selector.
  */
