@@ -76,9 +76,15 @@ function main() {
     const expected = expectedByTestcase.get(testcaseId);
     if (!expected) continue;
 
-    // Determine correctness: does the actual outcome match expected?
+    // Determine correctness per ACT conformance:
+    // - "passed" satisfies expected "passed" or "inapplicable"
+    // - "failed" satisfies expected "failed"
+    // - "inapplicable" satisfies expected "passed" or "inapplicable"
     const actualOutcome = assertion.result.outcome.replace("earl:", "");
-    const correct = actualOutcome === expected;
+    const correct =
+      actualOutcome === expected ||
+      (expected === "inapplicable" && (actualOutcome === "passed" || actualOutcome === "inapplicable")) ||
+      (expected === "passed" && actualOutcome === "inapplicable");
 
     const stats = ruleStats.get(coreRuleId) ?? { total: 0, passed: 0, failed: 0, cantTell: 0 };
     stats.total++;

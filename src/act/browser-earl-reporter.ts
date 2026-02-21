@@ -40,17 +40,17 @@ export default class BrowserEarlReporter implements Reporter {
     const testcaseId = metaMatch[3];
     const expected = expectedMatch[1] as "passed" | "failed" | "inapplicable";
 
-    // Extract actual outcome from test annotations or status
-    const status = result.status; // "passed" | "failed" | "timedOut" | "skipped"
+    const status = result.status; // "passed" | "failed" | "timedOut" | "skipped" | "interrupted"
+    const testcaseTitle = title.replace(/\s*\|act:[^|]+\|core:[^|]+\|tc:[^|]+$/, "").replace(/^\[(passed|failed|inapplicable)\]\s*/, "");
 
     // Skipped tests (external stylesheets, Shadow DOM) can't be evaluated
     if (status === "skipped") return;
 
-    // Timed-out tests — outcome couldn't be determined
-    if (status === "timedOut") {
+    // Timed-out or interrupted tests — outcome couldn't be determined
+    if (status === "timedOut" || status === "interrupted") {
       this.outcomes.push({
         testcaseId,
-        testcaseTitle: title.replace(/\s*\|act:[^|]+\|core:[^|]+\|tc:[^|]+$/, "").replace(/^\[(passed|failed|inapplicable)\]\s*/, ""),
+        testcaseTitle,
         actRuleId,
         coreRuleId,
         expected,
@@ -60,25 +60,38 @@ export default class BrowserEarlReporter implements Reporter {
       return;
     }
 
-    const testPassed = status === "passed";
-
-    // Determine actual outcome: if the test passed, the rule behaved correctly
-    let actual: "passed" | "failed" | "inapplicable";
-    if (testPassed) {
-      actual = expected; // Test passed means actual matched expected
+    // The tool only produces two real outcomes: violations (failed) or
+    // no violations (passed). It cannot distinguish "inapplicable" from
+    // "passed" — report what the tool actually determined.
+    let actual: "passed" | "failed" | "cantTell";
+    if (status === "passed") {
+      // Test passed: the rule produced the expected behavior.
+      // violations found → failed, no violations → passed.
+      actual = expected === "failed" ? "failed" : "passed";
     } else {
-      // Test failed — invert the expectation
-      actual = expected === "failed" ? "passed" : "failed";
+      // Test failed — but was it an assertion mismatch or a runtime error?
+      // Playwright sets status="failed" for both; check for an error that
+      // isn't an expect() assertion failure to distinguish crashes.
+      const isAssertionFailure = result.errors?.some(
+        (e) => e.message?.includes("expect(") || e.message?.includes("Expected"),
+      );
+      if (!isAssertionFailure && result.errors?.length) {
+        // Rule threw a runtime error — outcome is indeterminate
+        actual = "cantTell";
+      } else {
+        // Assertion mismatch — invert the expectation
+        actual = expected === "failed" ? "passed" : "failed";
+      }
     }
 
     this.outcomes.push({
       testcaseId,
-      testcaseTitle: title.replace(/\s*\|act:[^|]+\|core:[^|]+\|tc:[^|]+$/, "").replace(/^\[(passed|failed|inapplicable)\]\s*/, ""),
+      testcaseTitle,
       actRuleId,
       coreRuleId,
       expected,
       actual,
-      correct: testPassed,
+      correct: actual === expected || (expected === "inapplicable" && actual === "passed"),
     });
   }
 

@@ -27,7 +27,7 @@ export interface FixtureOutcome {
   actRuleId: string;
   coreRuleId: string;
   expected: "passed" | "failed" | "inapplicable";
-  actual: "passed" | "failed" | "inapplicable" | "cantTell";
+  actual: "passed" | "failed" | "cantTell";
   correct: boolean;
 }
 
