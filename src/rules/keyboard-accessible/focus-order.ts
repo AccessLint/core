@@ -14,7 +14,7 @@ export const focusOrder: Rule = {
   tags: ["best-practice"],
   level: "A",
   description:
-    "Elements that receive keyboard focus must have an appropriate role so assistive technologies can convey their purpose. Non-interactive elements with tabindex='0' need a valid interactive ARIA role.",
+    "Non-interactive elements with tabindex='0' must have an interactive ARIA role so assistive technologies can convey their purpose.",
   guidance:
     "When adding tabindex='0' to non-interactive elements like <div> or <span>, screen readers announce them generically. Add an appropriate role (button, link, tab, etc.) so users understand the element's purpose. Also add keyboard event handlers (Enter/Space for buttons, Enter for links). Consider using native interactive elements instead.",
   prompt:

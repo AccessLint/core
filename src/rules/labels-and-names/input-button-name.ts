@@ -11,7 +11,7 @@ export const inputButtonName: Rule = {
   guidance:
     "Input buttons (<input type='submit'>, type='button', type='reset'>) need accessible names so users know what action the button performs. Add a value attribute with descriptive text (e.g., value='Submit Form'), or use aria-label if the value must differ from the accessible name.",
   prompt:
-    "Based on the input type and form context, suggest a value attribute describing the button's action.",
+    "This input button has no accessible name. Add a value attribute describing the action (e.g. value='Submit Form'), or use aria-label if the visible text must differ from the accessible name (e.g. aria-label='Submit registration form'). For type='submit' or type='reset', the browser provides a default label only if no value attribute is present.",
   run(doc) {
     const violations = [];
     for (const input of doc.querySelectorAll(

@@ -6,7 +6,7 @@ export const emptyHeading: Rule = {
   id: "navigable/empty-heading",
   category: "navigable",
   actRuleIds: ["ffd0e9"],
-  wcag: [],
+  wcag: ["2.4.6"],
   level: "A",
   tags: ["best-practice"],
   description: "Headings must have discernible text.",

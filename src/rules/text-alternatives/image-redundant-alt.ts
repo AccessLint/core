@@ -8,7 +8,7 @@ import { getSelector, getHtmlSnippet } from "../utils/selector";
 export const imageRedundantAlt: Rule = {
   id: "text-alternatives/image-redundant-alt",
   category: "text-alternatives",
-  wcag: [],
+  wcag: ["1.1.1"],
   level: "A",
   tags: ["best-practice"],
   description:

@@ -6,9 +6,9 @@ export const pageHasHeadingOne: Rule = {
   category: "navigable",
   wcag: [],
   level: "A",
-  tags: ["best-practice"],
+  tags: ["best-practice", "page-level"],
   description: "Page should contain a level-one heading.",
-  guidance: "A level-one heading (<h1> or role='heading' with aria-level='1') helps users understand the page topic and provides a landmark for screen reader navigation. Each page should have exactly one h1 that describes the main content, typically matching or similar to the page title.",
+  guidance: "A level-one heading (<h1> or role='heading' with aria-level='1') helps users understand the page topic and provides a landmark for screen reader navigation. Each page should have at least one level-one heading that describes the main content, typically matching or similar to the page title.",
   prompt:
     "The page has no <h1> heading. Suggest appropriate h1 text based on the page title or content sample in context. The h1 should describe the page's main topic and typically be placed at the start of the main content area.",
   run(doc) {

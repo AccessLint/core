@@ -5,7 +5,7 @@ import { isAriaHidden, getAccessibleName } from "../utils/aria";
 export const emptyTableHeader: Rule = {
   id: "adaptable/empty-table-header",
   category: "adaptable",
-  wcag: [],
+  wcag: ["1.3.1"],
   level: "A",
   tags: ["best-practice"],
   description: "Table header cells should have visible text.",

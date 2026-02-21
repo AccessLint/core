@@ -133,10 +133,10 @@ describe("i18n message translation", () => {
   it("translates dynamic messages with multiple placeholders", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "navigable/heading-order", message: "Heading level 4 skipped from level 2.", element: "<h4>", selector: "h4" },
+      { ruleId: "navigable/heading-order", message: "Heading level 4 skipped from level 2. Use h3 instead.", element: "<h4>", selector: "h4" },
     ];
     const translated = translateViolations(violations, "es");
-    expect(translated[0].message).toBe("Nivel de encabezado 4 saltado desde el nivel 2.");
+    expect(translated[0].message).toBe("Nivel de encabezado 4 saltado desde el nivel 2. Use h3 en su lugar.");
   });
 
   it("returns original message when no matching template exists", () => {

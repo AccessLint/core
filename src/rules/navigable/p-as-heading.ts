@@ -5,13 +5,13 @@ import { isAriaHidden } from "../utils/aria";
 export const pAsHeading: Rule = {
   id: "navigable/p-as-heading",
   category: "navigable",
-  wcag: [],
+  wcag: ["1.3.1"],
   level: "A",
   tags: ["best-practice"],
   description: "Paragraphs should not be styled to look like headings.",
   guidance: "When paragraphs are styled with bold, large fonts to look like headings, screen reader users miss the semantic structure. Use proper heading elements (h1-h6) instead of styled paragraphs. If you need specific styling, apply CSS to the heading elements while maintaining proper heading hierarchy.",
   prompt:
-    "Suggest the appropriate heading level based on the document structure.",
+    "This <p> is styled to look like a heading. Replace it with the appropriate heading element (h1-h6). To determine the correct level, find the nearest preceding heading and use the next level down. For example, if the last heading was an <h2>, this should be an <h3>. Move the visual styles to the heading element or use CSS classes.",
   run(doc) {
     const violations = [];
 

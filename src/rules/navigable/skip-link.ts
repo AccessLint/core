@@ -7,11 +7,11 @@ export const skipLink: Rule = {
   category: "navigable",
   wcag: ["2.4.1"],
   level: "A",
-  tags: ["best-practice"],
+  tags: ["best-practice", "page-level"],
   description: "Skip links must point to a valid target on the page.",
   guidance: "Skip links allow keyboard users to bypass repetitive navigation and jump directly to main content. The skip link should be the first focusable element on the page, link to the main content (e.g., href='#main'), and become visible when focused. It can be visually hidden until focused using CSS.",
   prompt:
-    "A skip link is a single <a href='#main'>Skip to main content</a> as the first element in <body>. It can be visually hidden with CSS until focused. Explain this simple pattern.",
+    "This skip link points to a target that does not exist on the page. Either add an element with the matching id attribute (e.g. <main id='main'>), or update the skip link's href to point to an existing element. The target should be the start of the main content area.",
   run(doc) {
     const violations = [];
 

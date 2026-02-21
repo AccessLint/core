@@ -9,7 +9,7 @@ export const thHasDataCells: Rule = {
   wcag: ["1.3.1"],
   level: "A",
   description: "Table headers should be associated with data cells.",
-  guidance: "A table with header cells (th) but no data cells (td) is likely a misuse of table markup for layout or has missing content. Either add data cells that the headers describe, or use appropriate non-table markup if this is not tabular data.",
+  guidance: "Screen readers use <th> elements to announce column or row headers when navigating table cells — for example, reading 'Name: John' when moving to a cell. A table with <th> but no <td> elements means headers describe nothing, and screen readers cannot associate data with headers. Either add <td> data cells, or if this is not tabular data, use non-table markup instead.",
   prompt:
     "Explain whether this table needs data cells or if non-table layout would be more appropriate.",
   run(doc) {

@@ -32,7 +32,7 @@ export const headingOrder: Rule = {
           selector: getSelector(heading),
           html: getHtmlSnippet(heading),
           impact: "moderate" as const,
-          message: `Heading level ${level} skipped from level ${lastLevel}.`,
+          message: `Heading level ${level} skipped from level ${lastLevel}. Use h${lastLevel + 1} instead.`,
           context: lastHeading ? `Previous heading: ${getHtmlSnippet(lastHeading)}` : undefined,
         });
       }

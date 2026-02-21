@@ -8,7 +8,7 @@ export const mainIsTopLevel: Rule = {
   level: "A",
   tags: ["best-practice"],
   description: "Main landmark should not be nested within another landmark.",
-  guidance: "The main landmark must be a top-level landmark since it represents the primary content of the page. Do not nest <main> or role='main' inside article, aside, nav, or section elements.",
+  guidance: "Screen readers provide a shortcut to jump directly to the main landmark. When <main> is nested inside another landmark (article, aside, nav, or section), some screen readers may not list it as a top-level landmark, making it harder to find. Move <main> outside any sectioning elements so it sits at the top level of the document.",
   prompt:
     "Explain why the main landmark must be top-level and where to move it.",
   run(doc) {

@@ -9,7 +9,7 @@ export const listitemParent: Rule = {
   level: "A",
   description: "<li> elements must be contained in a <ul>, <ol>, or <menu>.",
   guidance:
-    "List items (<li>) only have semantic meaning inside a list container (<ul>, <ol>, or <menu>). Outside of these containers, assistive technologies cannot convey the list relationship. Wrap <li> elements in the appropriate list container.",
+    "List items (<li>) only have semantic meaning inside a list container (<ul>, <ol>, or <menu>). Without a list parent, screen readers will not announce 'list with N items' or allow users to skip between items using list navigation shortcuts. Wrap <li> elements in the appropriate list container — <ul> for unordered lists, <ol> for ordered/numbered lists.",
   prompt:
     "Explain that this <li> must be placed inside a <ul>, <ol>, or <menu> element.",
   run(doc) {

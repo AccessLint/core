@@ -5,7 +5,7 @@ import { isAriaHidden } from "../utils/aria";
 export const multipleLabels: Rule = {
   id: "labels-and-names/multiple-labels",
   category: "labels-and-names",
-  wcag: [],
+  wcag: ["4.1.2"],
   level: "A",
   tags: ["best-practice"],
   description: "Form fields should not have multiple label elements.",

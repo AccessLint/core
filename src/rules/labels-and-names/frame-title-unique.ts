@@ -12,7 +12,7 @@ export const frameTitleUnique: Rule = {
   description: "Frame titles should be unique.",
   guidance: "When multiple frames have identical titles, screen reader users cannot distinguish between them. Give each frame a unique, descriptive title that explains its specific purpose or content.",
   prompt:
-    "Suggest a more specific title to distinguish this frame from others.",
+    "Multiple frames share the same title, so screen reader users cannot tell them apart. Update each frame's title attribute to describe its specific content or purpose — for example, change two frames both titled 'Advertisement' to 'Top banner ad' and 'Sidebar ad'. Use the frame's src URL or content to inform a descriptive title.",
   run(doc) {
     const violations = [];
     const frames = Array.from(doc.querySelectorAll("iframe[title], frame[title]"));

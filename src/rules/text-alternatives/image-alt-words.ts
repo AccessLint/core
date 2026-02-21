@@ -12,7 +12,7 @@ const REDUNDANT_WORDS = ["image", "picture", "photo", "graphic", "icon", "img"];
 export const imageAltWords: Rule = {
   id: "text-alternatives/image-alt-words",
   category: "text-alternatives",
-  wcag: [],
+  wcag: ["1.1.1"],
   level: "A",
   tags: ["best-practice"],
   description:

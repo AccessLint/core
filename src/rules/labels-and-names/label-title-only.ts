@@ -6,7 +6,7 @@ import { NATIVE_LABELABLE_SELECTOR, findAssociatedLabel } from "./form-constants
 export const labelTitleOnly: Rule = {
   id: "labels-and-names/label-title-only",
   category: "labels-and-names",
-  wcag: [],
+  wcag: ["4.1.2"],
   level: "A",
   tags: ["best-practice"],
   description: "Form elements should not use title attribute as the only accessible name.",

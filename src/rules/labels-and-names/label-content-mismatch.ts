@@ -39,7 +39,7 @@ export const labelContentMismatch: Rule = {
   id: "labels-and-names/label-content-mismatch",
   category: "labels-and-names",
   actRuleIds: ["2ee8b8"],
-  wcag: [],
+  wcag: ["2.5.3"],
   level: "A",
   tags: ["best-practice"],
   description: "Interactive elements with visible text must have accessible names that contain that text.",
