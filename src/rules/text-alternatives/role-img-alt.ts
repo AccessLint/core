@@ -5,6 +5,7 @@ import { getAccessibleName, isAriaHidden } from "../utils/aria";
 export const roleImgAlt: Rule = {
   id: "text-alternatives/role-img-alt",
   category: "text-alternatives",
+  actRuleIds: ["23a2a8"],
   wcag: ["1.1.1"],
   level: "A",
   fixability: "contextual",

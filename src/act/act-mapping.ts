@@ -9,7 +9,7 @@ function buildActToCoreRule(): Record<string, string> {
   for (const rule of rules) {
     if (rule.actRuleIds) {
       for (const actId of rule.actRuleIds) {
-        mapping[actId] = rule.id;
+        mapping[actId] ??= rule.id;
       }
     }
   }

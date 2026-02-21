@@ -7,8 +7,6 @@ Pure accessibility rule engine with zero browser dependencies. Covers WCAG 2.1 L
 
 > Looking for CI? [AccessLint](https://www.accesslint.com?ref=readme_core) runs accessibility checks on every pull request and posts review comments directly on your GitHub PRs.
 
-> Automated testing catches a meaningful subset of accessibility issues, but not all of them. You'll still need to test with assistive technologies and include people with disabilities in user research.
-
 ## Contents
 
 - [Why @accesslint/core](#why-accesslintcore)

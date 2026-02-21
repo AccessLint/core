@@ -36,8 +36,8 @@ export async function runRuleByActId(
   return page.evaluate((actId) => {
     const { rules, clearAllCaches } = (window as any).AccessLint;
     clearAllCaches();
-    const rule = rules.find((r: any) => r.actRuleIds?.includes(actId));
-    if (!rule) return [];
-    return rule.run(document);
+    const matching = rules.filter((r: any) => r.actRuleIds?.includes(actId));
+    if (matching.length === 0) return [];
+    return matching.flatMap((rule: any) => rule.run(document));
   }, actRuleId);
 }
