@@ -9,6 +9,7 @@ export const focusVisible: Rule = {
   wcag: ["2.4.7"],
   level: "AA",
   fixability: "visual",
+  browserHint: "Tab to the element and screenshot to verify a visible focus indicator appears. Check that the indicator has sufficient contrast against the background.",
   description:
     "Elements in sequential focus order must have a visible focus indicator.",
   guidance:

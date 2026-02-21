@@ -16,6 +16,7 @@ export const imageAltWords: Rule = {
   level: "A",
   tags: ["best-practice"],
   fixability: "contextual",
+  browserHint: "Screenshot the image to verify the alt text accurately describes it without filler words like 'image of'.",
   description:
     "Image alt text should not contain words like 'image', 'photo', or 'picture' — screen readers already announce the element type.",
   guidance:

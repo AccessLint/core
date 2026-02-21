@@ -37,6 +37,7 @@ export const buttonName: Rule = {
   wcag: ["4.1.2"],
   level: "A",
   fixability: "contextual",
+  browserHint: "Screenshot the button to identify its icon or visual label, then add a matching aria-label.",
   description: "Buttons must have discernible text.",
   guidance:
     "Screen reader users need to know what a button does. Add visible text content, aria-label, or aria-labelledby. For icon buttons, use aria-label describing the action (e.g., aria-label='Close'). If the button contains an image, ensure the image has alt text describing the button's action.",

@@ -101,6 +101,7 @@ function checkGradientContrast(
     impact: "serious" as const,
     message: `Insufficient${level === "AAA" ? " enhanced" : ""} color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
     context: `foreground: ${rgbToHex(effectiveFg)} rgb(${effectiveFg.join(", ")}), background: gradient, ratio: ${roundedRatio}:1, required: ${threshold}:1`,
+    fix: { type: "suggest" as const, suggestion: `Change the text color or gradient background so the contrast ratio meets ${threshold}:1. The current foreground is ${rgbToHex(effectiveFg)}.` },
   };
 }
 
@@ -224,6 +225,7 @@ export function checkContrast(doc: Document, ruleId: string, level: "AA" | "AAA"
           impact: "serious" as const,
           message: `Insufficient${level === "AAA" ? " enhanced" : ""} color contrast ratio of ${roundedRatio}:1 (required ${threshold}:1).`,
           context: `foreground: ${fgHex} rgb(${effectiveFg.join(", ")}), background: ${bgHex} rgb(${bg.join(", ")}), ratio: ${roundedRatio}:1, required: ${threshold}:1`,
+          fix: { type: "suggest" as const, suggestion: `Change the text color or background color so the contrast ratio meets ${threshold}:1. Current foreground is ${fgHex}, background is ${bgHex}.` },
         });
       }
     }

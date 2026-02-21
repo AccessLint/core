@@ -9,6 +9,7 @@ export const audioTranscript: Rule = {
   wcag: ["1.2.1"],
   level: "A",
   fixability: "contextual",
+  browserHint: "Inspect the page around the audio element for existing transcript links or associated text content.",
   description: "Audio elements should have a text alternative or transcript.",
   guidance: "Audio-only content like podcasts or recordings needs a text alternative for deaf users. Provide a transcript either on the same page or linked nearby. The transcript should include all spoken content and descriptions of relevant sounds.",
   run(doc) {

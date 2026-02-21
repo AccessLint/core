@@ -39,6 +39,7 @@ export const imgAlt: Rule = {
   wcag: ["1.1.1"],
   level: "A",
   fixability: "contextual",
+  browserHint: "Screenshot the image to describe its visual content for alt text.",
   description:
     "Images must have alternate text. Add an alt attribute to <img> elements. Decorative images may use an empty alt attribute (alt=\"\"), role='none', or role='presentation'.",
   guidance:

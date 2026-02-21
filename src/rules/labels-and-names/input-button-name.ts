@@ -8,6 +8,7 @@ export const inputButtonName: Rule = {
   wcag: ["4.1.2"],
   level: "A",
   fixability: "contextual",
+  browserHint: "Screenshot the button to see its visual purpose, then set value or aria-label to describe the action.",
   description: "Input buttons must have discernible text via value, aria-label, or aria-labelledby.",
   guidance:
     "Input buttons (<input type='submit'>, type='button', type='reset'>) need accessible names so users know what action the button performs. Add a value attribute with descriptive text (e.g., value='Submit Form'), or use aria-label if the value must differ from the accessible name.",

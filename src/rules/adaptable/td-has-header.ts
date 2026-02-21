@@ -9,6 +9,7 @@ export const tdHasHeader: Rule = {
   wcag: ["1.3.1"],
   level: "A",
   fixability: "contextual",
+  browserHint: "Screenshot the table to understand its visual layout, then add scope or headers attributes to associate data cells with headers.",
   description: "Data cells in tables larger than 3x3 should have associated headers.",
   guidance: "In complex tables, screen reader users need header associations to understand data cells. Use th elements with scope attribute, or the headers attribute on td elements. For simple tables (≤3x3), this is less critical as context is usually clear.",
   run(doc) {

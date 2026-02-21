@@ -2,7 +2,7 @@
  * How easily an agent can fix violations of this rule:
  * - `mechanical`: Deterministic fix, no judgment needed (e.g., remove tabindex > 0)
  * - `contextual`: Needs surrounding context but an LLM can reason about it (e.g., suggest alt text)
- * - `visual`: Requires seeing the rendered output or design intent (e.g., color contrast)
+ * - `visual`: Requires seeing the rendered output or design intent (e.g., color contrast). Violation context may include computed values like colors and ratios that partially bridge the gap.
  */
 export type Fixability = "mechanical" | "contextual" | "visual";
 
@@ -15,6 +15,8 @@ export interface Rule {
   tags?: string[];
   /** How easily an agent can fix violations of this rule */
   fixability?: Fixability;
+  /** Hint describing what an agent with browser access (screenshots, DevTools) can do to improve fixing or verifying this rule */
+  browserHint?: string;
   description: string;
   /** Generic remediation guidance for the AI to contextualize */
   guidance?: string;
@@ -119,6 +121,7 @@ export interface DeclarativeRule {
   level: "A" | "AA" | "AAA";
   tags?: string[];
   fixability?: Fixability;
+  browserHint?: string;
   guidance?: string;
   fix?: FixSuggestion;
   skipAriaHidden?: boolean;

@@ -83,6 +83,7 @@ export const linkInTextBlock: Rule = {
   wcag: ["1.4.1"],
   level: "A",
   fixability: "visual",
+  browserHint: "Screenshot the text block to see how the link blends with surrounding text, then verify your fix (e.g., underline or border) makes the link visually distinct.",
   description: "Links within text blocks must be distinguishable by more than color alone.",
   guidance: "Users who cannot perceive color differences need other visual cues to identify links. Links in text should have underlines or other non-color indicators. If using color alone, ensure 3:1 contrast with surrounding text AND provide additional indication on focus/hover.",
   run(doc) {
@@ -152,6 +153,7 @@ export const linkInTextBlock: Rule = {
           `link color: ${hex(linkColor)} rgb(${linkColor.join(", ")}), ` +
           `surrounding text: ${hex(ctx.textColor)} rgb(${ctx.textColor.join(", ")}), ` +
           `ratio: ${ratio.toFixed(2)}:1`,
+        fix: { type: "suggest", suggestion: "Add text-decoration: underline to the link, or add a visible border-bottom. If relying on color contrast alone, ensure at least 3:1 ratio between the link color and surrounding text color." },
       });
     }
 

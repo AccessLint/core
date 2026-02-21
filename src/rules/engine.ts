@@ -119,6 +119,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
     level: spec.level,
     tags: spec.tags,
     fixability: spec.fixability,
+    browserHint: spec.browserHint,
     description: spec.description,
     guidance: spec.guidance,
     run(doc: Document): Violation[] {

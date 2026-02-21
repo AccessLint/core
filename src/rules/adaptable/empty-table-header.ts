@@ -9,6 +9,7 @@ export const emptyTableHeader: Rule = {
   level: "A",
   tags: ["best-practice"],
   fixability: "contextual",
+  browserHint: "Screenshot the table to see which header cells are visually empty, then add text content or aria-label.",
   description: "Table header cells should have visible text.",
   guidance: "Empty table headers provide no information to screen reader users. Either add descriptive text to the header, or if the header is intentionally empty (like a corner cell), consider using a td element instead or adding a visually hidden label.",
   run(doc) {

@@ -9,6 +9,7 @@ export const objectAlt: Rule = {
   wcag: ["1.1.1"],
   level: "A",
   fixability: "contextual",
+  browserHint: "Screenshot the embedded object to see its content, then add aria-label or title describing it.",
   description: "<object> elements must have alternative text.",
   guidance: "Object elements embed external content that may not be accessible to all users. Provide alternative text via aria-label, aria-labelledby, or a title attribute. The fallback content inside <object> is only shown when the object fails to load and does not serve as an accessible name.",
   run(doc) {

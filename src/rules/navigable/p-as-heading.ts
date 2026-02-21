@@ -8,7 +8,8 @@ export const pAsHeading: Rule = {
   wcag: ["1.3.1"],
   level: "A",
   tags: ["best-practice"],
-  fixability: "visual",
+  fixability: "contextual",
+  browserHint: "Screenshot the page to verify the paragraph visually functions as a heading and choose the correct heading level.",
   description: "Paragraphs should not be styled to look like headings.",
   guidance: "When paragraphs are styled with bold, large fonts to look like headings, screen reader users miss the semantic structure. Use proper heading elements (h1-h6) instead of styled paragraphs. If you need specific styling, apply CSS to the heading elements while maintaining proper heading hierarchy.",
   run(doc) {
@@ -46,6 +47,7 @@ export const pAsHeading: Rule = {
             html: getHtmlSnippet(p),
             impact: "serious" as const,
             message: "Paragraph appears to be styled as a heading. Use an h1-h6 element instead.",
+            fix: { type: "suggest", suggestion: "Replace the <p> element with the appropriate heading level (h1-h6) based on the document outline. Preserve the text content and move any inline styles to a CSS class on the new heading element." },
           });
         }
       }
