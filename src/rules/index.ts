@@ -85,7 +85,10 @@ import { skipLink } from "./links/skip-link";
 import { linkInTextBlock } from "./links/link-in-text-block";
 
 // Language
-import { htmlHasLang, htmlLangValid, validLang, htmlXmlLangMismatch } from "./language/html-has-lang";
+import { htmlHasLang } from "./language/html-has-lang";
+import { htmlLangValid } from "./language/html-lang-valid";
+import { validLang } from "./language/valid-lang";
+import { htmlXmlLangMismatch } from "./language/html-xml-lang-mismatch";
 
 // Tables
 import { tdHeadersAttr, thHasDataCells, tdHasHeader, scopeAttrValid, emptyTableHeader } from "./tables/table-headers";
