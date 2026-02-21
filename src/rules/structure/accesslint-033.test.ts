@@ -1,0 +1,28 @@
+import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
+import { accesslint033 } from "./accesslint-033";
+
+
+describe("accesslint-033", () => {
+  it("passes sequential headings", () => {
+    const doc = makeDoc("<html><body><h1>A</h1><h2>B</h2><h3>C</h3></body></html>");
+    expect(accesslint033.run(doc)).toHaveLength(0);
+  });
+
+  it("reports skipped heading level", () => {
+    const doc = makeDoc("<html><body><h1>A</h1><h3>C</h3></body></html>");
+    const v = accesslint033.run(doc);
+    expect(v).toHaveLength(1);
+    expect(v[0].message).toContain("3");
+  });
+
+  it("allows same level headings", () => {
+    const doc = makeDoc("<html><body><h2>A</h2><h2>B</h2></body></html>");
+    expect(accesslint033.run(doc)).toHaveLength(0);
+  });
+
+  it("allows going back to lower level", () => {
+    const doc = makeDoc("<html><body><h1>A</h1><h2>B</h2><h1>C</h1></body></html>");
+    expect(accesslint033.run(doc)).toHaveLength(0);
+  });
+});

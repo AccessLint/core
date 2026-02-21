@@ -1,0 +1,35 @@
+import type { Rule } from "../types";
+import { getHtmlSnippet } from "../utils/selector";
+
+export const accesslint083: Rule = {
+  id: "accesslint-083",
+  wcag: ["3.1.1"],
+  level: "A",
+  description: "The lang and xml:lang attributes on <html> must match.",
+  guidance: "In XHTML documents, if both lang and xml:lang are present, they must specify the same base language. Mismatched values confuse assistive technologies. Either remove xml:lang (preferred for HTML5) or ensure both attributes have identical values.",
+  prompt:
+    "Explain whether to remove xml:lang or align it with the lang value.",
+  run(doc) {
+    const html = doc.documentElement;
+    const lang = html.getAttribute("lang")?.trim().toLowerCase();
+    const xmlLang = html.getAttribute("xml:lang")?.trim().toLowerCase();
+
+    if (lang && xmlLang) {
+      // Extract primary language subtag for comparison
+      const langPrimary = lang.split("-")[0];
+      const xmlLangPrimary = xmlLang.split("-")[0];
+
+      if (langPrimary !== xmlLangPrimary) {
+        return [{
+          ruleId: "accesslint-083",
+          selector: "html",
+          html: getHtmlSnippet(html),
+          impact: "moderate" as const,
+          message: `lang="${lang}" and xml:lang="${xmlLang}" do not match.`,
+        }];
+      }
+    }
+
+    return [];
+  },
+};

@@ -1,0 +1,52 @@
+import type { Rule } from "../types";
+import { getSelector, getHtmlSnippet } from "../utils/selector";
+import { parseMetaRefreshContent } from "./constants";
+
+export const accesslint007: Rule = {
+  id: "accesslint-007",
+  actRuleIds: ["bc659a"],
+  wcag: ["2.2.1"],
+  level: "A",
+  description: "Meta refresh must not redirect or refresh automatically.",
+  guidance: "Automatic page refreshes or redirects can disorient users, especially those using screen readers or with cognitive disabilities. They may lose their place or not have time to read content. If a redirect is needed, use a server-side redirect (HTTP 301/302) instead. For timed refreshes, provide user controls.",
+  prompt:
+    "Explain why meta refresh is problematic and suggest server-side alternatives.",
+  run(doc) {
+    // Iterate through all meta refresh tags.  For URL redirects, the first
+    // one with a validly-formed URL wins (the browser acts on it).
+    for (const refresh of doc.querySelectorAll('meta[http-equiv="refresh"]')) {
+      const content = refresh.getAttribute("content") || "";
+      const parsed = parseMetaRefreshContent(content);
+      if (!parsed) continue;
+
+      if (parsed.hasValidUrl) {
+        // This is the effective redirect
+        if (parsed.seconds > 0 && parsed.seconds <= 72000) {
+          return [{
+            ruleId: "accesslint-007",
+            selector: getSelector(refresh),
+            html: getHtmlSnippet(refresh),
+            impact: "critical" as const,
+            message: `Page redirects after ${parsed.seconds} seconds without warning. Use server-side redirect.`,
+          }];
+        }
+        // Delay 0 or > 72000 is OK; this redirect wins so stop checking
+        return [];
+      }
+
+      // No valid URL = same-page refresh
+      if (parsed.seconds > 0 && parsed.seconds <= 72000) {
+        return [{
+          ruleId: "accesslint-007",
+          selector: getSelector(refresh),
+          html: getHtmlSnippet(refresh),
+          impact: "critical" as const,
+          message: `Page auto-refreshes after ${parsed.seconds} seconds. Provide user control over refresh.`,
+        }];
+      }
+      // seconds == 0 or > 72000 with no URL: skip, check next meta
+    }
+
+    return [];
+  },
+};

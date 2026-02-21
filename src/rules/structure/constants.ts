@@ -1,6 +1,37 @@
 import type { Rule, Violation } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 
+/** True when an iframe/frame is hidden and not exposed to assistive technology. */
+export function isHiddenFrame(frame: Element): boolean {
+  if (!(frame instanceof HTMLElement)) return false;
+  // Inline style checks
+  if (frame.style.display === "none") return true;
+  if (frame.style.visibility === "hidden") return true;
+  // Zero or 1×1 tracking pixel dimensions (attribute or inline style)
+  const w = frame.getAttribute("width");
+  const h = frame.getAttribute("height");
+  if ((w === "0" || w === "1") && (h === "0" || h === "1")) return true;
+  return false;
+}
+
+/**
+ * Parse a meta refresh content attribute, extracting the delay in seconds
+ * and whether it contains a valid URL redirect.
+ */
+export function parseMetaRefreshContent(content: string): { seconds: number; hasValidUrl: boolean } | null {
+  const match = content.match(/^(\d+)/);
+  if (!match) return null;
+  const seconds = parseInt(match[1], 10);
+
+  // Valid URL redirect: number followed by ; or , then either:
+  //   - url= prefix (with any URL, including relative), or
+  //   - an absolute http(s) URL
+  const hasValidUrl = /^\d+\s*[;,]\s*url\s*=/i.test(content) ||
+    /^\d+\s*[;,]\s*['"]?\s*https?:/i.test(content);
+
+  return { seconds, hasValidUrl };
+}
+
 // Selectors for sectioning elements that scope landmarks
 export const SECTIONING_SELECTOR = 'article, aside, main, nav, section, [role="article"], [role="complementary"], [role="main"], [role="navigation"], [role="region"]';
 

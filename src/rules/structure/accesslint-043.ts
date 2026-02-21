@@ -1,0 +1,35 @@
+import type { Rule, Violation } from "../types";
+import { getSelector, getHtmlSnippet } from "../utils/selector";
+
+export const accesslint043: Rule = {
+  id: "accesslint-043",
+  wcag: [],
+  level: "A",
+  tags: ["best-practice"],
+  description: "Aside (complementary) landmark should be top-level or directly inside main.",
+  guidance: "The complementary landmark (aside) should be top-level or a direct child of main. Nesting aside deep within other landmarks reduces its discoverability for screen reader users navigating by landmarks.",
+  prompt:
+    "Explain why this aside should be repositioned and suggest where to move it.",
+  run(doc) {
+    const violations: Violation[] = [];
+    const asides = doc.querySelectorAll('aside, [role="complementary"]');
+
+    for (const aside of asides) {
+      // Allowed: top-level or direct child of main
+      const parent = aside.parentElement;
+      if (parent && !parent.matches('body, main, [role="main"]')) {
+        // Check if nested in other sectioning elements
+        if (aside.closest('article, nav, section[aria-label], section[aria-labelledby], [role="article"], [role="navigation"], [role="region"]')) {
+          violations.push({
+            ruleId: "accesslint-043",
+            selector: getSelector(aside),
+            html: getHtmlSnippet(aside),
+            impact: "moderate" as const,
+            message: "Complementary landmark should be top-level.",
+          });
+        }
+      }
+    }
+    return violations;
+  },
+};
