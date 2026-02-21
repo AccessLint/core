@@ -1,16 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { isAriaHidden } from "../utils/aria";
-import { getCachedComputedStyle } from "../utils/color";
-
-const FOCUSABLE_SELECTOR = [
-  "a[href]",
-  "button:not([disabled])",
-  'input:not([disabled]):not([type="hidden"])',
-  "select:not([disabled])",
-  "textarea:not([disabled])",
-  '[tabindex]:not([tabindex="-1"])',
-].join(", ");
+import { isAriaHidden, FOCUSABLE_SELECTOR } from "../utils/aria";
 
 export const focusVisible: Rule = {
   id: "accesslint-032",
