@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { isAriaHidden } from "../utils/aria";
+import { isAriaHidden, isComputedHidden } from "../utils/aria";
 
 export const videoCaptions: Rule = {
   id: "accesslint-090",
@@ -15,6 +15,7 @@ export const videoCaptions: Rule = {
     const violations = [];
     for (const video of doc.querySelectorAll("video")) {
       if (isAriaHidden(video)) continue;
+      if (isComputedHidden(video)) continue;
 
       // Skip muted or autoplay videos — typically decorative/background with no audio to caption
       if (video.hasAttribute("muted")) continue;
@@ -50,6 +51,7 @@ export const audioCaptions: Rule = {
 
     for (const audio of doc.querySelectorAll("audio")) {
       if (isAriaHidden(audio)) continue;
+      if (isComputedHidden(audio)) continue;
 
       // Check for track element with captions or descriptions
       const track = audio.querySelector('track[kind="captions"], track[kind="descriptions"]');

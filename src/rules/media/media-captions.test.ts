@@ -1,9 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { videoCaptions, audioCaptions } from "./media-captions";
-
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
+import { makeDoc } from "../test-helpers";
 
 describe("accesslint-090", () => {
   it("reports video without captions track", () => {
@@ -57,11 +54,22 @@ describe("accesslint-090", () => {
     const doc = makeDoc('<html><body><video src="movie.mp4" aria-hidden="true"></video></body></html>');
     expect(videoCaptions.run(doc)).toHaveLength(0);
   });
+
+  it("skips computed-hidden video", () => {
+    const doc = makeDoc('<html><body><video src="movie.mp4" style="display:none"></video></body></html>');
+    expect(videoCaptions.run(doc)).toHaveLength(0);
+  });
+
+  it("skips autoplay-only video", () => {
+    const doc = makeDoc('<html><body><video src="bg.mp4" autoplay></video></body></html>');
+    expect(videoCaptions.run(doc)).toHaveLength(0);
+  });
 });
 
 describe("accesslint-091", () => {
   it("reports audio without transcript", () => {
-    const doc = makeDoc('<html><body><audio src="podcast.mp3"></audio></body></html>');
+    // happy-dom doesn't apply UA stylesheet for audio, so explicit display is needed
+    const doc = makeDoc('<html><body><audio src="podcast.mp3" controls style="display:block"></audio></body></html>');
     const violations = audioCaptions.run(doc);
     expect(violations).toHaveLength(1);
     expect(violations[0].ruleId).toBe("accesslint-091");
@@ -70,7 +78,7 @@ describe("accesslint-091", () => {
   it("passes audio with captions track", () => {
     const doc = makeDoc(`
       <html><body>
-        <audio src="podcast.mp3">
+        <audio src="podcast.mp3" controls>
           <track kind="captions" src="transcript.vtt">
         </audio>
       </body></html>
@@ -81,7 +89,7 @@ describe("accesslint-091", () => {
   it("passes audio with descriptions track", () => {
     const doc = makeDoc(`
       <html><body>
-        <audio src="podcast.mp3">
+        <audio src="podcast.mp3" controls>
           <track kind="descriptions" src="desc.vtt">
         </audio>
       </body></html>
@@ -103,7 +111,7 @@ describe("accesslint-091", () => {
     const doc = makeDoc(`
       <html><body>
         <div>
-          <audio src="podcast.mp3"></audio>
+          <audio src="podcast.mp3" controls></audio>
           <a href="/transcript">View transcript</a>
         </div>
       </body></html>
@@ -113,6 +121,11 @@ describe("accesslint-091", () => {
 
   it("skips aria-hidden audio", () => {
     const doc = makeDoc('<html><body><audio src="podcast.mp3" aria-hidden="true"></audio></body></html>');
+    expect(audioCaptions.run(doc)).toHaveLength(0);
+  });
+
+  it("skips computed-hidden audio", () => {
+    const doc = makeDoc('<html><body><audio src="podcast.mp3" style="display:none"></audio></body></html>');
     expect(audioCaptions.run(doc)).toHaveLength(0);
   });
 });
