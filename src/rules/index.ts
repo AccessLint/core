@@ -45,14 +45,16 @@ import {
   region,
 } from "./structure/landmark-rules";
 import { list, listitem, dlitem, definitionList } from "./structure/list-rules";
-import { documentTitle, bypass, pageHasHeadingOne } from "./structure/document-rules";
+import { documentTitle } from "./structure/document-title";
+import { bypass } from "./structure/bypass";
+import { pageHasHeadingOne } from "./structure/page-has-heading-one";
 import { frameTitle, frameTitleUnique } from "./structure/frame-rules";
 import { emptyHeading } from "./structure/heading-rules";
 import { metaViewport, metaRefresh, metaRefreshNoException } from "./structure/meta-rules";
 import { importantLetterSpacing, importantLineHeight, importantWordSpacing } from "./structure/text-spacing-rules";
 import { cssOrientationLock } from "./structure/orientation-lock";
 import { blink, marquee } from "./structure/deprecated-elements";
-import { pAsHeading } from "./structure/semantic-rules";
+import { pAsHeading } from "./structure/p-as-heading";
 
 // ARIA
 import { ariaRoles } from "./aria/aria-roles";

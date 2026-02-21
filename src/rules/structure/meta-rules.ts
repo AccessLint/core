@@ -59,6 +59,24 @@ export const metaViewport: Rule = {
   },
 };
 
+/**
+ * Parse a meta refresh content attribute, extracting the delay in seconds
+ * and whether it contains a valid URL redirect.
+ */
+function parseMetaRefreshContent(content: string): { seconds: number; hasValidUrl: boolean } | null {
+  const match = content.match(/^(\d+)/);
+  if (!match) return null;
+  const seconds = parseInt(match[1], 10);
+
+  // Valid URL redirect: number followed by ; or , then either:
+  //   - url= prefix (with any URL, including relative), or
+  //   - an absolute http(s) URL
+  const hasValidUrl = /^\d+\s*[;,]\s*url\s*=/i.test(content) ||
+    /^\d+\s*[;,]\s*['"]?\s*https?:/i.test(content);
+
+  return { seconds, hasValidUrl };
+}
+
 export const metaRefreshNoException: Rule = {
   id: "accesslint-008",
   actRuleIds: ["bisz58"],
@@ -70,22 +88,17 @@ export const metaRefreshNoException: Rule = {
   run(doc) {
     for (const refresh of doc.querySelectorAll('meta[http-equiv="refresh"]')) {
       const content = refresh.getAttribute("content") || "";
-      const match = content.match(/^(\d+)/);
-      if (!match) continue;
-      const seconds = parseInt(match[1], 10);
+      const parsed = parseMetaRefreshContent(content);
+      if (!parsed) continue;
 
-      // Check for valid URL redirect (browser processes the first one)
-      const hasValidUrl = /^\d+\s*[;,]\s*url\s*=/i.test(content) ||
-        /^\d+\s*[;,]\s*['""]?\s*https?:/i.test(content);
-
-      if (hasValidUrl) {
-        if (seconds > 0) {
+      if (parsed.hasValidUrl) {
+        if (parsed.seconds > 0) {
           return [{
             ruleId: "accesslint-008",
             selector: getSelector(refresh),
             html: getHtmlSnippet(refresh),
             impact: "critical" as const,
-            message: `Page has a ${seconds}-second meta refresh delay.`,
+            message: `Page has a ${parsed.seconds}-second meta refresh delay.`,
           }];
         }
         // Delay 0 with valid URL is OK; this redirect wins, stop checking
@@ -93,13 +106,13 @@ export const metaRefreshNoException: Rule = {
       }
 
       // Same-page refresh (no URL)
-      if (seconds > 0) {
+      if (parsed.seconds > 0) {
         return [{
           ruleId: "accesslint-008",
           selector: getSelector(refresh),
           html: getHtmlSnippet(refresh),
           impact: "critical" as const,
-          message: `Page has a ${seconds}-second meta refresh delay.`,
+          message: `Page has a ${parsed.seconds}-second meta refresh delay.`,
         }];
       }
     }
@@ -121,26 +134,18 @@ export const metaRefresh: Rule = {
     // one with a validly-formed URL wins (the browser acts on it).
     for (const refresh of doc.querySelectorAll('meta[http-equiv="refresh"]')) {
       const content = refresh.getAttribute("content") || "";
+      const parsed = parseMetaRefreshContent(content);
+      if (!parsed) continue;
 
-      const match = content.match(/^(\d+)/);
-      if (!match) continue;
-      const seconds = parseInt(match[1], 10);
-
-      // Valid URL redirect: number followed by ; or , then either:
-      //   - url= prefix (with any URL, including relative), or
-      //   - an absolute http(s) URL
-      const hasValidUrl = /^\d+\s*[;,]\s*url\s*=/i.test(content) ||
-        /^\d+\s*[;,]\s*['"]?\s*https?:/i.test(content);
-
-      if (hasValidUrl) {
+      if (parsed.hasValidUrl) {
         // This is the effective redirect
-        if (seconds > 0 && seconds <= 72000) {
+        if (parsed.seconds > 0 && parsed.seconds <= 72000) {
           return [{
             ruleId: "accesslint-007",
             selector: getSelector(refresh),
             html: getHtmlSnippet(refresh),
             impact: "critical" as const,
-            message: `Page redirects after ${seconds} seconds without warning. Use server-side redirect.`,
+            message: `Page redirects after ${parsed.seconds} seconds without warning. Use server-side redirect.`,
           }];
         }
         // Delay 0 or > 72000 is OK; this redirect wins so stop checking
@@ -148,13 +153,13 @@ export const metaRefresh: Rule = {
       }
 
       // No valid URL = same-page refresh
-      if (seconds > 0 && seconds <= 72000) {
+      if (parsed.seconds > 0 && parsed.seconds <= 72000) {
         return [{
           ruleId: "accesslint-007",
           selector: getSelector(refresh),
           html: getHtmlSnippet(refresh),
           impact: "critical" as const,
-          message: `Page auto-refreshes after ${seconds} seconds. Provide user control over refresh.`,
+          message: `Page auto-refreshes after ${parsed.seconds} seconds. Provide user control over refresh.`,
         }];
       }
       // seconds == 0 or > 72000 with no URL: skip, check next meta

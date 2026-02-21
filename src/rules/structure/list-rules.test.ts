@@ -1,9 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { list, dlitem, definitionList } from "./list-rules";
+import { makeDoc } from "../test-helpers";
+import { list, listitem, dlitem, definitionList } from "./list-rules";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-046", () => {
   it("passes valid ul", () => {
@@ -27,6 +25,47 @@ describe("accesslint-046", () => {
   it("passes ul with only whitespace text nodes", () => {
     const doc = makeDoc("<html><body><ul> <li>A</li> <li>B</li> </ul></body></html>");
     expect(list.run(doc)).toHaveLength(0);
+  });
+});
+
+describe("accesslint-047", () => {
+  it("passes li inside ul", () => {
+    const doc = makeDoc("<html><body><ul><li>Item</li></ul></body></html>");
+    expect(listitem.run(doc)).toHaveLength(0);
+  });
+
+  it("passes li inside ol", () => {
+    const doc = makeDoc("<html><body><ol><li>Item</li></ol></body></html>");
+    expect(listitem.run(doc)).toHaveLength(0);
+  });
+
+  it("passes li inside menu", () => {
+    const doc = makeDoc("<html><body><menu><li>Item</li></menu></body></html>");
+    expect(listitem.run(doc)).toHaveLength(0);
+  });
+
+  it("passes li inside role=list", () => {
+    const doc = makeDoc('<html><body><div role="list"><li>Item</li></div></body></html>');
+    expect(listitem.run(doc)).toHaveLength(0);
+  });
+
+  it("reports li inside div (no list role)", () => {
+    const doc = makeDoc("<html><body><div><li>Orphan</li></div></body></html>");
+    const violations = listitem.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].ruleId).toBe("accesslint-047");
+    expect(violations[0].message).toContain("<li>");
+  });
+
+  it("reports li directly in body", () => {
+    const doc = makeDoc("<html><body><li>Orphan</li></body></html>");
+    const violations = listitem.run(doc);
+    expect(violations).toHaveLength(1);
+  });
+
+  it("skips aria-hidden li", () => {
+    const doc = makeDoc('<html><body><div><li aria-hidden="true">Hidden</li></div></body></html>');
+    expect(listitem.run(doc)).toHaveLength(0);
   });
 });
 

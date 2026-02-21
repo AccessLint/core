@@ -1,4 +1,5 @@
 import { describe, it, expect } from "vitest";
+import { makeDoc } from "../test-helpers";
 import {
   landmarkMain,
   landmarkNoDuplicateBanner,
@@ -12,9 +13,6 @@ import {
   region,
 } from "./landmark-rules";
 
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
 
 describe("accesslint-036", () => {
   it("reports missing main landmark", () => {
