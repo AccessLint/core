@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { isAriaHidden, getComputedRole } from "../utils/aria";
+import { isAriaHidden, getComputedRole, FOCUSABLE_SELECTOR } from "../utils/aria";
 
 /**
  * Roles with the "children presentational" trait per ARIA 1.2.
@@ -26,20 +26,6 @@ const CHILDREN_PRESENTATIONAL_ROLES = new Set([
   "switch",
   "tab",
 ]);
-
-const FOCUSABLE_SELECTOR = [
-  "a[href]",
-  "button:not([disabled])",
-  'input:not([disabled]):not([type="hidden"])',
-  "select:not([disabled])",
-  "textarea:not([disabled])",
-  '[tabindex]:not([tabindex="-1"])',
-  "audio[controls]",
-  "video[controls]",
-  "iframe",
-  "embed",
-  "object",
-].join(", ");
 
 export const presentationalChildrenFocusable: Rule = {
   id: "accesslint-074",

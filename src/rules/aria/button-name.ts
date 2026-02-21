@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { getAccessibleName, isAriaHidden, isComputedHidden } from "../utils/aria";
+import { getAccessibleName, isAriaHidden, isComputedHidden, isInShadowDOM } from "../utils/aria";
 
 function getButtonContext(btn: Element): string | undefined {
   const parts: string[] = [];
@@ -58,7 +58,7 @@ export const buttonName: Rule = {
       // Skip elements inside shadow DOM — accessible name resolution
       // can't reliably cross shadow boundaries (aria-labelledby IDs,
       // slot content, etc.), leading to false positives.
-      if (btn.getRootNode() instanceof ShadowRoot) continue;
+      if (isInShadowDOM(btn)) continue;
 
       const name = getAccessibleName(btn);
       if (!name) {

@@ -1,24 +1,7 @@
 import type { Rule, DeclarativeRule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { compileDeclarativeRule } from "../engine";
-
-// Elements that are natively focusable
-const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'button:not([disabled])',
-  'input:not([disabled]):not([type="hidden"])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  '[tabindex]:not([tabindex="-1"])',
-  'audio[controls]',
-  'video[controls]',
-  '[contenteditable]:not([contenteditable="false"])',
-  'details > summary:first-of-type',
-  'iframe',
-  'object',
-  'embed',
-  'area[href]',
-].join(", ");
+import { FOCUSABLE_SELECTOR } from "../utils/aria";
 
 /**
  * Check if an element is actually visible and reachable in the current state.

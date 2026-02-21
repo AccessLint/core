@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { isAriaHidden, getComputedRole } from "../utils/aria";
+import { isAriaHidden, getComputedRole, GLOBAL_ARIA_ATTRS } from "../utils/aria";
 
 // Role to allowed ARIA attributes mapping based on ARIA 1.2 spec
 const ROLE_ALLOWED_ATTRS: Record<string, Set<string>> = {
@@ -77,14 +77,6 @@ const ROLE_ALLOWED_ATTRS: Record<string, Set<string>> = {
   treeitem: new Set(["aria-checked", "aria-disabled", "aria-expanded", "aria-haspopup", "aria-level", "aria-posinset", "aria-selected", "aria-setsize"]),
 };
 
-// Global ARIA attributes allowed on all elements
-const GLOBAL_ARIA_ATTRS = new Set([
-  "aria-atomic", "aria-busy", "aria-controls", "aria-current", "aria-describedby",
-  "aria-details", "aria-disabled", "aria-dropeffect", "aria-errormessage",
-  "aria-flowto", "aria-grabbed", "aria-haspopup", "aria-hidden", "aria-invalid",
-  "aria-keyshortcuts", "aria-label", "aria-labelledby", "aria-live", "aria-owns",
-  "aria-relevant", "aria-roledescription", "aria-braillelabel", "aria-brailleroledescription",
-]);
 
 export const ariaAllowedAttr: Rule = {
   id: "accesslint-058",
