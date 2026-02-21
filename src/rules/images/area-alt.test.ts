@@ -1,9 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { areaAlt } from "./area-alt";
-
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
+import { makeDoc } from "../test-helpers";
 
 describe("accesslint-016", () => {
   it("reports area without alt", () => {

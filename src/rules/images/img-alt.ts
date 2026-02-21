@@ -1,6 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { getAccessibleName, isAriaHidden } from "../utils/aria";
+import { getAccessibleName, isAriaHidden, isVisibilityHidden } from "../utils/aria";
 
 function getImageContext(img: Element): string | undefined {
   const parts: string[] = [];
@@ -30,16 +30,6 @@ function getImageContext(img: Element): string | undefined {
   }
 
   return parts.length > 0 ? parts.join("\n") : undefined;
-}
-
-/** Check if an element or any ancestor has visibility:hidden */
-function isVisibilityHidden(el: Element): boolean {
-  let current: Element | null = el;
-  while (current) {
-    if (current instanceof HTMLElement && current.style.visibility === "hidden") return true;
-    current = current.parentElement;
-  }
-  return false;
 }
 
 export const imgAlt: Rule = {
@@ -92,22 +82,6 @@ export const imgAlt: Rule = {
           impact: "critical" as const,
           message: "Image element missing alt attribute.",
           context: getImageContext(img),
-        });
-      }
-    }
-
-    // Check non-img elements with role="img"
-    for (const el of doc.querySelectorAll('[role="img"]:not(img):not(svg)')) {
-      if (isAriaHidden(el)) continue;
-      if (isVisibilityHidden(el)) continue;
-      if (!getAccessibleName(el)) {
-        violations.push({
-          ruleId: "accesslint-011",
-          selector: getSelector(el),
-          html: getHtmlSnippet(el),
-          impact: "critical" as const,
-          message: "Element with role=\"img\" has no accessible name. Add aria-label or aria-labelledby.",
-          context: getImageContext(el),
         });
       }
     }

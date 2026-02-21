@@ -1,33 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { isAriaHidden } from "../utils/aria";
-
-/**
- * Get the accessible name of an <object> from naming mechanisms only.
- * Fallback content inside <object> is rendered when the object fails to load
- * and does not constitute an accessible name for the object itself.
- */
-function getObjectAccessibleName(el: Element): string {
-  // aria-labelledby
-  const labelledBy = el.getAttribute("aria-labelledby");
-  if (labelledBy) {
-    const names = labelledBy
-      .split(/\s+/)
-      .map((id) => el.ownerDocument.getElementById(id)?.textContent?.trim() ?? "")
-      .filter(Boolean);
-    if (names.length) return names.join(" ");
-  }
-
-  // aria-label
-  const ariaLabel = el.getAttribute("aria-label")?.trim();
-  if (ariaLabel) return ariaLabel;
-
-  // title attribute
-  const title = el.getAttribute("title")?.trim();
-  if (title) return title;
-
-  return "";
-}
+import { isAriaHidden, isVisibilityHidden, getExplicitAccessibleName } from "../utils/aria";
 
 export const objectAlt: Rule = {
   id: "accesslint-017",
@@ -44,25 +17,14 @@ export const objectAlt: Rule = {
     for (const obj of doc.querySelectorAll("object")) {
       if (isAriaHidden(obj)) continue;
 
-      // Skip elements hidden via visibility
-      if (obj instanceof HTMLElement && obj.style.visibility === "hidden") continue;
-      let parent: Element | null = obj.parentElement;
-      let visHidden = false;
-      while (parent) {
-        if (parent instanceof HTMLElement && parent.style.visibility === "hidden") {
-          visHidden = true;
-          break;
-        }
-        parent = parent.parentElement;
-      }
-      if (visHidden) continue;
+      if (isVisibilityHidden(obj)) continue;
 
       // Skip objects that are purely decorative
       if (obj.getAttribute("role") === "presentation" || obj.getAttribute("role") === "none") {
         continue;
       }
 
-      if (getObjectAccessibleName(obj)) continue;
+      if (getExplicitAccessibleName(obj)) continue;
 
       // Skip objects loading HTML documents with accessible fallback content.
       // When a non-image object fails to load, the fallback is shown instead.

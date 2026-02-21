@@ -1,33 +1,18 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-import { isAriaHidden } from "../utils/aria";
+import { isAriaHidden, getExplicitAccessibleName } from "../utils/aria";
 
 /**
- * Get the accessible name of an SVG from naming mechanisms only
- * (not from text content, which is part of the image, not a label).
+ * Get the accessible name of an SVG: explicit name (aria-labelledby,
+ * aria-label, title attribute) with a fallback to a child <title> element.
  */
 function getSvgAccessibleName(el: Element): string {
-  // aria-labelledby
-  const labelledBy = el.getAttribute("aria-labelledby");
-  if (labelledBy) {
-    const names = labelledBy
-      .split(/\s+/)
-      .map((id) => el.ownerDocument.getElementById(id)?.textContent?.trim() ?? "")
-      .filter(Boolean);
-    if (names.length) return names.join(" ");
-  }
+  const explicit = getExplicitAccessibleName(el);
+  if (explicit) return explicit;
 
-  // aria-label
-  const ariaLabel = el.getAttribute("aria-label")?.trim();
-  if (ariaLabel) return ariaLabel;
-
-  // <title> element (first child)
+  // <title> element child (SVG-specific naming mechanism)
   const title = el.querySelector("title");
   if (title?.textContent?.trim()) return title.textContent.trim();
-
-  // title attribute
-  const titleAttr = el.getAttribute("title")?.trim();
-  if (titleAttr) return titleAttr;
 
   return "";
 }

@@ -1,4 +1,26 @@
 // ---------------------------------------------------------------------------
+// Focusable element selector
+// ---------------------------------------------------------------------------
+
+/** Elements that are natively focusable (comprehensive list). */
+export const FOCUSABLE_SELECTOR = [
+  'a[href]',
+  'button:not([disabled])',
+  'input:not([disabled]):not([type="hidden"])',
+  'select:not([disabled])',
+  'textarea:not([disabled])',
+  '[tabindex]:not([tabindex="-1"])',
+  'audio[controls]',
+  'video[controls]',
+  '[contenteditable]:not([contenteditable="false"])',
+  'details > summary:first-of-type',
+  'iframe',
+  'object',
+  'embed',
+  'area[href]',
+].join(", ");
+
+// ---------------------------------------------------------------------------
 // Computed role
 // ---------------------------------------------------------------------------
 
@@ -206,8 +228,9 @@ export function isValidRole(role: string): boolean {
   return VALID_ARIA_ROLES.has(cleaned);
 }
 
-const GLOBAL_ARIA_ATTRS = new Set([
-  "aria-atomic", "aria-busy", "aria-controls", "aria-current",
+export const GLOBAL_ARIA_ATTRS = new Set([
+  "aria-atomic", "aria-braillelabel", "aria-brailleroledescription",
+  "aria-busy", "aria-controls", "aria-current",
   "aria-describedby", "aria-details", "aria-disabled", "aria-dropeffect",
   "aria-errormessage", "aria-flowto", "aria-grabbed", "aria-haspopup",
   "aria-hidden", "aria-invalid", "aria-keyshortcuts", "aria-label",
@@ -324,4 +347,58 @@ export function getAccessibleTextContent(el: Element): string {
     }
   }
   return text;
+}
+
+// ---------------------------------------------------------------------------
+// Visibility helpers
+// ---------------------------------------------------------------------------
+
+/** Check if an element or any ancestor has inline visibility:hidden. */
+export function isVisibilityHidden(el: Element): boolean {
+  let current: Element | null = el;
+  while (current) {
+    if (current instanceof HTMLElement && current.style.visibility === "hidden") return true;
+    current = current.parentElement;
+  }
+  return false;
+}
+
+// ---------------------------------------------------------------------------
+// Explicit accessible name (aria-labelledby > aria-label > title attribute)
+// ---------------------------------------------------------------------------
+
+/**
+ * Return the explicit accessible name for an element, checking only
+ * aria-labelledby, aria-label, and the title attribute. Does NOT fall
+ * through to text content, alt, labels, or other naming mechanisms.
+ */
+export function getExplicitAccessibleName(el: Element): string {
+  // aria-labelledby
+  const labelledBy = el.getAttribute("aria-labelledby");
+  if (labelledBy) {
+    const names = labelledBy
+      .split(/\s+/)
+      .map((id) => el.ownerDocument.getElementById(id)?.textContent?.trim() ?? "")
+      .filter(Boolean);
+    if (names.length) return names.join(" ");
+  }
+
+  // aria-label
+  const ariaLabel = el.getAttribute("aria-label")?.trim();
+  if (ariaLabel) return ariaLabel;
+
+  // title attribute
+  const title = el.getAttribute("title")?.trim();
+  if (title) return title;
+
+  return "";
+}
+
+// ---------------------------------------------------------------------------
+// Shadow DOM
+// ---------------------------------------------------------------------------
+
+/** Check whether an element is inside a Shadow DOM tree. */
+export function isInShadowDOM(el: Element): boolean {
+  return el.getRootNode() instanceof ShadowRoot;
 }

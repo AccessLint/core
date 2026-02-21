@@ -1,9 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { objectAlt } from "./object-alt";
-
-function makeDoc(html: string): Document {
-  return new DOMParser().parseFromString(html, "text/html");
-}
+import { makeDoc } from "../test-helpers";
 
 describe("accesslint-017", () => {
   it("reports object without alternative text", () => {

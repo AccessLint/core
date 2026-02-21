@@ -1,10 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { imgAlt } from "./img-alt";
-
-function makeDoc(html: string): Document {
-  const doc = new DOMParser().parseFromString(html, "text/html");
-  return doc;
-}
+import { makeDoc } from "../test-helpers";
 
 describe("accesslint-011", () => {
   it("reports images missing alt attribute", () => {
