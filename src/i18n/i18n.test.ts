@@ -115,7 +115,7 @@ describe("i18n message translation", () => {
   it("translates static violation messages", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", element: "<button></button>", selector: "button" },
+      { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", html: "<button></button>", selector: "button", impact: "critical" as const },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe("El botón no tiene texto discernible.");
@@ -124,7 +124,7 @@ describe("i18n message translation", () => {
   it("translates dynamic messages with single placeholder", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "aria/aria-roles", message: 'Invalid ARIA role "banana".', element: "<div>", selector: "div" },
+      { ruleId: "aria/aria-roles", message: 'Invalid ARIA role "banana".', html: "<div>", selector: "div", impact: "critical" as const },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe('Rol ARIA inválido "banana".');
@@ -133,7 +133,7 @@ describe("i18n message translation", () => {
   it("translates dynamic messages with multiple placeholders", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "navigable/heading-order", message: "Heading level 4 skipped from level 2. Use h3 instead.", element: "<h4>", selector: "h4" },
+      { ruleId: "navigable/heading-order", message: "Heading level 4 skipped from level 2. Use h3 instead.", html: "<h4>", selector: "h4", impact: "moderate" as const },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe("Nivel de encabezado 4 saltado desde el nivel 2. Use h3 en su lugar.");
@@ -142,7 +142,7 @@ describe("i18n message translation", () => {
   it("returns original message when no matching template exists", () => {
     registerLocale("es", es);
     const violations = [
-      { ruleId: "labels-and-names/button-name", message: "Some unexpected message format.", element: "<button>", selector: "button" },
+      { ruleId: "labels-and-names/button-name", message: "Some unexpected message format.", html: "<button>", selector: "button", impact: "critical" as const },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe("Some unexpected message format.");
@@ -150,7 +150,7 @@ describe("i18n message translation", () => {
 
   it("returns original violations when locale is not registered", () => {
     const violations = [
-      { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", element: "<button>", selector: "button" },
+      { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", html: "<button>", selector: "button", impact: "critical" as const },
     ];
     const translated = translateViolations(violations, "unknown");
     expect(translated).toBe(violations);
@@ -158,7 +158,7 @@ describe("i18n message translation", () => {
 
   it("does not mutate original violation objects", () => {
     registerLocale("es", es);
-    const original = { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", element: "<button>", selector: "button" };
+    const original = { ruleId: "labels-and-names/button-name", message: "Button has no discernible text.", html: "<button>", selector: "button", impact: "critical" as const };
     const violations = [original];
     const translated = translateViolations(violations, "es");
     expect(original.message).toBe("Button has no discernible text.");
@@ -169,7 +169,7 @@ describe("i18n message translation", () => {
     registerLocale("es", es);
     // Captured value contains literal text that looks like a placeholder reference
     const violations = [
-      { ruleId: "aria/aria-valid-attr-value", message: 'aria-checked must be "true" or "false", got "{1} weird".', element: "<div>", selector: "div" },
+      { ruleId: "aria/aria-valid-attr-value", message: 'aria-checked must be "true" or "false", got "{1} weird".', html: "<div>", selector: "div", impact: "critical" as const },
     ];
     const translated = translateViolations(violations, "es");
     expect(translated[0].message).toBe('aria-checked debe ser "true" o "false", se obtuvo "{1} weird".');

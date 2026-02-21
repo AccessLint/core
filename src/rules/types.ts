@@ -49,6 +49,7 @@ export interface AuditResult {
   timestamp: number;
   violations: Violation[];
   ruleCount: number;
+  skippedRules: { ruleId: string; error: string }[];
 }
 
 export interface DiffResult {

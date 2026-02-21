@@ -242,6 +242,8 @@ export interface ChunkedAudit {
   processChunk(budgetMs: number): boolean;
   /** Return all violations collected so far. */
   getViolations(): Violation[];
+  /** Return rules that were skipped due to errors. */
+  getSkippedRules(): { ruleId: string; error: string }[];
 }
 
 // --- Configuration state ---
@@ -320,15 +322,19 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
   const activeRules = getActiveRules();
   const locale = activeLocale;
   const violations: Violation[] = [];
+  const skippedRules: { ruleId: string; error: string }[] = [];
   let index = 0;
 
   return {
     processChunk(budgetMs: number) {
       const start = performance.now();
       while (index < activeRules.length) {
+        const rule = activeRules[index];
         try {
-          violations.push(...activeRules[index].run(doc));
-        } catch {}
+          violations.push(...rule.run(doc));
+        } catch (e) {
+          skippedRules.push({ ruleId: rule.id, error: e instanceof Error ? e.message : String(e) });
+        }
         index++;
         if (performance.now() - start >= budgetMs) break;
       }
@@ -336,6 +342,9 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
     },
     getViolations() {
       return locale ? translateViolations(violations, locale) : violations;
+    },
+    getSkippedRules() {
+      return skippedRules;
     },
   };
 }
@@ -354,11 +363,12 @@ export function runAudit(doc: Document): AuditResult {
 
   const activeRules = getActiveRules();
   const violations: Violation[] = [];
+  const skippedRules: { ruleId: string; error: string }[] = [];
   for (const rule of activeRules) {
     try {
       violations.push(...rule.run(doc));
-    } catch {
-      // Skip rules that error
+    } catch (e) {
+      skippedRules.push({ ruleId: rule.id, error: e instanceof Error ? e.message : String(e) });
     }
   }
   return {
@@ -366,6 +376,7 @@ export function runAudit(doc: Document): AuditResult {
     timestamp: Date.now(),
     violations: activeLocale ? translateViolations(violations, activeLocale) : violations,
     ruleCount: activeRules.length,
+    skippedRules,
   };
 }
 

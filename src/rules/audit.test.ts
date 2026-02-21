@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { makeDoc } from "../test-helpers";
-import { runAudit, diffAudit, configureRules, getActiveRules } from "./index";
+import { runAudit, diffAudit, configureRules, getActiveRules, createChunkedAudit } from "./index";
 import { generateDoc, SMALL_SIZE } from "../bench/fixtures";
 
 
@@ -171,7 +171,7 @@ describe("diffAudit", () => {
   });
 
   it("handles empty results", () => {
-    const empty = { url: "", timestamp: 0, violations: [], ruleCount: 0 };
+    const empty = { url: "", timestamp: 0, violations: [], ruleCount: 0, skippedRules: [] };
     const diff = diffAudit(empty, empty);
     expect(diff.added).toHaveLength(0);
     expect(diff.fixed).toHaveLength(0);
@@ -187,5 +187,59 @@ describe("diffAudit", () => {
     const diff = diffAudit(before, after);
     expect(diff.fixed.some((v) => v.ruleId === "text-alternatives/img-alt")).toBe(true);
     expect(diff.added.some((v) => v.ruleId === "labels-and-names/button-name")).toBe(true);
+  });
+});
+
+describe("skippedRules", () => {
+  afterEach(() => {
+    configureRules({ additionalRules: [] });
+  });
+
+  it("collects rules that throw into skippedRules", () => {
+    const throwingRule = {
+      id: "test/throws",
+      category: "test",
+      wcag: [],
+      level: "A" as const,
+      description: "A rule that always throws",
+      run() {
+        throw new Error("boom");
+      },
+    };
+
+    configureRules({ additionalRules: [throwingRule] });
+    const doc = makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1></main></body></html>');
+    const result = runAudit(doc);
+
+    expect(result.skippedRules).toEqual([{ ruleId: "test/throws", error: "boom" }]);
+  });
+
+  it("returns empty skippedRules when no rules throw", () => {
+    const doc = makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1></main></body></html>');
+    const result = runAudit(doc);
+
+    expect(result.skippedRules).toEqual([]);
+  });
+
+  it("collects skipped rules in createChunkedAudit", () => {
+    const throwingRule = {
+      id: "test/chunked-throws",
+      category: "test",
+      wcag: [],
+      level: "A" as const,
+      description: "A rule that always throws",
+      run() {
+        throw new Error("chunked boom");
+      },
+    };
+
+    configureRules({ additionalRules: [throwingRule] });
+    const doc = makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1></main></body></html>');
+    const audit = createChunkedAudit(doc);
+
+    // Process all rules in one chunk
+    while (audit.processChunk(10_000)) {}
+
+    expect(audit.getSkippedRules()).toEqual([{ ruleId: "test/chunked-throws", error: "chunked boom" }]);
   });
 });
