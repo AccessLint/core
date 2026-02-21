@@ -8,6 +8,7 @@ export const ariaCommandName: Rule = {
   actRuleIds: ["m6b1q3"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "ARIA commands must have an accessible name.",
   guidance: "Interactive ARIA command roles (button, link, menuitem) must have accessible names so users know what action they perform. Add visible text content, aria-label, or aria-labelledby to provide a name.",
   prompt:
@@ -43,6 +44,7 @@ export const ariaCommandName: Rule = {
           html: getHtmlSnippet(el),
           impact: "serious" as const,
           message: "ARIA command has no accessible name.",
+          fix: { type: "add-attribute", attribute: "aria-label", value: "" } as const,
         });
       }
     }

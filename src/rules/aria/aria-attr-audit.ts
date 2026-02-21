@@ -1,4 +1,4 @@
-import type { Violation } from "../types";
+import type { Violation, FixSuggestion } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { isAriaHidden } from "../utils/aria";
 
@@ -158,6 +158,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
           html: v.html,
           impact: "critical",
           message: `Invalid ARIA attribute "${attr.name}".`,
+          fix: { type: "remove-attribute" as const, attribute: attr.name },
         });
         break;
       }
@@ -179,6 +180,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
             html: v.html,
             impact: "critical",
             message: `${attr.name} must be "true" or "false", got "${val}".`,
+            fix: { type: "set-attribute" as const, attribute: attr.name, value: "false" },
           });
         }
       } else if (TRISTATE_ATTRS.has(attr.name)) {
@@ -190,6 +192,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
             html: v.html,
             impact: "critical",
             message: `${attr.name} must be "true", "false", or "mixed", got "${val}".`,
+            fix: { type: "set-attribute" as const, attribute: attr.name, value: "false" },
           });
         }
       } else if (INTEGER_ATTRS.has(attr.name)) {
@@ -201,6 +204,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
             html: v.html,
             impact: "critical",
             message: `${attr.name} must be an integer, got "${val}".`,
+            fix: { type: "suggest" as const, suggestion: `Set ${attr.name} to a valid integer value` },
           });
         }
       } else if (NUMBER_ATTRS.has(attr.name)) {
@@ -212,6 +216,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
             html: v.html,
             impact: "critical",
             message: `${attr.name} must be a number, got "${val}".`,
+            fix: { type: "suggest" as const, suggestion: `Set ${attr.name} to a valid number value` },
           });
         }
       } else if (TOKEN_ATTRS[attr.name]) {
@@ -225,6 +230,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
               html: v.html,
               impact: "critical",
               message: `Invalid value "${val}" for ${attr.name}.`,
+              fix: { type: "suggest" as const, suggestion: `Set ${attr.name} to one of: ${[...TOKEN_ATTRS[attr.name]].join(", ")}` },
             });
             break;
           }
@@ -243,12 +249,14 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
 
         if (hasAriaLabel || hasAriaLabelledby) {
           const v = lazy();
+          const prohibitedName = hasAriaLabel ? "aria-label" : "aria-labelledby";
           prohibitedAttr.push({
             ruleId: "aria/aria-prohibited-attr",
             selector: v.selector,
             html: v.html,
             impact: "serious",
             message: `aria-label and aria-labelledby are prohibited on <${tagName}> elements.`,
+            fix: { type: "remove-attribute" as const, attribute: prohibitedName },
           });
         }
       } else if (explicitRole) {
@@ -258,12 +266,14 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
 
           if (hasAriaLabel || hasAriaLabelledby) {
             const v = lazy();
+            const prohibitedName = hasAriaLabel ? "aria-label" : "aria-labelledby";
             prohibitedAttr.push({
               ruleId: "aria/aria-prohibited-attr",
               selector: v.selector,
               html: v.html,
               impact: "serious",
               message: `aria-label and aria-labelledby are prohibited on role "${explicitRole}".`,
+              fix: { type: "remove-attribute" as const, attribute: prohibitedName },
             });
           }
         }
@@ -283,6 +293,7 @@ export function runAriaAttrAudit(doc: Document): AriaAttrAuditResult {
                 html: v.html,
                 impact: "serious",
                 message: `Attribute "${attr.name}" is prohibited on role "${explicitRole}".`,
+                fix: { type: "remove-attribute" as const, attribute: attr.name },
               });
             }
           }

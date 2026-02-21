@@ -7,6 +7,7 @@ export const inputButtonName: Rule = {
   category: "labels-and-names",
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Input buttons must have discernible text via value, aria-label, or aria-labelledby.",
   guidance:
     "Input buttons (<input type='submit'>, type='button', type='reset'>) need accessible names so users know what action the button performs. Add a value attribute with descriptive text (e.g., value='Submit Form'), or use aria-label if the value must differ from the accessible name.",
@@ -30,6 +31,7 @@ export const inputButtonName: Rule = {
           html: getHtmlSnippet(input),
           impact: "critical" as const,
           message: "Input button has no discernible text.",
+          fix: { type: "add-attribute", attribute: "value", value: "" } as const,
         });
       }
     }

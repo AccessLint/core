@@ -6,7 +6,8 @@ export const complementaryIsTopLevel: Rule = {
   category: "landmarks",
   wcag: [],
   level: "A",
-  tags: ["best-practice"],
+  tags: ["best-practice", "page-level"],
+  fixability: "contextual",
   description: "Aside (complementary) landmark should be top-level or directly inside main.",
   guidance: "The complementary landmark (aside) should be top-level or a direct child of main. Nesting aside deep within other landmarks reduces its discoverability for screen reader users navigating by landmarks.",
   prompt:

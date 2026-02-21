@@ -7,6 +7,7 @@ export const scopeAttrValid: Rule = {
   category: "adaptable",
   wcag: ["1.3.1"],
   level: "A",
+  fixability: "mechanical",
   description: "The scope attribute on table headers must have a valid value.",
   guidance: "The scope attribute tells screen readers which cells a header applies to. Valid values are: row, col, rowgroup, colgroup. Using invalid values breaks the association between headers and cells.",
   prompt:

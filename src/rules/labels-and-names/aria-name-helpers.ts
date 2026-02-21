@@ -1,4 +1,4 @@
-import type { Rule } from "../types";
+import type { Rule, Fixability, FixSuggestion } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 import { getAccessibleName, isAriaHidden, isComputedHidden, isInShadowDOM } from "../utils/aria";
 
@@ -10,7 +10,10 @@ export function createNameRule(opts: {
   message: string;
   actRuleIds?: string[];
   prompt?: string;
+  fixability?: Fixability;
   roleSet?: Set<string>;
+  /** Structured fix suggestion for agents and automated tooling */
+  fix?: FixSuggestion;
   /** Skip elements hidden via computed styles (display:none, visibility:hidden, etc.) */
   checkComputedHidden?: boolean;
   /** Skip elements inside shadow DOM (name resolution can't cross shadow boundaries) */
@@ -24,6 +27,7 @@ export function createNameRule(opts: {
     ...(opts.actRuleIds ? { actRuleIds: opts.actRuleIds } : {}),
     wcag: ["4.1.2"],
     level: "A",
+    ...(opts.fixability ? { fixability: opts.fixability } : {}),
     description: opts.description,
     guidance: opts.guidance,
     ...(opts.prompt ? { prompt: opts.prompt } : {}),
@@ -52,6 +56,7 @@ export function createNameRule(opts: {
             html: getHtmlSnippet(el),
             impact: "serious" as const,
             message: opts.message,
+            ...(opts.fix ? { fix: opts.fix } : {}),
           });
         }
       }

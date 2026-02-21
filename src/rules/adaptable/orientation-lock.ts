@@ -82,6 +82,8 @@ export const orientationLock: Rule = {
   actRuleIds: ["b33eff"],
   wcag: ["1.3.4"],
   level: "AA",
+  tags: ["page-level"],
+  fixability: "contextual",
   description:
     "Page orientation must not be restricted using CSS transforms.",
   guidance:

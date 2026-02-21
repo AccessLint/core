@@ -36,6 +36,7 @@ export const buttonName: Rule = {
   actRuleIds: ["97a4e1"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Buttons must have discernible text.",
   guidance:
     "Screen reader users need to know what a button does. Add visible text content, aria-label, or aria-labelledby. For icon buttons, use aria-label describing the action (e.g., aria-label='Close'). If the button contains an image, ensure the image has alt text describing the button's action.",
@@ -70,6 +71,7 @@ export const buttonName: Rule = {
           impact: "critical" as const,
           message: "Button has no discernible text.",
           context: getButtonContext(btn),
+          fix: { type: "add-text-content" } as const,
         });
       }
     }

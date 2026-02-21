@@ -42,6 +42,7 @@ export const labelContentMismatch: Rule = {
   wcag: ["2.5.3"],
   level: "A",
   tags: ["best-practice"],
+  fixability: "contextual",
   description: "Interactive elements with visible text must have accessible names that contain that text.",
   guidance: "For voice control users who activate controls by speaking their visible label, the accessible name must include the visible text. If aria-label is 'Submit form' but the button shows 'Send', voice users saying 'click Send' won't activate it. Ensure aria-label/aria-labelledby contains or matches the visible text.",
   prompt:
@@ -83,6 +84,7 @@ export const labelContentMismatch: Rule = {
           html: getHtmlSnippet(el),
           impact: "serious" as const,
           message: `Accessible name "${accessibleName}" does not contain visible text "${visibleText.trim()}".`,
+          fix: { type: "suggest", suggestion: "Update aria-label to include the visible text content so voice control users can activate this element by speaking its label" } as const,
         });
       }
     }
@@ -118,6 +120,7 @@ export const labelContentMismatch: Rule = {
           html: getHtmlSnippet(el),
           impact: "serious" as const,
           message: `Accessible name "${accessibleName}" does not contain visible label "${visibleLabel.trim()}".`,
+          fix: { type: "suggest", suggestion: "Update aria-label to include the visible label text so voice control users can activate this element by speaking its label" } as const,
         });
       }
     }

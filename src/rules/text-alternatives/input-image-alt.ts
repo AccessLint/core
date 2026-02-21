@@ -8,6 +8,7 @@ export const inputImageAlt: Rule = {
   actRuleIds: ["59796f"],
   wcag: ["1.1.1", "4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: 'Image inputs (<input type="image">) must have alternate text describing the button action.',
   guidance:
     "Image buttons (<input type='image'>) act as submit buttons with a custom image. Add alt text via alt, aria-label, or aria-labelledby that describes the action (e.g. alt='Search' or alt='Submit order'), not the image itself. Without it, screen readers announce only 'image' or the filename, giving no clue what the button does.",
@@ -24,6 +25,7 @@ export const inputImageAlt: Rule = {
           html: getHtmlSnippet(input),
           impact: "critical" as const,
           message: "Image input missing alt text.",
+          fix: { type: "add-attribute", attribute: "alt", value: "" } as const,
         });
       }
     }

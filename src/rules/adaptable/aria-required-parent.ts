@@ -26,6 +26,7 @@ export const ariaRequiredParent: Rule = {
   actRuleIds: ["ff89c9"],
   wcag: ["1.3.1"],
   level: "A",
+  fixability: "contextual",
   description: "Certain ARIA roles must be contained within specific parent roles.",
   guidance: "Some ARIA roles represent items that must exist within specific container roles. For example, a listitem must be within a list, a tab must be within a tablist. Wrap the element in the appropriate parent, or use native HTML elements that provide this structure (e.g., <li> inside <ul>).",
   prompt:

@@ -7,6 +7,7 @@ export const areaAlt: Rule = {
   category: "text-alternatives",
   wcag: ["1.1.1", "4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Image map <area> elements must have alternative text.",
   guidance: "Each clickable region in an image map needs alternative text so screen reader users know what the region represents. Add an alt attribute to every <area> element describing its purpose. For complex image maps, consider using alternative approaches like SVG with embedded links, or a list of text links.",
   prompt:
@@ -25,6 +26,7 @@ export const areaAlt: Rule = {
           html: getHtmlSnippet(area),
           impact: "critical" as const,
           message: "Image map <area> element is missing alternative text.",
+          fix: { type: "add-attribute", attribute: "alt", value: "" } as const,
         });
       }
     }

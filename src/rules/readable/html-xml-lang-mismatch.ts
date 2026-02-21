@@ -6,6 +6,8 @@ export const htmlXmlLangMismatch: Rule = {
   category: "readable",
   wcag: ["3.1.1"],
   level: "A",
+  tags: ["page-level"],
+  fixability: "mechanical",
   description: "The lang and xml:lang attributes on <html> must match.",
   guidance: "In XHTML documents, if both lang and xml:lang are present, they must specify the same base language. Mismatched values confuse assistive technologies. Either remove xml:lang (preferred for HTML5) or ensure both attributes have identical values.",
   prompt:
@@ -27,6 +29,7 @@ export const htmlXmlLangMismatch: Rule = {
           html: getHtmlSnippet(html),
           impact: "moderate" as const,
           message: `lang="${lang}" and xml:lang="${xmlLang}" do not match.`,
+          fix: { type: "remove-attribute", attribute: "xml:lang" } as const,
         }];
       }
     }

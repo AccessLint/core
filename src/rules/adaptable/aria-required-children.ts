@@ -72,6 +72,7 @@ export const ariaRequiredChildren: Rule = {
   actRuleIds: ["bc4a75"],
   wcag: ["1.3.1"],
   level: "A",
+  fixability: "contextual",
   description: "Certain ARIA roles require specific child roles to be present.",
   guidance: "Some ARIA roles represent containers that must contain specific child roles for proper semantics. For example, a list must contain listitems, a menu must contain menuitems. Add the required child elements with appropriate roles, or use native HTML elements that provide these semantics implicitly (e.g., <ul> with <li>).",
   prompt:

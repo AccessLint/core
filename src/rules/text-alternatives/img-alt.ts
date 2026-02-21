@@ -38,6 +38,7 @@ export const imgAlt: Rule = {
   actRuleIds: ["23a2a8"],
   wcag: ["1.1.1"],
   level: "A",
+  fixability: "contextual",
   description:
     "Images must have alternate text. Add an alt attribute to <img> elements. Decorative images may use an empty alt attribute (alt=\"\"), role='none', or role='presentation'.",
   guidance:
@@ -71,6 +72,7 @@ export const imgAlt: Rule = {
           impact: "critical" as const,
           message: "Image has whitespace-only alt text. Use alt=\"\" for decorative images or provide descriptive text.",
           context: getImageContext(img),
+          fix: { type: "set-attribute", attribute: "alt", value: "" } as const,
         });
         continue;
       }
@@ -83,6 +85,7 @@ export const imgAlt: Rule = {
           impact: "critical" as const,
           message: "Image element missing alt attribute.",
           context: getImageContext(img),
+          fix: { type: "add-attribute", attribute: "alt", value: "" } as const,
         });
       }
     }

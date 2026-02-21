@@ -89,6 +89,7 @@ export const nestedInteractive: Rule = {
   category: "keyboard-accessible",
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Interactive controls must not be nested inside each other.",
   guidance: "Nesting interactive elements (like a button inside a link, or a link inside a button) creates unpredictable behavior and confuses assistive technologies. The browser may remove the inner element from the accessibility tree. Restructure the HTML so interactive elements are siblings, not nested. If you need a clickable card, use CSS and JavaScript rather than nesting.",
   prompt:
@@ -121,6 +122,7 @@ export const nestedInteractive: Rule = {
               html: getHtmlSnippet(node),
               impact: "serious" as const,
               message: `Interactive element <${node.tagName.toLowerCase()}> is nested inside <${parent.tagName.toLowerCase()}>.`,
+              fix: { type: "suggest", suggestion: "Move the nested interactive element outside its interactive parent so they are siblings instead of nested" } as const,
             });
           }
         }

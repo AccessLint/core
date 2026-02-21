@@ -9,6 +9,7 @@ export const frameTitleUnique: Rule = {
   wcag: ["4.1.2"],
   level: "A",
   tags: ["best-practice"],
+  fixability: "contextual",
   description: "Frame titles should be unique.",
   guidance: "When multiple frames have identical titles, screen reader users cannot distinguish between them. Give each frame a unique, descriptive title that explains its specific purpose or content.",
   prompt:

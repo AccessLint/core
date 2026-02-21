@@ -7,6 +7,7 @@ export const colorContrast: Rule = {
   actRuleIds: ["afw4f7"],
   wcag: ["1.4.3"],
   level: "AA",
+  fixability: "visual",
   description:
     "Text elements must have sufficient color contrast against the background.",
   guidance:

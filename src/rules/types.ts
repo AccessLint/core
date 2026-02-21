@@ -1,3 +1,11 @@
+/**
+ * How easily an agent can fix violations of this rule:
+ * - `mechanical`: Deterministic fix, no judgment needed (e.g., remove tabindex > 0)
+ * - `contextual`: Needs surrounding context but an LLM can reason about it (e.g., suggest alt text)
+ * - `visual`: Requires seeing the rendered output or design intent (e.g., color contrast)
+ */
+export type Fixability = "mechanical" | "contextual" | "visual";
+
 export interface Rule {
   id: string;
   category: string;
@@ -5,6 +13,8 @@ export interface Rule {
   wcag: string[];
   level: "A" | "AA" | "AAA";
   tags?: string[];
+  /** How easily an agent can fix violations of this rule */
+  fixability?: Fixability;
   description: string;
   /** Generic remediation guidance for the AI to contextualize */
   guidance?: string;
@@ -12,6 +22,16 @@ export interface Rule {
   prompt?: string;
   run(doc: Document): Violation[];
 }
+
+/** Structured fix suggestion for agents and automated tooling */
+export type FixSuggestion =
+  | { type: "add-attribute"; attribute: string; value: string }
+  | { type: "set-attribute"; attribute: string; value: string }
+  | { type: "remove-attribute"; attribute: string }
+  | { type: "add-element"; tag: string; parent: string; attributes?: Record<string, string>; textContent?: string }
+  | { type: "remove-element" }
+  | { type: "add-text-content"; text?: string }
+  | { type: "suggest"; suggestion: string };
 
 export interface Violation {
   ruleId: string;
@@ -23,6 +43,8 @@ export interface Violation {
   context?: string;
   /** Additional context for AI guidance only (not displayed to user) */
   aiContext?: string;
+  /** Structured fix suggestion for agents and automated tooling */
+  fix?: FixSuggestion;
   element?: Element;
 }
 
@@ -31,6 +53,15 @@ export interface AuditResult {
   timestamp: number;
   violations: Violation[];
   ruleCount: number;
+}
+
+export interface DiffResult {
+  /** Violations present in `after` but not in `before` */
+  added: Violation[];
+  /** Violations present in `before` but not in `after` */
+  fixed: Violation[];
+  /** Violations present in both */
+  unchanged: Violation[];
 }
 
 // --- Declarative rule engine types ---
@@ -90,8 +121,10 @@ export interface DeclarativeRule {
   wcag: string[];
   level: "A" | "AA" | "AAA";
   tags?: string[];
+  fixability?: Fixability;
   guidance?: string;
   prompt?: string;
+  fix?: FixSuggestion;
   skipAriaHidden?: boolean;
   documentOnly?: boolean;
 }

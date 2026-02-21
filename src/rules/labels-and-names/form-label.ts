@@ -92,6 +92,7 @@ export const formLabel: Rule = {
   actRuleIds: ["e086e5"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Form elements must have labels. Use <label>, aria-label, or aria-labelledby.",
   guidance: "Every form input needs an accessible label so users understand what information to enter. Use a <label> element with a for attribute matching the input's id, wrap the input in a <label>, or use aria-label/aria-labelledby for custom components. Placeholders are not sufficient as labels since they disappear when typing.",
   prompt:
@@ -130,6 +131,7 @@ export const formLabel: Rule = {
           impact: "critical" as const,
           message: "Form element has no accessible label.",
           context: parts.length > 0 ? parts.join(", ") : undefined,
+          fix: { type: "suggest", suggestion: "Add a <label> element associated via the for attribute, or add an aria-label attribute" } as const,
         });
       }
     }

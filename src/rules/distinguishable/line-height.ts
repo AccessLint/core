@@ -17,6 +17,7 @@ export const lineHeight: Rule = {
   actRuleIds: ["78fd32"],
   wcag: ["1.4.12"],
   level: "AA",
+  fixability: "mechanical",
   description:
     "Line height set with !important in style attributes must be at least 1.5.",
   guidance:

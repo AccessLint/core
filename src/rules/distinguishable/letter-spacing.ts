@@ -7,6 +7,7 @@ export const letterSpacing: Rule = {
   actRuleIds: ["24afc2"],
   wcag: ["1.4.12"],
   level: "AA",
+  fixability: "mechanical",
   description:
     "Letter spacing set with !important in style attributes must be at least 0.12em.",
   guidance:

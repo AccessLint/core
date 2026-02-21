@@ -8,6 +8,7 @@ export const tdHeadersAttr: Rule = {
   actRuleIds: ["a25f45"],
   wcag: ["1.3.1"],
   level: "A",
+  fixability: "contextual",
   description: "All cells in a table using headers attribute must reference valid header IDs.",
   guidance: "The headers attribute on table cells must reference IDs of header cells (th or td) within the same table. This creates explicit associations for screen readers. Verify all referenced IDs exist and spell them correctly. For simple tables, consider using scope on th elements instead.",
   prompt:

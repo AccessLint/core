@@ -1,8 +1,12 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { makeDoc } from "../test-helpers";
-import { runAudit } from "./index";
+import { runAudit, diffAudit, configureRules, getActiveRules } from "./index";
 import { generateDoc, SMALL_SIZE } from "../bench/fixtures";
 
+
+afterEach(() => {
+  configureRules({ componentMode: false, disabledRules: [], includeAAA: false });
+});
 
 describe("runAudit integration", () => {
   it(
@@ -56,4 +60,132 @@ describe("runAudit integration", () => {
     },
     15_000,
   );
+});
+
+describe("componentMode", () => {
+  const PAGE_LEVEL_RULES = [
+    "navigable/document-title",
+    "navigable/bypass",
+    "navigable/page-has-heading-one",
+    "navigable/skip-link",
+    "readable/html-has-lang",
+    "readable/html-lang-valid",
+    "readable/html-xml-lang-mismatch",
+    "landmarks/landmark-main",
+    "landmarks/no-duplicate-banner",
+    "landmarks/no-duplicate-contentinfo",
+    "landmarks/no-duplicate-main",
+    "landmarks/banner-is-top-level",
+    "landmarks/contentinfo-is-top-level",
+    "landmarks/main-is-top-level",
+    "landmarks/complementary-is-top-level",
+    "landmarks/landmark-unique",
+    "landmarks/region",
+    "distinguishable/meta-viewport",
+    "enough-time/meta-refresh",
+    "enough-time/meta-refresh-no-exception",
+    "adaptable/orientation-lock",
+    "aria/aria-hidden-body",
+  ];
+
+  it("excludes page-level rules when componentMode is true", () => {
+    configureRules({ componentMode: true });
+    const active = getActiveRules();
+    const activeIds = active.map((r) => r.id);
+
+    for (const id of PAGE_LEVEL_RULES) {
+      expect(activeIds).not.toContain(id);
+    }
+  });
+
+  it("still includes component-level rules", () => {
+    configureRules({ componentMode: true });
+    const active = getActiveRules();
+    const activeIds = active.map((r) => r.id);
+
+    expect(activeIds).toContain("text-alternatives/img-alt");
+    expect(activeIds).toContain("navigable/link-name");
+    expect(activeIds).toContain("labels-and-names/form-label");
+    expect(activeIds).toContain("labels-and-names/button-name");
+    expect(activeIds).toContain("aria/aria-roles");
+    expect(activeIds).toContain("distinguishable/color-contrast");
+  });
+
+  it("suppresses page-level violations on component fragments", () => {
+    configureRules({ componentMode: true });
+    const doc = makeDoc('<div><img src="photo.jpg"><a href="/"></a></div>');
+    const result = runAudit(doc);
+
+    // Should find component-level violations
+    const ruleIds = result.violations.map((v) => v.ruleId);
+    expect(ruleIds).toContain("text-alternatives/img-alt");
+    expect(ruleIds).toContain("navigable/link-name");
+
+    // Should NOT find page-level violations
+    for (const id of PAGE_LEVEL_RULES) {
+      expect(ruleIds).not.toContain(id);
+    }
+  });
+
+  it("includes page-level rules when componentMode is false", () => {
+    configureRules({ componentMode: false });
+    const active = getActiveRules();
+    const activeIds = active.map((r) => r.id);
+
+    for (const id of PAGE_LEVEL_RULES) {
+      expect(activeIds).toContain(id);
+    }
+  });
+});
+
+describe("diffAudit", () => {
+  it("detects added violations", () => {
+    const before = runAudit(makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1></main></body></html>'));
+    const after = runAudit(makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1><img src="x.jpg"></main></body></html>'));
+
+    const diff = diffAudit(before, after);
+    expect(diff.added.length).toBeGreaterThan(0);
+    expect(diff.added.some((v) => v.ruleId === "text-alternatives/img-alt")).toBe(true);
+    expect(diff.fixed).toHaveLength(0);
+  });
+
+  it("detects fixed violations", () => {
+    const before = runAudit(makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1><img src="x.jpg"></main></body></html>'));
+    const after = runAudit(makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1><img src="x.jpg" alt="A red barn"></main></body></html>'));
+
+    const diff = diffAudit(before, after);
+    expect(diff.fixed.some((v) => v.ruleId === "text-alternatives/img-alt")).toBe(true);
+    expect(diff.added).toHaveLength(0);
+  });
+
+  it("detects unchanged violations", () => {
+    const doc1 = makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1><img src="x.jpg"></main></body></html>');
+    const doc2 = makeDoc('<html lang="en"><head><title>T</title></head><body><main><h1>Hi</h1><img src="x.jpg"></main></body></html>');
+    const before = runAudit(doc1);
+    const after = runAudit(doc2);
+
+    const diff = diffAudit(before, after);
+    expect(diff.unchanged.length).toBe(before.violations.length);
+    expect(diff.added).toHaveLength(0);
+    expect(diff.fixed).toHaveLength(0);
+  });
+
+  it("handles empty results", () => {
+    const empty = { url: "", timestamp: 0, violations: [], ruleCount: 0 };
+    const diff = diffAudit(empty, empty);
+    expect(diff.added).toHaveLength(0);
+    expect(diff.fixed).toHaveLength(0);
+    expect(diff.unchanged).toHaveLength(0);
+  });
+
+  it("correctly classifies a mix of added, fixed, and unchanged", () => {
+    configureRules({ componentMode: true });
+    const before = runAudit(makeDoc('<div><img src="a.jpg"><button>OK</button></div>'));
+    // Fix the img, break the button
+    const after = runAudit(makeDoc('<div><img src="a.jpg" alt="photo"><button></button></div>'));
+
+    const diff = diffAudit(before, after);
+    expect(diff.fixed.some((v) => v.ruleId === "text-alternatives/img-alt")).toBe(true);
+    expect(diff.added.some((v) => v.ruleId === "labels-and-names/button-name")).toBe(true);
+  });
 });

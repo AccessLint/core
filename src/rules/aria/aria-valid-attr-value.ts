@@ -7,6 +7,7 @@ export const ariaValidAttrValue: Rule = {
   actRuleIds: ["6a7281"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "ARIA attributes must have valid values.",
   guidance:
     "Each ARIA attribute accepts specific value types. Boolean attributes (aria-hidden, aria-disabled) accept only 'true' or 'false'. Tristate attributes (aria-checked, aria-pressed) also accept 'mixed'. Token attributes (aria-live, aria-autocomplete) accept predefined values. ID reference attributes (aria-labelledby, aria-describedby) must reference existing element IDs.",

@@ -30,6 +30,7 @@ export const linkName: Rule = {
   actRuleIds: ["c487ae"],
   wcag: ["2.4.4", "4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Links must have discernible text via content, aria-label, or aria-labelledby.",
   guidance:
     "Screen reader users need to know where a link goes. Add descriptive text content, aria-label, or use aria-labelledby. For image links, ensure the image has alt text describing the link destination. Avoid generic text like 'click here' or 'read more'—link text should make sense out of context.",
@@ -51,6 +52,7 @@ export const linkName: Rule = {
           impact: "serious" as const,
           message: "Link has no discernible text.",
           context: getLinkContext(a),
+          fix: { type: "add-text-content" } as const,
         });
       }
     }

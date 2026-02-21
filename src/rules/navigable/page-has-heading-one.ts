@@ -7,6 +7,7 @@ export const pageHasHeadingOne: Rule = {
   wcag: [],
   level: "A",
   tags: ["best-practice", "page-level"],
+  fixability: "contextual",
   description: "Page should contain a level-one heading.",
   guidance: "A level-one heading (<h1> or role='heading' with aria-level='1') helps users understand the page topic and provides a landmark for screen reader navigation. Each page should have at least one level-one heading that describes the main content, typically matching or similar to the page title.",
   prompt:

@@ -8,6 +8,7 @@ export const focusVisible: Rule = {
   actRuleIds: ["oj04fd"],
   wcag: ["2.4.7"],
   level: "AA",
+  fixability: "visual",
   description:
     "Elements in sequential focus order must have a visible focus indicator.",
   guidance:

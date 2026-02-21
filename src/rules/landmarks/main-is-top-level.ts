@@ -6,7 +6,8 @@ export const mainIsTopLevel: Rule = {
   category: "landmarks",
   wcag: [],
   level: "A",
-  tags: ["best-practice"],
+  tags: ["best-practice", "page-level"],
+  fixability: "contextual",
   description: "Main landmark should not be nested within another landmark.",
   guidance: "Screen readers provide a shortcut to jump directly to the main landmark. When <main> is nested inside another landmark (article, aside, nav, or section), some screen readers may not list it as a top-level landmark, making it harder to find. Move <main> outside any sectioning elements so it sits at the top level of the document.",
   prompt:

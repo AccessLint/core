@@ -118,6 +118,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
     wcag: spec.wcag,
     level: spec.level,
     tags: spec.tags,
+    fixability: spec.fixability,
     description: spec.description,
     guidance: spec.guidance,
     prompt: spec.prompt,
@@ -134,6 +135,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
               html: getHtmlSnippet(el),
               impact: spec.impact,
               message: applyTemplate(spec.message, el, spec.check),
+              ...(spec.fix ? { fix: spec.fix } : {}),
               element: el,
             });
           }
@@ -153,6 +155,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
+                ...(spec.fix ? { fix: spec.fix } : {}),
                 element: el,
               });
             }
@@ -171,6 +174,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
+                ...(spec.fix ? { fix: spec.fix } : {}),
                 element: el,
               });
             }
@@ -198,6 +202,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
+                ...(spec.fix ? { fix: spec.fix } : {}),
                 element: el,
               });
             } else if (!shouldMatch && matches) {
@@ -207,6 +212,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
+                ...(spec.fix ? { fix: spec.fix } : {}),
                 element: el,
               });
             }
@@ -225,6 +231,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
+                ...(spec.fix ? { fix: spec.fix } : {}),
                 element: el,
               });
             }
@@ -259,6 +266,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                   html: getHtmlSnippet(el),
                   impact: spec.impact,
                   message: `<${el.tagName.toLowerCase()}> contains direct text content. Wrap in ${wrapped}.`,
+                  ...(spec.fix ? { fix: spec.fix } : {}),
                   element: el,
                 });
                 found = true;
@@ -279,6 +287,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(child),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, child, spec.check),
+                ...(spec.fix ? { fix: spec.fix } : {}),
                 element: child,
               });
               break; // one violation per parent

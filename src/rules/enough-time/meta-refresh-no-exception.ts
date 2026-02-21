@@ -8,6 +8,8 @@ export const metaRefreshNoException: Rule = {
   actRuleIds: ["bisz58"],
   wcag: ["2.2.1"],
   level: "A",
+  tags: ["page-level"],
+  fixability: "mechanical",
   description: "Meta refresh must not be used with a delay (no exceptions).",
   guidance:
     "Automatic page refreshes and delayed redirects disorient users. Instant redirects (delay=0) are acceptable, but any positive delay is not. Use server-side redirects instead.",
@@ -27,6 +29,7 @@ export const metaRefreshNoException: Rule = {
             html: getHtmlSnippet(refresh),
             impact: "critical" as const,
             message: `Page has a ${parsed.seconds}-second meta refresh delay. Use a server-side redirect instead.`,
+            fix: { type: "remove-element" } as const,
           }];
         }
         // Delay 0 with valid URL is OK; this redirect wins, stop checking
@@ -41,6 +44,7 @@ export const metaRefreshNoException: Rule = {
           html: getHtmlSnippet(refresh),
           impact: "critical" as const,
           message: `Page has a ${parsed.seconds}-second meta refresh delay. Remove the auto-refresh or provide user control.`,
+          fix: { type: "remove-element" } as const,
         }];
       }
     }

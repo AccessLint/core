@@ -7,6 +7,7 @@ export const listitemParent: Rule = {
   category: "adaptable",
   wcag: ["1.3.1"],
   level: "A",
+  fixability: "contextual",
   description: "<li> elements must be contained in a <ul>, <ol>, or <menu>.",
   guidance:
     "List items (<li>) only have semantic meaning inside a list container (<ul>, <ol>, or <menu>). Without a list parent, screen readers will not announce 'list with N items' or allow users to skip between items using list navigation shortcuts. Wrap <li> elements in the appropriate list container — <ul> for unordered lists, <ol> for ordered/numbered lists.",

@@ -84,6 +84,7 @@ export const ariaAllowedAttr: Rule = {
   actRuleIds: ["5c01ea"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "mechanical",
   description: "ARIA attributes must be allowed for the element's role.",
   guidance: "Each ARIA role supports specific attributes. Using unsupported attributes creates confusion for assistive technologies. Check the ARIA specification for which attributes are valid for each role, or remove the attribute if it's not needed.",
   prompt:
@@ -116,6 +117,7 @@ export const ariaAllowedAttr: Rule = {
           impact: "critical" as const,
           message: `ARIA attribute "${attr.name}" is not allowed on role "${role}".`,
           context: `Attribute: ${attr.name}="${attr.value}", role: ${role}, allowed role-specific attributes: ${allowed}`,
+          fix: { type: "remove-attribute" as const, attribute: attr.name },
         });
       }
     }

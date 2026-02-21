@@ -23,6 +23,7 @@ export const ariaRequiredAttr: Rule = {
   actRuleIds: ["4e8ab6"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Elements with ARIA roles must have all required ARIA attributes.",
   guidance:
     "Some ARIA roles require specific attributes to function correctly. For example, checkbox requires aria-checked, slider requires aria-valuenow, heading requires aria-level. Without these attributes, assistive technologies cannot convey the element's state or value to users. Add the missing required attribute with an appropriate value.",
@@ -60,6 +61,7 @@ export const ariaRequiredAttr: Rule = {
             html: getHtmlSnippet(el),
             impact: "critical" as const,
             message: `Role "${role}" requires attribute "${attr}".`,
+            fix: { type: "add-attribute" as const, attribute: attr, value: "" },
           });
           break;
         }

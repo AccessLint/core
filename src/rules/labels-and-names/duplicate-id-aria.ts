@@ -7,6 +7,7 @@ export const duplicateIdAria: Rule = {
   category: "labels-and-names",
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "IDs used in ARIA and label associations must be unique to avoid broken references.",
   guidance:
     "When aria-labelledby, aria-describedby, aria-controls, or label[for] reference a duplicate ID, only the first matching element is used. This breaks the intended relationship and may leave controls unnamed or descriptions missing. Ensure IDs referenced by ARIA attributes and label associations are unique throughout the document.",
@@ -58,6 +59,7 @@ export const duplicateIdAria: Rule = {
         impact: "critical" as const,
         message: `Duplicate ID "${id}" referenced by ${refDesc ?? "an accessibility attribute"}.`,
         context: `First element: ${getHtmlSnippet(els[0])}${refDesc ? `\nReferenced by: ${refDesc}` : ""}`,
+        fix: { type: "suggest", suggestion: "Change the duplicate ID to a unique value so the ARIA or label reference points to the correct element" } as const,
       });
     }
     return violations;

@@ -9,6 +9,7 @@ export const labelTitleOnly: Rule = {
   wcag: ["4.1.2"],
   level: "A",
   tags: ["best-practice"],
+  fixability: "contextual",
   description: "Form elements should not use title attribute as the only accessible name.",
   guidance: "The title attribute is unreliable as a label because it only appears on hover/focus (not visible to touch users) and is often ignored by assistive technologies. Use a visible <label> element, aria-label, or aria-labelledby instead. Title can supplement a label but should not replace it.",
   prompt:
@@ -36,6 +37,7 @@ export const labelTitleOnly: Rule = {
           html: getHtmlSnippet(input),
           impact: "serious" as const,
           message: "Form element uses title attribute as only label. Use <label>, aria-label, or aria-labelledby instead.",
+          fix: { type: "suggest", suggestion: "Add a visible <label> element or aria-label attribute, and optionally keep the title as supplementary text" } as const,
         });
       }
     }

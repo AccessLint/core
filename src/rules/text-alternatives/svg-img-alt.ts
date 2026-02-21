@@ -23,6 +23,7 @@ export const svgImgAlt: Rule = {
   actRuleIds: ["7d6734"],
   wcag: ["1.1.1"],
   level: "A",
+  fixability: "contextual",
   description:
     "SVG elements with an img, graphics-document, or graphics-symbol role must have an accessible name via a <title> element, aria-label, or aria-labelledby.",
   guidance:
@@ -45,6 +46,7 @@ export const svgImgAlt: Rule = {
           html: getHtmlSnippet(el),
           impact: "serious" as const,
           message: `${el.tagName.toLowerCase()} with role='${role}' has no accessible name.`,
+          fix: { type: "add-attribute", attribute: "aria-label", value: "" } as const,
         });
       }
     }

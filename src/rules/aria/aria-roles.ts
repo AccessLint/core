@@ -8,6 +8,7 @@ export const ariaRoles: Rule = {
   actRuleIds: ["674b10"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "ARIA role values must be valid.",
   guidance:
     "Invalid role values are ignored by assistive technologies, meaning the element will not have the intended semantics. Check the spelling and use only roles defined in the WAI-ARIA specification. Common roles include: button, link, navigation, main, dialog, alert, tab, tabpanel, menu, menuitem.",
@@ -31,6 +32,7 @@ export const ariaRoles: Rule = {
           html: getHtmlSnippet(el),
           impact: "critical" as const,
           message: `Invalid ARIA role "${roles[0]}".`,
+          fix: { type: "remove-attribute", attribute: "role" } as const,
         });
       }
     }

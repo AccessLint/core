@@ -146,6 +146,7 @@ export const ariaAllowedRole: Rule = {
   category: "aria",
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "ARIA role must be appropriate for the element.",
   guidance: "Not all ARIA roles can be applied to all HTML elements. Many elements have implicit roles (e.g., <header> is implicitly banner, <nav> is navigation, <main> is main). Adding an explicit role that matches the implicit role is redundant. Adding a conflicting role breaks semantics. Either remove the role attribute or use a different element.",
   prompt:

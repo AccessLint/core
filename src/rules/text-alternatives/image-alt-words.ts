@@ -15,6 +15,7 @@ export const imageAltWords: Rule = {
   wcag: ["1.1.1"],
   level: "A",
   tags: ["best-practice"],
+  fixability: "contextual",
   description:
     "Image alt text should not contain words like 'image', 'photo', or 'picture' — screen readers already announce the element type.",
   guidance:
@@ -36,6 +37,7 @@ export const imageAltWords: Rule = {
           impact: "minor" as const,
           message: `Alt text "${img.getAttribute("alt")}" contains redundant word(s): ${found.join(", ")}.`,
           context: `Current alt: "${img.getAttribute("alt")}", redundant word(s): ${found.join(", ")}`,
+          fix: { type: "suggest", suggestion: "Remove the redundant word(s) from the alt text; screen readers already announce the element as an image" } as const,
         });
       }
     }

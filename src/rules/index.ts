@@ -1,4 +1,4 @@
-import type { Rule, Violation, AuditResult } from "./types";
+import type { Rule, Violation, AuditResult, DiffResult } from "./types";
 import { clearAriaHiddenCache, clearComputedRoleCache, clearAccessibleNameCache } from "./utils/aria";
 import { clearAriaAttrAuditCache } from "./aria/aria-attr-audit";
 import { clearColorCaches } from "./utils/color";
@@ -249,6 +249,7 @@ export interface ChunkedAudit {
 let additionalRules: Rule[] = [];
 let disabledRuleIds = new Set<string>();
 let includeAAA = false;
+let componentMode = false;
 let activeLocale: string | undefined;
 let localizedRulesCache: Rule[] | undefined;
 
@@ -259,6 +260,9 @@ export interface ConfigureOptions {
   disabledRules?: string[];
   /** Include AAA-level rules (excluded by default) */
   includeAAA?: boolean;
+  /** Exclude page-level rules (document-title, landmarks, html-has-lang, etc.)
+   *  for auditing components rendered in isolation */
+  componentMode?: boolean;
   /** Locale for translated rule descriptions/guidance (e.g. 'en', 'es') */
   locale?: string;
 }
@@ -272,6 +276,9 @@ export function configureRules(options: ConfigureOptions): void {
   }
   if ("includeAAA" in options) {
     includeAAA = !!options.includeAAA;
+  }
+  if ("componentMode" in options) {
+    componentMode = !!options.componentMode;
   }
   if ("locale" in options) {
     activeLocale = options.locale || undefined;
@@ -290,6 +297,7 @@ export function getActiveRules(): Rule[] {
   const active = rules.filter((r) => {
     if (disabledRuleIds.has(r.id)) return false;
     if (r.level === "AAA" && !includeAAA) return false;
+    if (componentMode && r.tags?.includes("page-level")) return false;
     return true;
   });
   const combined = active.concat(additionalRules);
@@ -359,6 +367,44 @@ export function runAudit(doc: Document): AuditResult {
     violations: activeLocale ? translateViolations(violations, activeLocale) : violations,
     ruleCount: activeRules.length,
   };
+}
+
+/**
+ * Compare two audit results to find added, fixed, and unchanged violations.
+ * Violations are matched by ruleId + selector.
+ */
+export function diffAudit(before: AuditResult, after: AuditResult): DiffResult {
+  const key = (v: Violation) => `${v.ruleId}\0${v.selector}`;
+
+  const beforeSet = new Map<string, Violation>();
+  for (const v of before.violations) {
+    beforeSet.set(key(v), v);
+  }
+
+  const afterSet = new Map<string, Violation>();
+  for (const v of after.violations) {
+    afterSet.set(key(v), v);
+  }
+
+  const added: Violation[] = [];
+  const unchanged: Violation[] = [];
+
+  for (const [k, v] of afterSet) {
+    if (beforeSet.has(k)) {
+      unchanged.push(v);
+    } else {
+      added.push(v);
+    }
+  }
+
+  const fixed: Violation[] = [];
+  for (const [k, v] of beforeSet) {
+    if (!afterSet.has(k)) {
+      fixed.push(v);
+    }
+  }
+
+  return { added, fixed, unchanged };
 }
 
 const ruleMap = new Map<string, Rule>(rules.map((r) => [r.id, r]));

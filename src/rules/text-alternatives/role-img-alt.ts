@@ -7,6 +7,7 @@ export const roleImgAlt: Rule = {
   category: "text-alternatives",
   wcag: ["1.1.1"],
   level: "A",
+  fixability: "contextual",
   description: "Elements with role='img' must have an accessible name.",
   guidance: "When you assign role='img' to an element (like a div containing icon fonts or CSS backgrounds), you must provide an accessible name via aria-label or aria-labelledby. Without this, screen reader users have no way to understand what the image represents. If the image is decorative, use role='presentation' or role='none' instead.",
   prompt:
@@ -31,6 +32,7 @@ export const roleImgAlt: Rule = {
           html: getHtmlSnippet(el),
           impact: "serious" as const,
           message: "Element with role='img' has no accessible name. Add aria-label or aria-labelledby.",
+          fix: { type: "add-attribute", attribute: "aria-label", value: "" } as const,
         });
       }
     }

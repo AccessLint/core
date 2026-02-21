@@ -6,6 +6,8 @@ export const documentTitle: Rule = {
   actRuleIds: ["2779a5"],
   wcag: ["2.4.2"],
   level: "A",
+  tags: ["page-level"],
+  fixability: "contextual",
   description: "Documents must have a <title> element to provide users with an overview of content.",
   guidance: "Screen reader users rely on page titles to identify and navigate between tabs/windows. Add a descriptive <title> element in <head> that summarizes the page purpose. Keep titles unique across the site, placing specific content before the site name (e.g., 'Contact Us - Acme Corp').",
   prompt:
@@ -29,6 +31,7 @@ export const documentTitle: Rule = {
         impact: "serious" as const,
         message: title ? "Document <title> element is empty." : "Document is missing a <title> element.",
         context: textSample,
+        fix: { type: "add-element", tag: "title", parent: "head", textContent: "" } as const,
       }];
     }
     return [];

@@ -8,6 +8,7 @@ export const skipLink: Rule = {
   wcag: ["2.4.1"],
   level: "A",
   tags: ["best-practice", "page-level"],
+  fixability: "mechanical",
   description: "Skip links must point to a valid target on the page.",
   guidance: "Skip links allow keyboard users to bypass repetitive navigation and jump directly to main content. The skip link should be the first focusable element on the page, link to the main content (e.g., href='#main'), and become visible when focused. It can be visually hidden until focused using CSS.",
   prompt:

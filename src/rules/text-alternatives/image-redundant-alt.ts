@@ -11,6 +11,7 @@ export const imageRedundantAlt: Rule = {
   wcag: ["1.1.1"],
   level: "A",
   tags: ["best-practice"],
+  fixability: "contextual",
   description:
     "Image alt text should not duplicate adjacent link or button text. When alt text repeats surrounding text, screen reader users hear the same information twice.",
   guidance:
@@ -37,6 +38,7 @@ export const imageRedundantAlt: Rule = {
             impact: "minor" as const,
             message: `Alt text "${img.getAttribute("alt")}" duplicates surrounding ${parentTag} text.`,
             context: `Duplicated text: "${img.getAttribute("alt")}", parent element: <${parentTag}>${href ? ` href="${href}"` : ""}`,
+            fix: { type: "suggest", suggestion: "Set alt=\"\" if the image is decorative in this context, or provide complementary alt text that adds information the visible text does not convey" } as const,
           });
         }
       }

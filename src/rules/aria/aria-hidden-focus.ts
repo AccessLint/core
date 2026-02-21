@@ -67,6 +67,7 @@ export const ariaHiddenFocus: Rule = {
   actRuleIds: ["6cfa84"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Elements with aria-hidden='true' must not contain focusable elements.",
   guidance: "When aria-hidden='true' hides an element from assistive technologies but the element contains focusable children, keyboard users can focus those children but screen reader users won't know they exist. Either remove focusable elements from the hidden region, add tabindex='-1' to them, or remove aria-hidden.",
   prompt:
@@ -130,6 +131,7 @@ export const ariaHiddenFocus: Rule = {
             impact: "serious" as const,
             message: "Focusable element is inside an aria-hidden region.",
             context: `Focusable because: ${reason}. aria-hidden ancestor: ${hiddenAncestor ? getHtmlSnippet(hiddenAncestor) : "unknown"}`,
+            fix: { type: "suggest", suggestion: "Add tabindex=\"-1\" to remove from tab order, or move the element outside the aria-hidden region" } as const,
           });
         }
       }

@@ -10,6 +10,8 @@ const ariaHiddenBodySpec: DeclarativeRule = {
   description: "aria-hidden='true' must not be present on the document body.",
   wcag: ["4.1.2"],
   level: "A",
+  tags: ["page-level"],
+  fixability: "mechanical",
   guidance: "Setting aria-hidden='true' on the body element hides all page content from assistive technologies, making the page completely inaccessible to screen reader users. Remove aria-hidden from the body element. If you need to hide content temporarily (e.g., behind a modal), use aria-hidden on specific sections instead.",
   prompt: "Instruct to remove aria-hidden='true' from the body element.",
   skipAriaHidden: false,

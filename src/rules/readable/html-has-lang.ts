@@ -7,6 +7,8 @@ export const htmlHasLang: Rule = {
   actRuleIds: ["b5c3f8"],
   wcag: ["3.1.1"],
   level: "A",
+  tags: ["page-level"],
+  fixability: "mechanical",
   description: "The <html> element must have a lang attribute.",
   guidance: "Screen readers use the lang attribute to determine which language rules and pronunciation to use. Without it, content may be mispronounced. Set lang to the primary language of the page (e.g., lang='en' for English, lang='es' for Spanish).",
   prompt:
@@ -38,6 +40,7 @@ export const htmlHasLang: Rule = {
         impact: "serious" as const,
         message: "<html> element missing lang attribute.",
         context: textSample ? `Page text sample: "${textSample}"` : undefined,
+        fix: { type: "add-attribute", attribute: "lang", value: "en" } as const,
       }];
     }
     return [];

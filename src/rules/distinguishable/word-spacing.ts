@@ -7,6 +7,7 @@ export const wordSpacing: Rule = {
   actRuleIds: ["9e45ec"],
   wcag: ["1.4.12"],
   level: "AA",
+  fixability: "mechanical",
   description:
     "Word spacing set with !important in style attributes must be at least 0.16em.",
   guidance:

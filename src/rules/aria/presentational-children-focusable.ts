@@ -33,6 +33,7 @@ export const presentationalChildrenFocusable: Rule = {
   actRuleIds: ["307n5z"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description:
     "Elements with a role that makes children presentational must not contain focusable content.",
   guidance:

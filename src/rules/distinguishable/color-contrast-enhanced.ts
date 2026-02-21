@@ -7,6 +7,7 @@ export const colorContrastEnhanced: Rule = {
   actRuleIds: ["09o5cg"],
   wcag: ["1.4.6"],
   level: "AAA",
+  fixability: "visual",
   description:
     "Text elements must have enhanced color contrast against the background (WCAG AAA).",
   guidance:

@@ -8,6 +8,7 @@ export const videoCaptions: Rule = {
   actRuleIds: ["eac66b"],
   wcag: ["1.2.2"],
   level: "A",
+  fixability: "contextual",
   description: "Video elements must have captions via <track kind='captions'> or <track kind='subtitles'>.",
   guidance: "Captions provide text alternatives for audio content in videos, benefiting deaf users and those who cannot hear audio. Add a <track> element with kind='captions' pointing to a WebVTT caption file. Captions should include both dialogue and important sound effects.",
   prompt:

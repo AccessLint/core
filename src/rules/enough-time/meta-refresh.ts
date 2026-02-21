@@ -8,6 +8,8 @@ export const metaRefresh: Rule = {
   actRuleIds: ["bc659a"],
   wcag: ["2.2.1"],
   level: "A",
+  tags: ["page-level"],
+  fixability: "mechanical",
   description: "Meta refresh must not redirect or refresh automatically.",
   guidance: "Automatic page refreshes or redirects can disorient users, especially those using screen readers or with cognitive disabilities. They may lose their place or not have time to read content. If a redirect is needed, use a server-side redirect (HTTP 301/302) instead. For timed refreshes, provide user controls.",
   prompt:
@@ -29,6 +31,7 @@ export const metaRefresh: Rule = {
             html: getHtmlSnippet(refresh),
             impact: "critical" as const,
             message: `Page redirects after ${parsed.seconds} seconds without warning. Use server-side redirect.`,
+            fix: { type: "remove-element" } as const,
           }];
         }
         // Delay 0 or > 72000 is OK; this redirect wins so stop checking
@@ -43,6 +46,7 @@ export const metaRefresh: Rule = {
           html: getHtmlSnippet(refresh),
           impact: "critical" as const,
           message: `Page auto-refreshes after ${parsed.seconds} seconds. Provide user control over refresh.`,
+          fix: { type: "remove-element" } as const,
         }];
       }
       // seconds == 0 or > 72000 with no URL: skip, check next meta

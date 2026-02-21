@@ -8,6 +8,7 @@ export const pAsHeading: Rule = {
   wcag: ["1.3.1"],
   level: "A",
   tags: ["best-practice"],
+  fixability: "visual",
   description: "Paragraphs should not be styled to look like headings.",
   guidance: "When paragraphs are styled with bold, large fonts to look like headings, screen reader users miss the semantic structure. Use proper heading elements (h1-h6) instead of styled paragraphs. If you need specific styling, apply CSS to the heading elements while maintaining proper heading hierarchy.",
   prompt:

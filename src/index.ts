@@ -1,5 +1,5 @@
 // Core audit
-export { rules, runAudit, getRuleById, getActiveRules, clearAllCaches } from "./rules/index";
+export { rules, runAudit, diffAudit, getRuleById, getActiveRules, clearAllCaches } from "./rules/index";
 export type { ChunkedAudit } from "./rules/index";
 export { createChunkedAudit } from "./rules/index";
 
@@ -15,6 +15,9 @@ export type {
   Rule,
   Violation,
   AuditResult,
+  DiffResult,
+  Fixability,
+  FixSuggestion,
   DeclarativeRule,
   CheckType,
 } from "./rules/types";

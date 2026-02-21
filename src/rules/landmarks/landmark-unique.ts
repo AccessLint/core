@@ -7,7 +7,8 @@ export const landmarkUnique: Rule = {
   category: "landmarks",
   wcag: [],
   level: "A",
-  tags: ["best-practice"],
+  tags: ["best-practice", "page-level"],
+  fixability: "contextual",
   description: "Landmarks should have unique labels when there are multiple of the same type.",
   guidance: "When a page has multiple landmarks of the same type (e.g., multiple nav elements), each should have a unique accessible name via aria-label or aria-labelledby. This helps screen reader users distinguish between them (e.g., 'Main navigation' vs 'Footer navigation').",
   prompt:

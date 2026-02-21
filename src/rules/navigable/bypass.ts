@@ -7,6 +7,7 @@ export const bypass: Rule = {
   wcag: ["2.4.1"],
   level: "A",
   tags: ["best-practice", "page-level"],
+  fixability: "contextual",
   description: "Page must have a mechanism to bypass repeated blocks of content.",
   guidance: "Keyboard users must be able to skip repetitive content like navigation. Provide a skip link at the top of the page that links to the main content (e.g., <a href=\"#main\">Skip to main content</a>), or use a <main> landmark. Screen readers can jump directly to landmarks, so a properly marked-up <main> element satisfies this requirement.",
   prompt:

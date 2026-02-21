@@ -9,6 +9,7 @@ export const frameTitle: Rule = {
   actRuleIds: ["cae760"],
   wcag: ["4.1.2"],
   level: "A",
+  fixability: "contextual",
   description: "Frames must have an accessible name.",
   guidance: "Screen readers announce frame titles when users navigate frames. Add a title attribute to <iframe> and <frame> elements that describes the frame's purpose (e.g., <iframe title='Video player'>). Avoid generic titles like 'frame' or 'iframe'. If the frame is decorative, use aria-hidden='true'.",
   prompt:
@@ -28,6 +29,7 @@ export const frameTitle: Rule = {
           impact: "serious" as const,
           message: "Frame is missing an accessible name. Add a title attribute.",
           context: src ? `src: "${src}"` : undefined,
+          fix: { type: "add-attribute", attribute: "title", value: "" } as const,
         });
       }
     }

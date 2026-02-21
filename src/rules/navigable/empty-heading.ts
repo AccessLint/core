@@ -9,6 +9,7 @@ export const emptyHeading: Rule = {
   wcag: ["2.4.6"],
   level: "A",
   tags: ["best-practice"],
+  fixability: "contextual",
   description: "Headings must have discernible text.",
   guidance: "Screen reader users navigate pages by headings, so empty headings create confusing navigation points. Ensure all headings contain visible text or accessible names. If a heading is used purely for visual styling, use CSS instead of heading elements.",
   prompt:
@@ -36,6 +37,7 @@ export const emptyHeading: Rule = {
           impact: "minor" as const,
           message: "Heading is empty. Add text content or remove the heading element.",
           context: nearby ? `Following content: "${nearby}"` : undefined,
+          fix: { type: "add-text-content" } as const,
         });
       }
     }

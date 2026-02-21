@@ -13,6 +13,7 @@ export const focusOrder: Rule = {
   wcag: [],
   tags: ["best-practice"],
   level: "A",
+  fixability: "contextual",
   description:
     "Non-interactive elements with tabindex='0' must have an interactive ARIA role so assistive technologies can convey their purpose.",
   guidance:
