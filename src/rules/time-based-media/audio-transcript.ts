@@ -11,8 +11,6 @@ export const audioTranscript: Rule = {
   fixability: "contextual",
   description: "Audio elements should have a text alternative or transcript.",
   guidance: "Audio-only content like podcasts or recordings needs a text alternative for deaf users. Provide a transcript either on the same page or linked nearby. The transcript should include all spoken content and descriptions of relevant sounds.",
-  prompt:
-    "Explain options for providing a text alternative: transcript link or aria-describedby.",
   run(doc) {
     const violations = [];
 

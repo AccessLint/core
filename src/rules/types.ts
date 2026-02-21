@@ -18,8 +18,6 @@ export interface Rule {
   description: string;
   /** Generic remediation guidance for the AI to contextualize */
   guidance?: string;
-  /** Tailored prompt for AI explanation of this specific rule violation */
-  prompt?: string;
   run(doc: Document): Violation[];
 }
 
@@ -39,10 +37,8 @@ export interface Violation {
   html: string;
   impact: "critical" | "serious" | "moderate" | "minor";
   message: string;
-  /** Rule-specific surrounding context to help AI understand the issue */
+  /** Surrounding context for understanding the violation (shown in reports and used by AI) */
   context?: string;
-  /** Additional context for AI guidance only (not displayed to user) */
-  aiContext?: string;
   /** Structured fix suggestion for agents and automated tooling */
   fix?: FixSuggestion;
   element?: Element;
@@ -123,7 +119,6 @@ export interface DeclarativeRule {
   tags?: string[];
   fixability?: Fixability;
   guidance?: string;
-  prompt?: string;
   fix?: FixSuggestion;
   skipAriaHidden?: boolean;
   documentOnly?: boolean;

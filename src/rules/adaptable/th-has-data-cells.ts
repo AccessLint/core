@@ -11,8 +11,6 @@ export const thHasDataCells: Rule = {
   fixability: "contextual",
   description: "Table headers should be associated with data cells.",
   guidance: "Screen readers use <th> elements to announce column or row headers when navigating table cells — for example, reading 'Name: John' when moving to a cell. A table with <th> but no <td> elements means headers describe nothing, and screen readers cannot associate data with headers. Either add <td> data cells, or if this is not tabular data, use non-table markup instead.",
-  prompt:
-    "Explain whether this table needs data cells or if non-table layout would be more appropriate.",
   run(doc) {
     const violations = [];
     for (const table of doc.querySelectorAll("table")) {

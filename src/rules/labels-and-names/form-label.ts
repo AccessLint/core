@@ -94,9 +94,7 @@ export const formLabel: Rule = {
   level: "A",
   fixability: "contextual",
   description: "Form elements must have labels. Use <label>, aria-label, or aria-labelledby.",
-  guidance: "Every form input needs an accessible label so users understand what information to enter. Use a <label> element with a for attribute matching the input's id, wrap the input in a <label>, or use aria-label/aria-labelledby for custom components. Placeholders are not sufficient as labels since they disappear when typing.",
-  prompt:
-    "This form field has no accessible label. Based on the context (input type, name attribute, placeholder, or surrounding elements), suggest adding a <label for=\"id\"> element with descriptive text, or an aria-label attribute. The label should describe what information the user should enter, not the field type. For example: 'Email address', 'Search', 'Phone number'.",
+  guidance: "Every form input needs an accessible label so users understand what information to enter. Use a <label> element with a for attribute matching the input's id, wrap the input in a <label>, or use aria-label/aria-labelledby for custom components. Placeholders are not sufficient as labels since they disappear when typing. Labels should describe the information requested, not the field type (e.g., 'Email address', 'Search', 'Phone number').",
   run(doc) {
     const violations = [];
 

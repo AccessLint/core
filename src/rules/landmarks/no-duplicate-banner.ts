@@ -6,6 +6,5 @@ export const noDuplicateBanner = makeNoDuplicateLandmarkRule({
   landmarkName: "banner",
   description: "Page should not have more than one banner landmark.",
   guidance: "The banner landmark (typically <header>) identifies site-oriented content like logos and search. Only one top-level banner is allowed per page. If you need multiple headers, nest them inside sectioning elements (article, section, aside) where they become scoped headers rather than page-level banners.",
-  prompt: "Explain whether to remove this duplicate banner or nest it inside a sectioning element.",
   filterTopLevel: true,
 });

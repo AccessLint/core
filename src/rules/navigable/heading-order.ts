@@ -12,8 +12,6 @@ export const headingOrder: Rule = {
   description: "Heading levels should increase by one; skipping levels (e.g. h2 to h4) makes navigation harder.",
   guidance:
     "Screen reader users navigate by headings to understand page structure. Skipping levels (h2 to h4) suggests missing content and creates confusion. Start with h1 for the page title, then use h2 for main sections, h3 for subsections, etc. You can go back up (h3 to h2) when starting a new section.",
-  prompt:
-    "State which heading level was expected and suggest changing this heading to the appropriate level.",
   run(doc) {
     const violations = [];
     const headings = doc.querySelectorAll("h1, h2, h3, h4, h5, h6, [role='heading']");

@@ -12,7 +12,6 @@ const marqueeSpec: DeclarativeRule = {
   level: "A",
   fixability: "mechanical",
   guidance: "Scrolling or moving content is difficult for many users to read, especially those with cognitive or visual disabilities. The <marquee> element is deprecated. Replace scrolling text with static content. If content must scroll, provide pause/stop controls and ensure it stops after 5 seconds.",
-  prompt: "Suggest static alternatives or accessible carousel patterns.",
   fix: { type: "remove-element" },
 };
 

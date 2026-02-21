@@ -9,7 +9,6 @@ export function createNameRule(opts: {
   selector: string;
   message: string;
   actRuleIds?: string[];
-  prompt?: string;
   fixability?: Fixability;
   roleSet?: Set<string>;
   /** Structured fix suggestion for agents and automated tooling */
@@ -30,7 +29,6 @@ export function createNameRule(opts: {
     ...(opts.fixability ? { fixability: opts.fixability } : {}),
     description: opts.description,
     guidance: opts.guidance,
-    ...(opts.prompt ? { prompt: opts.prompt } : {}),
     run(doc) {
       const violations = [];
 

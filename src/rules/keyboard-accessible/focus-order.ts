@@ -18,8 +18,6 @@ export const focusOrder: Rule = {
     "Non-interactive elements with tabindex='0' must have an interactive ARIA role so assistive technologies can convey their purpose.",
   guidance:
     "When adding tabindex='0' to non-interactive elements like <div> or <span>, screen readers announce them generically. Add an appropriate role (button, link, tab, etc.) so users understand the element's purpose. Also add keyboard event handlers (Enter/Space for buttons, Enter for links). Consider using native interactive elements instead.",
-  prompt:
-    "Based on the element's apparent purpose, suggest adding an appropriate role attribute (button, link, etc.) or converting to a native interactive element.",
   run(doc) {
     const violations = [];
     for (const el of doc.querySelectorAll('[tabindex="0"]')) {

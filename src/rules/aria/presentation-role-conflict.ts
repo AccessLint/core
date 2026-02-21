@@ -65,8 +65,6 @@ export const presentationRoleConflict: Rule = {
   fixability: "contextual",
   description: "Elements with role='presentation' or role='none' must not be focusable or have global ARIA attributes.",
   guidance: "When an element has role='presentation' or role='none', it's marked as decorative and removed from the accessibility tree. However, if the element is focusable or has certain ARIA attributes, the presentation role is ignored and the element remains accessible. This creates confusion. Either remove the presentation role, or remove the focusability/ARIA attributes.",
-  prompt:
-    "Identify the conflict (focusable or ARIA attribute) and suggest either removing the presentation role or removing the conflicting attribute/focusability.",
   run(doc) {
     const violations = [];
 

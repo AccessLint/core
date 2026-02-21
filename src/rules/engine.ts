@@ -121,7 +121,6 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
     fixability: spec.fixability,
     description: spec.description,
     guidance: spec.guidance,
-    prompt: spec.prompt,
     run(doc: Document): Violation[] {
       const violations: Violation[] = [];
 

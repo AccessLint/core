@@ -10,8 +10,6 @@ export const landmarkMain: Rule = {
   fixability: "contextual",
   description: "Page should have exactly one main landmark.",
   guidance: "The main landmark contains the primary content of the page. Screen readers allow users to jump directly to main content. Use a single <main> element (or role='main') to wrap the central content, excluding headers, footers, and navigation.",
-  prompt:
-    "Identify the primary content area and explain how to wrap it in a <main> element.",
   run(doc) {
     const mains = doc.querySelectorAll('main, [role="main"]');
     if (mains.length === 0) {

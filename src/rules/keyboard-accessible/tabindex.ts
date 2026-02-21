@@ -13,7 +13,6 @@ const tabindexSpec: DeclarativeRule = {
   tags: ["best-practice"],
   fixability: "mechanical",
   guidance: "Positive tabindex values force elements to the front of the tab order regardless of DOM position, creating unpredictable navigation for keyboard users. Use tabindex='0' to add elements to the natural tab order, or tabindex='-1' to make elements programmatically focusable but not in tab order. Rely on DOM order for tab sequence.",
-  prompt: "Change the positive tabindex value to tabindex='0' and rely on DOM order for tab sequence instead.",
   fix: { type: "set-attribute", attribute: "tabindex", value: "0" },
 };
 

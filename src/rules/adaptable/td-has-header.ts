@@ -11,8 +11,6 @@ export const tdHasHeader: Rule = {
   fixability: "contextual",
   description: "Data cells in tables larger than 3x3 should have associated headers.",
   guidance: "In complex tables, screen reader users need header associations to understand data cells. Use th elements with scope attribute, or the headers attribute on td elements. For simple tables (≤3x3), this is less critical as context is usually clear.",
-  prompt:
-    "Explain whether to use scope attributes on headers or headers attribute on this cell.",
   run(doc) {
     const violations = [];
 

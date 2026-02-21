@@ -7,7 +7,6 @@ export const ariaToggleFieldName = createNameRule({
   fixability: "contextual",
   description: "ARIA toggle fields must have an accessible name.",
   guidance: "ARIA toggle controls (checkbox, switch, radio, menuitemcheckbox, menuitemradio) must have accessible names so users understand what option they're selecting. Add visible text content, aria-label, or use aria-labelledby to reference a visible label.",
-  prompt: "Based on the context, suggest an aria-label describing what option this toggle controls.",
   fix: { type: "add-attribute", attribute: "aria-label", value: "" },
   checkComputedHidden: true,
   checkShadowDOM: true,

@@ -10,8 +10,6 @@ export const bypass: Rule = {
   fixability: "contextual",
   description: "Page must have a mechanism to bypass repeated blocks of content.",
   guidance: "Keyboard users must be able to skip repetitive content like navigation. Provide a skip link at the top of the page that links to the main content (e.g., <a href=\"#main\">Skip to main content</a>), or use a <main> landmark. Screen readers can jump directly to landmarks, so a properly marked-up <main> element satisfies this requirement.",
-  prompt:
-    "The page has no mechanism for keyboard users to skip repeated content. The simplest fix is to wrap the primary content area in a <main> element — screen readers can jump directly to it. Alternatively, add a skip link as the first element in <body>: <a href=\"#main\" class=\"skip-link\">Skip to main content</a>, with a matching id on the target element. Use the context to understand what the page is missing.",
   run(doc) {
     // Check for any ARIA landmark (main, nav, aside, header/banner, footer/contentinfo)
     const hasLandmark = doc.querySelector(

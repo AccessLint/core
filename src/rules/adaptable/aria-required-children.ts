@@ -75,8 +75,6 @@ export const ariaRequiredChildren: Rule = {
   fixability: "contextual",
   description: "Certain ARIA roles require specific child roles to be present.",
   guidance: "Some ARIA roles represent containers that must contain specific child roles for proper semantics. For example, a list must contain listitems, a menu must contain menuitems. Add the required child elements with appropriate roles, or use native HTML elements that provide these semantics implicitly (e.g., <ul> with <li>).",
-  prompt:
-    "State which child role(s) are required and suggest adding elements with those roles, or using equivalent native HTML elements.",
   run(doc) {
     const violations: Violation[] = [];
 

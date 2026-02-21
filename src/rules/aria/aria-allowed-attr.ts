@@ -87,8 +87,6 @@ export const ariaAllowedAttr: Rule = {
   fixability: "mechanical",
   description: "ARIA attributes must be allowed for the element's role.",
   guidance: "Each ARIA role supports specific attributes. Using unsupported attributes creates confusion for assistive technologies. Check the ARIA specification for which attributes are valid for each role, or remove the attribute if it's not needed.",
-  prompt:
-    "The ARIA attribute listed in context is not supported on this element's role. Either remove the attribute (if the behavior it describes isn't needed), or change the element's role to one that supports it. The context lists which attributes ARE allowed on this role — use that to suggest alternatives if applicable.",
   run(doc) {
     const violations = [];
 

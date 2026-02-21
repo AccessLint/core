@@ -11,8 +11,6 @@ export const summaryName: Rule = {
   fixability: "contextual",
   description: "<summary> elements must have an accessible name.",
   guidance: "The <summary> element provides the visible label for a <details> disclosure widget. It must have descriptive text content so screen reader users understand what will be revealed when expanded. Add clear, concise text that indicates what content is contained in the details section.",
-  prompt:
-    "Based on the surrounding context or details content, suggest text to add inside the <summary> element.",
   run(doc) {
     const violations = [];
 

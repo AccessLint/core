@@ -339,7 +339,6 @@ describe("compileDeclarativeRule — rule metadata", () => {
       id: "test-meta",
       description: "Test desc",
       guidance: "Test guidance",
-      prompt: "Test prompt",
       wcag: ["1.1.1", "4.1.2"],
       level: "AA",
       tags: ["best-practice"],
@@ -347,7 +346,6 @@ describe("compileDeclarativeRule — rule metadata", () => {
     expect(rule.id).toBe("test-meta");
     expect(rule.description).toBe("Test desc");
     expect(rule.guidance).toBe("Test guidance");
-    expect(rule.prompt).toBe("Test prompt");
     expect(rule.wcag).toEqual(["1.1.1", "4.1.2"]);
     expect(rule.level).toBe("AA");
     expect(rule.tags).toEqual(["best-practice"]);

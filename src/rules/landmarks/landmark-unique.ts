@@ -11,8 +11,6 @@ export const landmarkUnique: Rule = {
   fixability: "contextual",
   description: "Landmarks should have unique labels when there are multiple of the same type.",
   guidance: "When a page has multiple landmarks of the same type (e.g., multiple nav elements), each should have a unique accessible name via aria-label or aria-labelledby. This helps screen reader users distinguish between them (e.g., 'Main navigation' vs 'Footer navigation').",
-  prompt:
-    "Suggest a unique aria-label that distinguishes this landmark based on its purpose.",
   run(doc) {
     const violations: Violation[] = [];
     const landmarkTypes = [

@@ -10,8 +10,6 @@ export const documentTitle: Rule = {
   fixability: "contextual",
   description: "Documents must have a <title> element to provide users with an overview of content.",
   guidance: "Screen reader users rely on page titles to identify and navigate between tabs/windows. Add a descriptive <title> element in <head> that summarizes the page purpose. Keep titles unique across the site, placing specific content before the site name (e.g., 'Contact Us - Acme Corp').",
-  prompt:
-    "The page has no title or an empty title. Suggest a concise, descriptive <title> based on the page content sample in context. Good titles are specific and front-load the unique part: 'Product Details - Store Name' rather than 'Store Name - Product Details'.",
   run(doc) {
     const title = doc.querySelector("title");
     if (!title || !title.textContent?.trim()) {

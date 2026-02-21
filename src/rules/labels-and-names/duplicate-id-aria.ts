@@ -11,8 +11,6 @@ export const duplicateIdAria: Rule = {
   description: "IDs used in ARIA and label associations must be unique to avoid broken references.",
   guidance:
     "When aria-labelledby, aria-describedby, aria-controls, or label[for] reference a duplicate ID, only the first matching element is used. This breaks the intended relationship and may leave controls unnamed or descriptions missing. Ensure IDs referenced by ARIA attributes and label associations are unique throughout the document.",
-  prompt:
-    "Identify which attribute references this ID and suggest a unique replacement.",
   run(doc) {
     const violations = [];
     const activeRefs = collectActiveIdRefs(doc);

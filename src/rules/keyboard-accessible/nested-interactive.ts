@@ -92,8 +92,6 @@ export const nestedInteractive: Rule = {
   fixability: "contextual",
   description: "Interactive controls must not be nested inside each other.",
   guidance: "Nesting interactive elements (like a button inside a link, or a link inside a button) creates unpredictable behavior and confuses assistive technologies. The browser may remove the inner element from the accessibility tree. Restructure the HTML so interactive elements are siblings, not nested. If you need a clickable card, use CSS and JavaScript rather than nesting.",
-  prompt:
-    "Identify which elements are nested and suggest restructuring them as siblings instead.",
   run(doc) {
     const violations: Violation[] = [];
     const root = doc.body ?? (doc as unknown as ShadowRoot);

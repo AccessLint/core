@@ -11,8 +11,6 @@ export const emptyTableHeader: Rule = {
   fixability: "contextual",
   description: "Table header cells should have visible text.",
   guidance: "Empty table headers provide no information to screen reader users. Either add descriptive text to the header, or if the header is intentionally empty (like a corner cell), consider using a td element instead or adding a visually hidden label.",
-  prompt:
-    "Suggest header text based on the column/row content, or explain if this should be a td instead.",
   run(doc) {
     const violations = [];
 

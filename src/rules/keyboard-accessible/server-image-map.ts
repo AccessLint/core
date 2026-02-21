@@ -12,7 +12,6 @@ const serverSideImageMapSpec: DeclarativeRule = {
   level: "A",
   fixability: "contextual",
   guidance: "Server-side image maps (using ismap attribute) send click coordinates to the server, which is inaccessible to keyboard users and screen readers who can't precisely click specific regions. Replace with client-side image maps (<map> with <area> elements) that provide keyboard access and accessible names, or use linked images/buttons instead.",
-  prompt: "Explain that the ismap attribute should be removed and the functionality replaced with a client-side <map> element with <area> children, or separate linked images/buttons.",
   fix: { type: "remove-attribute", attribute: "ismap" },
 };
 

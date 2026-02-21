@@ -43,8 +43,6 @@ export const imgAlt: Rule = {
     "Images must have alternate text. Add an alt attribute to <img> elements. Decorative images may use an empty alt attribute (alt=\"\"), role='none', or role='presentation'.",
   guidance:
     "Every image needs an alt attribute. For informative images, describe the content or function concisely. For decorative images (backgrounds, spacers, purely visual flourishes), use alt='' to hide them from screen readers. Never omit alt entirely—screen readers may read the filename instead.",
-  prompt:
-    "Describe what alt text to add. If the image appears decorative based on context (spacer, background, icon next to text that already describes it), recommend alt=''. Otherwise suggest descriptive alt text based on the src or surrounding context.",
   run(doc) {
     const violations = [];
 

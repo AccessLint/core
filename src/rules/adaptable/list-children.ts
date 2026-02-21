@@ -11,8 +11,7 @@ const listSpec: DeclarativeRule = {
   wcag: ["1.3.1"],
   level: "A",
   fixability: "contextual",
-  guidance: "Screen readers announce list structure ('list with 5 items') based on proper markup. Placing non-<li> elements directly inside <ul> or <ol> breaks this structure. Wrap content in <li> elements, or if you need wrapper divs for styling, restructure your CSS to style the <li> elements directly.",
-  prompt: "This non-<li> element is a direct child of <ul> or <ol>. Wrap it in an <li> element, or if it is a wrapper div used for styling, apply the styles to the <li> elements directly and remove the wrapper. For example: change <ul><div>item</div></ul> to <ul><li>item</li></ul>.",
+  guidance: "Screen readers announce list structure ('list with 5 items') based on proper markup. Placing non-<li> elements directly inside <ul> or <ol> breaks this structure. Wrap content in <li> elements, or if you need wrapper divs for styling, apply styles to <li> elements directly and remove the wrapper (e.g., change <ul><div>item</div></ul> to <ul><li>item</li></ul>).",
 };
 
 export const listChildren = compileDeclarativeRule(listSpec);

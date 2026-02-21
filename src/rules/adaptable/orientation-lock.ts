@@ -88,8 +88,6 @@ export const orientationLock: Rule = {
     "Page orientation must not be restricted using CSS transforms.",
   guidance:
     "Users with motor disabilities may mount their device in a fixed orientation. Using CSS transforms with @media (orientation: portrait/landscape) to rotate content 90° effectively locks the page to one orientation. Remove the orientation-dependent transform and use responsive design instead.",
-  prompt:
-    "The CSS uses a transform (e.g. rotate(90deg)) inside an @media (orientation: …) query to force a specific orientation. Remove the orientation media query and its transform. If the layout needs to adapt to different orientations, use responsive CSS (flexbox, grid, media queries for width) instead of rotating the entire page.",
   run(doc) {
     const violations = [];
 

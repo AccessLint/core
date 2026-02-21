@@ -149,8 +149,6 @@ export const ariaAllowedRole: Rule = {
   fixability: "contextual",
   description: "ARIA role must be appropriate for the element.",
   guidance: "Not all ARIA roles can be applied to all HTML elements. Many elements have implicit roles (e.g., <header> is implicitly banner, <nav> is navigation, <main> is main). Adding an explicit role that matches the implicit role is redundant. Adding a conflicting role breaks semantics. Either remove the role attribute or use a different element.",
-  prompt:
-    "Consider implicit roles: header=banner, nav=navigation, main=main, footer=contentinfo, aside=complementary, article=article, section=region (when labeled). Explain if this role is redundant (matches implicit) or invalid (conflicts). Suggest removing it or restructuring.",
   run(doc) {
     const violations = [];
 

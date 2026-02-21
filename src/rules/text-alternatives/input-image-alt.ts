@@ -12,8 +12,6 @@ export const inputImageAlt: Rule = {
   description: 'Image inputs (<input type="image">) must have alternate text describing the button action.',
   guidance:
     "Image buttons (<input type='image'>) act as submit buttons with a custom image. Add alt text via alt, aria-label, or aria-labelledby that describes the action (e.g. alt='Search' or alt='Submit order'), not the image itself. Without it, screen readers announce only 'image' or the filename, giving no clue what the button does.",
-  prompt:
-    "Based on the src attribute or form context, suggest alt text describing the button's action (e.g., 'Submit', 'Search', 'Go').",
   run(doc) {
     const violations = [];
     for (const input of doc.querySelectorAll('input[type="image"]')) {

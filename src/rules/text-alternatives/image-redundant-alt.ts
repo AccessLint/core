@@ -16,8 +16,6 @@ export const imageRedundantAlt: Rule = {
     "Image alt text should not duplicate adjacent link or button text. When alt text repeats surrounding text, screen reader users hear the same information twice.",
   guidance:
     "When an image is inside a link or button that also has text, make the alt text complementary rather than identical. If the image is purely decorative in that context, use alt='' to avoid repetition.",
-  prompt:
-    "The image alt text is identical to the text already visible in the parent link or button. Screen reader users hear the same words twice. If the image is decorative in this context (e.g. an icon next to a label), recommend alt=''. Otherwise suggest brief complementary alt text that adds information the visible text doesn't convey — for example what the image depicts, not what the link says.",
   run(doc) {
     const violations = [];
     for (const img of doc.querySelectorAll("img[alt]")) {

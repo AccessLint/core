@@ -45,8 +45,6 @@ export const labelContentMismatch: Rule = {
   fixability: "contextual",
   description: "Interactive elements with visible text must have accessible names that contain that text.",
   guidance: "For voice control users who activate controls by speaking their visible label, the accessible name must include the visible text. If aria-label is 'Submit form' but the button shows 'Send', voice users saying 'click Send' won't activate it. Ensure aria-label/aria-labelledby contains or matches the visible text.",
-  prompt:
-    "Show the mismatch between the visible text and accessible name, and suggest updating aria-label to include the visible text.",
   run(doc) {
     const violations = [];
 

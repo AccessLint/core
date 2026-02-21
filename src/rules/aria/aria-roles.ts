@@ -12,8 +12,6 @@ export const ariaRoles: Rule = {
   description: "ARIA role values must be valid.",
   guidance:
     "Invalid role values are ignored by assistive technologies, meaning the element will not have the intended semantics. Check the spelling and use only roles defined in the WAI-ARIA specification. Common roles include: button, link, navigation, main, dialog, alert, tab, tabpanel, menu, menuitem.",
-  prompt:
-    "Identify the invalid role and suggest the correct spelling or a valid alternative role that matches the intended purpose.",
   run(doc) {
     const violations = [];
     for (const el of doc.querySelectorAll("[role]")) {

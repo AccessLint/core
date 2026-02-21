@@ -38,8 +38,6 @@ export const presentationalChildrenFocusable: Rule = {
     "Elements with a role that makes children presentational must not contain focusable content.",
   guidance:
     "Roles like button, checkbox, img, tab, and others make their children presentational — hidden from assistive technologies. If those children are focusable, keyboard users can reach elements that screen reader users cannot perceive. Move focusable content outside the parent or remove the focusability.",
-  prompt:
-    "A focusable element (link, button, input, or element with tabindex) is inside a parent whose role makes children presentational. Either move the focusable element outside the parent, or remove its focusability by adding tabindex='-1' if the parent element already handles the interaction.",
   run(doc) {
     const violations = [];
 

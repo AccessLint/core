@@ -12,8 +12,6 @@ export const metaRefresh: Rule = {
   fixability: "mechanical",
   description: "Meta refresh must not redirect or refresh automatically.",
   guidance: "Automatic page refreshes or redirects can disorient users, especially those using screen readers or with cognitive disabilities. They may lose their place or not have time to read content. If a redirect is needed, use a server-side redirect (HTTP 301/302) instead. For timed refreshes, provide user controls.",
-  prompt:
-    "Explain why meta refresh is problematic and suggest server-side alternatives.",
   run(doc) {
     // Iterate through all meta refresh tags.  For URL redirects, the first
     // one with a validly-formed URL wins (the browser acts on it).

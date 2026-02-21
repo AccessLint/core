@@ -12,8 +12,6 @@ export const labelTitleOnly: Rule = {
   fixability: "contextual",
   description: "Form elements should not use title attribute as the only accessible name.",
   guidance: "The title attribute is unreliable as a label because it only appears on hover/focus (not visible to touch users) and is often ignored by assistive technologies. Use a visible <label> element, aria-label, or aria-labelledby instead. Title can supplement a label but should not replace it.",
-  prompt:
-    "The title attribute text should be moved to a visible <label> element or aria-label. Show what text to use based on the current title.",
   run(doc) {
     const violations = [];
     const inputs = doc.querySelectorAll(NATIVE_LABELABLE_SELECTOR);

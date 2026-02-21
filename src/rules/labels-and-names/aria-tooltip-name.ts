@@ -6,7 +6,6 @@ export const ariaTooltipName: Rule = createNameRule({
   fixability: "contextual",
   description: "ARIA tooltips must have an accessible name.",
   guidance: "Tooltip elements must have accessible names (usually their text content). The tooltip content itself typically serves as the accessible name. Ensure the tooltip contains descriptive text content or has aria-label.",
-  prompt: "Add text content to the tooltip describing the information it provides, or add aria-label.",
   selector: '[role="tooltip"]',
   message: "Tooltip has no accessible name.",
   fix: { type: "add-text-content" },

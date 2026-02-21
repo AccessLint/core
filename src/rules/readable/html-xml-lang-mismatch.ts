@@ -10,8 +10,6 @@ export const htmlXmlLangMismatch: Rule = {
   fixability: "mechanical",
   description: "The lang and xml:lang attributes on <html> must match.",
   guidance: "In XHTML documents, if both lang and xml:lang are present, they must specify the same base language. Mismatched values confuse assistive technologies. Either remove xml:lang (preferred for HTML5) or ensure both attributes have identical values.",
-  prompt:
-    "Explain whether to remove xml:lang or align it with the lang value.",
   run(doc) {
     const html = doc.documentElement;
     const lang = html.getAttribute("lang")?.trim().toLowerCase();

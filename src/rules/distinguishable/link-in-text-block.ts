@@ -85,8 +85,6 @@ export const linkInTextBlock: Rule = {
   fixability: "visual",
   description: "Links within text blocks must be distinguishable by more than color alone.",
   guidance: "Users who cannot perceive color differences need other visual cues to identify links. Links in text should have underlines or other non-color indicators. If using color alone, ensure 3:1 contrast with surrounding text AND provide additional indication on focus/hover.",
-  prompt:
-    "Explain how to make this link visually distinguishable without relying on color alone.",
   run(doc) {
     const violations = [];
 

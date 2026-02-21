@@ -10,9 +10,7 @@ export const htmlHasLang: Rule = {
   tags: ["page-level"],
   fixability: "mechanical",
   description: "The <html> element must have a lang attribute.",
-  guidance: "Screen readers use the lang attribute to determine which language rules and pronunciation to use. Without it, content may be mispronounced. Set lang to the primary language of the page (e.g., lang='en' for English, lang='es' for Spanish).",
-  prompt:
-    "The page is missing a lang attribute on <html>. Use the text sample in context to determine the primary language and suggest the correct BCP 47 code (e.g. 'en' for English, 'es' for Spanish, 'fr' for French, 'de' for German, 'ja' for Japanese, 'zh' for Chinese, 'pt' for Portuguese, 'ar' for Arabic). Add lang to the <html> element: <html lang=\"...\">.",
+  guidance: "Screen readers use the lang attribute to determine which language rules and pronunciation to use. Without it, content may be mispronounced. Set lang to the primary language of the page using a BCP 47 code (e.g., 'en' for English, 'es' for Spanish, 'fr' for French, 'de' for German, 'ja' for Japanese, 'zh' for Chinese, 'pt' for Portuguese, 'ar' for Arabic).",
   run(doc) {
     const html = doc.documentElement;
     // Only applies to HTML documents (not SVG or MathML roots)

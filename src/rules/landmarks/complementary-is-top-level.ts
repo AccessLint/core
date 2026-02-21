@@ -10,8 +10,6 @@ export const complementaryIsTopLevel: Rule = {
   fixability: "contextual",
   description: "Aside (complementary) landmark should be top-level or directly inside main.",
   guidance: "The complementary landmark (aside) should be top-level or a direct child of main. Nesting aside deep within other landmarks reduces its discoverability for screen reader users navigating by landmarks.",
-  prompt:
-    "Explain why this aside should be repositioned and suggest where to move it.",
   run(doc) {
     const violations: Violation[] = [];
     const asides = doc.querySelectorAll('aside, [role="complementary"]');

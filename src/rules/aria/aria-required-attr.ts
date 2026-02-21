@@ -27,8 +27,6 @@ export const ariaRequiredAttr: Rule = {
   description: "Elements with ARIA roles must have all required ARIA attributes.",
   guidance:
     "Some ARIA roles require specific attributes to function correctly. For example, checkbox requires aria-checked, slider requires aria-valuenow, heading requires aria-level. Without these attributes, assistive technologies cannot convey the element's state or value to users. Add the missing required attribute with an appropriate value.",
-  prompt:
-    "State which attribute is required for this role and suggest an appropriate value based on the element's apparent state.",
   run(doc) {
     const violations = [];
     for (const el of doc.querySelectorAll("[role]")) {

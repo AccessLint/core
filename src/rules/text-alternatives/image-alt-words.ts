@@ -20,8 +20,6 @@ export const imageAltWords: Rule = {
     "Image alt text should not contain words like 'image', 'photo', or 'picture' — screen readers already announce the element type.",
   guidance:
     "Screen readers already announce 'image' or 'graphic' before reading alt text, so phrases like 'image of', 'photo of', or 'picture of' are redundant. Remove these words and describe what the image shows. For example, change 'image of a dog' to 'golden retriever playing fetch'.",
-  prompt:
-    "The alt text contains a word like 'image', 'photo', or 'picture' that is already announced by the screen reader. Rewrite the alt text with the redundant word removed while keeping the description meaningful. For example: 'image of a sunset over the ocean' → 'sunset over the ocean'; 'photo of team members' → 'team members at the 2024 offsite'; 'icon for settings' → 'settings'.",
   run(doc) {
     const violations = [];
     for (const img of doc.querySelectorAll("img[alt]")) {

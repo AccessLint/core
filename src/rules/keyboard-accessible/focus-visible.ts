@@ -13,8 +13,6 @@ export const focusVisible: Rule = {
     "Elements in sequential focus order must have a visible focus indicator.",
   guidance:
     "Keyboard users need to see which element has focus. Do not remove the default focus outline (outline: none) without providing an alternative visible indicator. Use :focus-visible or :focus styles to ensure focus is always perceivable.",
-  prompt:
-    "This element has outline: none without a visible focus alternative. Either remove the outline: none declaration to restore the browser default, or add a custom focus style such as box-shadow: 0 0 0 2px #4A90D9 or border: 2px solid currentColor to ensure keyboard users can see where focus is.",
   run(doc) {
     const violations = [];
 

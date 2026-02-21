@@ -12,8 +12,6 @@ export const emptyHeading: Rule = {
   fixability: "contextual",
   description: "Headings must have discernible text.",
   guidance: "Screen reader users navigate pages by headings, so empty headings create confusing navigation points. Ensure all headings contain visible text or accessible names. If a heading is used purely for visual styling, use CSS instead of heading elements.",
-  prompt:
-    "This heading element has no text content, so screen reader users encounter a blank heading when navigating. Either add descriptive text that summarizes the following section, or if this element is used only for visual styling, replace it with a styled <p> or <div> and use CSS for appearance. The context includes nearby content to help suggest appropriate heading text.",
   run(doc) {
     const violations = [];
     const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6, [role="heading"]');

@@ -11,8 +11,6 @@ export const ariaCommandName: Rule = {
   fixability: "contextual",
   description: "ARIA commands must have an accessible name.",
   guidance: "Interactive ARIA command roles (button, link, menuitem) must have accessible names so users know what action they perform. Add visible text content, aria-label, or aria-labelledby to provide a name.",
-  prompt:
-    "Based on the element's content or context, suggest an aria-label describing what this command does.",
   run(doc) {
     const violations = [];
 

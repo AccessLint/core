@@ -13,8 +13,6 @@ export const metaRefreshNoException: Rule = {
   description: "Meta refresh must not be used with a delay (no exceptions).",
   guidance:
     "Automatic page refreshes and delayed redirects disorient users. Instant redirects (delay=0) are acceptable, but any positive delay is not. Use server-side redirects instead.",
-  prompt:
-    "The page uses <meta http-equiv='refresh'> with a delay. Replace this with a server-side HTTP 301 or 302 redirect for URL changes, or remove the auto-refresh entirely and let users control when to reload. If a delay is needed for user notification, show a message with a manual link instead.",
   run(doc) {
     for (const refresh of doc.querySelectorAll('meta[http-equiv="refresh"]')) {
       const content = refresh.getAttribute("content") || "";

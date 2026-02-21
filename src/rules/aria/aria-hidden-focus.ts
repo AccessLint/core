@@ -70,8 +70,6 @@ export const ariaHiddenFocus: Rule = {
   fixability: "contextual",
   description: "Elements with aria-hidden='true' must not contain focusable elements.",
   guidance: "When aria-hidden='true' hides an element from assistive technologies but the element contains focusable children, keyboard users can focus those children but screen reader users won't know they exist. Either remove focusable elements from the hidden region, add tabindex='-1' to them, or remove aria-hidden.",
-  prompt:
-    "This element can receive keyboard focus but is inside an aria-hidden region, making it invisible to screen readers. The context explains why it's focusable. Fix by either: (1) adding tabindex='-1' to remove it from tab order, (2) moving it outside the aria-hidden region, or (3) removing aria-hidden='true' from the ancestor if the content should be accessible.",
   run(doc) {
     const violations = [];
 

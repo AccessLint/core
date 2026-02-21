@@ -34,8 +34,6 @@ export const linkName: Rule = {
   description: "Links must have discernible text via content, aria-label, or aria-labelledby.",
   guidance:
     "Screen reader users need to know where a link goes. Add descriptive text content, aria-label, or use aria-labelledby. For image links, ensure the image has alt text describing the link destination. Avoid generic text like 'click here' or 'read more'—link text should make sense out of context.",
-  prompt:
-    "Based on the href or surrounding context, suggest descriptive link text or an aria-label.",
   run(doc) {
     const violations = [];
     for (const a of doc.querySelectorAll('a[href], area[href], [role="link"]')) {

@@ -10,8 +10,6 @@ export const scopeAttrValid: Rule = {
   fixability: "mechanical",
   description: "The scope attribute on table headers must have a valid value.",
   guidance: "The scope attribute tells screen readers which cells a header applies to. Valid values are: row, col, rowgroup, colgroup. Using invalid values breaks the association between headers and cells.",
-  prompt:
-    "Explain which scope value (row, col, rowgroup, colgroup) is appropriate for this header.",
   run(doc) {
     const violations = [];
     const validScopes = new Set(["row", "col", "rowgroup", "colgroup"]);

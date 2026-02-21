@@ -10,8 +10,6 @@ export const areaAlt: Rule = {
   fixability: "contextual",
   description: "Image map <area> elements must have alternative text.",
   guidance: "Each clickable region in an image map needs alternative text so screen reader users know what the region represents. Add an alt attribute to every <area> element describing its purpose. For complex image maps, consider using alternative approaches like SVG with embedded links, or a list of text links.",
-  prompt:
-    "Based on the href or shape/coords, suggest alt text describing where this area links or what it represents.",
   run(doc) {
     const violations = [];
 

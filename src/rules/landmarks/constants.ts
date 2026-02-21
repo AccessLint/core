@@ -48,7 +48,6 @@ export function makeNestedLandmarkRule(opts: {
   landmarkName: string;
   description: string;
   guidance: string;
-  prompt: string;
 }): Rule {
   return {
     id: opts.id,
@@ -59,7 +58,6 @@ export function makeNestedLandmarkRule(opts: {
     fixability: "contextual",
     description: opts.description,
     guidance: opts.guidance,
-    prompt: opts.prompt,
     run(doc) {
       const violations: Violation[] = [];
       for (const el of doc.querySelectorAll(opts.selector)) {
@@ -88,7 +86,6 @@ export function makeNoDuplicateLandmarkRule(opts: {
   landmarkName: string;
   description: string;
   guidance: string;
-  prompt: string;
   filterTopLevel: boolean;
 }): Rule {
   return {
@@ -100,7 +97,6 @@ export function makeNoDuplicateLandmarkRule(opts: {
     fixability: "contextual",
     description: opts.description,
     guidance: opts.guidance,
-    prompt: opts.prompt,
     run(doc) {
       const violations: Violation[] = [];
       const els = doc.querySelectorAll(opts.selector);
