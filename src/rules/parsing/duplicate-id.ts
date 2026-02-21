@@ -1,7 +1,6 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
-
-const ARIA_ID_ATTRS = ["aria-labelledby", "aria-describedby", "aria-controls", "aria-owns", "aria-flowto"];
+import { ARIA_ID_ATTRS, collectActiveIdRefs } from "./constants";
 
 export const duplicateIdAria: Rule = {
   id: "accesslint-089",
@@ -14,21 +13,7 @@ export const duplicateIdAria: Rule = {
     "Identify which attribute references this ID and suggest a unique replacement.",
   run(doc) {
     const violations = [];
-
-    // Collect IDs referenced by ARIA attributes
-    const activeRefs = new Set<string>();
-    for (const el of doc.querySelectorAll("[aria-labelledby], [aria-describedby], [aria-controls], [aria-owns], [aria-flowto]")) {
-      for (const attr of ARIA_ID_ATTRS) {
-        const val = el.getAttribute(attr);
-        if (val) val.split(/\s+/).forEach((id) => activeRefs.add(id));
-      }
-    }
-
-    // Collect IDs referenced by label[for]
-    for (const label of doc.querySelectorAll("label[for]")) {
-      const forVal = label.getAttribute("for");
-      if (forVal) activeRefs.add(forVal);
-    }
+    const activeRefs = collectActiveIdRefs(doc);
 
     // Count visible elements per referenced ID.
     // Skip elements hidden via display:none or visibility:hidden — responsive
