@@ -1,9 +1,7 @@
-import codspeedPlugin from "@codspeed/vitest-plugin";
 import { defineConfig } from "vite";
 import { resolve } from "path";
 
 export default defineConfig({
-  plugins: [codspeedPlugin()],
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
@@ -34,7 +32,6 @@ export default defineConfig({
       include: ["src/rules/**/*.ts"],
       exclude: [
         "src/rules/**/*.test.ts",
-        "src/rules/**/*.bench.ts",
       ],
       thresholds: {
         statements: 80,
@@ -43,9 +40,5 @@ export default defineConfig({
         lines: 80,
       },
     },
-  },
-  benchmark: {
-    include: ["src/**/*.bench.ts"],
-    hookTimeout: 120_000,
   },
 });
