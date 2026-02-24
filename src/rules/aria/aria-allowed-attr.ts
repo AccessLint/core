@@ -90,7 +90,21 @@ export const ariaAllowedAttr: Rule = {
   run(doc) {
     const violations = [];
 
-    for (const el of doc.querySelectorAll("[role], [aria-*]")) {
+    const candidates = new Set<Element>(doc.querySelectorAll("[role]"));
+    const walker = doc.createTreeWalker(doc.body || doc.documentElement, 1 /* NodeFilter.SHOW_ELEMENT */);
+    let node: Node | null = walker.currentNode;
+    while (node) {
+      if (node instanceof Element) {
+        for (const attr of node.attributes) {
+          if (attr.name.startsWith("aria-")) {
+            candidates.add(node);
+            break;
+          }
+        }
+      }
+      node = walker.nextNode();
+    }
+    for (const el of candidates) {
       if (isAriaHidden(el)) continue;
 
       const role = getComputedRole(el);
