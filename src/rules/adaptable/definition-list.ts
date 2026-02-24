@@ -4,10 +4,10 @@ import { compileDeclarativeRule } from "../engine";
 const definitionListSpec: DeclarativeRule = {
   id: "adaptable/definition-list",
   selector: "dl",
-  check: { type: "child-invalid", allowedChildren: ["dt", "dd", "div", "script", "template"] },
+  check: { type: "child-invalid", allowedChildren: ["dt", "dd", "div", "script", "template", "style"] },
   impact: "serious",
   message: "<dl> contains invalid child <{{tag}}>.",
-  description: "<dl> elements must only contain <dt>, <dd>, <div>, <script>, or <template>.",
+  description: "<dl> elements must only contain <dt>, <dd>, <div>, <script>, <template>, or <style>.",
   wcag: ["1.3.1"],
   level: "A",
   fixability: "contextual",

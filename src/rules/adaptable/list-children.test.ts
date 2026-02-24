@@ -22,6 +22,11 @@ describe("adaptable/list-children", () => {
     expect(violations[0].message).toContain("<li>");
   });
 
+  it("passes style element inside ul (CSS-in-JS)", () => {
+    const doc = makeDoc('<html><body><ul><style>.x{color:red}</style><li>A</li></ul></body></html>');
+    expect(listChildren.run(doc)).toHaveLength(0);
+  });
+
   it("passes ul with only whitespace text nodes", () => {
     const doc = makeDoc("<html><body><ul> <li>A</li> <li>B</li> </ul></body></html>");
     expect(listChildren.run(doc)).toHaveLength(0);
