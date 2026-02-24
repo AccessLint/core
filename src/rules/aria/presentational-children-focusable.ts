@@ -53,6 +53,9 @@ export const presentationalChildrenFocusable: Rule = {
         if (child === el) continue;
         // Skip disabled elements
         if ((child as HTMLButtonElement | HTMLInputElement).disabled) continue;
+        // Skip elements with tabindex="-1" — they are not keyboard-focusable
+        // (they can receive programmatic focus, but are not reachable via Tab)
+        if (child.getAttribute("tabindex") === "-1") continue;
 
         violations.push({
           ruleId: "aria/presentational-children-focusable",
