@@ -4,3 +4,4 @@ dist/
 act-fixtures/
 test-results/
 coverage/
+.env
