@@ -1,13 +1,23 @@
 import type { Rule } from "../types";
 import { getSelector, getHtmlSnippet } from "../utils/selector";
 
-const REDUNDANT_WORDS = ["image", "picture", "photo", "graphic", "icon", "img"];
+/**
+ * Matches alt text that starts with a self-referential word used as a prefix.
+ * Only flags when the word appears at the start and is followed by a
+ * preposition ("of"), a separator (: - — –), or is the entire alt text.
+ *
+ * Flags:   "image of a dog", "photo: sunset", "icon", "graphic"
+ * Skips:   "Close icon for closing window", "Walmart Photo logo",
+ *          "magnifying glass icon", "A family taking a photo"
+ */
+const REDUNDANT_PREFIX_RE =
+  /^(image|picture|photo|graphic|icon|img)(\s+of\b|\s*[:\u2013\u2014-]|\s*$)/i;
 
 /**
- * Checks if alt text contains self-referential words like "image" or "photo".
- * Screen readers already announce "image"/"graphic" before alt text, so these
- * words are redundant.  Separate from image-redundant-alt because axe-core
- * does not have an equivalent check.
+ * Checks if alt text starts with a self-referential prefix like "image of"
+ * or "photo:". Screen readers already announce "image"/"graphic" before alt
+ * text, so these prefixes are redundant.  Separate from image-redundant-alt
+ * because axe-core does not have an equivalent check.
  */
 export const imageAltWords: Rule = {
   id: "text-alternatives/image-alt-words",
@@ -18,25 +28,26 @@ export const imageAltWords: Rule = {
   fixability: "contextual",
   browserHint: "Screenshot the image to verify the alt text accurately describes it without filler words like 'image of'.",
   description:
-    "Image alt text should not contain words like 'image', 'photo', or 'picture' — screen readers already announce the element type.",
+    "Image alt text should not start with words like 'image of', 'photo of', or 'picture of' — screen readers already announce the element type.",
   guidance:
     "Screen readers already announce 'image' or 'graphic' before reading alt text, so phrases like 'image of', 'photo of', or 'picture of' are redundant. Remove these words and describe what the image shows. For example, change 'image of a dog' to 'golden retriever playing fetch'.",
   run(doc) {
     const violations = [];
     for (const img of doc.querySelectorAll("img[alt]")) {
-      const alt = img.getAttribute("alt")!.toLowerCase();
+      const alt = img.getAttribute("alt")!.trim();
       if (!alt) continue;
 
-      const found = REDUNDANT_WORDS.filter((w) => alt.split(/\s+/).includes(w));
-      if (found.length > 0) {
+      const match = alt.match(REDUNDANT_PREFIX_RE);
+      if (match) {
+        const word = match[1].toLowerCase();
         violations.push({
           ruleId: "text-alternatives/image-alt-words",
           selector: getSelector(img),
           html: getHtmlSnippet(img),
           impact: "minor" as const,
-          message: `Alt text "${img.getAttribute("alt")}" contains redundant word(s): ${found.join(", ")}.`,
-          context: `Current alt: "${img.getAttribute("alt")}", redundant word(s): ${found.join(", ")}`,
-          fix: { type: "suggest", suggestion: "Remove the redundant word(s) from the alt text; screen readers already announce the element as an image" } as const,
+          message: `Alt text "${alt}" starts with redundant prefix "${word}".`,
+          context: `Current alt: "${alt}", redundant prefix: "${word}"`,
+          fix: { type: "suggest", suggestion: "Remove the redundant prefix from the alt text; screen readers already announce the element as an image" } as const,
         });
       }
     }
