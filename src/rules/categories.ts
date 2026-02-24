@@ -15,6 +15,7 @@ export const categories: Category[] = [
   { slug: "navigable", name: "Navigable", wcagGuideline: "2.4", principle: "operable" },
   { slug: "landmarks", name: "Landmarks", wcagGuideline: null, principle: null },
   { slug: "readable", name: "Readable", wcagGuideline: "3.1", principle: "understandable" },
+  { slug: "input-assistance", name: "Input Assistance", wcagGuideline: "3.3", principle: "understandable" },
   { slug: "labels-and-names", name: "Labels and Names", wcagGuideline: "4.1", principle: "robust" },
   { slug: "aria", name: "ARIA", wcagGuideline: "4.1", principle: "robust" },
 ];

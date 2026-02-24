@@ -106,6 +106,9 @@ import { buttonName } from "./labels-and-names/button-name";
 import { summaryName } from "./labels-and-names/summary-name";
 import { duplicateIdAria } from "./labels-and-names/duplicate-id-aria";
 
+// Input Assistance
+import { accessibleAuthentication } from "./input-assistance/accessible-authentication";
+
 // ARIA
 import { ariaRoles } from "./aria/aria-roles";
 import { ariaValidAttr } from "./aria/aria-valid-attr";
@@ -220,6 +223,9 @@ export const rules: Rule[] = [
   buttonName,
   summaryName,
   duplicateIdAria,
+
+  // Input Assistance
+  accessibleAuthentication,
 
   // ARIA
   ariaRoles,

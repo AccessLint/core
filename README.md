@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@accesslint/core)](https://www.npmjs.com/package/@accesslint/core)
 [![license](https://img.shields.io/npm/l/@accesslint/core)](https://github.com/AccessLint/core/blob/main/LICENSE)
 
-Pure accessibility rule engine with zero browser dependencies. Covers WCAG 2.1 Level A and AA with best-practice rules included.
+Pure accessibility rule engine with zero browser dependencies. Covers WCAG 2.2 Level A and AA with best-practice rules included.
 
 > Looking for CI? [AccessLint](https://www.accesslint.com?ref=readme_core) runs accessibility checks on every pull request and posts review comments directly on your GitHub PRs.
 
@@ -190,7 +190,7 @@ Helpers for building custom rules:
 
 ## Rules
 
-Covers WCAG 2.1 Level A and AA, plus best-practice rules. One additional AAA-level rule (`distinguishable/color-contrast-enhanced`) is bundled but excluded by default; include it via `configureRules({ includeAAA: true })`.
+Covers WCAG 2.2 Level A and AA, plus best-practice rules. One additional AAA-level rule (`distinguishable/color-contrast-enhanced`) is bundled but excluded by default; include it via `configureRules({ includeAAA: true })`.
 
 Rule IDs match the `ruleId` field in violations and are used with `configureRules()` and `getRuleById()`.
 
@@ -290,6 +290,7 @@ Rule IDs match the `ruleId` field in violations and are used with `configureRule
 | `time-based-media/video-captions` | A | 1.2.2 | Videos must have captions. |
 | `time-based-media/audio-transcript` | A | 1.2.1 | Audio elements should have a text alternative. |
 | `distinguishable/color-contrast` | AA | 1.4.3 | Text must have sufficient color contrast. |
+| `input-assistance/accessible-authentication` | AA | 3.3.8 | Password inputs must not block password managers. |
 | `distinguishable/color-contrast-enhanced` | AAA | 1.4.6 | Text must have enhanced color contrast (AAA). |
 
 </details>
