@@ -63,6 +63,7 @@ const ELEMENT_ALLOWED_ROLES: Record<string, Set<string> | "any" | "none"> = {
   "input[type=checkbox]": new Set(["button", "menuitemcheckbox", "option", "switch"]),
   "input[type=image]": new Set(["link", "menuitem", "menuitemcheckbox", "menuitemradio", "radio", "switch"]),
   "input[type=radio]": new Set(["menuitemradio"]),
+  "input[type=search]": new Set(["combobox", "searchbox"]),
   "input[type=text]": new Set(["combobox", "searchbox", "spinbutton"]),
   ins: "any",
   kbd: "any",

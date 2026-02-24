@@ -83,4 +83,21 @@ describe("aria/aria-allowed-role", () => {
     const doc = makeDoc('<aside role="complementary">Sidebar</aside>');
     expect(ariaAllowedRole.run(doc)).toHaveLength(0);
   });
+
+  it("passes combobox role on input[type=search]", () => {
+    const doc = makeDoc('<input type="search" role="combobox" aria-expanded="false" aria-controls="list1">');
+    expect(ariaAllowedRole.run(doc)).toHaveLength(0);
+  });
+
+  it("passes searchbox role on input[type=search]", () => {
+    const doc = makeDoc('<input type="search" role="searchbox">');
+    expect(ariaAllowedRole.run(doc)).toHaveLength(0);
+  });
+
+  it("reports disallowed role on input[type=search]", () => {
+    const doc = makeDoc('<input type="search" role="button">');
+    const violations = ariaAllowedRole.run(doc);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].message).toContain("button");
+  });
 });
