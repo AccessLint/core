@@ -94,6 +94,7 @@ import { multipleLabels } from "./labels-and-names/multiple-labels";
 import { inputButtonName } from "./labels-and-names/input-button-name";
 import { labelContentMismatch } from "./labels-and-names/label-content-mismatch";
 import { labelTitleOnly } from "./labels-and-names/label-title-only";
+import { labelPlaceholderOnly } from "./labels-and-names/label-placeholder-only";
 import { ariaCommandName } from "./labels-and-names/aria-command-name";
 import { ariaInputFieldName } from "./labels-and-names/aria-input-field-name";
 import { ariaToggleFieldName } from "./labels-and-names/aria-toggle-field-name";
@@ -212,6 +213,7 @@ export const rules: Rule[] = [
   inputButtonName,
   labelContentMismatch,
   labelTitleOnly,
+  labelPlaceholderOnly,
   ariaCommandName,
   ariaInputFieldName,
   ariaToggleFieldName,
