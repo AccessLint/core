@@ -12,8 +12,8 @@
   "vendor": "AccessLint",
   "release": {
     "@type": "Version",
-    "revision": "0.8.7",
-    "created": "2026-02-24"
+    "revision": "0.8.8",
+    "created": "2026-02-25"
   },
   "assertedThat": [
     {
