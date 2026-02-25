@@ -8,22 +8,8 @@ export default defineConfig({
     },
   },
   test: {
-    environment: "happy-dom",
-    environmentOptions: {
-      happyDOM: {
-        settings: {
-          disableCSSFileLoading: true,
-          navigation: {
-            disableMainFrameNavigation: true,
-            disableChildFrameNavigation: true,
-            disableChildPageNavigation: true,
-          },
-        },
-      },
-    },
-    onConsoleLog(log) {
-      if (log.includes("CSS file loading is disabled")) return false;
-    },
+    environment: "jsdom",
+    setupFiles: ["src/test-setup.ts"],
     include: ["src/**/*.test.ts"],
     exclude: ["src/bench/memory.test.ts"],
     hookTimeout: 60_000,

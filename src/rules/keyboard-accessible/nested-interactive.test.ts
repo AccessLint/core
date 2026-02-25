@@ -111,7 +111,13 @@ describe("keyboard-accessible/nested-interactive", () => {
   // --- True violations: interactive controls wrongly nested ---
 
   it("reports button inside another button", () => {
-    const doc = makeDoc("<button>Outer<button>Inner</button></button>");
+    // HTML parsers auto-close <button> before a nested <button>, so we
+    // construct the invalid nesting via DOM APIs to test the rule logic.
+    const doc = makeDoc("<button>Outer</button>");
+    const outer = doc.querySelector("button")!;
+    const inner = doc.createElement("button");
+    inner.textContent = "Inner";
+    outer.appendChild(inner);
     const violations = nestedInteractive.run(doc);
     expect(violations.length).toBeGreaterThanOrEqual(1);
   });

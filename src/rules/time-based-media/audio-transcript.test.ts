@@ -4,7 +4,7 @@ import { makeDoc } from "../../test-helpers";
 
 describe("time-based-media/audio-transcript", () => {
   it("reports audio without transcript", () => {
-    // happy-dom doesn't apply UA stylesheet for audio, so explicit display is needed
+    // jsdom doesn't apply UA stylesheet for audio, so explicit display is needed
     const doc = makeDoc('<html><body><audio src="podcast.mp3" controls style="display:block"></audio></body></html>');
     const violations = audioTranscript.run(doc);
     expect(violations).toHaveLength(1);

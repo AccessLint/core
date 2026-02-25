@@ -33,7 +33,7 @@ export const lineHeight: Rule = {
       // Line-height is only relevant when text wraps vertically
       if (hasHorizontalOnlyScroll(el)) continue;
       // Line-height only matters for multi-line text — skip single-line elements.
-      // In happy-dom, scrollHeight is 0 (no layout engine) so this guard is
+      // In jsdom, scrollHeight is 0 (no layout engine) so this guard is
       // effectively a no-op there; the check only activates in browser contexts.
       if (el instanceof HTMLElement && el.scrollHeight > 0) {
         const lh = parseFloat(getCachedComputedStyle(el).lineHeight);

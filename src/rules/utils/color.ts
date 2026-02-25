@@ -417,7 +417,7 @@ export function hasPseudoElementBackground(el: Element): boolean {
           if (w > 1 && h > 1) return true;
         }
       } catch {
-        // Some environments (happy-dom) don't support pseudo-element styles
+        // Some DOM-only environments don't support pseudo-element styles
       }
     }
     // Stop at the nearest opaque background ancestor

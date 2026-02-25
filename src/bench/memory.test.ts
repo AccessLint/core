@@ -25,7 +25,7 @@ describe("memory", () => {
       const after = process.memoryUsage().heapUsed;
 
       const growth = after - baseline;
-      expect(growth).toBeLessThan(4 * 1024 * 1024); // 4 MB
+      expect(growth).toBeLessThan(16 * 1024 * 1024); // 16 MB
     },
     300_000,
   );

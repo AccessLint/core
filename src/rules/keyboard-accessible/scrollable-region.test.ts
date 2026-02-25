@@ -10,7 +10,7 @@ describe("keyboard-accessible/scrollable-region", () => {
         <div style="height: 200px;">Tall content</div>
       </div>
     `);
-    // Note: In JSDOM/happy-dom, computed styles may not work as expected
+    // Note: In jsdom, computed styles may not work as expected
     // This test verifies the rule logic
     expect(scrollableRegion.run(doc)).toHaveLength(0);
   });

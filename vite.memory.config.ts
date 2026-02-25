@@ -8,7 +8,8 @@ export default defineConfig({
     },
   },
   test: {
-    environment: "happy-dom",
+    environment: "jsdom",
+    setupFiles: ["src/test-setup.ts"],
     include: ["src/bench/memory.test.ts"],
     pool: "forks",
     poolOptions: {

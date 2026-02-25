@@ -43,7 +43,7 @@ export const scrollableRegion: Rule = {
 
       // Check if it actually has scrollable content.
       // In real browsers, scroll metrics reflect actual layout overflow.
-      // In DOM-only environments (happy-dom), scrollHeight === clientHeight === 0,
+      // In DOM-only environments (jsdom), scrollHeight === clientHeight === 0,
       // so fall back to heuristic: explicit dimensions + visible text content.
       const hasScrollMetrics = el.scrollHeight > 0 || el.clientHeight > 0;
       if (hasScrollMetrics) {
