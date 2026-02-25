@@ -10,5 +10,11 @@ export default defineConfig({
   test: {
     environment: "happy-dom",
     include: ["src/bench/memory.test.ts"],
+    pool: "forks",
+    poolOptions: {
+      forks: {
+        execArgv: ["--expose-gc"],
+      },
+    },
   },
 });
