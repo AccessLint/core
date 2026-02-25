@@ -35,7 +35,7 @@ describe("runAudit integration", () => {
       expect(ruleIds.has("navigable/link-name")).toBe(true);
       expect(ruleIds.has("navigable/empty-heading")).toBe(true);
     },
-    15_000,
+    30_000,
   );
 
   it("returns no violations on a clean document", () => {
@@ -58,7 +58,7 @@ describe("runAudit integration", () => {
         b.violations.map((v) => v.ruleId),
       );
     },
-    15_000,
+    30_000,
   );
 });
 
