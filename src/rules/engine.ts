@@ -135,7 +135,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
               html: getHtmlSnippet(el),
               impact: spec.impact,
               message: applyTemplate(spec.message, el, spec.check),
-              ...(spec.fix ? { fix: spec.fix } : {}),
+              fix: spec.fix,
               element: el,
             });
           }
@@ -155,7 +155,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
-                ...(spec.fix ? { fix: spec.fix } : {}),
+                fix: spec.fix,
                 element: el,
               });
             }
@@ -174,7 +174,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
-                ...(spec.fix ? { fix: spec.fix } : {}),
+                fix: spec.fix,
                 element: el,
               });
             }
@@ -202,7 +202,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
-                ...(spec.fix ? { fix: spec.fix } : {}),
+                fix: spec.fix,
                 element: el,
               });
             } else if (!shouldMatch && matches) {
@@ -212,7 +212,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
-                ...(spec.fix ? { fix: spec.fix } : {}),
+                fix: spec.fix,
                 element: el,
               });
             }
@@ -231,7 +231,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(el),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, el, spec.check),
-                ...(spec.fix ? { fix: spec.fix } : {}),
+                fix: spec.fix,
                 element: el,
               });
             }
@@ -246,6 +246,10 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
           const allowedRoleSet = spec.check.allowedChildRoles
             ? new Set(spec.check.allowedChildRoles.map((r) => r.toLowerCase()))
             : null;
+          const semanticChildren = spec.check.allowedChildren.filter(
+            (t) => t !== "script" && t !== "template",
+          );
+          const wrapped = semanticChildren.map((t) => `<${t}>`).join(" or ");
           for (const el of doc.querySelectorAll(spec.selector)) {
             if (skipAriaHidden && isAriaHidden(el)) continue;
             // Skip elements with role="presentation" or role="none" —
@@ -254,19 +258,15 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
             if (parentRole === "presentation" || parentRole === "none") continue;
             let found = false;
             // Check for bare text nodes (non-whitespace) — invalid direct children
-            const semanticChildren = spec.check.allowedChildren.filter(
-              (t) => t !== "script" && t !== "template",
-            );
             for (const node of el.childNodes) {
               if (node.nodeType === 3 && node.textContent && node.textContent.trim()) {
-                const wrapped = semanticChildren.map((t) => `<${t}>`).join(" or ");
                 violations.push({
                   ruleId: spec.id,
                   selector: getSelector(el),
                   html: getHtmlSnippet(el),
                   impact: spec.impact,
                   message: `<${el.tagName.toLowerCase()}> contains direct text content. Wrap in ${wrapped}.`,
-                  ...(spec.fix ? { fix: spec.fix } : {}),
+                  fix: spec.fix,
                   element: el,
                 });
                 found = true;
@@ -287,7 +287,7 @@ export function compileDeclarativeRule(spec: DeclarativeRule): Rule {
                 html: getHtmlSnippet(child),
                 impact: spec.impact,
                 message: applyTemplate(spec.message, child, spec.check),
-                ...(spec.fix ? { fix: spec.fix } : {}),
+                fix: spec.fix,
                 element: child,
               });
               break; // one violation per parent

@@ -260,6 +260,7 @@ let includeAAA = false;
 let componentMode = false;
 let activeLocale: string | undefined;
 let localizedRulesCache: Rule[] | undefined;
+let activeRulesCache: Rule[] | undefined;
 
 export interface ConfigureOptions {
   /** Additional rules to include (e.g. compiled declarative rules) */
@@ -292,6 +293,7 @@ export function configureRules(options: ConfigureOptions): void {
     activeLocale = options.locale || undefined;
   }
   localizedRulesCache = undefined;
+  activeRulesCache = undefined;
 }
 
 /**
@@ -301,6 +303,7 @@ export function configureRules(options: ConfigureOptions): void {
  */
 export function getActiveRules(): Rule[] {
   if (localizedRulesCache) return localizedRulesCache;
+  if (activeRulesCache) return activeRulesCache;
 
   const active = rules.filter((r) => {
     if (disabledRuleIds.has(r.id)) return false;
@@ -315,6 +318,7 @@ export function getActiveRules(): Rule[] {
     return localizedRulesCache;
   }
 
+  activeRulesCache = combined;
   return combined;
 }
 
@@ -337,7 +341,8 @@ export function createChunkedAudit(doc: Document): ChunkedAudit {
       while (index < activeRules.length) {
         const rule = activeRules[index];
         try {
-          violations.push(...rule.run(doc));
+          const result = rule.run(doc);
+          for (let i = 0; i < result.length; i++) violations.push(result[i]);
         } catch (e) {
           skippedRules.push({ ruleId: rule.id, error: e instanceof Error ? e.message : String(e) });
         }
@@ -372,7 +377,8 @@ export function runAudit(doc: Document): AuditResult {
   const skippedRules: { ruleId: string; error: string }[] = [];
   for (const rule of activeRules) {
     try {
-      violations.push(...rule.run(doc));
+      const result = rule.run(doc);
+      for (let i = 0; i < result.length; i++) violations.push(result[i]);
     } catch (e) {
       skippedRules.push({ ruleId: rule.id, error: e instanceof Error ? e.message : String(e) });
     }
