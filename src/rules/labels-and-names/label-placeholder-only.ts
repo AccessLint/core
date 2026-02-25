@@ -8,7 +8,7 @@ export const labelPlaceholderOnly: Rule = {
   category: "labels-and-names",
   wcag: ["3.3.2"],
   level: "A",
-  tags: ["best-practice"],
+  tags: [],
   fixability: "contextual",
   description: "Form elements should not use placeholder attribute as the only accessible name.",
   guidance: "The placeholder attribute disappears as soon as the user begins typing, making it unreliable as a label. Users may forget the field's purpose mid-entry, and placeholders are often rendered with low contrast. Use a visible <label> element, aria-label, or aria-labelledby instead. Placeholder can supplement a label but should not replace it.",
