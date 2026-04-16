@@ -1,3 +1,5 @@
+> **This package is maintained in the [AccessLint monorepo](https://github.com/AccessLint/accesslint).**
+
 # @accesslint/core
 
 [![npm version](https://img.shields.io/npm/v/@accesslint/core)](https://www.npmjs.com/package/@accesslint/core)
